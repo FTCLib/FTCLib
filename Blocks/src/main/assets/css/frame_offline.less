@@ -1,0 +1,104 @@
+/**
+ * Styles used in FtcOfflineFrame.html
+ *
+ * Note that for the offline blocks editor, which does not use less, this file
+ * is pre-processed by OfflineBlocksUtil.convertLessToCss.
+ */
+@import "/css/core.less";
+
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  overflow: hidden;
+  margin: 0;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+td {
+  padding: 0;
+}
+
+.navbar-container {
+  background-color: @backgroundMedium;
+  padding-bottom: 1px;
+}
+
+.navbar {
+  background-color: @backgroundMedium;
+}
+
+.navbar-home {
+  cursor: pointer;
+  color: white;
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+  padding-left: 15px;
+  padding-top: 3px;
+}
+
+.wordmarkfirstword {
+  font-style: italic;
+  font-weight: 900;
+  font-size: 14.4px;
+  letter-spacing: -1px;
+}
+
+.trademark {
+  font-size: 5.76px;
+  line-height: 100%;
+}
+
+.brandphrase {
+  display: inline-block;
+  font-size: 9px;
+  line-height: 9px;
+  padding-left: 10px;
+  padding-bottom: 3px;
+}
+
+.navbar-item-active {
+  background-color: darken(@backgroundMedium, 5%);
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-size: 14px;
+  line-height: 20px;
+  padding: 15px 0px 15px 15px;
+}
+
+.navbar-item-active-link {
+  color: @textBright;
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-size: 14px;
+  height: 20px;
+  text-decoration: none;
+}
+
+.navbar-item-disabled {
+  color: #888888;
+  line-height: 20px;
+  padding: 15px 0px 15px 15px;
+}
+
+.navbar-item-disabled-link {
+  color: #888888;
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-size: 14px;
+  height: 20px;
+  text-decoration: none;
+}
+
+.navbar-help {
+  color: #888888;
+  line-height: 20px;
+  padding: 15px 15px 15px 15px;
+}
+
+.theiframe {
+  width:100%;
+  border:0;
+}

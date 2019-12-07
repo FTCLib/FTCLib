@@ -1,0 +1,25 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 26
+
+    defaultConfig {
+        minSdkVersion 19
+        targetSdkVersion 26
+        versionCode 1
+        versionName "1.0"
+
+    }
+}
+
+dependencies {
+    /*
+     * Other Modules
+     */
+    implementation project(':RobotCore')
+
+    /*
+     * External
+     */
+    implementation fileTree(include: ['*.jar', '*.aar'], dir: 'libs')
+}

@@ -1,0 +1,4 @@
+      <block type="vuforiaLocalizerParameters_setCameraDirection">
+        <value name="VUFORIA_LOCALIZER_PARAMETERS"><block type="variables_get"><field name="VAR">{vuforiaLocalizerParametersVariable}</field></block></value>
+        <value name="CAMERA_DIRECTION"><shadow type="navigation_typedEnum_cameraDirection"></shadow></value>
+      </block>

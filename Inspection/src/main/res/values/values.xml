@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <string name="app_name">Inspection</string>
+    <string name="inspection_activity">Inspection Mode</string>
+    <string name="stringManufacturer">Manufacturer:</string>
+    <string name="stringModel">Model:</string>
+    <string name="titleInspectionReportDS">Driver Station\nInspection Report</string>
+    <string name="titleInspectionReportRC">Robot Controller\nInspection Report</string>
+    <string name="wifiAccessPointLabel">WiFi Access Point</string>
+</resources>

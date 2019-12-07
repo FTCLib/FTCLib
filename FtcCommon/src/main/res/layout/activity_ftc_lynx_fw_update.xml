@@ -1,0 +1,57 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingBottom="@dimen/activity_vertical_margin"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:paddingTop="@dimen/activity_vertical_margin"
+                tools:context=".FtcLynxFirmwareUpdateActivity" >
+
+    <include layout="@layout/backbar_layout"
+        android:id="@+id/backbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="0dp" />
+
+    <TextView
+        android:id="@+id/lynxFirmwareInstructionsPre"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/lynx_fw_instructions_update"
+        android:layout_gravity="center_horizontal" />
+
+    <ListView
+        android:id="@+id/lynxFirmwareModuleList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:scrollbars="vertical">
+    </ListView>
+
+    <TextView
+        android:id="@+id/lynxFirmwareInstructionsPost"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/lynx_fw_instructions_update_post"
+        android:layout_gravity="center_horizontal" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/lynxFirmwareUpdateButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="@string/update_lynx_firmware"
+            android:onClick="onUpdateLynxFirmwareClicked"/>
+
+    </RelativeLayout>
+
+
+</LinearLayout>

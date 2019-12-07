@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="active_connections_label">Active connections:</string>
+    <string name="blocks_activity">Blocks</string>
+    <string name="display_server_log_button">Display Server Log</string>
+    <string name="help_content">No help available yet.</string>
+    <string name="help_menu_item">Help</string>
+    <string name="hide_server_log_button">Hide Server Log</string>
+    <string name="log_label">Server log:</string>
+    <string name="network_name_label">Connect your laptop\'s wireless adapter to the following network:</string>
+    <string name="network_not_ok">Network not OK.</string>
+    <string name="not_available">&lt;NOT AVAILABLE></string>
+    <string name="passphrase_label">Use the following passphrase to gain access to the network:</string>
+    <string name="program_and_manage_activity">Program &amp; Manage</string>
+    <string name="server_not_ok">Server not OK.</string>
+    <string name="server_ok">Server OK (Running since %1$s)</string>
+    <string name="server_status_label">Server status:</string>
+    <string name="server_url_label">Once connected, enter the following address into your web browser:</string>
+</resources>

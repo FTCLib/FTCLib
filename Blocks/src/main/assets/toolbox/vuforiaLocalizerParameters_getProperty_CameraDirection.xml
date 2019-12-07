@@ -1,0 +1,4 @@
+      <block type="vuforiaLocalizerParameters_getProperty_CameraDirection">
+        <field name="PROP">CameraDirection</field>
+        <value name="VUFORIA_LOCALIZER_PARAMETERS"><block type="variables_get"><field name="VAR">{vuforiaLocalizerParametersVariable}</field></block></value>
+      </block>

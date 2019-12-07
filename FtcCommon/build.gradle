@@ -1,0 +1,33 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 26
+
+    defaultConfig {
+        minSdkVersion 19
+        targetSdkVersion 26
+        versionCode 67
+        versionName "11.9"
+    }
+}
+
+apply from: '../moduleFlavors.gradle'
+
+dependencies {
+    /*
+     * Other Modules
+     */
+    implementation project(':Hardware')
+    implementation project(':Inspection')
+    implementation project(':RobotCore')
+
+    turboImplementation project(':RobotServer')
+    //turboImplementation project(':OpenRC')
+
+    //extremeTurboImplementation project(':OpenRC')
+
+    /*
+     * External
+     */
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+}

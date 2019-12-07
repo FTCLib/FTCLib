@@ -1,0 +1,72 @@
+<category name="TensorFlow Object Detection">
+  <category name="Optimized for SKYSTONE">
+    <block type="tfodSkyStone_initialize">
+      <value name="MINIMUM_CONFIDENCE"><shadow type="math_number"><field name="NUM">0.4</field></shadow></value>
+      <value name="USE_OBJECT_TRACKER"><shadow type="logic_boolean"><field name="BOOL">TRUE</field></shadow></value>
+      <value name="ENABLE_CAMERA_MONITORING"><shadow type="logic_boolean"><field name="BOOL">TRUE</field></shadow></value>
+    </block>
+    <block type="tfodSkyStone_activate">
+    </block>
+    <block type="tfodSkyStone_deactivate">
+    </block>
+    <block type="tfodSkyStone_setClippingMargins">
+      <value name="LEFT"><shadow type="math_number"><field name="NUM">0</field></shadow></value>
+      <value name="TOP"><shadow type="math_number"><field name="NUM">200</field></shadow></value>
+      <value name="RIGHT"><shadow type="math_number"><field name="NUM">0</field></shadow></value>
+      <value name="BOTTOM"><shadow type="math_number"><field name="NUM">0</field></shadow></value>
+    </block>
+    <block type="tfodSkyStone_getRecognitions">
+    </block>
+  </category>
+  <category name="Recognition">
+    <block type="tfodRecognition_getProperty_String">
+      <field name="PROP">Label</field>
+      <value name="TFOD_RECOGNITION"><block type="variables_get"><field name="VAR">{tfodRecognitionVariable}</field></block></value>
+    </block>
+    <block type="tfodSkyStone_typedEnum_label"><field name="LABEL">first element</field></block>
+    <block type="tfodSkyStone_typedEnum_label"><field name="LABEL">second element</field></block>
+    <block type="tfodRecognition_getProperty_Number">
+      <field name="PROP">Confidence</field>
+      <value name="TFOD_RECOGNITION"><block type="variables_get"><field name="VAR">{tfodRecognitionVariable}</field></block></value>
+    </block>
+    <block type="tfodRecognition_getProperty_Number">
+      <field name="PROP">Left</field>
+      <value name="TFOD_RECOGNITION"><block type="variables_get"><field name="VAR">{tfodRecognitionVariable}</field></block></value>
+    </block>
+    <block type="tfodRecognition_getProperty_Number">
+      <field name="PROP">Right</field>
+      <value name="TFOD_RECOGNITION"><block type="variables_get"><field name="VAR">{tfodRecognitionVariable}</field></block></value>
+    </block>
+    <block type="tfodRecognition_getProperty_Number">
+      <field name="PROP">Top</field>
+      <value name="TFOD_RECOGNITION"><block type="variables_get"><field name="VAR">{tfodRecognitionVariable}</field></block></value>
+    </block>
+    <block type="tfodRecognition_getProperty_Number">
+      <field name="PROP">Bottom</field>
+      <value name="TFOD_RECOGNITION"><block type="variables_get"><field name="VAR">{tfodRecognitionVariable}</field></block></value>
+    </block>
+    <block type="tfodRecognition_getProperty_Number">
+      <field name="PROP">Width</field>
+      <value name="TFOD_RECOGNITION"><block type="variables_get"><field name="VAR">{tfodRecognitionVariable}</field></block></value>
+    </block>
+    <block type="tfodRecognition_getProperty_Number">
+      <field name="PROP">Height</field>
+      <value name="TFOD_RECOGNITION"><block type="variables_get"><field name="VAR">{tfodRecognitionVariable}</field></block></value>
+    </block>
+    <block type="tfodRecognition_getProperty_Number">
+      <field name="PROP">ImageWidth</field>
+      <value name="TFOD_RECOGNITION"><block type="variables_get"><field name="VAR">{tfodRecognitionVariable}</field></block></value>
+    </block>
+    <block type="tfodRecognition_getProperty_Number">
+      <field name="PROP">ImageHeight</field>
+      <value name="TFOD_RECOGNITION"><block type="variables_get"><field name="VAR">{tfodRecognitionVariable}</field></block></value>
+    </block>
+    <block type="tfodRecognition_toText">
+      <value name="TFOD_RECOGNITION"><block type="variables_get"><field name="VAR">{tfodRecognitionVariable}</field></block></value>
+    </block>
+    <block type="tfodRecognition_estimateAngleToObject">
+      <value name="TFOD_RECOGNITION"><block type="variables_get"><field name="VAR">{tfodRecognitionVariable}</field></block></value>
+      <value name="ANGLE_UNIT"><shadow type="navigation_typedEnum_angleUnit"></shadow></value>
+    </block>
+  </category>
+</category>

@@ -1,0 +1,43 @@
+android {
+
+    flavorDimensions 'type'
+    productFlavors {
+        stock {
+            dimension 'type'
+        }
+        turbo {
+            dimension 'type'
+        }
+        extremeTurbo {
+            dimension 'type'
+        }
+    }
+
+    sourceSets {
+
+        stock {
+            res.srcDirs = ['src/stock/res', 'src/stockAndStdTurbo/res']
+            assets.srcDirs = ['src/stockAndStdTurbo/assets', 'src/stock/assets']
+        }
+
+        turbo {
+            res.srcDirs = ['src/openftc/res', 'src/turbo/res', 'src/stockAndStdTurbo/res']
+            java.srcDirs = ['src/openftc/java', 'src/turbo/java']
+            assets.srcDirs = ['src/turbo/assets', 'src/stockAndStdTurbo/assets']
+        }
+
+        extremeTurbo {
+            res.srcDirs = ['src/openftc/res', 'src/extremeTurbo/res']
+            java.srcDirs = ['src/openftc/java', 'src/extremeTurbo/java']
+            //resources.srcDirs = ['src/openftc/java', 'src/extremeTurbo/java']
+        }
+    }
+
+    // Selecting a release variant will prompt teams to set up a signing key. Now that there's
+    // a reason to select other variants, better to filter out the ones that will confuse teams.
+    variantFilter { variant ->
+        if (variant.buildType.name == "release") {
+            setIgnore(true)
+        }
+    }
+}
