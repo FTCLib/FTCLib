@@ -29,12 +29,13 @@ public class PIDFController {
 
     private double period;
 
-    // pre-condition: coeff is a four-element array: {kP, kI, kD, kF}
+    /**
+     * Pre-Condition: coeff is a four-element array: {kP, kI, kD, kF}
+     *
+     * <p>The {@link #period} is automatically set to 0.02.</p>
+     */
     public PIDFController(double[] coeff) {
-        kP = coeff[0];
-        kI = coeff[1];
-        kD = coeff[2];
-        kF = coeff[3];
+        this(coeff, 0, 0, 0.02);
     }
 
     /**

@@ -59,11 +59,17 @@ public class SwerveDrive extends RobotDrive {
         wheelSpeeds[MotorType.kBackLeft.value] = v3.magnitude();
         wheelSpeeds[MotorType.kBackRight.value] = v4.magnitude();
 
+        normalize(wheelSpeeds);
+
         double[] rotationalSpeeds = new double[4];
-        rotationalSpeeds[MotorType.kFrontLeft.value] = v1.angle() / Math.PI;
-        rotationalSpeeds[MotorType.kFrontRight.value] = v2.angle() / Math.PI;
-        rotationalSpeeds[MotorType.kBackLeft.value] = v3.angle() / Math.PI;
-        rotationalSpeeds[MotorType.kBackRight.value] = v4.angle() / Math.PI;
+        rotationalSpeeds[MotorType.kFrontLeft.value] = v1.angle();
+        rotationalSpeeds[MotorType.kFrontRight.value] = v2.angle();
+        rotationalSpeeds[MotorType.kBackLeft.value] = v3.angle();
+        rotationalSpeeds[MotorType.kBackRight.value] = v4.angle();
+
+        for (int i = 0; i < 4; i++) {
+            modules[i].driveModule(wheelSpeeds[i], rotationalSpeeds[i]);
+        }
     }
 
     @Override
