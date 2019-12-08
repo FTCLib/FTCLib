@@ -5,6 +5,11 @@ import com.arcrobotics.ftclib.controller.PIDFController;
 import com.arcrobotics.ftclib.geometry.Vector2d;
 import com.arcrobotics.ftclib.hardware.Motor;
 
+/**
+ * The module for a swerve drive. Each module contains two motors: one for turning,
+ * and the other for driving. The combination of these two factors makes for a wide degree of motion
+ * using three degrees of freedom with traction, making it a more effective version of a mecanum drive.
+ */
 public class SwerveModule {
 
     /**

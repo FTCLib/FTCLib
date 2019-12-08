@@ -34,10 +34,16 @@ public class SwerveDrive extends RobotDrive {
         W = trackwidth;
     }
 
+    /**
+     * Drives the robot using robot-centric control scheme. See {@link MecanumDrive} for more.
+     */
     public void driveRobotCentric(double xSpeed, double ySpeed, double turnSpeed) {
         driveFieldCentric(xSpeed, ySpeed, turnSpeed, 0);
     }
 
+    /**
+     * Drives the robot using field-centric control scheme. See {@link MecanumDrive} for more.
+     */
     public void driveFieldCentric(double xSpeed, double ySpeed, double turnSpeed, double gyroAngle) {
         double A = xSpeed - turnSpeed * L / 2;
         double B = xSpeed + turnSpeed * L / 2;
@@ -67,9 +73,18 @@ public class SwerveDrive extends RobotDrive {
         rotationalSpeeds[MotorType.kBackLeft.value] = v3.angle();
         rotationalSpeeds[MotorType.kBackRight.value] = v4.angle();
 
-        for (int i = 0; i < 4; i++) {
-            modules[i].driveModule(wheelSpeeds[i], rotationalSpeeds[i]);
-        }
+        modules[MotorType.kFrontLeft.value]
+                .driveModule(wheelSpeeds[MotorType.kFrontLeft.value],
+                             rotationalSpeeds[MotorType.kFrontLeft.value]);
+        modules[MotorType.kFrontRight.value]
+                .driveModule(wheelSpeeds[MotorType.kFrontRight.value],
+                        rotationalSpeeds[MotorType.kFrontRight.value]);
+        modules[MotorType.kBackLeft.value]
+                .driveModule(wheelSpeeds[MotorType.kBackLeft.value],
+                        rotationalSpeeds[MotorType.kBackLeft.value]);
+        modules[MotorType.kBackRight.value]
+                .driveModule(wheelSpeeds[MotorType.kBackRight.value],
+                        rotationalSpeeds[MotorType.kBackRight.value]);
     }
 
     @Override
