@@ -34,9 +34,9 @@ package org.firstinspires.ftc.robotcore.internal.opengl.shaders;
 
 import android.graphics.Color;
 import android.opengl.GLES20;
-import android.support.annotation.ColorInt;
-import android.support.annotation.IdRes;
-import android.support.annotation.RawRes;
+import androidx.annotation.ColorInt;
+import androidx.annotation.IdRes;
+import androidx.annotation.RawRes;
 
 import com.qualcomm.robotcore.R;
 

@@ -29,7 +29,7 @@
  */
 package com.qualcomm.robotcore.wifi;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 public enum NetworkType
   {

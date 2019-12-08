@@ -1,7 +1,7 @@
 package com.qualcomm.robotcore.robocol;
 
 import android.annotation.SuppressLint;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 import com.qualcomm.robotcore.util.RobotLog;
 

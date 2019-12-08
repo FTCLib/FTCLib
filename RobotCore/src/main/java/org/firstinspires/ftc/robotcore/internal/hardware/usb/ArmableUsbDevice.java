@@ -33,8 +33,8 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package org.firstinspires.ftc.robotcore.internal.hardware.usb;
 
 import android.content.Context;
-import android.support.annotation.CallSuper;
-import android.support.annotation.Nullable;
+import androidx.annotation.CallSuper;
+import androidx.annotation.Nullable;
 
 import com.qualcomm.robotcore.R;
 import com.qualcomm.robotcore.eventloop.SyncdDevice;

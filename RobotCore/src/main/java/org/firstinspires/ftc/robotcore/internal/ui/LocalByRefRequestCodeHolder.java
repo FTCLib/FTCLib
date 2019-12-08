@@ -32,7 +32,7 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 package org.firstinspires.ftc.robotcore.internal.ui;
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;

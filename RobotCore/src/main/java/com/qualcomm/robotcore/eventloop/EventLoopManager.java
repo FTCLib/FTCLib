@@ -31,7 +31,7 @@
 package com.qualcomm.robotcore.eventloop;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.qualcomm.robotcore.eventloop.opmode.EventLoopManagerClient;
 import com.qualcomm.robotcore.eventloop.opmode.OpModeManager;

@@ -31,7 +31,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.qualcomm.robotcore.hardware.configuration;
 
-import android.support.annotation.CallSuper;
+import androidx.annotation.CallSuper;
 
 import com.qualcomm.robotcore.exception.RobotCoreException;
 import com.qualcomm.robotcore.util.RobotLog;

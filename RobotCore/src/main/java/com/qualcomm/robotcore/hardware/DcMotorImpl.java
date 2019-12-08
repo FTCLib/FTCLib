@@ -31,7 +31,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.qualcomm.robotcore.hardware;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.qualcomm.robotcore.R;
 import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigurationType;

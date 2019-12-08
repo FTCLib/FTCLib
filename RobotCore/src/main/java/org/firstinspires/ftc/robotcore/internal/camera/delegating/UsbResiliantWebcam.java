@@ -33,7 +33,7 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package org.firstinspires.ftc.robotcore.internal.camera.delegating;
 
 import android.hardware.usb.UsbDevice;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.qualcomm.robotcore.util.SerialNumber;
 

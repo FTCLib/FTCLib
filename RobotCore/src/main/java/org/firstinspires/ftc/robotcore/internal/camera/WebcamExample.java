@@ -34,8 +34,8 @@ package org.firstinspires.ftc.robotcore.internal.camera;
 
 import android.graphics.Bitmap;
 import android.graphics.ImageFormat;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.MovingStatistics;

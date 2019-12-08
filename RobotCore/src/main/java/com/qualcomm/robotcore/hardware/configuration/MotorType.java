@@ -32,7 +32,7 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 package com.qualcomm.robotcore.hardware.configuration;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import org.firstinspires.ftc.robotcore.external.navigation.Rotation;
 

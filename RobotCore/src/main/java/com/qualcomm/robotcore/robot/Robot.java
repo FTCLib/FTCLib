@@ -30,18 +30,11 @@
 
 package com.qualcomm.robotcore.robot;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.qualcomm.robotcore.eventloop.EventLoop;
 import com.qualcomm.robotcore.eventloop.EventLoopManager;
 import com.qualcomm.robotcore.exception.RobotCoreException;
-import com.qualcomm.robotcore.robocol.RobocolDatagram;
-import com.qualcomm.robotcore.robocol.RobocolDatagramSocket;
-import com.qualcomm.robotcore.util.RobotLog;
-
-import java.net.InetAddress;
-import java.net.SocketException;
-import java.util.concurrent.ArrayBlockingQueue;
 
 /**
  * Contains the base components of a robot

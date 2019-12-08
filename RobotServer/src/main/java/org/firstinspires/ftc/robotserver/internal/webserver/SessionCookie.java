@@ -32,7 +32,7 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 package org.firstinspires.ftc.robotserver.internal.webserver;
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 import com.qualcomm.robotcore.util.RobotLog;
 

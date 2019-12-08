@@ -19,7 +19,7 @@ package org.firstinspires.ftc.robotcore.external.android;
 import static org.firstinspires.ftc.robotcore.internal.system.AppUtil.BLOCKS_SOUNDS_DIR;
 
 import android.content.Context;
-import android.support.annotation.RawRes;
+import androidx.annotation.RawRes;
 import org.firstinspires.ftc.robotcore.internal.android.SoundPoolIntf;
 import org.firstinspires.ftc.robotcore.internal.system.AppUtil;
 import java.io.File;

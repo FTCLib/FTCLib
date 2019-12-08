@@ -35,8 +35,8 @@ package com.qualcomm.hardware.bosch;
 import static org.firstinspires.ftc.robotcore.external.navigation.NavUtil.meanIntegrate;
 import static org.firstinspires.ftc.robotcore.external.navigation.NavUtil.plus;
 
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.qualcomm.robotcore.util.RobotLog;
 

@@ -35,7 +35,7 @@ package org.firstinspires.ftc.robotcore.internal.system;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.qualcomm.robotcore.util.RobotLog;
 

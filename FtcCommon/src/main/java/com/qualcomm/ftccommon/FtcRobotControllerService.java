@@ -37,8 +37,8 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Binder;
 import android.os.IBinder;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.qualcomm.robotcore.eventloop.EventLoop;
 import com.qualcomm.robotcore.eventloop.EventLoopManager;
@@ -55,7 +55,6 @@ import com.qualcomm.robotcore.robot.Robot;
 import com.qualcomm.robotcore.robot.RobotState;
 import com.qualcomm.robotcore.robot.RobotStatus;
 import com.qualcomm.robotcore.util.Device;
-import com.qualcomm.robotcore.util.Intents;
 import com.qualcomm.robotcore.util.RobotLog;
 import com.qualcomm.robotcore.util.ThreadPool;
 import com.qualcomm.robotcore.util.WebServer;
@@ -63,7 +62,6 @@ import com.qualcomm.robotcore.wifi.NetworkConnection;
 import com.qualcomm.robotcore.wifi.NetworkConnectionFactory;
 import com.qualcomm.robotcore.wifi.NetworkType;
 
-import org.firstinspires.ftc.robotcore.internal.hardware.android.AndroidBoard;
 import org.firstinspires.ftc.robotcore.internal.hardware.android.DragonboardIndicatorLED;
 import org.firstinspires.ftc.robotcore.internal.network.CallbackResult;
 import org.firstinspires.ftc.robotcore.internal.network.NetworkConnectionHandler;

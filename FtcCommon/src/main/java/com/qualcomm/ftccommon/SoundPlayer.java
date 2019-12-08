@@ -42,9 +42,9 @@ import android.media.SoundPool;
 import android.net.Uri;
 import android.os.Build;
 import android.preference.PreferenceManager;
-import android.support.annotation.CheckResult;
-import android.support.annotation.Nullable;
-import android.support.annotation.RawRes;
+import androidx.annotation.CheckResult;
+import androidx.annotation.Nullable;
+import androidx.annotation.RawRes;
 
 import com.qualcomm.robotcore.robocol.Command;
 import com.qualcomm.robotcore.util.RobotLog;

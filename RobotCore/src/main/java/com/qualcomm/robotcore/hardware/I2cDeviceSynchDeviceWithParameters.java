@@ -1,6 +1,6 @@
 package com.qualcomm.robotcore.hardware;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 /**
  * {@link I2cDeviceSynchDeviceWithParameters} adds to {@link I2cDeviceSynchDevice} support for

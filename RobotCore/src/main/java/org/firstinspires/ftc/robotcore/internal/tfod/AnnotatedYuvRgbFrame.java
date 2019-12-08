@@ -16,7 +16,7 @@
 
 package org.firstinspires.ftc.robotcore.internal.tfod;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import java.util.List;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 

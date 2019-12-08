@@ -34,9 +34,7 @@ package org.firstinspires.ftc.robotcore.external.stream;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.support.annotation.Nullable;
-import android.util.SparseArray;
-import android.util.SparseIntArray;
+import androidx.annotation.Nullable;
 
 import com.qualcomm.robotcore.util.RobotLog;
 

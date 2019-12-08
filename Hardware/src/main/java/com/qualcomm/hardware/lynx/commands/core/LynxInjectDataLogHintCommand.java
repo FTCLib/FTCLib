@@ -32,7 +32,7 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 package com.qualcomm.hardware.lynx.commands.core;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.qualcomm.hardware.lynx.LynxModuleIntf;
 import com.qualcomm.hardware.lynx.commands.LynxDatagram;

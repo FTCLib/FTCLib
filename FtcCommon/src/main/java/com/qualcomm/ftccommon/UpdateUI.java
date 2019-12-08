@@ -32,8 +32,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.qualcomm.ftccommon;
 
 import android.app.Activity;
-import android.support.annotation.ColorInt;
-import android.support.annotation.NonNull;
+import androidx.annotation.ColorInt;
+import androidx.annotation.NonNull;
 import android.view.View;
 import android.widget.TextView;
 
@@ -50,7 +50,6 @@ import org.firstinspires.ftc.ftccommon.external.RobotStateMonitor;
 import org.firstinspires.ftc.robotcore.internal.network.DeviceNameListener;
 import org.firstinspires.ftc.robotcore.internal.network.DeviceNameManagerFactory;
 import org.firstinspires.ftc.robotcore.internal.system.AppUtil;
-import org.firstinspires.ftc.robotcore.internal.network.WifiDirectDeviceNameManager;
 import org.firstinspires.ftc.robotcore.internal.network.NetworkStatus;
 import org.firstinspires.ftc.robotcore.internal.network.PeerStatus;
 

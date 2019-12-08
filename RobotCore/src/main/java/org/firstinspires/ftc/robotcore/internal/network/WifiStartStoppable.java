@@ -34,7 +34,7 @@ package org.firstinspires.ftc.robotcore.internal.network;
 
 import android.content.Context;
 import android.net.wifi.p2p.WifiP2pManager;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.qualcomm.robotcore.R;
 import com.qualcomm.robotcore.util.RobotLog;

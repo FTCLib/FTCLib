@@ -12,14 +12,13 @@ import static org.firstinspires.ftc.robotcore.internal.system.AppUtil.BLOCKS_JS_
 import static org.firstinspires.ftc.robotcore.internal.system.AppUtil.BLOCK_OPMODES_DIR;
 
 import android.content.res.AssetManager;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.text.Html;
 import android.util.Xml;
 
 import com.google.blocks.ftcrobotcontroller.hardware.HardwareItem;
 import com.google.blocks.ftcrobotcontroller.hardware.HardwareItemMap;
 import com.google.blocks.ftcrobotcontroller.hardware.HardwareType;
-import com.google.blocks.ftcrobotcontroller.hardware.HardwareUtil;
 import com.qualcomm.robotcore.util.RobotLog;
 
 import org.firstinspires.ftc.robotcore.external.Supplier;
@@ -32,13 +31,11 @@ import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlSerializer;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -48,8 +45,6 @@ import java.util.TreeMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipOutputStream;
 
 /**
  * A class that provides utility methods related to blocks projects.

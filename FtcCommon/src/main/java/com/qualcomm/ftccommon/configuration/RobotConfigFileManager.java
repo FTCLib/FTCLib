@@ -10,9 +10,9 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.content.res.XmlResourceParser;
 import android.preference.PreferenceManager;
-import android.support.annotation.IdRes;
-import android.support.annotation.NonNull;
-import android.support.annotation.XmlRes;
+import androidx.annotation.IdRes;
+import androidx.annotation.NonNull;
+import androidx.annotation.XmlRes;
 import android.view.View;
 import android.widget.TextView;
 

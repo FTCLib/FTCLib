@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.robotcore.internal.webserver.websockets;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import java.net.InetAddress;
 

@@ -32,7 +32,7 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 package com.qualcomm.robotcore.hardware;
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 /**
  * {@link RobotConfigNameable} provides access to the name by which a device has been configured

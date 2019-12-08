@@ -63,7 +63,7 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package com.qualcomm.hardware.modernrobotics.comm;
 
 import android.annotation.SuppressLint;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 import com.qualcomm.robotcore.hardware.usb.RobotUsbDevice;
 import com.qualcomm.robotcore.util.RobotLog;

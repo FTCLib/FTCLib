@@ -33,7 +33,7 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package org.firstinspires.ftc.robotserver.internal.webserver;
 
 import android.content.res.TypedArray;
-import android.support.annotation.ColorInt;
+import androidx.annotation.ColorInt;
 
 import org.firstinspires.ftc.robotcore.internal.collections.SimpleGson;
 import org.firstinspires.ftc.robotcore.internal.system.AppUtil;

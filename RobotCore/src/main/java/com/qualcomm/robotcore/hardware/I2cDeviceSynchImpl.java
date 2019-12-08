@@ -36,7 +36,7 @@ package com.qualcomm.robotcore.hardware;
 import static org.firstinspires.ftc.robotcore.internal.system.Assert.assertFalse;
 import static org.firstinspires.ftc.robotcore.internal.system.Assert.assertTrue;
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.util.Log;
 
 import com.qualcomm.robotcore.hardware.usb.RobotArmingStateNotifier;

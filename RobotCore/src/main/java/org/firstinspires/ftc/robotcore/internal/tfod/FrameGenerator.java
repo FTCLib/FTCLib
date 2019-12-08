@@ -16,8 +16,7 @@
 
 package org.firstinspires.ftc.robotcore.internal.tfod;
 
-import android.app.Activity;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 /**
  * FrameGenerator provides a unified interface for receiving consecutive frames from a sequence.

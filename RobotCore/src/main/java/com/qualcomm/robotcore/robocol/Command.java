@@ -30,7 +30,7 @@
 
 package com.qualcomm.robotcore.robocol;
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 import com.qualcomm.robotcore.exception.RobotCoreException;
 import com.qualcomm.robotcore.util.RobotLog;

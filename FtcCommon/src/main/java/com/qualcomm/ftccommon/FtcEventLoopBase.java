@@ -94,8 +94,8 @@ package com.qualcomm.ftccommon;
 
 import android.app.Activity;
 import android.graphics.Color;
-import android.support.annotation.CallSuper;
-import android.support.annotation.NonNull;
+import androidx.annotation.CallSuper;
+import androidx.annotation.NonNull;
 
 import com.qualcomm.ftccommon.configuration.FtcConfigurationActivity;
 import com.qualcomm.ftccommon.configuration.RobotConfigFile;

@@ -31,7 +31,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.qualcomm.robotcore.hardware;
 
-import android.support.annotation.ColorInt;
+import androidx.annotation.ColorInt;
 
 /**
  * Color Sensor

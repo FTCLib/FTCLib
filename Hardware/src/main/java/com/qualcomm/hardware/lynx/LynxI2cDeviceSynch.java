@@ -33,16 +33,14 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package com.qualcomm.hardware.lynx;
 
 import android.content.Context;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 import com.qualcomm.hardware.R;
 import com.qualcomm.hardware.lynx.commands.LynxCommand;
-import com.qualcomm.hardware.lynx.commands.core.LynxI2cReadMultipleBytesCommand;
 import com.qualcomm.hardware.lynx.commands.core.LynxI2cReadSingleByteCommand;
 import com.qualcomm.hardware.lynx.commands.core.LynxI2cReadStatusQueryCommand;
 import com.qualcomm.hardware.lynx.commands.core.LynxI2cReadStatusQueryResponse;
 import com.qualcomm.hardware.lynx.commands.core.LynxI2cWriteMultipleBytesCommand;
-import com.qualcomm.hardware.lynx.commands.core.LynxI2cWriteReadMultipleBytesCommand;
 import com.qualcomm.hardware.lynx.commands.core.LynxI2cWriteSingleByteCommand;
 import com.qualcomm.hardware.lynx.commands.core.LynxI2cWriteStatusQueryCommand;
 import com.qualcomm.hardware.lynx.commands.core.LynxI2cWriteStatusQueryResponse;

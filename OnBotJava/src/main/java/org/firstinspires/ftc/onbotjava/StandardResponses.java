@@ -33,7 +33,7 @@
 
 package org.firstinspires.ftc.onbotjava;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import fi.iki.elonen.NanoHTTPD;
 

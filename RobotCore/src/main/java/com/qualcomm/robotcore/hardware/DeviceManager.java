@@ -30,8 +30,8 @@
 
 package com.qualcomm.robotcore.hardware;
 
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.qualcomm.robotcore.exception.RobotCoreException;
 import com.qualcomm.robotcore.hardware.configuration.typecontainers.AnalogSensorConfigurationType;

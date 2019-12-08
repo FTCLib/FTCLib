@@ -16,7 +16,7 @@ limitations under the License.
 
 package com.google.blocks.ftcrobotcontroller.util;
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 /**
  * An enum to represent the various identifiers that are used in the generate javascript code.

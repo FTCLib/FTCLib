@@ -44,7 +44,7 @@ import android.net.UrlQuerySanitizer;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.view.KeyEvent;
 import android.webkit.ConsoleMessage;
 import android.webkit.DownloadListener;

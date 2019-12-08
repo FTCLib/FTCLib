@@ -17,7 +17,7 @@ limitations under the License.
 package org.firstinspires.ftc.robotcore.internal.android;
 
 import android.content.Context;
-import android.support.annotation.RawRes;
+import androidx.annotation.RawRes;
 import java.io.File;
 
 /**

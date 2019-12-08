@@ -32,7 +32,7 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 package org.firstinspires.ftc.robotcore.internal.system;
 
-import android.support.annotation.CallSuper;
+import androidx.annotation.CallSuper;
 
 import com.qualcomm.robotcore.util.RobotLog;
 import com.qualcomm.robotcore.util.TypeConversion;

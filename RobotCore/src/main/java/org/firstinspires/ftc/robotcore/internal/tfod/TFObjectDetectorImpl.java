@@ -28,7 +28,7 @@ import android.graphics.Canvas;
 import android.hardware.Camera;
 import android.hardware.Camera.CameraInfo;
 import android.os.Build;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Surface;

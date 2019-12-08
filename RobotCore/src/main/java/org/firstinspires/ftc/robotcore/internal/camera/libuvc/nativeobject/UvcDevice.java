@@ -37,8 +37,8 @@ import android.hardware.usb.UsbDeviceConnection;
 import android.hardware.usb.UsbInterface;
 import android.hardware.usb.UsbManager;
 import android.os.Build;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import org.firstinspires.ftc.robotcore.external.function.Supplier;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.Camera;

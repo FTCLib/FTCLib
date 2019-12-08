@@ -32,7 +32,7 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 package org.firstinspires.ftc.robotcore.internal.camera.names;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.BuiltinCameraName;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;

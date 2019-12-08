@@ -32,7 +32,7 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 package org.firstinspires.ftc.robotcore.internal.hardware;
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 /**
  * A simple interface by which the user-conscious name of a device can be set and retrieved.

@@ -32,7 +32,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.qualcomm.ftccommon;
 
 import android.content.Context;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 import com.qualcomm.ftccommon.configuration.USBScanManager;
 import com.qualcomm.hardware.HardwareFactory;
@@ -50,7 +50,6 @@ import com.qualcomm.robotcore.hardware.ServoController;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 import com.qualcomm.robotcore.hardware.configuration.ConfigurationUtility;
 import com.qualcomm.robotcore.hardware.configuration.ControllerConfiguration;
-import com.qualcomm.robotcore.hardware.configuration.LynxConstants;
 import com.qualcomm.robotcore.hardware.usb.RobotArmingStateNotifier;
 import com.qualcomm.robotcore.robocol.TelemetryMessage;
 import com.qualcomm.robotcore.robot.RobotState;

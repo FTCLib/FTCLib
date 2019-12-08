@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.robotcore.internal.network;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 /**
  * Utility for managing passwords on a device.

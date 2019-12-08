@@ -36,8 +36,8 @@ import android.app.Activity;
 import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.Nullable;
-import android.support.annotation.StringRes;
+import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
 
 import com.qualcomm.robotcore.R;
 import com.qualcomm.robotcore.util.RobotLog;

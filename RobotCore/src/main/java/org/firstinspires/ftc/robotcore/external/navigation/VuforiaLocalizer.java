@@ -36,10 +36,10 @@ import static org.firstinspires.ftc.robotcore.internal.system.AppUtil.WEBCAM_CAL
 
 import android.app.Activity;
 import android.graphics.Bitmap;
-import android.support.annotation.IdRes;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.annotation.XmlRes;
+import androidx.annotation.IdRes;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.XmlRes;
 import android.view.ViewGroup;
 
 import com.qualcomm.robotcore.R;

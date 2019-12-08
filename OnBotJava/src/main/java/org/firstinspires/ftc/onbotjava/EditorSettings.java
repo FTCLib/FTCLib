@@ -34,7 +34,7 @@
 package org.firstinspires.ftc.onbotjava;
 
 import android.content.SharedPreferences;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.google.gson.reflect.TypeToken;
 import com.qualcomm.robotcore.util.RobotLog;
