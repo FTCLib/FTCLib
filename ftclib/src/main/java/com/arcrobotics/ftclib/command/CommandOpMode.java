@@ -58,6 +58,42 @@ public abstract class CommandOpMode extends LinearOpMode {
         }
         command.end();
     }
+
+    public void addSequential(Command newCommand, double dt) {
+        final long timeInterval = (long) dt;
+        final Command command = newCommand;
+        command.initialize();
+        final ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(3);
+
+
+        Runnable updateMethod = new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    telemetry.addData("Running: ", true);
+                    command.execute();
+                    telemetry.update();
+                } catch(Exception e) {
+                    telemetry.addData("Running: ", false);
+                    telemetry.addData("Exception: ", e);
+
+                    telemetry.update();
+                }
+            }
+        };
+        try {
+            scheduledExecutorService.scheduleAtFixedRate(updateMethod, 0,timeInterval, TimeUnit.MILLISECONDS);
+            while(!command.isFinished() && this.opModeIsActive()) {
+                //telemetry.update();
+            }
+            scheduledExecutorService.shutdownNow();
+
+        } catch (Exception e) {
+            command.end();
+            throw e;
+        }
+        command.end();
+    }
 }
 
 
