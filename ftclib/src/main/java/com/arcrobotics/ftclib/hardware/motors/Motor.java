@@ -1,4 +1,6 @@
-package com.arcrobotics.ftclib.hardware;
+package com.arcrobotics.ftclib.hardware.motors;
+
+import com.arcrobotics.ftclib.hardware.HardwareDevice;
 
 /**
  * Interface for motor devices. Create your own custom motors

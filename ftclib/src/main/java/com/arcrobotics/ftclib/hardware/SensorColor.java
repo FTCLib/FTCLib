@@ -10,9 +10,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 public class SensorColor implements HardwareDevice {
 
-
     private ColorSensor colorSensor;
-
 
     /**Constructs a color sensor, defaults to ARGB */
     public SensorColor(ColorSensor colorSensor){
@@ -23,8 +21,6 @@ public class SensorColor implements HardwareDevice {
     public SensorColor(HardwareMap hardwareMap, String name){
         this.colorSensor = hardwareMap.get(ColorSensor.class, "name");
     }
-
-
 
     /** Convert HSV value to an ARGB one. Includes alpha.*/
     public int[] HSVtoARGB( int alpha, float[] hsv){
@@ -38,12 +34,10 @@ public class SensorColor implements HardwareDevice {
         return hsv;
     }
 
-
     /** Get all the ARGB values in an array from the sensor **/
     public int[] getARGB(){
         return new int[] {alpha(), red(), green(), blue()};
     }
-
 
     /** Gets the alpha value from the sensor */
     public int alpha() {

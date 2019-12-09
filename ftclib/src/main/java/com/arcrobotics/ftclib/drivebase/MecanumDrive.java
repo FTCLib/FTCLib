@@ -1,7 +1,7 @@
 package com.arcrobotics.ftclib.drivebase;
 
 import com.arcrobotics.ftclib.geometry.Vector2d;
-import com.arcrobotics.ftclib.hardware.Motor;
+import com.arcrobotics.ftclib.hardware.motors.Motor;
 
 /**
  * #TODO: get DcMotor from FTC tree, or let user interface with the lib
