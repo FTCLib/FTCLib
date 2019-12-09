@@ -1,9 +1,7 @@
 package com.arcrobotics.ftclib.drivebase;
 
 import com.arcrobotics.ftclib.controller.PController;
-import com.arcrobotics.ftclib.controller.PIDFController;
-import com.arcrobotics.ftclib.geometry.Vector2d;
-import com.arcrobotics.ftclib.hardware.Motor;
+import com.arcrobotics.ftclib.hardware.motors.Motor;
 
 /**
  * The module for a swerve drive. Each module contains two motors: one for turning,

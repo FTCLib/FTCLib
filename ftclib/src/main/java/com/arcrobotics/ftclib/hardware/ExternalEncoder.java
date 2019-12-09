@@ -18,14 +18,9 @@ package com.arcrobotics.ftclib.hardware;
 *
  * */
 
-
 public abstract class ExternalEncoder {
 
-
-
-
 public abstract long getCounts();
- 
 
 /**
 * Syncs the recorded counts with the current counts reported by the 

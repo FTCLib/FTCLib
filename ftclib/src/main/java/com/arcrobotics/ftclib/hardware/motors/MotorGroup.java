@@ -1,4 +1,4 @@
-package com.arcrobotics.ftclib.hardware;
+package com.arcrobotics.ftclib.hardware.motors;
 
 /**
  * Allows multiple {@link Motor} objects to be linked together

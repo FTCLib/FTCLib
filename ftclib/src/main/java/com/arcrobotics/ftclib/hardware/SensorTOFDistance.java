@@ -7,16 +7,14 @@ import com.qualcomm.robotcore.util.Range;
 import java.util.ArrayList;
 import java.util.List;
 
-
-/**Class for a time-of-flight distance sensor */
+/**
+ * Class for a time-of-flight distance sensor
+ */
 public class SensorTOFDistance implements HardwareDevice {
 
-
-
-
-
-    /** Represents a target distance */
-
+    /**
+     * Represents a target distance
+     */
     public class DistanceTarget {
 
         /**The distance.  */
@@ -185,19 +183,5 @@ public class SensorTOFDistance implements HardwareDevice {
     public String getDeviceType(){
         return "TOF Distance Sensor";
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 }

@@ -1,8 +1,11 @@
 package com.arcrobotics.ftclib.drivebase;
 
 import com.arcrobotics.ftclib.geometry.Vector2d;
-import com.arcrobotics.ftclib.hardware.Motor;
 
+/**
+ * A swerve drive that uses several {@link SwerveModule} objects
+ * that act cohesively as a drivebase.
+ */
 public class SwerveDrive extends RobotDrive {
 
     /**

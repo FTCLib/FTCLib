@@ -1,7 +1,7 @@
 package com.arcrobotics.ftclib.drivebase;
 
-import com.arcrobotics.ftclib.hardware.Motor;
-import com.arcrobotics.ftclib.hardware.MotorGroup;
+import com.arcrobotics.ftclib.hardware.motors.Motor;
+import com.arcrobotics.ftclib.hardware.motors.MotorGroup;
 
 /**
  * A differential drive is one that has two motors or motor groups
