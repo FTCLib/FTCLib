@@ -17,8 +17,7 @@ public class Vector2d {
      * Initializes to x and y components of 0
      */
     public Vector2d() {
-        m_x = 0;
-        m_y = 0;
+        this(0, 0);
     }
 
     /**

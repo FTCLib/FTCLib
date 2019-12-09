@@ -22,7 +22,13 @@ public class Robot {
      * BREAK causes mechanisms to stop immediately after deactivation.
      */
     public enum Safety {
-        SWIFT, EASE_OFF, DEFAULT, BREAK
+        SWIFT(0), EASE_OFF(1), DEFAULT(2), BREAK(3);
+
+        public final int value;
+
+        Safety(int value) {
+            this.value = value;
+        }
     }
 
     /**
