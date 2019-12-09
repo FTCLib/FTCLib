@@ -3,7 +3,7 @@ package com.arcrobotics.ftclib.gamepad;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class TriggerReader implements KeyReader {
-    private GamepadWrapper gamepad;
+    private GamepadEx gamepad;
     private GamepadKeys.Trigger trigger;
     /** Last state of the button **/
     private boolean lastState;
@@ -16,7 +16,7 @@ public class TriggerReader implements KeyReader {
      * @param gamepad The controller joystick
      * @param trigger The controller button
      **/
-    public TriggerReader(GamepadWrapper gamepad, GamepadKeys.Trigger trigger) {
+    public TriggerReader(GamepadEx gamepad, GamepadKeys.Trigger trigger) {
         this.gamepad = gamepad;
         this.trigger = trigger;
         if(this.gamepad.getTrigger(trigger) > 0.5) {
@@ -28,7 +28,7 @@ public class TriggerReader implements KeyReader {
         triggerName = "";
     }
 
-    public TriggerReader(GamepadWrapper gamepad, GamepadKeys.Trigger trigger, String triggerName, Telemetry telemetry) {
+    public TriggerReader(GamepadEx gamepad, GamepadKeys.Trigger trigger, String triggerName, Telemetry telemetry) {
         this.gamepad = gamepad;
         this.trigger = trigger;
         if(this.gamepad.getTrigger(trigger) > 0.5) {

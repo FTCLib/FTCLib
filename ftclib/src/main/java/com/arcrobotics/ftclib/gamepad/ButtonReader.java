@@ -4,7 +4,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 
 public class ButtonReader implements KeyReader {
-    private GamepadWrapper gamepad;
+    private GamepadEx gamepad;
     private GamepadKeys.Button button;
     /** Last state of the button **/
     private boolean lastState;
@@ -17,14 +17,14 @@ public class ButtonReader implements KeyReader {
      * @param gamepad The controller joystick
      * @param button The controller button
     **/
-    public ButtonReader(GamepadWrapper gamepad, GamepadKeys.Button button) {
+    public ButtonReader(GamepadEx gamepad, GamepadKeys.Button button) {
         this.gamepad = gamepad;
         this.button = button;
         currState = this.gamepad.getButton(button);
         lastState = currState;
     }
 
-    public ButtonReader(GamepadWrapper gamepad, GamepadKeys.Button button, String buttonName) {
+    public ButtonReader(GamepadEx gamepad, GamepadKeys.Button button, String buttonName) {
         this.gamepad = gamepad;
         this.button = button;
         this.buttonName = buttonName + "_BUTTON";

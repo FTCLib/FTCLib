@@ -3,10 +3,10 @@ package com.arcrobotics.ftclib.gamepad;
 import com.qualcomm.robotcore.hardware.Gamepad;
 
 
-public class GamepadWrapper {
+public class GamepadEx {
     public Gamepad gamepad;
 
-    public GamepadWrapper(Gamepad gamepad) {
+    public GamepadEx(Gamepad gamepad) {
         this.gamepad = gamepad;
     }
 
