@@ -4,7 +4,7 @@ public class ToggleButtonReader extends ButtonReader {
     private boolean currToggleState;
 
 
-    public ToggleButtonReader(GamepadWrapper gamepad, GamepadKeys.Button button) {
+    public ToggleButtonReader(GamepadEx gamepad, GamepadKeys.Button button) {
         super(gamepad, button);
 
         currToggleState = false;
