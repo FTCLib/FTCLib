@@ -4,9 +4,13 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+/**
+ * An implementation of the motor. Utilizes the {@link DcMotorEx}
+ * object from the SDK.
+ */
 public class MotorImpl {
 
-    Motor mot;
+    CustomMotor mot;
 
     public class CustomMotor implements Motor {
 
@@ -19,12 +23,50 @@ public class MotorImpl {
         }
 
         @Override
-        public void set(double speed) {
-            motor.setVelocity(counts_per_rev * speed);
+        public void set(double speed) { motor.setPower(speed); }
+
+        /**
+         * Set the power of the motor.
+         *
+         * @param power The percentage of power running through the motor.
+         */
+        public void setPower(double power) {
+            set(power);
+        }
+
+        /**
+         * Sets the velocity of the motor in terms of ticks per second.
+         *
+         * @param velocity the desired velocity of the motor.
+         */
+        public void setVelocity(double velocity) { motor.setVelocity(velocity); }
+
+        /**
+         * returns the maximum speed of the motor given its rotations per minute.
+         *
+         * @param rpm   The number of revolutions per minute of the motor.
+         * @return the maximum velocity of the motor in ticks per second.
+         */
+        public double getMaxVelocity(double rpm) {
+            return counts_per_rev * rpm / 60;
         }
 
         @Override
         public double get() {
+            return motor.getPower();
+        }
+
+        /**
+         * @return the percentage of the max speed of the motor and its direction.
+         */
+        public double getPower() {
+            return get();
+        }
+
+        /**
+         * @return the velocity of the motor in ticks / second.
+         */
+        public double getVelocity() {
             return motor.getVelocity();
         }
 
@@ -58,30 +100,76 @@ public class MotorImpl {
             set(0);
         }
 
+        /**
+         * @return the current position of the motor
+         */
         public double getCurrentPosition() {
             return motor.getCurrentPosition();
         }
 
-        public double getTargetPosition() {
-            return motor.getTargetPosition();
-        }
-
     }
 
+    /**
+     * References a dcMotor object in the hardware map (located in your
+     * local configuration) and constructs an implemented motor.
+     *
+     * @param hMap      the hardware map
+     * @param motorName the name of the motor in the local configuration
+     * @param cpr       the counts per revolution of the motor
+     */
     public MotorImpl(HardwareMap hMap, String motorName, double cpr) {
         mot = new CustomMotor(hMap, motorName, cpr);
     }
 
-    void set(double speed) {
-        mot.set(speed);
+    /**
+     * Sets the power of the motor to a percentage of the maximum speed.
+     *
+     * @param speed the percentage of the maximum speed
+     */
+    public void setPower(double speed) {
+        mot.setPower(speed);
     }
 
+    /**
+     * Sets the velocity of the motor to a set number of ticks per second.
+     *
+     * @param velocity the desired speed in ticks per second
+     */
+    public void setVelocity(double velocity) {
+        mot.setVelocity(velocity);
+    }
+
+    /**
+     * Returns the maximum velocity of the motor.
+     *
+     * @param rpm The rotations per minute of the output shaft.
+     * @return the maximum velocity
+     */
+    public double getMaxVelocity(double rpm) {
+        return mot.getMaxVelocity(rpm);
+    }
+
+    /**
+     * The current position of the motor.
+     *
+     * @return The current position of the output shaft in ticks
+     */
     double getCurrentPosition() {
-        return ((CustomMotor)mot).getCurrentPosition();
+        return mot.getCurrentPosition();
     }
 
-    public double get() {
-        return mot.get();
+    /**
+     * @return the percentage of the max speed of the output shaft
+     */
+    public double getPower() {
+        return mot.getPower();
+    }
+
+    /**
+     * @return the velocity of the motor in ticks per second
+     */
+    public double getVelocity() {
+        return mot.getVelocity();
     }
 
     public void setInverted(boolean isInverted) {

@@ -2,15 +2,33 @@ package com.arcrobotics.ftclib.hardware.motors;
 
 import com.arcrobotics.ftclib.controller.PIDFController;
 
+/**
+ * An extended implemented motor. Uses a {@link MotorImpl} along
+ * with the methods of {@link MotorEx}.
+ */
 public class MotorImplEx extends MotorEx {
 
     private MotorImpl motor;
     private double distancePerPulse;
 
+    /**
+     * The constructor or the object.
+     *
+     * @param ex    the implemented motor
+     * @param cpr   the counts per revolution of the output shaft
+     */
     public MotorImplEx(MotorImpl ex, double cpr) {
         this(ex, cpr, new PIDFController(new double[]{0,0,0,0}));
     }
 
+    /**
+     * The constructor for the motor that includes an internal
+     * PIDF controller.
+     *
+     * @param ex                the motor in question
+     * @param cpr               the counts per revolution
+     * @param pidfController    the PIDF controller that controls the output of the motor
+     */
     public MotorImplEx(MotorImpl ex, double cpr, PIDFController pidfController) {
         super(ex.mot, cpr, pidfController);
 
@@ -23,10 +41,18 @@ public class MotorImplEx extends MotorEx {
         return motor.getCurrentPosition();
     }
 
+    /**
+     * sets the distance per encoder tick
+     *
+     * @param distancePerPulse  the distance travelled after one tick
+     */
     public void setDistancePerPulse(double distancePerPulse) {
         this.distancePerPulse = Math.abs(distancePerPulse);
     }
 
+    /**
+     * @return the number of encoder ticks
+     */
     public double getEncoderPulses() {
         return getCurrentPosition();
     }
@@ -51,7 +77,19 @@ public class MotorImplEx extends MotorEx {
 
     @Override
     public double get() {
-        return motor.get();
+        return motor.getPower();
+    }
+
+    public double getVelocity() { return motor.getVelocity(); }
+
+    public double getPower() { return get(); }
+
+    public void setPower(double power) {
+        motor.setPower(power);
+    }
+
+    public void setVelocity(double velocity) {
+        motor.setVelocity(velocity);
     }
 
     @Override

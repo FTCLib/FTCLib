@@ -51,7 +51,6 @@ public class Vector2d {
     }
 
     /**
-     * gets the an
      * @return the angle of the vector
      */
     public double angle() { return Math.atan2(m_y, m_x); }
@@ -70,7 +69,7 @@ public class Vector2d {
      * @return the difference of the vectors
      */
     public Vector2d minus(Vector2d other){
-        return new Vector2d(m_x - other.m_x, m_y - other.m_y);
+        return plus(other.unaryMinus());
     }
 
     /**
@@ -144,8 +143,8 @@ public class Vector2d {
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof Vector2d) {
-            return Math.abs(((Vector2d) obj).m_x - m_x) < 1E-9
-                    && Math.abs(((Vector2d) obj).m_y - m_y) < 1E-9;
+            return Math.abs(((Vector2d) obj).getX() - m_x) < 1E-9
+                    && Math.abs(((Vector2d) obj).getY() - m_y) < 1E-9;
         }
         return false;
     }
