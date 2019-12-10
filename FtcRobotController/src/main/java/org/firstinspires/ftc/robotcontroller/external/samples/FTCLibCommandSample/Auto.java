@@ -3,6 +3,7 @@ package org.firstinspires.ftc.robotcontroller.external.samples.FTCLibCommandSamp
 import com.arcrobotics.ftclib.command.CommandOpMode;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 
+@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="Command-based Autonomous Sample")  // @Autonomous(...) is the other common choice
 public class Auto extends CommandOpMode {
 
     DriveSubsystem driveSubsystem;
