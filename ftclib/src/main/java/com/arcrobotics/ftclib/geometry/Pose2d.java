@@ -33,4 +33,20 @@ public class Pose2d {
 
     public Pose2d unaryMinus() { return new Pose2d(m_pos.unaryMinus(), -m_heading); }
 
+    public Pose2d plus(Pose2d other) {
+        return new Pose2d(m_pos.plus(other.getPos()), m_heading + other.getHeading());
+    }
+
+    public Pose2d minus(Pose2d other) {
+        return new Pose2d(m_pos.minus(other.getPos()), m_heading - other.getHeading());
+    }
+
+    public Pose2d times(double scalar) {
+        return new Pose2d(m_pos.times(scalar), m_heading * scalar);
+    }
+
+    public Pose2d div(double scalar) {
+        return times(1 / scalar);
+    }
+
 }
