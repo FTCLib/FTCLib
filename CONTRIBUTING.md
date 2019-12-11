@@ -179,13 +179,13 @@ Develop and build this project using Android Studio or another IDE with a proper
 
 ### 3. Branch
 
-Checkout the `dev` branch to start contributing. Follow the [Branch Naming Conventions](#Branch Naming) and [Branch Types](#Main Branches) above. _NEVER_ make a PR directly to the `master` branch. All such PRs will be categorically rejected.
+Checkout the `dev` branch to start contributing. Follow the [Branch Naming Conventions](#branch-naming) and [Branch Types](#main-branches) above. _NEVER_ make a PR directly to the `master` branch. All such PRs will be categorically rejected.
 
 ## Making Changes
 
 ### 4. Commit
 
-Please keep your changes grouped logically witihng individual commits. Each commit should be prefixed with an appropriate prefix, as noted [above](#Commit Naming). A commit could contain a new feature, or new documentation, but never both, especially not in different files. Following these guidelines make it easier to review changes split across multiple commits.
+Please keep your changes grouped logically witihng individual commits. Each commit should be prefixed with an appropriate prefix, as noted [above](#commit-naming). A commit could contain a new feature, or new documentation, but never both, especially not in different files. Following these guidelines make it easier to review changes split across multiple commits.
 
 ### 5. Rebase
 
