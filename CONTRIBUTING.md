@@ -14,17 +14,17 @@ Welcome to the FTCLib project! We hope we have something useful for you!
 |---------|---------|----------------------------------|
 |Stable|`master`|Accepts merges from Working and Hotfixes|
 |Working|`dev`|Accepts merges from Features/Issues and Hotfixes|
-|Features/Issues|`topic-*`|Always branches off HEAD of Working|
+|Features/Issues|`feat-*`|Always branches off HEAD of Working|
 |Hotfix|`hotfix-*`|Always branches off of Stable|
 
 ## Commit Naming
 
 | Commit type | Commit prefix| Commit body | Use when... |
 |-------------|--------------|-------------|-------------|
-| New Feature | `Feat: ***`  | Describe the new feature added| A new feature is added|
-| Fixed bug   | `Fix: ***`   | Describe bug fix | A bug is fixed|
-| Documentation | `Docs: ***`| Describe what documentation was added| New docs are added or existing docs are updated|
-| Refactor | `Refactor: ***` | Describe what was moved around | Nothing new added but files or file content reorganized|
+| New Feature | `feat: ***`  | Describe the new feature added| A new feature is added|
+| Fixed bug   | `fix: ***`   | Describe bug fix | A bug is fixed|
+| Documentation | `docs: ***`| Describe what documentation was added| New docs are added or existing docs are updated|
+| Refactor | `refactor: ***` | Describe what was moved around | Nothing new added but files or file content reorganized|
 
 ## Main Branches
 
