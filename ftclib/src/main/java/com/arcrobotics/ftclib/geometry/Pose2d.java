@@ -88,6 +88,10 @@ public class Pose2d {
         return times(1 / scalar);
     }
 
+    public Pose2d rotate(double deltaTheta) {
+        return new Pose2d(m_pos, m_heading + deltaTheta);
+    }
+
     /**
      * Checks equality between this Pose2d and another object
      *
@@ -102,5 +106,4 @@ public class Pose2d {
         }
         return false;
     }
-
 }

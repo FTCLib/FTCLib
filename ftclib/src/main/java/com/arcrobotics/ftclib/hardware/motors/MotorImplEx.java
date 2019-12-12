@@ -15,10 +15,9 @@ public class MotorImplEx extends MotorEx {
      * The constructor or the object.
      *
      * @param ex    the implemented motor
-     * @param cpr   the counts per revolution of the output shaft
      */
-    public MotorImplEx(MotorImpl ex, double cpr) {
-        this(ex, cpr, new PIDFController(new double[]{0,0,0,0}));
+    public MotorImplEx(MotorImpl ex) {
+        this(ex, new PIDFController(new double[]{0,0,0,0}));
     }
 
     /**
@@ -26,11 +25,10 @@ public class MotorImplEx extends MotorEx {
      * PIDF controller.
      *
      * @param ex                the motor in question
-     * @param cpr               the counts per revolution
      * @param pidfController    the PIDF controller that controls the output of the motor
      */
-    public MotorImplEx(MotorImpl ex, double cpr, PIDFController pidfController) {
-        super(ex.mot, cpr, pidfController);
+    public MotorImplEx(MotorImpl ex, PIDFController pidfController) {
+        super(ex.mot, ex.getCPR(), pidfController);
 
         motor = ex;
         distancePerPulse = -1; // not set yet

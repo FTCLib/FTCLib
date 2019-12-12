@@ -184,6 +184,10 @@ public class MotorImpl {
         mot.disable();
     }
 
+    public double getCPR() {
+        return mot.counts_per_rev;
+    }
+
     public void pidWrite(double output) {
         mot.pidWrite(output);
     }
