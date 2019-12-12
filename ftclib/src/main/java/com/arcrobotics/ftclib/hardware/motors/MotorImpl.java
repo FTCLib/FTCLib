@@ -22,6 +22,9 @@ public class MotorImpl {
             counts_per_rev = cpr;
         }
 
+        public boolean isBusy() { return motor.isBusy(); }
+
+
         @Override
         public void set(double speed) { motor.setPower(speed); }
 
@@ -195,5 +198,8 @@ public class MotorImpl {
     public String getDeviceType() {
         return mot.getDeviceType();
     }
+
+    public boolean isBusy() { return mot.isBusy(); }
+
 
 }

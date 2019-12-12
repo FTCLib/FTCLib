@@ -78,6 +78,8 @@ public class MotorImplEx extends MotorEx {
         return motor.getPower();
     }
 
+    public boolean isBusy() { return motor.isBusy(); }
+
     public double getVelocity() { return motor.getVelocity(); }
 
     public double getPower() { return get(); }
