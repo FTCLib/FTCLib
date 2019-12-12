@@ -66,7 +66,7 @@ public abstract class MotorEx implements Motor {
         RUN_TO_POSITION("rtp"), RUN_USING_ENCODER("rue"), RUN_WITHOUT_ENCODER("rwe"),
         STOP_AND_RESET_ENCODER("sare");
 
-        public final String mode;
+        private final String mode;
 
         RunMode(String mode) {
             this.mode = mode;
@@ -93,7 +93,7 @@ public abstract class MotorEx implements Motor {
     public enum ZeroPowerBehavior {
         BREAK("break"), FLOAT("float"), UNKNOWN("null");
 
-        public final String behavior;
+        private final String behavior;
 
         ZeroPowerBehavior(String behavior) {
             this.behavior = behavior;

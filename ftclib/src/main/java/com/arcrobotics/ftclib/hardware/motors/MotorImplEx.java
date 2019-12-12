@@ -1,0 +1,119 @@
+package com.arcrobotics.ftclib.hardware.motors;
+
+import com.arcrobotics.ftclib.controller.PIDFController;
+
+/**
+ * An extended implemented motor. Uses a {@link MotorImpl} along
+ * with the methods of {@link MotorEx}.
+ */
+public class MotorImplEx extends MotorEx {
+
+    private MotorImpl motor;
+    private double distancePerPulse;
+
+    /**
+     * The constructor or the object.
+     *
+     * @param ex    the implemented motor
+     */
+    public MotorImplEx(MotorImpl ex) {
+        this(ex, new PIDFController(new double[]{0,0,0,0}));
+    }
+
+    /**
+     * The constructor for the motor that includes an internal
+     * PIDF controller.
+     *
+     * @param ex                the motor in question
+     * @param pidfController    the PIDF controller that controls the output of the motor
+     */
+    public MotorImplEx(MotorImpl ex, PIDFController pidfController) {
+        super(ex.mot, ex.getCPR(), pidfController);
+
+        motor = ex;
+        distancePerPulse = -1; // not set yet
+    }
+
+    @Override
+    double getCurrentPosition() {
+        return motor.getCurrentPosition();
+    }
+
+    /**
+     * sets the distance per encoder tick
+     *
+     * @param distancePerPulse  the distance travelled after one tick
+     */
+    public void setDistancePerPulse(double distancePerPulse) {
+        this.distancePerPulse = Math.abs(distancePerPulse);
+    }
+
+    /**
+     * @return the number of encoder ticks
+     */
+    public double getEncoderPulses() {
+        return getCurrentPosition();
+    }
+
+    public double getDistance() throws Exception {
+        if(distancePerPulse == -1) {
+            throw new Exception("Must set distance per pulse or call" +
+                    " methods that set distance per pulse before getting distance!");
+        }
+
+        return distancePerPulse * getCurrentPosition();
+    }
+
+    public void setTargetDistance(double distance) throws Exception {
+        if (distancePerPulse == -1) {
+            throw new Exception("Must set distance per pulse or call" +
+                    " methods that set distance per pulse before setting distance!");
+        }
+
+        setTargetPosition(distance / distancePerPulse);
+    }
+
+    @Override
+    public double get() {
+        return motor.getPower();
+    }
+
+    public double getVelocity() { return motor.getVelocity(); }
+
+    public double getPower() { return get(); }
+
+    public void setPower(double power) {
+        motor.setPower(power);
+    }
+
+    public void setVelocity(double velocity) {
+        motor.setVelocity(velocity);
+    }
+
+    @Override
+    public void setInverted(boolean isInverted) {
+        motor.setInverted(isInverted);
+    }
+
+    @Override
+    public boolean getInverted() {
+        return motor.getInverted();
+    }
+
+    @Override
+    public void disable() {
+        motor.disable();
+    }
+
+    @Override
+    public String getDeviceType() {
+        return motor.getDeviceType();
+    }
+
+    @Override
+    public void pidWrite(double output) {
+        motor.pidWrite(output);
+    }
+
+
+}

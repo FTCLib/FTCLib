@@ -1,0 +1,7 @@
+com.arcrobotics.ftclib
+com.arcrobotics.ftclib.command
+com.arcrobotics.ftclib.controller
+com.arcrobotics.ftclib.drivebase
+com.arcrobotics.ftclib.geometry
+com.arcrobotics.ftclib.hardware
+com.arcrobotics.ftclib.hardware.motors

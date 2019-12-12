@@ -1,6 +1,7 @@
 package com.arcrobotics.ftclib.hardware.motors;
 
 import com.arcrobotics.ftclib.controller.PIDFController;
+import com.arcrobotics.ftclib.hardware.HardwareDevice;
 
 /**
  * An extended encoder object. EncoderEx functions like a normal internal encoder
@@ -9,7 +10,7 @@ import com.arcrobotics.ftclib.controller.PIDFController;
  *
  * <p>Uses a {@link MotorEx} object for encoder values.</p>
  */
-public class EncoderEx {
+public class EncoderEx implements HardwareDevice {
 
     public static final double kDefaultEncoderMultiplier = 1.0;
 
@@ -89,9 +90,18 @@ public class EncoderEx {
     /**
      * Disables the encoder.
      */
+    @Override
     public void disable() {
         multiplier = 0;
         stopAndReset();
+    }
+
+    /**
+     * @return The type of device.
+     */
+    @Override
+    public String getDeviceType() {
+        return "Extended Encoder";
     }
 
 }

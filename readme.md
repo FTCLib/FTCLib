@@ -2,7 +2,10 @@
 ## FTCLib
 
 origin: https://github.com/FTCLib/FTCLib
+
 upstream: https://github.com/OpenFTC/OpenRC-Turbo
+
+**Contributors: Please read CONTRIBUTING.md**
 
 OpenRC is a modified version of the official [FTC SDK](https://github.com/FIRST-Tech-Challenge/SkyStone)
 in which all of the source code that is normally tucked away inside the AAR files has been extracted into modules. This makes it easy to see and modify almost the entirety of the Robot Controller app's source code. In addition, the history in Git shows all changes that have been made to the core code since OpenRC's inception. This complements the changelogs that FIRST provides, allowing teams to see exactly what code has been changed.

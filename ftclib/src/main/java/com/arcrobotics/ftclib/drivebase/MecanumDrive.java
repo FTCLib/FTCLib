@@ -4,8 +4,6 @@ import com.arcrobotics.ftclib.geometry.Vector2d;
 import com.arcrobotics.ftclib.hardware.motors.Motor;
 
 /**
- * #TODO: get DcMotor from FTC tree, or let user interface with the lib
- * <br />
  * This is a classfile representing the kinematics of a mecanum drivetrain
  * and controls their speed. The drive methods {@link #driveRobotCentric(double, double, double)}
  * and {@link #driveFieldCentric(double, double, double, double)} are meant to be put inside
