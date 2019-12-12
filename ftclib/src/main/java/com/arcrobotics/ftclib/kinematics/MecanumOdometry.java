@@ -55,7 +55,7 @@ public class MecanumOdometry {
         double deltaX = perpendicularEncoderVal * Math.sin(theta + deltaTheta / 2);
         double deltaY = perpendicularEncoderVal * Math.cos(theta + deltaTheta / 2);
 
-        updateOdometryCounts(-deltaX, -deltaY);
+        updateOdometryCounts(-deltaX, deltaY);
     }
 
     public void update(double horizontalOdoInches, double... verticalOdoInches) {
