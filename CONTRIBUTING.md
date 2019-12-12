@@ -14,6 +14,7 @@ Welcome to the FTCLib project! We hope we have something useful for you!
 |---------|---------|----------------------------------|
 |Stable|`master`|Accepts merges from Working and Hotfixes|
 |Working|`dev`|Accepts merges from Features/Issues and Hotfixes|
+|GitHub Pages|`docs`|Reserved for GitHub Pages
 |Features/Issues|`feat-*`|Always branches off HEAD of Working|
 |Hotfix|`hotfix-*`|Always branches off of Stable|
 
@@ -28,16 +29,19 @@ Welcome to the FTCLib project! We hope we have something useful for you!
 
 ## Main Branches
 
-The main repository will always hold two evergreen branches:
+The main repository will always hold three evergreen branches:
 
 - `dev`
 - `master`
+- `docs`
 
 The main branch should be considered `origin/dev` and will be the main branch where the source code of `HEAD` always reflects a state with the latest delivered development changes for the next release. As a developer, you will be branching and merging from `dev`.
 
 Consider `origin/master` to always represent the latest code deployed to production. During day to day development, the `master` branch will not be interacted with.
 
 When the source code in `dev` is stable and has been deployed, all of the changes will be merged into `master` and tagged with a release number.
+
+`docs` is reserved for the use of GitHub Pages. No deployable code will be maintained on `docs`.
 
 ## Supporting Branches
 
