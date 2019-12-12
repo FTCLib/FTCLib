@@ -51,4 +51,6 @@ public class HDrive extends RobotDrive
     {
 
     }
+
+    public void driveRobotCentric(double xSpeed, double ySpeed, double turn){driveFieldCentric(xSpeed, ySpeed, turn, 0.0);}
 }
