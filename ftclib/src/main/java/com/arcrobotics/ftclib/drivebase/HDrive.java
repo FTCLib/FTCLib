@@ -1,7 +1,9 @@
 package com.arcrobotics.ftclib.drivebase;
 
-        import com.arcrobotics.ftclib.hardware.Motor;
+import com.arcrobotics.ftclib.geometry.Vector2d;
+import com.arcrobotics.ftclib.hardware.Motor;
 
+@Deprecated()
 public class HDrive extends RobotDrive
 {
     Motor[] motors;
@@ -49,7 +51,26 @@ public class HDrive extends RobotDrive
 
     public void driveFieldCentric(double xSpeed, double ySpeed, double turn, double heading)
     {
+        xSpeed = clipRange(xSpeed);
+        ySpeed = clipRange(ySpeed);
+        turn = clipRange(turn);
 
+        Vector2d vector = new Vector2d(xSpeed, ySpeed);
+        vector = vector.rotateBy(heading);
+
+        double theta = Math.atan2(ySpeed, xSpeed);
+
+        double[] speeds = new double[4];
+
+//        speeds[MotorType.kLeft.value] =
+//        speeds[MotorType.kRight.value] =
+//        speeds[MotorType.kSlide.value] =
+
+        normalize(speeds);
+
+        motors[MotorType.kLeft.value].set(speeds[MotorType.kLeft.value] * maxOutput);
+        motors[MotorType.kRight.value].set(speeds[MotorType.kRight.value] * -maxOutput);
+        motors[MotorType.kSlide.value].set(speeds[MotorType.kSlide.value] * maxOutput);
     }
 
     public void driveRobotCentric(double xSpeed, double ySpeed, double turn){driveFieldCentric(xSpeed, ySpeed, turn, 0.0);}
