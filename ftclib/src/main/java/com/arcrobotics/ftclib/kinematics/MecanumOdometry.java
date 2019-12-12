@@ -12,7 +12,7 @@ public class MecanumOdometry {
     private double trackWidth;
 
     public MecanumOdometry() {
-        this(0);
+        this(18);
     }
 
     public MecanumOdometry(double trackWidth) {
@@ -55,14 +55,23 @@ public class MecanumOdometry {
         double deltaX = perpendicularEncoderVal * Math.sin(theta + deltaTheta / 2);
         double deltaY = perpendicularEncoderVal * Math.cos(theta + deltaTheta / 2);
 
-        updateOdometryCounts(-deltaX, -deltaY);
+        updateOdometryCounts(-deltaX, deltaY);
     }
 
-    public void update(double horizontalOdoTicks, double... verticalOdoTicks) {
+    public void update(double horizontalOdoInches, double... verticalOdoInches) {
         double deltaTheta =
-                verticalOdoTicks[verticalOdoTicks.length - 1] - verticalOdoTicks[0];
-        updateCurve(deltaTheta, verticalOdoTicks);
-        updateStrafe(deltaTheta, horizontalOdoTicks);
+                verticalOdoInches[verticalOdoInches.length - 1] - verticalOdoInches[0];
+        deltaTheta /= trackWidth;
+        updateCurve(deltaTheta, verticalOdoInches);
+        updateStrafe(deltaTheta, horizontalOdoInches);
+
+        rotatePose(deltaTheta);
+    }
+
+    public void update(double horizontalOdoInches, double verticalOdoInches, double heading) {
+        double deltaTheta = heading - robotPos.getHeading();
+        updateCurve(deltaTheta, verticalOdoInches);
+        updateStrafe(deltaTheta, horizontalOdoInches);
 
         rotatePose(deltaTheta);
     }
