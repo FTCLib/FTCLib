@@ -58,6 +58,7 @@ public class MecanumDrive extends RobotDrive {
         }
     }
 
+
     /**
      * Drives the robot from the perspective of the robot itself rather than that
      * of the driver.
@@ -68,6 +69,24 @@ public class MecanumDrive extends RobotDrive {
      */
     public void driveRobotCentric(double xSpeed, double ySpeed, double turnSpeed) {
         driveFieldCentric(xSpeed, ySpeed, turnSpeed, 0.0);
+    }
+
+    /**
+     * Drives the robot from the perspective of the driver. No matter the orientation of the
+     * robot, pushing forward on the drive stick will always drive the robot away
+     * from the driver.
+     *
+     * @param xSpeed    the horizontal speed of the robot, derived from input
+     * @param ySpeed    the vertical speed of the robot, derived from input
+     * @param turnSpeed the turn speed of the robot, derived from input
+     * @param squareInputs Square the value of the input to allow for finer control
+     */
+    public void driveRobotCentric(double xSpeed, double ySpeed, double turnSpeed, boolean squareInputs) {
+        xSpeed = squareInputs ? clipRange(squareInput(xSpeed)) : clipRange(xSpeed);
+        ySpeed = squareInputs ? clipRange(squareInput(ySpeed)) : clipRange(ySpeed);
+        turnSpeed = squareInputs ? clipRange(squareInput(turnSpeed)) : clipRange(turnSpeed);
+
+        driveRobotCentric(xSpeed, ySpeed, turnSpeed);
     }
 
     /**
@@ -111,6 +130,25 @@ public class MecanumDrive extends RobotDrive {
                 .set(wheelSpeeds[MotorType.kBackLeft.value] * maxOutput);
         motors[MotorType.kBackRight.value]
                 .set(wheelSpeeds[MotorType.kBackRight.value] * -maxOutput);
+    }
+
+    /**
+     * Drives the robot from the perspective of the driver. No matter the orientation of the
+     * robot, pushing forward on the drive stick will always drive the robot away
+     * from the driver.
+     *
+     * @param xSpeed    the horizontal speed of the robot, derived from input
+     * @param ySpeed    the vertical speed of the robot, derived from input
+     * @param turnSpeed the turn speed of the robot, derived from input
+     * @param gyroAngle the heading of the robot, derived from the gyro
+     * @param squareInputs Square the value of the input to allow for finer control
+     */
+    public void driveFieldCentric(double xSpeed, double ySpeed, double turnSpeed, double gyroAngle, boolean squareInputs) {
+        xSpeed = squareInputs ? clipRange(squareInput(xSpeed)) : clipRange(xSpeed);
+        ySpeed = squareInputs ? clipRange(squareInput(ySpeed)) : clipRange(ySpeed);
+        turnSpeed = squareInputs ? clipRange(squareInput(turnSpeed)) : clipRange(turnSpeed);
+
+        driveFieldCentric(xSpeed, ySpeed, turnSpeed, gyroAngle);
     }
 
 }

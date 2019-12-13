@@ -26,7 +26,10 @@ public class MotorImpl {
 
 
         @Override
-        public void set(double speed) { motor.setPower(speed); }
+        public void set(double speed) {
+
+            motor.setPower(speed);
+        }
 
         /**
          * Set the power of the motor.

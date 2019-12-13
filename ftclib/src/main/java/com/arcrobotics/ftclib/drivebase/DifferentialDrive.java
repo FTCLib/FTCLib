@@ -111,6 +111,21 @@ public class DifferentialDrive extends RobotDrive {
     }
 
     /**
+     * Drives the robot using the arcade system.
+     *
+     * @param ySpeed    The input value that determines the vertical speed of the robot.
+     * @param turnSpeed The input value that determines the rotational speed of the robot.
+     * @param squareInputs Square the value of the input to allow for finer control
+     */
+    public void arcadeDrive(double ySpeed, double turnSpeed, boolean squareInputs) {
+        ySpeed = squareInputs ? clipRange(squareInput(ySpeed)) : clipRange(ySpeed);
+        turnSpeed = squareInputs ? clipRange(squareInput(turnSpeed)) : clipRange(turnSpeed);
+
+        arcadeDrive(ySpeed, turnSpeed);
+    }
+
+
+    /**
      * Drive the robot using the tank system.
      *
      * @param leftSpeed     The input value that determines the speed of the left side motors.
@@ -129,5 +144,20 @@ public class DifferentialDrive extends RobotDrive {
         motors[MotorType.kLeft.value].set(wheelSpeeds[0] * maxOutput);
         motors[MotorType.kRight.value].set(wheelSpeeds[1] * -maxOutput);
     }
+
+    /**
+     * Drive the robot using the tank system.
+     *
+     * @param leftSpeed     The input value that determines the speed of the left side motors.
+     * @param rightSpeed    The input value that determines the speed of the right side motors.
+     * @param squareInputs Square the value of the input to allow for finer control
+     */
+    public void tankDrive(double leftSpeed, double rightSpeed, boolean squareInputs) {
+        leftSpeed = squareInputs ? clipRange(squareInput(leftSpeed)) : clipRange(leftSpeed);
+        rightSpeed = squareInputs ? clipRange(squareInput(rightSpeed)) : clipRange(rightSpeed);
+
+        tankDrive(leftSpeed, rightSpeed);
+    }
+
 
 }
