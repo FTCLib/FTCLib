@@ -22,7 +22,8 @@ public abstract class RobotDrive {
         kFrontLeft(0),
         kFrontRight(1),
         kLeft(0),
-        kRight(1);
+        kRight(1),
+        kSlide(2);
 
         public final int value;
 
