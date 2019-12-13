@@ -95,4 +95,11 @@ public abstract class RobotDrive {
         }
     }
 
+    /**
+     * Square magnitude of number while keeping the sign.
+     */
+    protected double squareInput(double input) {
+        return input * Math.abs(input);
+    }
+
 }
