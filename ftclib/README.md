@@ -76,4 +76,4 @@ us at any time for potential collaborator status.
 ## Authors
 
 Jackson from ARC Robotics, Daniel from JDroids, Pranav from TecHounds,
-Noah from Radical Raiders.
+Noah from Radical Raiders, Peter from Huskies.
