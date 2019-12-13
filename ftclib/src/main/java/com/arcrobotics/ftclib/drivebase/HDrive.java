@@ -1,7 +1,7 @@
 package com.arcrobotics.ftclib.drivebase;
 
 import com.arcrobotics.ftclib.geometry.Vector2d;
-import com.arcrobotics.ftclib.hardware.Motor;
+import com.arcrobotics.ftclib.hardware.motors.Motor;
 
 @Deprecated()
 public class HDrive extends RobotDrive
@@ -9,9 +9,10 @@ public class HDrive extends RobotDrive
     Motor[] motors;
 
     /**
-     * Constructor for the H-Drive class, which requires at least three motors:
-     * @param m1 one of the necessary primary drive motors
-     * @param m2 one of the necessary primary drive motors
+     * Constructor for the H-Drive class, which requires at least three motors.
+     *
+     * @param m1    one of the necessary primary drive motors
+     * @param m2    one of the necessary primary drive motors
      * @param slide the necessary slide motor for the use of h-drive
      * @param motor the rest of the motors, potentially the other motors if its 4wd
      */
@@ -25,7 +26,7 @@ public class HDrive extends RobotDrive
     }
 
     /**
-     * Sets the range of the input, see RobotDrive for more info.
+     * Sets the range of the input, see {@link RobotDrive} for more info.
      *
      * @param min The minimum value of the range.
      * @param max The maximum value of the range.
@@ -35,7 +36,7 @@ public class HDrive extends RobotDrive
     }
 
     /**
-     * Sets the max speed of the drivebase, see RobotDrive for more info.
+     * Sets the max speed of the drivebase, see {@link RobotDrive} for more info.
      *
      * @param value The maximum output speed.
      */
@@ -73,5 +74,7 @@ public class HDrive extends RobotDrive
         motors[MotorType.kSlide.value].set(speeds[MotorType.kSlide.value] * maxOutput);
     }
 
-    public void driveRobotCentric(double xSpeed, double ySpeed, double turn){driveFieldCentric(xSpeed, ySpeed, turn, 0.0);}
+    public void driveRobotCentric(double xSpeed, double ySpeed, double turn){
+        driveFieldCentric(xSpeed, ySpeed, turn, 0.0);
+    }
 }

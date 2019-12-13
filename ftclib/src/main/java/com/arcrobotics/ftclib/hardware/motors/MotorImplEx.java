@@ -1,6 +1,7 @@
 package com.arcrobotics.ftclib.hardware.motors;
 
 import com.arcrobotics.ftclib.controller.PIDFController;
+import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 
 /**
  * An extended implemented motor. Uses a {@link MotorImpl} along
@@ -17,7 +18,9 @@ public class MotorImplEx extends MotorEx {
      * @param ex    the implemented motor
      */
     public MotorImplEx(MotorImpl ex) {
-        this(ex, new PIDFController(new double[]{0,0,0,0}));
+        super(ex.mot, ex.getCPR(),
+                new PIDFController(new double[]
+                        {ex.mot.getP(),ex.mot.getI(),ex.mot.getD(),ex.mot.getF()}));
     }
 
     /**

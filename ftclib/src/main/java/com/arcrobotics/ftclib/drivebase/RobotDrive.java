@@ -16,7 +16,6 @@ public abstract class RobotDrive {
      * and at most four motors.
      */
     public enum MotorType {
-        kBack(2),
         kBackLeft(2),
         kBackRight(3),
         kFrontLeft(0),
