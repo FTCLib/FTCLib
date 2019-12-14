@@ -3,6 +3,7 @@ package com.arcrobotics.ftclib.hardware.motors;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 
 /**
  * An implementation of the motor. Utilizes the {@link DcMotorEx}
@@ -38,6 +39,41 @@ public class MotorImpl {
          */
         public void setPower(double power) {
             set(power);
+        }
+
+        /**
+         * @return the internal PIDF coefficients of the motor
+         */
+        public PIDFCoefficients getPIDFCoefficients() {
+            return motor.getPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER);
+        }
+
+        /**
+         * @return the internal kP value
+         */
+        public double getP() {
+            return getPIDFCoefficients().p;
+        }
+
+        /**
+         * @return the internal kI value
+         */
+        public double getI() {
+            return getPIDFCoefficients().i;
+        }
+
+        /**
+         * @return the internal kD value
+         */
+        public double getD() {
+            return getPIDFCoefficients().d;
+        }
+
+        /**
+         * @return the internal kF value
+         */
+        public double getF() {
+            return getPIDFCoefficients().f;
         }
 
         /**
