@@ -33,6 +33,14 @@ public class RevIMU extends GyroEx {
         offset = 0;
     }
 
+    public void init(BNO055IMU.Parameters parameters) {
+        revIMU.initialize(parameters);
+
+        globalHeading = 0;
+        relativeHeading = 0;
+        offset = 0;
+    }
+
     public double getHeading() {
         globalHeading = revIMU.getAngularOrientation().firstAngle;
         relativeHeading = globalHeading + offset;
