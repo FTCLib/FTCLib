@@ -7,6 +7,7 @@ import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.arcrobotics.ftclib.hardware.motors.MotorImpl;
 import com.arcrobotics.ftclib.hardware.motors.MotorImplEx;
+import com.arcrobotics.ftclib.hardware.motors.SimpleMotorImpl;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -16,11 +17,11 @@ public class DriveSubsystem implements Subsystem {
     GamepadEx driverGamepad;
     Telemetry telemetry;
 
-    public MotorImplEx backLeftMotor, frontLeftMotor, backRightMotor, frontRightMotor;
+    public SimpleMotorImpl backLeftMotor, frontLeftMotor, backRightMotor, frontRightMotor;
     public MecanumDrive driveTrain;
 
     final double WHEEL_DIAMETER = 4; // Inches
-    final double PULSES_PER_ROTATION = 280; // NEVEREST 40
+    final int PULSES_PER_ROTATION = 280; // NEVEREST 40
     ButtonReader slowDownButton;
 
 
@@ -28,18 +29,18 @@ public class DriveSubsystem implements Subsystem {
         this.driverGamepad = driverGamepad;
         this.telemetry = telemetry;
 
-        backLeftMotor = new MotorImplEx(new MotorImpl(hw, "backLeftMotor", PULSES_PER_ROTATION));
-        frontLeftMotor = new MotorImplEx(new MotorImpl(hw, "frontLeftMotor", PULSES_PER_ROTATION));
-        backRightMotor = new MotorImplEx(new MotorImpl(hw, "backRightMotor", PULSES_PER_ROTATION));
-        frontRightMotor = new MotorImplEx(new MotorImpl(hw, "frontRightMotor", PULSES_PER_ROTATION));
+        backLeftMotor = new SimpleMotorImpl(hw, telemetry,"backLeftMotor");
+        frontLeftMotor = new SimpleMotorImpl(hw, telemetry,"frontLeftMotor");
+        backRightMotor = new SimpleMotorImpl(hw, telemetry, "backRightMotor");
+        frontRightMotor = new SimpleMotorImpl(hw, telemetry, "frontRightMotor");
 
         backLeftMotor.setInverted(true);
         frontLeftMotor.setInverted(true);
 
-        backLeftMotor.setDistancePerPulse((WHEEL_DIAMETER * Math.PI) / (PULSES_PER_ROTATION));
-        frontLeftMotor.setDistancePerPulse((WHEEL_DIAMETER * Math.PI) / (PULSES_PER_ROTATION));
-        backRightMotor.setDistancePerPulse((WHEEL_DIAMETER * Math.PI) / (PULSES_PER_ROTATION));
-        frontRightMotor.setDistancePerPulse((WHEEL_DIAMETER * Math.PI) / (PULSES_PER_ROTATION));
+        backLeftMotor.setCpr(PULSES_PER_ROTATION);
+        frontLeftMotor.setCpr(PULSES_PER_ROTATION);
+        backRightMotor.setCpr(PULSES_PER_ROTATION);
+        frontRightMotor.setCpr(PULSES_PER_ROTATION);
 
 
         driveTrain = new MecanumDrive(frontLeftMotor, backLeftMotor, frontRightMotor, backRightMotor);
@@ -54,10 +55,10 @@ public class DriveSubsystem implements Subsystem {
 
     @Override
     public void reset() {
-        backLeftMotor.resetEncoder();
-        backRightMotor.resetEncoder();
-        frontLeftMotor.resetEncoder();
-        frontRightMotor.resetEncoder();
+        backLeftMotor.reset();
+        backRightMotor.reset();
+        frontLeftMotor.reset();
+        frontRightMotor.reset();
     }
 
     @Override
