@@ -8,6 +8,8 @@ public class DriveForwardCommand implements Command {
     private DriveSubsystem driveSubsystem;
     private ElapsedTime timer;
     private double distance, speed, timeout;
+    // 4 inches e.g
+    private double wheelDiameter = 4;
 
     public DriveForwardCommand(DriveSubsystem driveSubsystem, double distance, double speed, double timeout) {
         this.driveSubsystem = driveSubsystem;
@@ -20,17 +22,17 @@ public class DriveForwardCommand implements Command {
 
     @Override
     public void initialize() {
-        try {
-            driveSubsystem.backLeftMotor.setTargetDistance(distance);
-        } catch(Exception e) {
-            e.printStackTrace();
-        }
+        driveSubsystem.backLeftMotor.setDistance(distance, wheelDiameter);
+        driveSubsystem.backRightMotor.setDistance(distance, wheelDiameter);
+        driveSubsystem.frontLeftMotor.setDistance(distance, wheelDiameter);
+        driveSubsystem.frontRightMotor.setDistance(distance, wheelDiameter);
+
         timer.startTime();
     }
 
     @Override
     public void execute() {
-        driveSubsystem.driveTrain.driveRobotCentric(0, speed, 0);
+        driveSubsystem.driveTrain.driveRobotCentric(speed, 0, 0);
     }
 
 
