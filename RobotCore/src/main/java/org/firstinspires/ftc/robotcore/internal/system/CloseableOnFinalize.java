@@ -32,8 +32,8 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 package org.firstinspires.ftc.robotcore.internal.system;
 
-import androidx.annotation.CallSuper;
-import androidx.annotation.Nullable;
+import android.support.annotation.CallSuper;
+import android.support.annotation.Nullable;
 
 /**
  * {@link CloseableOnFinalize} instances will be (internally) closed on finalization, if they haven't

@@ -33,7 +33,7 @@
 
 package org.firstinspires.ftc.robotcore.internal.opmode;
 
-import androidx.annotation.NonNull;
+import android.support.annotation.NonNull;
 
 /**
  * {@link OpModeMeta} provides information about an OpMode.

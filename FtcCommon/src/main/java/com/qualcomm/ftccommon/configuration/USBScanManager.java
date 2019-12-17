@@ -33,7 +33,7 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package com.qualcomm.ftccommon.configuration;
 
 import android.content.Context;
-import androidx.annotation.NonNull;
+import android.support.annotation.NonNull;
 
 import com.qualcomm.ftccommon.CommandList;
 import com.qualcomm.hardware.HardwareDeviceManager;

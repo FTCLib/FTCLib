@@ -33,7 +33,7 @@
 
 package org.firstinspires.ftc.onbotjava;
 
-import androidx.annotation.NonNull;
+import android.support.annotation.NonNull;
 
 import com.qualcomm.robotcore.util.ReadWriteFile;
 import com.qualcomm.robotcore.util.RobotLog;

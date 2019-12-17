@@ -1,7 +1,5 @@
 package com.arcrobotics.ftclib.hardware;
 
-import androidx.annotation.ColorInt;
-
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 

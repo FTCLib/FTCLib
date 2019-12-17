@@ -32,7 +32,7 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 package com.qualcomm.robotcore.hardware;
 
-import androidx.annotation.Nullable;
+import android.support.annotation.Nullable;
 
 import java.util.concurrent.atomic.AtomicInteger;
 

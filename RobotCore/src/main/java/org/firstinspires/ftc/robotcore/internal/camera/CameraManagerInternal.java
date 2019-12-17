@@ -34,8 +34,8 @@ package org.firstinspires.ftc.robotcore.internal.camera;
 
 import android.hardware.usb.UsbDevice;
 import android.hardware.usb.UsbManager;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import com.qualcomm.robotcore.eventloop.SyncdDevice;
 import com.qualcomm.robotcore.util.SerialNumber;

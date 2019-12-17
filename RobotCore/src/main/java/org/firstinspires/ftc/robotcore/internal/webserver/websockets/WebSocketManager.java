@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.robotcore.internal.webserver.websockets;
 
-import androidx.annotation.NonNull;
+import android.support.annotation.NonNull;
 
 public interface WebSocketManager {
     String SYSTEM_NAMESPACE = "system";

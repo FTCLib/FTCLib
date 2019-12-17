@@ -32,9 +32,10 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 package org.firstinspires.ftc.robotcore.external.navigation;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
+import com.vuforia.Matrix34F;
 import com.vuforia.TrackableResult;
 import com.vuforia.VuMarkTarget;
 import com.vuforia.VuMarkTargetResult;
@@ -46,6 +47,7 @@ import org.firstinspires.ftc.robotcore.external.hardware.camera.CameraManager;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.CameraName;
 import org.firstinspires.ftc.robotcore.external.matrices.OpenGLMatrix;
 import org.firstinspires.ftc.robotcore.internal.system.Misc;
+import org.firstinspires.ftc.robotcore.internal.system.Tracer;
 import org.firstinspires.ftc.robotcore.internal.vuforia.VuforiaPoseMatrix;
 
 import java.util.HashMap;

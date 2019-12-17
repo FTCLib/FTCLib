@@ -1,7 +1,8 @@
 package org.firstinspires.ftc.robotcore.internal.network;
 
+import android.content.Context;
 import android.os.SystemClock;
-import androidx.annotation.NonNull;
+import android.support.annotation.NonNull;
 
 import com.qualcomm.robotcore.R;
 import com.qualcomm.robotcore.hardware.Gamepad;

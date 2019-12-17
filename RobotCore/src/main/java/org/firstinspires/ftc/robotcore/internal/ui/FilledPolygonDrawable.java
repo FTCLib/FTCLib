@@ -35,7 +35,7 @@ package org.firstinspires.ftc.robotcore.internal.ui;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Rect;
-import androidx.annotation.ColorInt;
+import android.support.annotation.ColorInt;
 
 /**
  * {@link FilledPolygonDrawable} is a simple utility that draws a filled (regular) polygon

@@ -33,7 +33,7 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package org.firstinspires.ftc.robotcore.external.hardware.camera;
 
 import android.graphics.Bitmap;
-import androidx.annotation.NonNull;
+import android.support.annotation.NonNull;
 
 import org.firstinspires.ftc.robotcore.external.android.util.Size;
 

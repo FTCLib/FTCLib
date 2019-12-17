@@ -33,7 +33,7 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package org.firstinspires.ftc.robotcore.internal.usb;
 
 import android.hardware.usb.UsbEndpoint;
-import androidx.annotation.Nullable;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 import com.qualcomm.robotcore.R;

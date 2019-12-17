@@ -33,7 +33,7 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package org.firstinspires.ftc.robotcore.internal.opengl.shaders;
 
 import android.opengl.GLES20;
-import androidx.annotation.RawRes;
+import android.support.annotation.RawRes;
 
 import com.qualcomm.robotcore.R;
 import com.vuforia.GLTextureUnit;
