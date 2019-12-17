@@ -5,8 +5,7 @@ import com.arcrobotics.ftclib.drivebase.MecanumDrive;
 import com.arcrobotics.ftclib.gamepad.ButtonReader;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
-import com.arcrobotics.ftclib.hardware.motors.MotorImpl;
-import com.arcrobotics.ftclib.hardware.motors.MotorImplEx;
+import com.arcrobotics.ftclib.hardware.RevIMU;
 import com.arcrobotics.ftclib.hardware.motors.SimpleMotorImpl;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
@@ -17,11 +16,16 @@ public class DriveSubsystem implements Subsystem {
     GamepadEx driverGamepad;
     Telemetry telemetry;
 
+    //Gyro
+    RevIMU gyro;
+    
     public SimpleMotorImpl backLeftMotor, frontLeftMotor, backRightMotor, frontRightMotor;
     public MecanumDrive driveTrain;
 
     final double WHEEL_DIAMETER = 4; // Inches
     final int PULSES_PER_ROTATION = 280; // NEVEREST 40
+
+
     ButtonReader slowDownButton;
 
 
@@ -33,6 +37,9 @@ public class DriveSubsystem implements Subsystem {
         frontLeftMotor = new SimpleMotorImpl(hw, telemetry,"frontLeftMotor");
         backRightMotor = new SimpleMotorImpl(hw, telemetry, "backRightMotor");
         frontRightMotor = new SimpleMotorImpl(hw, telemetry, "frontRightMotor");
+
+        gyro = new RevIMU(hw);
+
 
         backLeftMotor.setInverted(true);
         frontLeftMotor.setInverted(true);
@@ -48,8 +55,13 @@ public class DriveSubsystem implements Subsystem {
         slowDownButton = new ButtonReader(driverGamepad, GamepadKeys.Button.X);
     }
 
+    public double getHeading() {
+        return gyro.getHeading();
+    }
+
     @Override
     public void initialize() {
+        gyro.init();
         reset();
     }
 
@@ -59,6 +71,8 @@ public class DriveSubsystem implements Subsystem {
         backRightMotor.reset();
         frontLeftMotor.reset();
         frontRightMotor.reset();
+        gyro.reset();
+
     }
 
     @Override
