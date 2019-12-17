@@ -34,8 +34,8 @@
 package org.firstinspires.ftc.onbotjava;
 
 import android.content.res.AssetManager;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import com.qualcomm.robotcore.util.RobotLog;
 

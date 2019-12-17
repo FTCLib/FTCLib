@@ -33,8 +33,8 @@
 
 package org.firstinspires.ftc.onbotjava.handlers.file;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import com.google.blocks.ftcrobotcontroller.hardware.HardwareItem;
 import com.google.blocks.ftcrobotcontroller.hardware.HardwareItemMap;

@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
-import androidx.annotation.StringRes;
+import android.support.annotation.StringRes;
 import android.text.TextUtils;
 import android.widget.FrameLayout;
 

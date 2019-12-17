@@ -21,7 +21,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Region;
-import androidx.annotation.NonNull;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import com.google.ftcresearch.tfod.util.ImageUtils;
 import com.google.ftcresearch.tfod.util.Size;

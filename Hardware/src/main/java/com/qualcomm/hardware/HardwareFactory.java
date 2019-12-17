@@ -31,7 +31,7 @@
 package com.qualcomm.hardware;
 
 import android.content.Context;
-import androidx.annotation.NonNull;
+import android.support.annotation.NonNull;
 
 import com.qualcomm.hardware.hitechnic.HiTechnicNxtDcMotorController;
 import com.qualcomm.hardware.lynx.LynxAnalogInputController;
@@ -39,6 +39,7 @@ import com.qualcomm.hardware.lynx.LynxDcMotorController;
 import com.qualcomm.hardware.lynx.LynxDigitalChannelController;
 import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.hardware.lynx.LynxNackException;
+import com.qualcomm.hardware.lynx.LynxPwmOutputController;
 import com.qualcomm.hardware.lynx.LynxServoController;
 import com.qualcomm.hardware.lynx.LynxUsbDevice;
 import com.qualcomm.hardware.lynx.LynxVoltageSensor;

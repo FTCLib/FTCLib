@@ -30,21 +30,31 @@
 
 package org.firstinspires.ftc.robotcore.internal.system;
 
+import android.Manifest;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.TextView;
 
 import com.qualcomm.robotcore.R;
 import com.qualcomm.robotcore.util.RobotLog;
 
+import org.firstinspires.ftc.robotcore.internal.system.AppUtil;
+import org.firstinspires.ftc.robotcore.internal.system.PermissionListener;
+import org.firstinspires.ftc.robotcore.internal.system.PermissionValidator;
+import org.firstinspires.ftc.robotcore.internal.system.RobotApplication;
+import org.firstinspires.ftc.robotcore.internal.system.ServiceController;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 /**
  * This class sits between app launch and FtcRobotControllerActivity acting as a gate

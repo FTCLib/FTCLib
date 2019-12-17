@@ -1,9 +1,7 @@
 package com.arcrobotics.ftclib.hardware;
 
 import android.graphics.Color;
-import android.graphics.ColorSpace;
 
-import androidx.annotation.ColorInt;
 
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -24,7 +22,7 @@ public class SensorColor implements HardwareDevice {
 
     /** Convert HSV value to an ARGB one. Includes alpha.*/
     public int[] HSVtoARGB( int alpha, float[] hsv){
-        @ColorInt int color = Color.HSVToColor(alpha, hsv);
+        int color = Color.HSVToColor(alpha, hsv);
         return new int[] {Color.alpha(color), Color.red(color), Color.green(color), Color.blue(color)};
     }
 

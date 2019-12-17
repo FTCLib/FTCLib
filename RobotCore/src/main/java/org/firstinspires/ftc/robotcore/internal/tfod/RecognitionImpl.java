@@ -17,7 +17,7 @@
 package org.firstinspires.ftc.robotcore.internal.tfod;
 
 import android.graphics.RectF;
-import androidx.annotation.NonNull;
+import android.support.annotation.NonNull;
 import java.util.Objects;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;

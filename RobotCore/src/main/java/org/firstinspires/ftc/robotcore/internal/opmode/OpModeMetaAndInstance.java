@@ -32,7 +32,7 @@
  */
 package org.firstinspires.ftc.robotcore.internal.opmode;
 
-import androidx.annotation.Nullable;
+import android.support.annotation.Nullable;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 

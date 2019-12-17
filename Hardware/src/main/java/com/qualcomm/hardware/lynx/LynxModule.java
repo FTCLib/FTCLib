@@ -33,8 +33,8 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package com.qualcomm.hardware.lynx;
 
 import android.graphics.Color;
-import androidx.annotation.ColorInt;
-import androidx.annotation.NonNull;
+import android.support.annotation.ColorInt;
+import android.support.annotation.NonNull;
 
 import com.qualcomm.hardware.R;
 import com.qualcomm.hardware.lynx.commands.LynxCommand;
@@ -95,6 +95,7 @@ import java.util.Collection;
 import java.util.Deque;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
