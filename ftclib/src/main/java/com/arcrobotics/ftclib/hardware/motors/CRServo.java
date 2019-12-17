@@ -9,7 +9,7 @@ import com.arcrobotics.ftclib.controller.PController;
 public class CRServo implements Motor {
 
     /**
-     * The CR Servo motor object.
+     * The CR ServoEx motor object.
      */
     private Motor crServo;
 
@@ -19,7 +19,7 @@ public class CRServo implements Motor {
     private PController pController;
 
     /**
-     * The constructor for the CR Servo.
+     * The constructor for the CR ServoEx.
      *
      * @param servo The servo in question.
      */
@@ -56,7 +56,7 @@ public class CRServo implements Motor {
 
     @Override
     public String getDeviceType() {
-        return "CR Servo";
+        return "CR ServoEx";
     }
 
     @Override

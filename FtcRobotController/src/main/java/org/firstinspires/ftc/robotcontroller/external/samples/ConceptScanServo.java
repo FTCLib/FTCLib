@@ -40,7 +40,7 @@ import com.qualcomm.robotcore.hardware.Servo;
  * INCREMENT sets how much to increase/decrease the servo position each cycle
  * CYCLE_MS sets the update period.
  *
- * This code assumes a Servo configured with the name "left_hand" as is found on a pushbot.
+ * This code assumes a ServoEx configured with the name "left_hand" as is found on a pushbot.
  *
  * NOTE: When any servo position is set, ALL attached servos are activated, so ensure that any other
  * connected servos are able to move freely before running this test.
@@ -48,7 +48,7 @@ import com.qualcomm.robotcore.hardware.Servo;
  * Use Android Studio to Copy this Class, and Paste it into your team's code folder with a new name.
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
-@TeleOp(name = "Concept: Scan Servo", group = "Concept")
+@TeleOp(name = "Concept: Scan ServoEx", group = "Concept")
 @Disabled
 public class ConceptScanServo extends LinearOpMode {
 
@@ -71,7 +71,7 @@ public class ConceptScanServo extends LinearOpMode {
         servo = hardwareMap.get(Servo.class, "left_hand");
 
         // Wait for the start button
-        telemetry.addData(">", "Press Start to scan Servo." );
+        telemetry.addData(">", "Press Start to scan ServoEx." );
         telemetry.update();
         waitForStart();
 
@@ -98,7 +98,7 @@ public class ConceptScanServo extends LinearOpMode {
             }
 
             // Display the current value
-            telemetry.addData("Servo Position", "%5.2f", position);
+            telemetry.addData("ServoEx Position", "%5.2f", position);
             telemetry.addData(">", "Press Stop to end test." );
             telemetry.update();
 
