@@ -111,7 +111,7 @@ public abstract class MotorEx implements Motor {
      * @param cpr   The counts per revolution of said motor.
      */
     public MotorEx(Motor mot, double cpr) {
-        this(mot, cpr, new PIDFController(new double[]{0,0,0,0}));
+        this(mot, cpr, new PIDFController(new double[]{1,0,0,0}));
     }
 
     /**

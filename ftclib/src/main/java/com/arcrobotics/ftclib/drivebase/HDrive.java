@@ -3,26 +3,71 @@ package com.arcrobotics.ftclib.drivebase;
 import com.arcrobotics.ftclib.geometry.Vector2d;
 import com.arcrobotics.ftclib.hardware.motors.Motor;
 
-@Deprecated()
+/**
+ * Holonomic drivebase
+ */
 public class HDrive extends RobotDrive
 {
     Motor[] motors;
 
+    public static final double kDefaultRightMotorAngle = Math.PI / 3;
+    public static final double kDefaultLeftMotorAngle = 2 * Math.PI / 3;
+    public static final double kDefaultSlideMotorAngle = 3 * Math.PI / 2;
+
+    private double rightMotorAngle = kDefaultRightMotorAngle;
+    private double leftMotorAngle = kDefaultLeftMotorAngle;
+    private double slideMotorAngle = kDefaultSlideMotorAngle;
+
     /**
      * Constructor for the H-Drive class, which requires at least three motors.
      *
-     * @param m1    one of the necessary primary drive motors
-     * @param m2    one of the necessary primary drive motors
-     * @param slide the necessary slide motor for the use of h-drive
-     * @param motor the rest of the motors, potentially the other motors if its 4wd
+     * @param mLeft     one of the necessary primary drive motors
+     * @param mRight    one of the necessary primary drive motors
+     * @param slide     the necessary slide motor for the use of h-drive
      */
-    public HDrive(Motor m1, Motor m2, Motor slide, Motor... motor)
-    {
-        this.motors = new Motor[motor.length + 3];
-        System.arraycopy(motor, 0, this.motors, 0, motor.length);
-        this.motors[motor.length] = m1;
-        this.motors[motor.length + 1] = m2;
-        this.motors[motor.length + 2] = slide;
+    public HDrive(Motor mLeft, Motor mRight, Motor slide) {
+        motors = new Motor[3];
+        motors[MotorType.kLeft.value] = mLeft;
+        motors[MotorType.kRight.value] = mRight;
+        motors[MotorType.kSlide.value] = slide;
+    }
+
+    /**
+     * The constructor that includes the angles of the motors.
+     *
+     * <p>
+     *     The default angles are {@value #kDefaultRightMotorAngle},
+     *     {@value #kDefaultLeftMotorAngle}, {@value #kDefaultSlideMotorAngle}.
+     * </p>
+     *
+     * @param mLeft             one of the necessary primary drive motors
+     * @param mRight            one of the necessary primary drive motors
+     * @param slide             the necessary slide motor for the use of h-drive
+     * @param leftMotorAngle    the angle of the left motor in radians
+     * @param rightMotorAngle   the angle of the right motor in radians
+     * @param slideMotorAngle   the angle of the slide motor in radians
+     */
+    public HDrive(Motor mLeft, Motor mRight, Motor slide, double leftMotorAngle,
+                  double rightMotorAngle, double slideMotorAngle) {
+        motors = new Motor[3];
+        motors[0] = mLeft;
+        motors[1] = mRight;
+        motors[2] = slide;
+
+        this.leftMotorAngle = leftMotorAngle;
+        this.rightMotorAngle = rightMotorAngle;
+        this.slideMotorAngle = slideMotorAngle;
+    }
+
+    /**
+     * Sets up the constructor for the holonomic drive.
+     *
+     * @param myMotors The motors in order of:
+     *                 frontLeft, frontRight, backLeft, backRight.
+     *                 Do not input in any other order.
+     */
+    public HDrive(Motor... myMotors) {
+        motors = myMotors;
     }
 
     /**
@@ -57,21 +102,50 @@ public class HDrive extends RobotDrive
         turn = clipRange(turn);
 
         Vector2d vector = new Vector2d(xSpeed, ySpeed);
-        vector = vector.rotateBy(heading);
+        vector = vector.rotateBy(-heading);
 
         double theta = Math.atan2(ySpeed, xSpeed);
 
-        double[] speeds = new double[4];
+        double[] speeds = new double[motors.length];
 
-//        speeds[MotorType.kLeft.value] =
-//        speeds[MotorType.kRight.value] =
-//        speeds[MotorType.kSlide.value] =
+        if (speeds.length == 3) {
+            Vector2d leftVec = new Vector2d(Math.cos(leftMotorAngle), Math.sin(leftMotorAngle));
+            Vector2d rightVec = new Vector2d(Math.cos(rightMotorAngle), Math.sin(rightMotorAngle));
+            Vector2d slideVec = new Vector2d(Math.cos(slideMotorAngle), Math.sin(slideMotorAngle));
 
-        normalize(speeds);
+            speeds[MotorType.kLeft.value] = vector.scalarProject(leftVec) + turn;
+            speeds[MotorType.kRight.value] = vector.scalarProject(rightVec) + turn;
+            speeds[MotorType.kSlide.value] = vector.scalarProject(slideVec) + turn;
 
-        motors[MotorType.kLeft.value].set(speeds[MotorType.kLeft.value] * maxOutput);
-        motors[MotorType.kRight.value].set(speeds[MotorType.kRight.value] * -maxOutput);
-        motors[MotorType.kSlide.value].set(speeds[MotorType.kSlide.value] * maxOutput);
+            normalize(speeds);
+
+            motors[MotorType.kLeft.value].set(speeds[MotorType.kRight.value] * maxOutput);
+            motors[MotorType.kRight.value].set(speeds[MotorType.kLeft.value] * maxOutput);
+            motors[MotorType.kSlide.value].set(speeds[MotorType.kSlide.value] * maxOutput);
+        }
+        // this looks similar to mecanum because mecanum is a four wheel holonomic drivebase
+        else {
+            speeds[MotorType.kFrontLeft.value] =
+                    vector.magnitude() * Math.sin(theta + Math.PI / 4) + turn;
+            speeds[MotorType.kFrontRight.value] =
+                    vector.magnitude() * Math.sin(theta - Math.PI / 4) - turn;
+            speeds[MotorType.kBackLeft.value] =
+                    vector.magnitude() * Math.sin(theta - Math.PI / 4) + turn;
+            speeds[MotorType.kBackRight.value] =
+                    vector.magnitude() * Math.sin(theta + Math.PI / 4) - turn;
+
+            normalize(speeds);
+
+            motors[MotorType.kFrontLeft.value]
+                    .set(speeds[MotorType.kFrontLeft.value] * maxOutput);
+            motors[MotorType.kFrontRight.value]
+                    .set(speeds[MotorType.kFrontRight.value] * -maxOutput);
+            motors[MotorType.kBackLeft.value]
+                    .set(speeds[MotorType.kBackLeft.value] * maxOutput);
+            motors[MotorType.kBackRight.value]
+                    .set(speeds[MotorType.kBackRight.value] * -maxOutput);
+        }
+
     }
 
     public void driveRobotCentric(double xSpeed, double ySpeed, double turn){
