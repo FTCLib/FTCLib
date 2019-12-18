@@ -48,6 +48,11 @@ public class RevIMU extends GyroEx {
         return relativeHeading;
     }
 
+    @Override
+    public double getAbsoluteHeading() {
+        return revIMU.getAngularOrientation().firstAngle;
+    }
+
     // TODO Find the order of these angles
     public double[] getAngles() {
 
