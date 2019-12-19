@@ -3,12 +3,12 @@ package com.arcrobotics.ftclib.command;
 public interface Command {
 
     /**
-     * The initial subroutine of a command.  Called once when the command is initially scheduled.
+     * The initial subroutine of a command. Called once when the command is initially scheduled.
      */
     void initialize();
 
     /**
-     * The main body of a command.  Called repeatedly while the command is scheduled.
+     * The main body of a command. Called repeatedly while the command is scheduled.
      */
     void execute();
 
@@ -18,7 +18,7 @@ public interface Command {
     void end();
 
     /**
-     * Whether the command has finished.  Once a command finishes, the scheduler will call its
+     * Whether the command has finished. Once a command finishes, the scheduler will call its
      * end() method.
      *
      * @return whether the command has finished.

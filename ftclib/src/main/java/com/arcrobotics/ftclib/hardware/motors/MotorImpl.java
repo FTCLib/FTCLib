@@ -28,7 +28,6 @@ public class MotorImpl {
 
         @Override
         public void set(double speed) {
-
             motor.setPower(speed);
         }
 
@@ -129,7 +128,9 @@ public class MotorImpl {
 
         @Override
         public String getDeviceType() {
-            return motor.getDeviceName();
+            String port = Integer.toString(motor.getPortNumber());
+            String controller = motor.getController().toString();
+            return "Motor: " + port + "; " + controller;
         }
 
         @Override

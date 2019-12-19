@@ -6,16 +6,7 @@ can be found right here.
 
 ## Installation
 
-Download the library. In your ftc app, right click on the project name and click
-"New Module". Then, create a new Java Library. Name the library 'ftclib' and the package
-'com.arcrobotics.ftclib'. Port what is in the current com.arcrobotics.ftclib package in
-the original ftclib download into the same-named package within the new module in the ftc app.
-In the build.common.gradle file of your project, type the following:
-```gradle
-dependencies {
-    implementation project(path: ':ftclib')
-}
-```
+Download the library and use the resources to create your code in the TeamCode folder.
 
 ## Usage
 
@@ -39,10 +30,10 @@ res = cmr.getInstance();
 
 // if the skystone is not in range
 while (!res.hasObject(VisualObject.SKYSTONE)) {
-    robot.strafe(Safety.SWIFT);
+    robot.strafe(Safety.SWIFT, Direction.RIGHT);
     res = cmr.getInstance();
 }
-robot.setSafetyMode(Safety.EASE_OFF);
+robot.stop(Safety.EASE_OFF)
 
 // align robot with the skystone
 robot.centerRobotWithObject(res.getObject(VisualObject.SKYSTONE));

@@ -148,4 +148,11 @@ public class Vector2d {
         }
         return false;
     }
+
+    @Override
+    public String toString() {
+        String x = Double.toString(m_x);
+        String y = Double.toString(m_y);
+        return "( " + x + ", " + y + " )";
+    }
 }

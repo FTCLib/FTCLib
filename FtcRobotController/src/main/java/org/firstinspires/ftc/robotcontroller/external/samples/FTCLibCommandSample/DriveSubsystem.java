@@ -33,10 +33,10 @@ public class DriveSubsystem implements Subsystem {
         this.driverGamepad = driverGamepad;
         this.telemetry = telemetry;
 
-        backLeftMotor = new SimpleMotorImpl(hw, telemetry,"backLeftMotor");
-        frontLeftMotor = new SimpleMotorImpl(hw, telemetry,"frontLeftMotor");
-        backRightMotor = new SimpleMotorImpl(hw, telemetry, "backRightMotor");
-        frontRightMotor = new SimpleMotorImpl(hw, telemetry, "frontRightMotor");
+        backLeftMotor = new SimpleMotorImpl(hw, telemetry,"backLeftMotor", 383.6);
+        frontLeftMotor = new SimpleMotorImpl(hw, telemetry,"frontLeftMotor", 383.6);
+        backRightMotor = new SimpleMotorImpl(hw, telemetry, "backRightMotor", 383.6);
+        frontRightMotor = new SimpleMotorImpl(hw, telemetry, "frontRightMotor", 383.6);
 
         gyro = new RevIMU(hw);
 

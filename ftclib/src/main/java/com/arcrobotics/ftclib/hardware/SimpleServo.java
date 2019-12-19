@@ -1,8 +1,7 @@
-package com.arcrobotics.ftclib.hardware.motors;
+package com.arcrobotics.ftclib.hardware;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.util.Hardware;
 
 public class SimpleServo implements ServoEx {
 
@@ -28,7 +27,6 @@ public class SimpleServo implements ServoEx {
     public void rotateDegrees(double angle) {
         angle = getAngle() + angle;
         turnToAngle(angle);
-
     }
 
     @Override
@@ -92,6 +90,18 @@ public class SimpleServo implements ServoEx {
 
     public double getAngleRange() {
         return maxAngle - minAngle;
+    }
+
+    @Override
+    public void disable() {
+        servo.close();
+    }
+
+    @Override
+    public String getDeviceType() {
+        String port = Integer.toString(servo.getPortNumber());
+        String controller = servo.getController().toString();
+        return "SimpleServo: " + port + "; " + controller;
     }
 
 }

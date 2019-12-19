@@ -106,4 +106,11 @@ public class Pose2d {
         }
         return false;
     }
+
+    @Override
+    public String toString() {
+        String position = m_pos.toString();
+        String heading = Double.toString(m_heading);
+        return "Pose: " + position + ", Heading: " + heading;
+    }
 }

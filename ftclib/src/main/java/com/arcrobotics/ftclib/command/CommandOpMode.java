@@ -7,6 +7,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 public abstract class CommandOpMode extends LinearOpMode {
+
     /**
      * Initialize all objects, set up subsystems, etc...
      */
@@ -16,7 +17,6 @@ public abstract class CommandOpMode extends LinearOpMode {
      * Run Op Mode. Is called after user presses play button
      */
     public abstract void run();
-
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -33,13 +33,12 @@ public abstract class CommandOpMode extends LinearOpMode {
      * @param newCommand new Command to run.
      */
     public void addSequential(Command newCommand) {
-
         final Command command = newCommand;
         command.initialize();
 
         // Start a ScheduledExecutorService to get precise loop timing.
-        final ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(3);
-
+        final ScheduledExecutorService scheduledExecutorService =
+                Executors.newScheduledThreadPool(3);
 
         Runnable updateMethod = new Runnable() {
             @Override
@@ -47,6 +46,7 @@ public abstract class CommandOpMode extends LinearOpMode {
                 // Runs the command's execute function in a 20 ms loop
                 // If it throws an exception, then print that exception to telemtry
                 try {
+                    telemetry.addData("Running: ", true);
                     command.execute();
                     telemetry.update();
                 } catch(Exception e) {
@@ -58,6 +58,8 @@ public abstract class CommandOpMode extends LinearOpMode {
         };
 
         try {
+            scheduledExecutorService
+                    .scheduleAtFixedRate(updateMethod, 0,20, TimeUnit.MILLISECONDS);
             // Start the loop thread
             scheduledExecutorService.scheduleAtFixedRate(updateMethod, 0,20, TimeUnit.MILLISECONDS);
             // Delay the execution of future if the command isn't finished and the opMode isn't stopped
@@ -88,8 +90,8 @@ public abstract class CommandOpMode extends LinearOpMode {
         final long timeInterval = (long) dt;
         final Command command = newCommand;
         command.initialize();
-        final ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(3);
-
+        final ScheduledExecutorService scheduledExecutorService =
+                Executors.newScheduledThreadPool(3);
 
         Runnable updateMethod = new Runnable() {
             @Override
@@ -106,8 +108,10 @@ public abstract class CommandOpMode extends LinearOpMode {
                 }
             }
         };
+
         try {
-            scheduledExecutorService.scheduleAtFixedRate(updateMethod, 0,timeInterval, TimeUnit.MILLISECONDS);
+            scheduledExecutorService
+                    .scheduleAtFixedRate(updateMethod, 0,timeInterval, TimeUnit.MILLISECONDS);
             while(!command.isFinished() && this.opModeIsActive()) {
                 //telemetry.update();
             }
@@ -119,6 +123,7 @@ public abstract class CommandOpMode extends LinearOpMode {
         }
         command.end();
     }
+
 }
 
 

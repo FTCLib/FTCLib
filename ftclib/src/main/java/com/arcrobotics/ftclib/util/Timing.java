@@ -6,8 +6,6 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * Class for a time related items.
- *
- *
  */
 public class Timing {
 
@@ -18,10 +16,8 @@ public class Timing {
      *
      * A more simple version of a timer better suited for quick uses rather than an
      *  {@link ElapsedTime} object.
-     *
-     *
      */
-    public class Timer {
+    public static class Timer {
         private ElapsedTime time;
         private long timerLength;
         private long pauseTime;
@@ -63,7 +59,7 @@ public class Timing {
         }
 
         public boolean done(){
-            return time.now(unit) >= timerLength;
+            return currentTime() >= timerLength;
         }
 
         public boolean isTimerOn() { return timerOn;}

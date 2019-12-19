@@ -1,5 +1,7 @@
 package com.arcrobotics.ftclib;
 
+import com.arcrobotics.ftclib.util.Safety;
+
 /**
  * This is the Robot class. This is where you will store your
  * subsystems. This will make your command-based robot code a lot smoother
@@ -12,24 +14,6 @@ public class Robot {
      * mode is DEFAULT.
      */
     public Safety m_safety = Safety.DEFAULT;
-
-    /**
-     * The Robot class makes use of four safety modes:
-     * swift, ease_off, default, and break. SWIFT performs actions quickly.
-     * EASE_OFF performs actions swiftly, but as soon as the action ends, the
-     * system continues to go for a while longer until deactivating. DEFAULT
-     * does not have any special features and performs actions the way they normally would.
-     * BREAK causes mechanisms to stop immediately after deactivation.
-     */
-    public enum Safety {
-        SWIFT(0), EASE_OFF(1), DEFAULT(2), BREAK(3);
-
-        public final int value;
-
-        Safety(int value) {
-            this.value = value;
-        }
-    }
 
     /**
      * Sets the safety mode for the robot.

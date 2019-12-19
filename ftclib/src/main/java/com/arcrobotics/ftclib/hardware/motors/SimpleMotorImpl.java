@@ -5,15 +5,14 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.util.Hardware;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
 
 public class SimpleMotorImpl implements Motor {
+
     private DcMotorEx motor;
-    int cpr;
+    double cpr;
 
     Telemetry telemetry;
 
@@ -23,7 +22,7 @@ public class SimpleMotorImpl implements Motor {
         this.telemetry = telemetry;
     }
 
-    public SimpleMotorImpl(HardwareMap hMap, Telemetry telemetry, String motorName, int cpr) {
+    public SimpleMotorImpl(HardwareMap hMap, Telemetry telemetry, String motorName, double cpr) {
         motor = (DcMotorEx)hMap.get(DcMotor.class, motorName);
         this.cpr = cpr;
         this.telemetry = telemetry;
@@ -34,7 +33,7 @@ public class SimpleMotorImpl implements Motor {
         this.cpr = cpr;
     }
 
-    public int getCpr() {
+    public double getCpr() {
         return cpr;
     }
 
@@ -137,4 +136,5 @@ public class SimpleMotorImpl implements Motor {
     public void stopMotor() {
         set(0);
     }
+
 }

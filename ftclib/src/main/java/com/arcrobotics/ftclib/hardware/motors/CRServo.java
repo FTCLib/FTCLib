@@ -6,7 +6,7 @@ import com.arcrobotics.ftclib.controller.PController;
  * A continuous rotation servo that uses a motor object to
  * and a P controller to limit speed and acceleration.
  */
-public class CRServo implements Motor {
+public abstract class CRServo implements Motor {
 
     /**
      * The CR ServoEx motor object.
@@ -19,7 +19,7 @@ public class CRServo implements Motor {
     private PController pController;
 
     /**
-     * The constructor for the CR ServoEx.
+     * The constructor for the CR Servo.
      *
      * @param servo The servo in question.
      */
@@ -27,6 +27,19 @@ public class CRServo implements Motor {
         crServo = servo;
 
         pController = new PController(0.3);
+    }
+
+    /**
+     * The constructor for the CR Servo that incldues a custom
+     * proportional error coefficient.
+     *
+     * @param servo The servo in question.
+     * @param kP    The desired coefficient for the P controller.
+     */
+    public CRServo(Motor servo, double kP) {
+        crServo = servo;
+
+        pController = new PController(kP);
     }
 
     @Override
@@ -52,11 +65,6 @@ public class CRServo implements Motor {
     @Override
     public void disable() {
         crServo.disable();
-    }
-
-    @Override
-    public String getDeviceType() {
-        return "CR ServoEx";
     }
 
     @Override
