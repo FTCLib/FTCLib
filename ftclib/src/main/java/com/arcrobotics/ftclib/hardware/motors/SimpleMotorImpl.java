@@ -74,6 +74,10 @@ public class SimpleMotorImpl implements Motor {
 
     }
 
+    public void setRunMode(DcMotor.RunMode runMode) {
+        motor.setMode(runMode);
+    }
+
     public double getRotations() throws Exception {
         if(cpr == 0) {
             throw new Exception("Must set counts per rotation");
@@ -87,10 +91,11 @@ public class SimpleMotorImpl implements Motor {
         return motor.isBusy();
     }
 
+
     @Override
     public void set(double speed) {
-        // Might need to change this to RUN_WITHOUT ENCODER
-        motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        if(motor.getMode() != DcMotor.RunMode.RUN_TO_POSITION)
+            motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         motor.setPower(speed);
     }
 
