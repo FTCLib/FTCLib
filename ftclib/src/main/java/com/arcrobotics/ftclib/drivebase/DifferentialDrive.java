@@ -44,6 +44,17 @@ public class DifferentialDrive extends RobotDrive {
         setRightSideInverted(true);
     }
 
+    /**
+     * Construct a DifferentialDrive.
+     *
+     * <p>
+     *     To pass multiple motors per side, use a {@link MotorGroup}. If a motor needs to
+     *     be inverted, do so before passing it in.
+     * </p>
+     * @param autoInvert Whether or not to automatically invert right side
+     * @param myMotors The {@link Motor} objects in the differential drive. Must be in the order
+     *                 of left, right.
+     */
     public DifferentialDrive(boolean autoInvert, Motor... myMotors) {
         motors = myMotors;
         setRightSideInverted(autoInvert);
