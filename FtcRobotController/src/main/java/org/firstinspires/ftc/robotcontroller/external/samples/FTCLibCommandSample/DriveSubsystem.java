@@ -50,7 +50,7 @@ public class DriveSubsystem implements Subsystem {
         frontRightMotor.setCpr(PULSES_PER_ROTATION);
 
 
-        driveTrain = new MecanumDrive(frontLeftMotor, backLeftMotor, frontRightMotor, backRightMotor);
+        driveTrain = new MecanumDrive(false, frontLeftMotor, frontRightMotor, backLeftMotor, backRightMotor);
 
         slowDownButton = new ButtonReader(driverGamepad, GamepadKeys.Button.X);
     }
