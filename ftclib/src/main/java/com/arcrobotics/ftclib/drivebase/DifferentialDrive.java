@@ -41,7 +41,14 @@ public class DifferentialDrive extends RobotDrive {
      */
     public DifferentialDrive(Motor... myMotors) {
         motors = myMotors;
+        setRightSideInverted(true);
     }
+
+    public DifferentialDrive(boolean autoInvert, Motor... myMotors) {
+        motors = myMotors;
+        setRightSideInverted(autoInvert);
+    }
+
 
     /**
      * Checks if the right side motors are inverted.
