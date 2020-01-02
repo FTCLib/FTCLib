@@ -1,13 +1,14 @@
 package com.arcrobotics.ftclib.command;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 public abstract class CommandOpMode extends LinearOpMode {
-
+    private ElapsedTime commandTimer;
     /**
      * Initialize all objects, set up subsystems, etc...
      */
@@ -20,6 +21,7 @@ public abstract class CommandOpMode extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
+        commandTimer = new ElapsedTime();
         initialize();
         waitForStart();
         run();
@@ -32,8 +34,8 @@ public abstract class CommandOpMode extends LinearOpMode {
      * If the isFinished method is true, it exits out of the loop and runs the command's end method.
      * @param newCommand new Command to run.
      */
-    public void addSequential(Command newCommand) {
-        addSequential(newCommand, 20);
+    public void addSequential(Command newCommand, double timeout) {
+        addSequential(newCommand, timeout, 20);
     }
 
     /**
@@ -41,9 +43,10 @@ public abstract class CommandOpMode extends LinearOpMode {
      * @param newCommand Command to run
      * @param dt Time interval of loop iterations
      */
-    public void addSequential(Command newCommand, double dt) {
+    public void addSequential(Command newCommand, double timeout,double dt) {
         final long timeInterval = (long) dt;
         final Command command = newCommand;
+        commandTimer.reset();
         command.initialize();
         final ScheduledExecutorService scheduledExecutorService =
                 Executors.newScheduledThreadPool(3);
@@ -65,9 +68,10 @@ public abstract class CommandOpMode extends LinearOpMode {
         };
 
         try {
+
             scheduledExecutorService
                     .scheduleAtFixedRate(updateMethod, 0,timeInterval, TimeUnit.MILLISECONDS);
-            while(!command.isFinished() && this.opModeIsActive()) {
+            while(!command.isFinished() && this.opModeIsActive() && (commandTimer.seconds() <= timeout)) {
                 //telemetry.update();
             }
             scheduledExecutorService.shutdownNow();
