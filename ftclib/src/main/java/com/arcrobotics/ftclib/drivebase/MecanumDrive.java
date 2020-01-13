@@ -27,6 +27,14 @@ public class MecanumDrive extends RobotDrive {
      */
     public MecanumDrive(Motor... myMotors) {
         motors = myMotors;
+        checkMotorInversion();
+    }
+    
+    // we do not want any motors to be inverted
+    private void checkMotorInversion() {
+        for (Motor m : motors) {
+            if (m.getInverted()) m.setInverted(false);
+        }
     }
 
     /**
