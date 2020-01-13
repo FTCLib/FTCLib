@@ -7,17 +7,15 @@ public class DriveForwardCommand implements Command {
 
     private DriveSubsystem driveSubsystem;
     private ElapsedTime timer;
-    private double distance, speed, timeout;
+    private double distance, speed;
     // 4 inches e.g
     private double wheelDiameter = 4;
 
-    public DriveForwardCommand(DriveSubsystem driveSubsystem, double distance, double speed, double timeout) {
+    public DriveForwardCommand(DriveSubsystem driveSubsystem, double distance, double speed) {
         this.driveSubsystem = driveSubsystem;
         this.distance = distance;
         this.speed = speed;
-        this.timeout = timeout;
 
-        timer = new ElapsedTime();
     }
 
     @Override
@@ -26,8 +24,6 @@ public class DriveForwardCommand implements Command {
         driveSubsystem.backRightMotor.setDistance(distance, wheelDiameter);
         driveSubsystem.frontLeftMotor.setDistance(distance, wheelDiameter);
         driveSubsystem.frontRightMotor.setDistance(distance, wheelDiameter);
-
-        timer.startTime();
     }
 
     @Override
@@ -50,8 +46,7 @@ public class DriveForwardCommand implements Command {
         boolean distanceReached = !driveSubsystem.backLeftMotor.isBusy() && !driveSubsystem.backRightMotor.isBusy()
                 && !driveSubsystem.frontLeftMotor.isBusy() && !driveSubsystem.frontRightMotor.isBusy();
         // If the timeout has been reached
-        boolean timeoutReached = timer.seconds() >= timeout;
 
-        return distanceReached || timeoutReached;
+        return distanceReached;
     }
 }

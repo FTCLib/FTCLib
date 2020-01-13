@@ -62,11 +62,8 @@ public class DriveSubsystem implements Subsystem {
         gyro = new RevIMU(hw);
 
 
-        backLeftMotor.setInverted(true);
-        frontLeftMotor.setInverted(true);
-
-
-        driveTrain = new MecanumDrive(frontLeftMotor, backLeftMotor, frontRightMotor, backRightMotor);
+        // Autoinverts right side
+        driveTrain = new MecanumDrive(frontLeftMotor, frontRightMotor, backLeftMotor, backRightMotor);
 
         slowDownButton = new ButtonReader(driverGamepad, GamepadKeys.Button.X);
     }

@@ -15,11 +15,13 @@ import com.arcrobotics.ftclib.hardware.motors.Motor;
  * https://www.youtube.com/watch?v=8rhAkjViHEQ.
  */
 public class MecanumDrive extends RobotDrive {
+    private double rightSideMultiplier;
 
     Motor[] motors;
 
     /**
      * Sets up the constructor for the mecanum drive.
+     * Automatically inverts right side by default
      *
      * @param myMotors The motors in order of:
      *                 frontLeft, frontRight, backLeft, backRight.
@@ -27,14 +29,37 @@ public class MecanumDrive extends RobotDrive {
      */
     public MecanumDrive(Motor... myMotors) {
         motors = myMotors;
-        checkMotorInversion();
+        setRightSideInverted(true);
     }
-    
-    // we do not want any motors to be inverted
-    private void checkMotorInversion() {
-        for (Motor m : motors) {
-            if (m.getInverted()) m.setInverted(false);
-        }
+
+    /**
+     * Sets up the constructor for the mecanum drive.
+     *
+     * @param autoInvert Whether or not to automatically invert the right motors
+     * @param myMotors The motors in order of: frontLeft, frontRight, backLeft, backRight.
+          Do not input in any other order.
+     */
+    public MecanumDrive(boolean autoInvert, Motor... myMotors) {
+        motors = myMotors;
+        setRightSideInverted(autoInvert);
+    }
+
+    /**
+     * Checks if the right side motors are inverted.
+     *
+     * @return true if the multiplier for the right side is equal to -1.
+     */
+    public boolean isRightSideInverted() {
+        return rightSideMultiplier == -1.0;
+    }
+
+    /**
+     * Sets the right side inversion factor to the specified boolean.
+     *
+     * @param isInverted If true, sets the right side multiplier to -1 or 1 if false.
+     */
+    public void setRightSideInverted(boolean isInverted) {
+        rightSideMultiplier = isInverted ? -1.0 : 1.0;
     }
 
     /**
@@ -133,11 +158,11 @@ public class MecanumDrive extends RobotDrive {
         motors[MotorType.kFrontLeft.value]
                 .set(wheelSpeeds[MotorType.kFrontLeft.value] * maxOutput);
         motors[MotorType.kFrontRight.value]
-                .set(wheelSpeeds[MotorType.kFrontRight.value] * -maxOutput);
+                .set(wheelSpeeds[MotorType.kFrontRight.value] * rightSideMultiplier * maxOutput);
         motors[MotorType.kBackLeft.value]
                 .set(wheelSpeeds[MotorType.kBackLeft.value] * maxOutput);
         motors[MotorType.kBackRight.value]
-                .set(wheelSpeeds[MotorType.kBackRight.value] * -maxOutput);
+                .set(wheelSpeeds[MotorType.kBackRight.value] * rightSideMultiplier * maxOutput);
     }
 
     /**

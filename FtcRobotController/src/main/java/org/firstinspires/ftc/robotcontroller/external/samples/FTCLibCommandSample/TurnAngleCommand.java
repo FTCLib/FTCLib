@@ -7,22 +7,19 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 public class TurnAngleCommand implements Command {
 
     DriveSubsystem driveSubsystem;
-    ElapsedTime timer;
-    double angle, timeout;
+    double angle;
 
     // Proportional Controller for correcting for gyro error
     PController headingController;
 
-    public TurnAngleCommand(DriveSubsystem driveSubsystem, double angle, double timeout) {
+    public TurnAngleCommand(DriveSubsystem driveSubsystem, double angle) {
         this.driveSubsystem = driveSubsystem;
         this.angle = angle;
-        this.timeout = timeout;
 
         // At 180 degrees, we should spin almost as fast as we can to correct
         // 1 is full power. 180 * 0.05 = 0.9
         headingController = new PController(0.005);
 
-        timer = new ElapsedTime();
     }
 
 
@@ -36,8 +33,6 @@ public class TurnAngleCommand implements Command {
         // If within 5 degrees of setpoint, the target is considered reached
         headingController.setTolerance(5);
 
-        timer.reset();
-        timer.startTime();
     }
 
     @Override
@@ -56,8 +51,7 @@ public class TurnAngleCommand implements Command {
 
     @Override
     public boolean isFinished() {
-        boolean timeoutReached = timer.seconds() > timeout;
         boolean angleReached = headingController.atSetPoint();
-        return timeoutReached || angleReached;
+        return angleReached;
     }
 }
