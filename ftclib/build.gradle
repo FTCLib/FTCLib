@@ -1,5 +1,11 @@
 apply plugin: 'com.android.library'
 
+ext {
+    PUBLISH_GROUP_ID = 'com.arcrobotics'
+    PUBLISH_ARTIFACT_ID = 'ftclib'
+    PUBLISH_VERSION = '1.0.0'
+}
+
 android {
     compileSdkVersion 26
     buildToolsVersion '29.0.0'
