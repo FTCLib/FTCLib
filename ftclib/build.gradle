@@ -39,3 +39,5 @@ dependencies {
     implementation project(path: ':RobotCore')
     implementation project(path: ':Hardware')
 }
+
+apply from: '../release-aar.gradle'
