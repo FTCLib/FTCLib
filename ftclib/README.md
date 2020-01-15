@@ -6,6 +6,33 @@ can be found right here.
 
 ## Installation
 
+1. Open up your FTC SDK Project in Android Studio.
+
+2. Go to your `build.common.gradle` file in your project.
+
+    ![BuildCommonGradle](https://github.com/OpenFTC/EasyOpenCV/blob/master/doc/images/build-common-gradle.png)
+    
+3. Add `jcenter()` to the `repositories` section at the bottom of the file.
+
+    ![JcenterHere](https://github.com/OpenFTC/EasyOpenCV/blob/master/doc/images/jcenter.png)
+    
+4. Open the `build.gradle` file in your TeamCode module. 
+    
+    ![TeamCodeGradle](https://github.com/OpenFTC/EasyOpenCV/blob/master/doc/images/teamcode-gradle.png)
+    
+5. Go to the bottom of the file, and add the following.
+
+    ```groovy
+    dependencies {
+        implementation `com.arcrobotics:ftclib:1.0.0`
+    }
+    ```
+    
+6. Perform a gradle sync to implement your changes.
+
+    ![GradleSync](https://github.com/OpenFTC/EasyOpenCV/blob/master/doc/images/gradle-sync.png)
+
+
 Download the library and use the resources to create your code in the TeamCode folder.
 
 ## Usage
