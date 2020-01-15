@@ -1,6 +1,19 @@
 
 ## FTCLib
+## How to use developer release
+In your build.common.gradle, insert this line into the repositories block:
+```
+maven { url "https://ftclib.bintray.com/FTCLib" }
+``` 
+Now, in your TeamCode buid.gradle, add these lines:
+```
+dependencies {
+ implementation 'com.arcrobotics:ftclib:1.0.0'
+}
+```
+And that's it!
 
+## Origin and Upstream
 origin: https://github.com/FTCLib/FTCLib
 
 upstream: https://github.com/OpenFTC/OpenRC-Turbo
