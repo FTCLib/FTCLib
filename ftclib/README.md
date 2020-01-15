@@ -12,9 +12,13 @@ can be found right here.
 
     ![BuildCommonGradle](https://github.com/OpenFTC/EasyOpenCV/blob/master/doc/images/build-common-gradle.png)
     
-3. Add `jcenter()` to the `repositories` section at the bottom of the file.
+3. Add the following to the `repositories` section at the bottom of the file.
 
-    ![JcenterHere](https://github.com/OpenFTC/EasyOpenCV/blob/master/doc/images/jcenter.png)
+    ```groovy
+   maven {
+       url "https://ftclib.bintray.com/FTCLib" 
+   }
+   ```
     
 4. Open the `build.gradle` file in your TeamCode module. 
     
@@ -33,7 +37,13 @@ can be found right here.
     ![GradleSync](https://github.com/OpenFTC/EasyOpenCV/blob/master/doc/images/gradle-sync.png)
 
 
-Download the library and use the resources to create your code in the TeamCode folder.
+7. When the sync finishes, you are done! You can now use FTCLib in your code.
+
+__NOTE:__ If your module has a few dependencies, you might have an error related to mutlidex.
+This is caused by the project exceeding the limit for imports enforced by Android Studio. To solve this, 
+add `multiDexEnabled true` to this location (add hyperlink) inside the `build.common.gradle` file 
+
+
 
 ## Usage
 
