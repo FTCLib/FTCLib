@@ -8,7 +8,7 @@ maven { url "https://ftclib.bintray.com/FTCLib" }
 Now, in your TeamCode buid.gradle, add these lines:
 ```
 dependencies {
- implementation 'com.arcrobotics:ftclib:1.0.0'
+ implementation 'com.arcrobotics:ftclib:1.0.2'
 }
 ```
 And that's it!
