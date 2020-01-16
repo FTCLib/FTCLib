@@ -4,6 +4,33 @@ Modeled off wpilib for FRC, the ftclib uses modularization and class dependencie
 for easy robot programming. No need for multiple third-party libraries. Everything
 can be found right here.
 
+## DISCLAIMER! 
+__Before using this project, please acknowledge that the FTCLib project is still in Alpha! That means that there are possibly bugs that exist in the code. The FTCLib library is continuing to grow, and part of that process is testing and fixing. By using this project, you except the risk of possible issues that exist in the library.__
+
+This being said, FTCLib is a still in development, so bugs, exceptions, or errors are being fixed as the project progresses. Fixing bugs, exceptions, problems, and/or issues is a big priority for FTCLib, and your help would be greatly appreciated on that task. If you find an issue with FTCLib, please don't hesitate to contact us for a solution/workaround. Issues can be submitted through GitHub, or by email at `ftclib.release@gmail.com`.
+
+While those two options are the most convenient for most things, another way it to contact one of our members through
+the [FTC Discord](https://discord.gg/first-tech-challenge "The FTC Discord") .
+
+
+
+## Alpha v1.0.0! (Dev Release)
+
+This is the first official release of FTCLib! The project is still in the Alpha stage, with many things being untested. The project is being added to constantly, and there will most likely be smaller updates to come in the near future. If you want to contribute to the project, be sure to read the [Contributing.MD](https://github.com/Lunerwalker2/FTCLib-1/blob/dev/CONTRIBUTING.md)
+
+There is still a great need for Alpha testers, so also please contact us if you are interested in that.
+
+__Features__:
+
++ Cool thing here
++ Cool thing here
+    + Cool subthing here
+    + Another subthing
++ Cool thing here    
+
+
+
+
 ## Installation
 
 1. Open up your FTC SDK Project in Android Studio.
@@ -39,9 +66,20 @@ can be found right here.
 
 7. When the sync finishes, you are done! You can now use FTCLib in your code.
 
-__NOTE:__ If your module has a few dependencies, you might have an error related to mutlidex.
+__NOTE:__ If your module has a few dependencies, you might have an error related to multidex on building the project.
 This is caused by the project exceeding the limit for imports enforced by Android Studio. To solve this, 
-add `multiDexEnabled true` to this location (add hyperlink) inside the `build.common.gradle` file 
+add `multiDexEnabled true` to the below location inside the `build.common.gradle` file.
+
+```groovy
+
+    defaultConfig {
+        applicationId 'com.qualcomm.ftcrobotcontroller'
+        minSdkVersion 19
+        targetSdkVersion 26
+
+
+        multiDexEnabled true
+```
 
 
 
@@ -104,4 +142,4 @@ us at any time for potential collaborator status.
 ## Authors
 
 Jackson from ARC Robotics, Daniel from JDroids, Pranav from TecHounds,
-Noah from Radical Raiders, Peter from E-lemon-ators.
+Noah from Radical Raiders, Peter from E-lemon-ators, Ryan from CircuitRunners Green.
