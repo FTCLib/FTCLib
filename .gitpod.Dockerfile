@@ -20,6 +20,8 @@ RUN cd /opt && \
     unzip -q *.zip -d ${ANDROID_HOME} && \
     rm *.zip
 
+RUN chmod -R 777 ${ANDROID_HOME}
+
 USER gitpod
 
 ENV PATH ${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/tools/bin:${ANDROID_HOME}/platform-tools
