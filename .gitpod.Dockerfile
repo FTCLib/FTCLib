@@ -13,9 +13,15 @@ USER root
 
 RUN bash -c "apt update && apt install -y zip unzip && \
                 cd /opt && wget https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip && \
-                unzip sdk-tools-linux-4333796.zip && rm *.zip"
+                unzip sdk-tools-linux-4333796.zip && rm *.zip && \
+                mkdir android-sdk-linux && mv tools android-sdk-linux && \
+                chmod a+x /opt/android-sdk-linux/tools/bin/* /opt/android-sdk-linux/tools/android \
+                /opt/android-sdk-linux/tools/emulator /opt/android-sdk-linux/tools/emulator-check \
+                /opt/android-sdk-linux/tools/mksdcard /opt/android-sdk-linux/tools/monitor"
 
 USER gitpod
 
 RUN bash -c "source ~/.sdkman/bin/sdkman-init.sh && \
-                sdk install java 8.0.232-open"
+                sdk install java 8.0.232-open && \
+                export ANDROID_HOME=/opt/android-sdk-linux && \
+                export PATH=$ANDROID_HOME/tools/bin:$PATH"
