@@ -17,11 +17,11 @@ RUN bash -c "apt update && apt install -y zip unzip && \
                 mkdir android-sdk-linux && mv tools android-sdk-linux && \
                 chmod a+x /opt/android-sdk-linux/tools/bin/* /opt/android-sdk-linux/tools/android \
                 /opt/android-sdk-linux/tools/emulator /opt/android-sdk-linux/tools/emulator-check \
-                /opt/android-sdk-linux/tools/mksdcard /opt/android-sdk-linux/tools/monitor"
+                /opt/android-sdk-linux/tools/mksdcard /opt/android-sdk-linux/tools/monitor && \
+                chmod 777 /opt/android-sdk-linux"
 
 USER gitpod
 
 RUN bash -c "source ~/.sdkman/bin/sdkman-init.sh && \
                 sdk install java 8.0.232-open && \
-                export ANDROID_HOME=/opt/android-sdk-linux && \
-                export PATH=$ANDROID_HOME/tools/bin:$PATH"
+                echo \"ANDROID_HOME=/opt/android-sdk-linux \n export PATH=$ANDROID_HOME/tools/bin:$PATH\" >> ~/.bashrc"
