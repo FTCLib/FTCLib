@@ -22,6 +22,8 @@ RUN cd /opt && \
 
 RUN chmod -R 777 ${ANDROID_HOME}
 
+RUN apt clean -qq
+
 USER gitpod
 
 ENV PATH ${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/tools/bin:${ANDROID_HOME}/platform-tools
@@ -81,5 +83,3 @@ RUN bash -c "source ~/.sdkman/bin/sdkman-init.sh && \
 #    "add-ons;addon-google_apis-google-23" \
 #    "add-ons;addon-google_apis-google-22" \
 #    "add-ons;addon-google_apis-google-21"
-
-RUN apt-get clean -qq
