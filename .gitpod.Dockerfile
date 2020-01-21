@@ -22,6 +22,7 @@ RUN bash -c "apt update && apt install -y zip unzip && \
 
 USER gitpod
 
-RUN bash ~/.sdkman/bin/sdkman-init.sh && \
-                sdk install java 8.0.232-open && \
-                echo "ANDROID_HOME=/opt/android-sdk-linux \n export PATH=$ANDROID_HOME/tools/bin:$PATH\" >> ~/.bashrc"
+RUN bash -c "source ~/.sdkman/bin/sdkman-init.sh && \
+                sdk install java 8.0.232-open"
+                
+RUN echo "ANDROID_HOME=/opt/android-sdk-linux \n export PATH=$ANDROID_HOME/tools/bin:$PATH\" >> ~/.bashrc"
