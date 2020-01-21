@@ -13,14 +13,19 @@ ENV ANDROID_HOME /opt/android-sdk-linux
 
 USER root
 
-RUN apt update -qq && apt upgrade -y && apt install zip unzip
+RUN apt update -qq && apt install zip unzip
 
 RUN cd /opt && \
     wget https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip && \
     unzip -q *.zip -d ${ANDROID_HOME} && \
     rm *.zip
 
+USER gitpod
+
 ENV PATH ${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/tools/bin:${ANDROID_HOME}/platform-tools
+
+RUN bash -c "source ~/.sdkman/bin/sdkman-init.sh && \
+                sdk install java 8.0.232-open"
 
 RUN yes | sdkmanager --licenses
 
@@ -74,12 +79,5 @@ RUN yes | sdkmanager \
     "add-ons;addon-google_apis-google-23" \
     "add-ons;addon-google_apis-google-22" \
     "add-ons;addon-google_apis-google-21"
-
-USER gitpod
-
-ENV PATH ${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/tools/bin:${ANDROID_HOME}/platform-tools
-
-RUN bash -c "source ~/.sdkman/bin/sdkman-init.sh && \
-                sdk install java 8.0.232-open"
 
 RUN apt-get clean -qq
