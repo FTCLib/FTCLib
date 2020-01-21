@@ -2,6 +2,8 @@ package com.arcrobotics.ftclib.kinematics;
 
 import com.arcrobotics.ftclib.drivebase.MecanumDrive;
 import com.arcrobotics.ftclib.geometry.Pose2d;
+import com.arcrobotics.ftclib.geometry.Rotation2d;
+import com.arcrobotics.ftclib.geometry.Translation2d;
 
 /**
  * The classfile that performs the calculations for the robot's odometry,
@@ -46,7 +48,8 @@ public class MecanumOdometry {
      * @param trackWidth The track width of the robot in inches.
      */
     public MecanumOdometry(double trackWidth) {
-        this(new Pose2d(0, 0, 0), trackWidth);
+
+        this(new Pose2d(new Translation2d(0, 0), new Rotation2d(0)), trackWidth);
     }
 
     /**
@@ -66,7 +69,7 @@ public class MecanumOdometry {
      * @param newPose   the new {@link Pose2d}
      */
     public void updatePose(Pose2d newPose) {
-        robotPos = new Pose2d(newPose);
+        robotPos = newPose;
     }
 
     /**
@@ -148,7 +151,7 @@ public class MecanumOdometry {
 
         rotatePose(deltaTheta);
 
-        updatePose(new Pose2d(odoX, odoY, robotPos.getHeading()));
+        updatePose(new Pose2d(odoX, odoY, new Rotation2d(robotPos.getHeading())));
     }
 
 }
