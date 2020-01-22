@@ -42,15 +42,13 @@ public class MotorImplEx extends MotorEx {
     }
     
     public MotorImplEx(HardwareMap hMap, String name, double cpr) {
-        motor = new MotorImpl(hMap, name, cpr);
-        this(motor);
+        this(new MotorImpl(hMap, name, cpr));
         
         distancePerPulse = -1; // not set yet
     }
     
     public MotorImplEx(HardwareMap hMap, String name, double cpr, PIDFController pidfController) {
-        motor = new MotorImpl(hMap, name, cpr);
-        this(motor, pidfController);
+        this(new MotorImpl(hMap, name, cpr), pidfController);
         
         distancePerPulse = -1; // not set yet
     }
