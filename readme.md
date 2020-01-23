@@ -114,8 +114,8 @@ __Features__:
     + Direction
         + Represents a logical direction
         + LEFT, RIGHT, UP, DOWN, FORWARDS, BACKWARDS
-    + Saftey
-        + Represents an arbitrary saftey level
+    + Safety
+        + Represents an arbitrary safety level
         + SWIFT, EASE_OFF, DEFAULT, BREAK
     + Timing
         + Has a few different functions for a Timer
