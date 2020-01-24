@@ -1,11 +1,19 @@
 package com.arcrobotics.ftclib.gamepad;
 
+import android.os.Build;
+import android.support.annotation.RequiresApi;
+
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
+import java.util.function.BooleanSupplier;
 
+/**
+ * Class that reads the value of button states.
+ * In order to get any values that depend on the previous state, you must call "readValue();" in a loop.
+ */
+@RequiresApi(api = Build.VERSION_CODES.N)
 public class ButtonReader implements KeyReader {
-    private GamepadEx gamepad;
-    private GamepadKeys.Button button;
+
     /** Last state of the button **/
     private boolean lastState;
     /** Current state of the button **/
@@ -13,32 +21,34 @@ public class ButtonReader implements KeyReader {
     private Telemetry telemetry;
     /*** Description of Button ***/
     private String buttonName;
+
+    private BooleanSupplier buttonState;
     /** Initializes controller variables
      * @param gamepad The controller joystick
      * @param button The controller button
     **/
     public ButtonReader(GamepadEx gamepad, GamepadKeys.Button button) {
-        this.gamepad = gamepad;
-        this.button = button;
-        currState = this.gamepad.getButton(button);
+
+        buttonState = () -> gamepad.getButton(button);
+        currState = buttonState.getAsBoolean();
         lastState = currState;
     }
 
-    public ButtonReader(GamepadEx gamepad, GamepadKeys.Button button, String buttonName) {
-        this.gamepad = gamepad;
-        this.button = button;
-        this.buttonName = buttonName + "_BUTTON";
-        currState = this.gamepad.getButton(button);
+    public ButtonReader(BooleanSupplier buttonValue) {
+        buttonState = buttonValue;
+        currState = buttonState.getAsBoolean();
         lastState = currState;
     }
+
     /** Reads button value **/
     public void readValue() {
         lastState = currState;
-        currState = this.gamepad.getButton(button);
+        currState = buttonState.getAsBoolean();
     }
+
     /** Checks if the button is down **/
     public boolean isDown() {
-        return currState;
+        return buttonState.getAsBoolean();
     }
     /** Checks if the button was just pressed **/
     public boolean wasJustPressed() {
