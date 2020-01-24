@@ -105,6 +105,7 @@ android {
 apply from: '../moduleFlavors.gradle'
 
 repositories {
+    mavenLocal()
     flatDir {
         dirs rootProject.file('libs')
     }
