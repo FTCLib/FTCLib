@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Gradle: org.ejml:ejml-ddense:0.38@jar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.ejml/ejml-ddense/0.38/3f64a356900f72951ffa0242e958b2acf18ac3a3/ejml-ddense-0.38.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.ejml/ejml-ddense/0.38/4c697e198a4865cd93a82ddd6efc092873ff4288/ejml-ddense-0.38-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.ejml/ejml-ddense/0.38/7b24d949fc1749fdaf6929953cdedc6a9fa90b76/ejml-ddense-0.38-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
