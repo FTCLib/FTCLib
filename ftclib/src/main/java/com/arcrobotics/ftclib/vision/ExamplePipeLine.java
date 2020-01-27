@@ -1,4 +1,4 @@
-package com.arcrobotics.ftclib.Vision;
+package com.arcrobotics.ftclib.vision;
 
 /**
  * This is an example of vision using EasyOpenCv.This example will show
