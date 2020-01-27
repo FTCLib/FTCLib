@@ -2,13 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3e9d7a03-689a-4b05-913a-c4f9e645f2cf" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/arcrobotics/ftclib/vision/SkystoneDetector.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../build.common.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../build.common.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/caches/gradle_models.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/gradle_models.ser" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/arcrobotics/ftclib/Vision/ExamplePipeLine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arcrobotics/ftclib/vision/ExamplePipeLine.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/arcrobotics/ftclib/Vision/InternalCameraExample.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/arcrobotics/ftclib/vision/InternalCameraExample.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -69,7 +65,7 @@
         <entry file="file://$PROJECT_DIR$/src/main/java/com/arcrobotics/ftclib/vision/SkystoneDetector.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="76">
-              <caret line="129" column="8" selection-start-line="129" selection-start-column="8" selection-end-line="129" selection-end-column="8" />
+              <caret line="129" selection-start-line="129" selection-end-line="129" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#831#832#0" expanded="true" />
@@ -234,128 +230,6 @@
               <item name="FTCLib" type="1abcf292:AndroidViewProjectNode" />
               <item name="ftclib" type="feadf853:AndroidModuleNode" />
             </path>
-            <path>
-              <item name="FTCLib" type="1abcf292:AndroidViewProjectNode" />
-              <item name="ftclib" type="feadf853:AndroidModuleNode" />
-              <item name="manifests" type="f94875db:AndroidManifestsGroupNode" />
-            </path>
-            <path>
-              <item name="FTCLib" type="1abcf292:AndroidViewProjectNode" />
-              <item name="ftclib" type="feadf853:AndroidModuleNode" />
-              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
-            </path>
-            <path>
-              <item name="FTCLib" type="1abcf292:AndroidViewProjectNode" />
-              <item name="ftclib" type="feadf853:AndroidModuleNode" />
-              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
-              <item name="ftclib" type="cbb59c9e:AndroidPsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="FTCLib" type="1abcf292:AndroidViewProjectNode" />
-              <item name="ftclib" type="feadf853:AndroidModuleNode" />
-              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
-              <item name="ftclib" type="cbb59c9e:AndroidPsiDirectoryNode" />
-              <item name="command" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="FTCLib" type="1abcf292:AndroidViewProjectNode" />
-              <item name="ftclib" type="feadf853:AndroidModuleNode" />
-              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
-              <item name="ftclib" type="cbb59c9e:AndroidPsiDirectoryNode" />
-              <item name="controller" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="FTCLib" type="1abcf292:AndroidViewProjectNode" />
-              <item name="ftclib" type="feadf853:AndroidModuleNode" />
-              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
-              <item name="ftclib" type="cbb59c9e:AndroidPsiDirectoryNode" />
-              <item name="controller" type="462c0819:PsiDirectoryNode" />
-              <item name="wpilibcontroller" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="FTCLib" type="1abcf292:AndroidViewProjectNode" />
-              <item name="ftclib" type="feadf853:AndroidModuleNode" />
-              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
-              <item name="ftclib" type="cbb59c9e:AndroidPsiDirectoryNode" />
-              <item name="drivebase" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="FTCLib" type="1abcf292:AndroidViewProjectNode" />
-              <item name="ftclib" type="feadf853:AndroidModuleNode" />
-              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
-              <item name="ftclib" type="cbb59c9e:AndroidPsiDirectoryNode" />
-              <item name="gamepad" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="FTCLib" type="1abcf292:AndroidViewProjectNode" />
-              <item name="ftclib" type="feadf853:AndroidModuleNode" />
-              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
-              <item name="ftclib" type="cbb59c9e:AndroidPsiDirectoryNode" />
-              <item name="hardware" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="FTCLib" type="1abcf292:AndroidViewProjectNode" />
-              <item name="ftclib" type="feadf853:AndroidModuleNode" />
-              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
-              <item name="ftclib" type="cbb59c9e:AndroidPsiDirectoryNode" />
-              <item name="hardware" type="462c0819:PsiDirectoryNode" />
-              <item name="motors" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="FTCLib" type="1abcf292:AndroidViewProjectNode" />
-              <item name="ftclib" type="feadf853:AndroidModuleNode" />
-              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
-              <item name="ftclib" type="cbb59c9e:AndroidPsiDirectoryNode" />
-              <item name="kinematics" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="FTCLib" type="1abcf292:AndroidViewProjectNode" />
-              <item name="ftclib" type="feadf853:AndroidModuleNode" />
-              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
-              <item name="ftclib" type="cbb59c9e:AndroidPsiDirectoryNode" />
-              <item name="kinematics" type="462c0819:PsiDirectoryNode" />
-              <item name="wpilibkinematics" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="FTCLib" type="1abcf292:AndroidViewProjectNode" />
-              <item name="ftclib" type="feadf853:AndroidModuleNode" />
-              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
-              <item name="ftclib" type="cbb59c9e:AndroidPsiDirectoryNode" />
-              <item name="spline" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="FTCLib" type="1abcf292:AndroidViewProjectNode" />
-              <item name="ftclib" type="feadf853:AndroidModuleNode" />
-              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
-              <item name="ftclib" type="cbb59c9e:AndroidPsiDirectoryNode" />
-              <item name="trajectory" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="FTCLib" type="1abcf292:AndroidViewProjectNode" />
-              <item name="ftclib" type="feadf853:AndroidModuleNode" />
-              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
-              <item name="ftclib" type="cbb59c9e:AndroidPsiDirectoryNode" />
-              <item name="trajectory" type="462c0819:PsiDirectoryNode" />
-              <item name="constraint" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="FTCLib" type="1abcf292:AndroidViewProjectNode" />
-              <item name="ftclib" type="feadf853:AndroidModuleNode" />
-              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
-              <item name="ftclib" type="cbb59c9e:AndroidPsiDirectoryNode" />
-              <item name="util" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="FTCLib" type="1abcf292:AndroidViewProjectNode" />
-              <item name="ftclib" type="feadf853:AndroidModuleNode" />
-              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
-              <item name="ftclib" type="cbb59c9e:AndroidPsiDirectoryNode" />
-              <item name="vision" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="FTCLib" type="1abcf292:AndroidViewProjectNode" />
-              <item name="Gradle Scripts" type="ae0cef3a:AndroidBuildScriptsGroupNode" />
-            </path>
           </expand>
           <select />
         </subPane>
@@ -465,7 +339,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-6" y="-6" width="1292" height="692" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info id="Captures" order="0" side_tool="true" weight="0.25" />
       <window_info active="true" content_ui="combo" id="Project" order="1" visible="true" weight="0.32928804" />
@@ -916,7 +789,7 @@
     <entry file="file://$PROJECT_DIR$/src/main/java/com/arcrobotics/ftclib/vision/SkystoneDetector.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="76">
-          <caret line="129" column="8" selection-start-line="129" selection-start-column="8" selection-end-line="129" selection-end-column="8" />
+          <caret line="129" selection-start-line="129" selection-end-line="129" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#831#832#0" expanded="true" />
