@@ -70,7 +70,13 @@ __Features__:
         + Many uses including the current state, the recent state, and more
     + TriggerReader class
         + A class that represents a gamepad trigger
+<<<<<<< HEAD
         + Includes simlular state-changing methods like GamepadButton
+=======
+        + Includes simlular states
+		    + Able to read trigger value as boolean (true/false)
+		    + Gives the program one button press even when holding button down
+>>>>>>> f219ff2c3c208b256c60d0f06781a6396ad1ad20
         + Can set the trigger name for telemetry
 + Geometry
     + Lots of geometry - related classes and functions
