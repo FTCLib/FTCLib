@@ -70,7 +70,7 @@ __Features__:
         + Many uses including the current state, the recent state, and more
     + TriggerReader class
         + A class that represents a gamepad trigger
-        + Includes simlular state - changing methods like GamepadButton
+        + Includes simlular state-changing methods like GamepadButton
         + Can set the trigger name for telemetry
 + Geometry
     + Lots of geometry - related classes and functions
@@ -110,7 +110,7 @@ __Features__:
         + Three wheel + Gyro
         + Three wheel
 + Utility
-    + Has a few differnt utility functions
+    + Has a few different utility functions
     + Direction
         + Represents a logical direction
         + LEFT, RIGHT, UP, DOWN, FORWARDS, BACKWARDS
