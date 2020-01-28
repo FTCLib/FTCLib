@@ -1,4 +1,4 @@
-package com.arcrobotics.ftclib.drivebase;
+package com.arcrobotics.ftclib.drivebase.swerve;
 
 import com.arcrobotics.ftclib.controller.PController;
 import com.arcrobotics.ftclib.hardware.motors.Motor;
@@ -8,7 +8,7 @@ import com.arcrobotics.ftclib.hardware.motors.Motor;
  * and the other for driving. The combination of these two factors makes for a wide degree of motion
  * using three degrees of freedom with traction, making it a more effective version of a mecanum drive.
  */
-public class SwerveModule {
+public class CoaxialSwerveModule {
 
     /**
      * The motors in the swerve module. One spins the wheel, creating translation,
@@ -32,7 +32,7 @@ public class SwerveModule {
      * @param turn  The motor that rotates the base.
      * @param drive The motor that drives the wheel.
      */
-    public SwerveModule(Motor turn, Motor drive, double p) {
+    public CoaxialSwerveModule(Motor turn, Motor drive, double p) {
         turnMotor = turn;
         driveMotor = drive;
 

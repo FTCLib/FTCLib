@@ -1,17 +1,19 @@
-package com.arcrobotics.ftclib.drivebase;
+package com.arcrobotics.ftclib.drivebase.swerve;
 
+import com.arcrobotics.ftclib.drivebase.MecanumDrive;
+import com.arcrobotics.ftclib.drivebase.RobotDrive;
 import com.arcrobotics.ftclib.geometry.Vector2d;
 
 /**
- * A swerve drive that uses several {@link SwerveModule} objects
+ * A swerve drive that uses several {@link CoaxialSwerveDrive} objects
  * that act cohesively as a drivebase.
  */
-public class SwerveDrive extends RobotDrive {
+public class CoaxialSwerveDrive extends RobotDrive {
 
     /**
      * the modules for the swerve drive
      */
-    private SwerveModule[] modules;
+    private CoaxialSwerveModule[] modules;
 
     /**
      * the vertical distance between each wheel
@@ -31,11 +33,12 @@ public class SwerveDrive extends RobotDrive {
      * @param modules       The modules for the drivetrain. Make sure to put in this order:
      *                      frontLeft, frontRight, backLeft, backRight.
      */
-    public SwerveDrive(double wheelbase, double trackwidth, SwerveModule... modules) {
+    public CoaxialSwerveDrive(double wheelbase, double trackwidth, CoaxialSwerveModule... modules) {
         this.modules = modules;
         L = wheelbase;
         W = trackwidth;
     }
+
 
     /**
      * Drives the robot using robot-centric control scheme. See {@link MecanumDrive} for more.
@@ -92,7 +95,7 @@ public class SwerveDrive extends RobotDrive {
 
     @Override
     public void stopMotor() {
-        for (SwerveModule x : modules) {
+        for (CoaxialSwerveModule x : modules) {
             x.stopMotor();
         }
     }

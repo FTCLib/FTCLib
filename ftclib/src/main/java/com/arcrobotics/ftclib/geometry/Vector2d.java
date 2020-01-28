@@ -135,6 +135,24 @@ public class Vector2d {
     }
 
     /**
+     * Scales the values of the vector by some scalar
+     *
+     * @param scalar the scalar
+     */
+    public Vector2d scale(double scalar) {
+        return new Vector2d(m_x * scalar, m_y * scalar);
+    }
+
+    /**
+     * Projects this vector onto another vector
+     *
+     * @param other the other vector
+     */
+    public Vector2d project(Vector2d other) {
+        return other.scale(dot(other) / (magnitude() * other.magnitude()));
+    }
+
+    /**
      * Checks equality between this Vector2d and another object
      *
      * @param obj the other object
