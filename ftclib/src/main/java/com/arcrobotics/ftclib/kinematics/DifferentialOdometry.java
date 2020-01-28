@@ -2,9 +2,6 @@ package com.arcrobotics.ftclib.kinematics;
 
 import com.arcrobotics.ftclib.drivebase.DifferentialDrive;
 import com.arcrobotics.ftclib.geometry.Pose2d;
-import com.arcrobotics.ftclib.geometry.Rotation2d;
-import com.arcrobotics.ftclib.geometry.Transform2d;
-import com.arcrobotics.ftclib.geometry.Translation2d;
 
 /**
  * The classfile that performs odometry calculations for a differential drivetrain.
@@ -27,7 +24,6 @@ public class DifferentialOdometry {
      */
     public double odoY;
 
-
     /**
      * The distance between the left and right main wheels on the robot.
      * This defaults to 18.
@@ -48,7 +44,7 @@ public class DifferentialOdometry {
      * @param trackWidth The track width of the robot in inches.
      */
     public DifferentialOdometry(double trackWidth) {
-        this(new Pose2d(new Translation2d(0, 0), new Rotation2d(0)), trackWidth);
+        this(new Pose2d(0,0,0), trackWidth);
     }
 
     /**
@@ -120,8 +116,7 @@ public class DifferentialOdometry {
 
         updateOdometryCounts(deltaX, deltaY);
         rotatePose(deltaTheta);
-
-        updatePose(new Pose2d(odoX, odoY, new Rotation2d(robotPose.getHeading())));
+        updatePose(new Pose2d(odoX, odoY, robotPose.getHeading()));
     }
 
 }

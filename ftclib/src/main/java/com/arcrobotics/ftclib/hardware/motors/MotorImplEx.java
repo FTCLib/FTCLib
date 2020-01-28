@@ -2,7 +2,6 @@ package com.arcrobotics.ftclib.hardware.motors;
 
 import com.arcrobotics.ftclib.controller.PIDFController;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
-import com.qualcomm.robotcore.hardware.HardwareMap;
 
 /**
  * An extended implemented motor. Uses a {@link MotorImpl} along
@@ -22,9 +21,6 @@ public class MotorImplEx extends MotorEx {
         super(ex.mot, ex.getCPR(),
                 new PIDFController(new double[]
                         {ex.mot.getP(),ex.mot.getI(),ex.mot.getD(),ex.mot.getF()}));
-        
-        motor = ex;
-        distancePerPulse = -1; // not set yet
     }
 
     /**
@@ -38,18 +34,6 @@ public class MotorImplEx extends MotorEx {
         super(ex.mot, ex.getCPR(), pidfController);
 
         motor = ex;
-        distancePerPulse = -1; // not set yet
-    }
-    
-    public MotorImplEx(HardwareMap hMap, String name, double cpr) {
-        this(new MotorImpl(hMap, name, cpr));
-        
-        distancePerPulse = -1; // not set yet
-    }
-    
-    public MotorImplEx(HardwareMap hMap, String name, double cpr, PIDFController pidfController) {
-        this(new MotorImpl(hMap, name, cpr), pidfController);
-        
         distancePerPulse = -1; // not set yet
     }
 

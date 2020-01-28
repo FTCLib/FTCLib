@@ -114,7 +114,7 @@ public class DriveSubsystem implements Subsystem {
         driveTrain.driveRobotCentric(driverGamepad.getLeftY()  * maxSpeed,
                  driverGamepad.getLeftX() * maxSpeed, driverGamepad.getRightX() * maxSpeed);
 
-        telemetry.addData("Odometry: ", getRobotPose().toString());
+        telemetry.addData("Odometry: ", getRobotPose().getPos().toString());
         telemetry.addData("Absolute Heading: ", gyro.getAbsoluteHeading());
 
     }

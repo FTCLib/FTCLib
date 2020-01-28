@@ -14,6 +14,6 @@ dependencies {
     /*
      * Other Modules
      */
-    implementation project(path: ':ftclib')
     implementation project(':FtcRobotController')
+    implementation project(path: ':ftclib')
 }

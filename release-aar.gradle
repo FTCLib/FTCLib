@@ -1,5 +1,5 @@
 // ./gradlew clean build generateRelease
-apply plugin: 'maven'
+ apply plugin: 'maven'
 
 def groupId = project.PUBLISH_GROUP_ID
 def artifactId = project.PUBLISH_ARTIFACT_ID

@@ -6,214 +6,111 @@ package com.arcrobotics.ftclib.geometry;
  * some of these methods do.
  */
 public class Pose2d {
-    private final Translation2d m_translation;
-    private final Rotation2d m_rotation;
+
+    private final Vector2d m_pos;
+    private final double m_heading;
 
     /**
-     * Constructs a pose at the origin facing toward the positive X axis.
-     * (Translation2d{0, 0} and Rotation{0})
+     * Default constructor, no params.
+     * Initializes to x, y, and heading components of 0
      */
     public Pose2d() {
-        m_translation = new Translation2d();
-        m_rotation = new Rotation2d();
+        this(0, 0, 0);
     }
 
     /**
-     * Constructs a pose with the specified translation and rotation.
+     * The constructor that sets up the values for the 2d position.
      *
-     * @param translation The translational component of the pose.
-     * @param rotation    The rotational component of the pose.
+     * @param x         the x value of the vector
+     * @param y         the y value of the vector
+     * @param heading   the heading of the position
      */
-    public Pose2d(Translation2d translation, Rotation2d rotation) {
-        m_translation = translation;
-        m_rotation = rotation;
+    public Pose2d(double x, double y, double heading) {
+        this(new Vector2d(x, y), heading);
     }
 
     /**
-     * Convenience constructors that takes in x and y values directly instead of
-     * having to construct a Translation2d.
+     * The constructor that sets up a position vector and heading.
      *
-     * @param x        The x component of the translational component of the pose.
-     * @param y        The y component of the translational component of the pose.
-     * @param rotation The rotational component of the pose.
+     * @param pos       A 2d vector that contains the x and y values.
+     * @param heading   The heading of the 2d position.
      */
-    @SuppressWarnings("ParameterName")
-    public Pose2d(double x, double y, Rotation2d rotation) {
-        m_translation = new Translation2d(x, y);
-        m_rotation = rotation;
+    public Pose2d(Vector2d pos, double heading) {
+        m_pos = pos;
+        m_heading = heading;
     }
 
     /**
-     * Transforms the pose by the given transformation and returns the new
-     * transformed pose.
+     * Sets up a 2d position with a 2d vector without an instantiated heading.
+     * Initializes the heading to 0.
      *
-     * <p>The matrix multiplication is as follows
-     * [x_new]    [cos, -sin, 0][transform.x]
-     * [y_new] += [sin,  cos, 0][transform.y]
-     * [t_new]    [0,    0,   1][transform.t]
-     *
-     * @param other The transform to transform the pose by.
-     * @return The transformed pose.
+     * @param pos   The 2d vector that represents the Cartesian position.
      */
-    public Pose2d plus(Transform2d other) {
-        return transformBy(other);
+    public Pose2d(Vector2d pos) {
+        this(pos, 0);
+    }
+
+    public Pose2d(Pose2d other) {
+        m_pos = other.getPos();
+        m_heading = other.getHeading();
     }
 
     /**
-     * Returns the Transform2d that maps the one pose to another.
-     *
-     * @param other The initial pose of the transformation.
-     * @return The transform that maps the other pose to the current pose.
+     * @return The Cartesian vector of the 2d position.
      */
-    public Transform2d minus(Pose2d other) {
-        final Pose2d pose = this.relativeTo(other);
-        return new Transform2d(pose.getTranslation(), pose.getRotation());
+    public Vector2d getPos() {
+        return m_pos;
     }
 
     /**
-     * Returns the translation component of the transformation.
-     *
-     * @return The translational component of the pose.
+     * @return The heading of the 2d position.
      */
-    public Translation2d getTranslation() {
-        return m_translation;
+    public double getHeading() {
+        return m_heading;
+    }
+
+    public Pose2d unaryMinus() { return new Pose2d(m_pos.unaryMinus(), -m_heading); }
+
+
+    public Pose2d plus(Pose2d other) {
+        return new Pose2d(m_pos.plus(other.getPos()), m_heading + other.getHeading());
+    }
+
+    public Pose2d minus(Pose2d other) {
+        return plus(other.unaryMinus());
+    }
+
+    public Pose2d times(double scalar) {
+        return new Pose2d(m_pos.times(scalar), m_heading * scalar);
+    }
+
+    public Pose2d div(double scalar) {
+        return times(1 / scalar);
+    }
+
+    public Pose2d rotate(double deltaTheta) {
+        return new Pose2d(m_pos, m_heading + deltaTheta);
     }
 
     /**
-     * Returns the rotational component of the transformation.
+     * Checks equality between this Pose2d and another object
      *
-     * @return The rotational component of the pose.
-     */
-    public Rotation2d getRotation() {
-        return m_rotation;
-    }
-
-    /**
-     * Transforms the pose by the given transformation and returns the new pose.
-     * See + operator for the matrix multiplication performed.
-     *
-     * @param other The transform to transform the pose by.
-     * @return The transformed pose.
-     */
-    public Pose2d transformBy(Transform2d other) {
-        return new Pose2d(m_translation.plus(other.getTranslation().rotateBy(m_rotation)),
-                m_rotation.plus(other.getRotation()));
-    }
-
-    /**
-     * Returns the other pose relative to the current pose.
-     *
-     * <p>This function can often be used for trajectory tracking or pose
-     * stabilization algorithms to get the error between the reference and the
-     * current pose.
-     *
-     * @param other The pose that is the origin of the new coordinate frame that
-     *              the current pose will be converted into.
-     * @return The current pose relative to the new origin pose.
-     */
-    public Pose2d relativeTo(Pose2d other) {
-        Transform2d transform = new Transform2d(other, this);
-        return new Pose2d(transform.getTranslation(), transform.getRotation());
-    }
-
-    /**
-     * Obtain a new Pose2d from a (constant curvature) velocity.
-     *
-     * <p>See <a href="https://file.tavsys.net/control/state-space-guide.pdf">
-     * Controls Engineering in the FIRST Robotics Competition</a>
-     * section on nonlinear pose estimation for derivation.
-     *
-     * <p>The twist is a change in pose in the robot's coordinate frame since the
-     * previous pose update. When the user runs exp() on the previous known
-     * field-relative pose with the argument being the twist, the user will
-     * receive the new field-relative pose.
-     *
-     * <p>"Exp" represents the pose exponential, which is solving a differential
-     * equation moving the pose forward in time.
-     *
-     * @param twist The change in pose in the robot's coordinate frame since the
-     *              previous pose update. For example, if a non-holonomic robot moves forward
-     *              0.01 meters and changes angle by 0.5 degrees since the previous pose update,
-     *              the twist would be Twist2d{0.01, 0.0, toRadians(0.5)}
-     * @return The new pose of the robot.
-     */
-    @SuppressWarnings("LocalVariableName")
-    public Pose2d exp(Twist2d twist) {
-        double dx = twist.dx;
-        double dy = twist.dy;
-        double dtheta = twist.dtheta;
-
-        double sinTheta = Math.sin(dtheta);
-        double cosTheta = Math.cos(dtheta);
-
-        double s;
-        double c;
-        if (Math.abs(dtheta) < 1E-9) {
-            s = 1.0 - 1.0 / 6.0 * dtheta * dtheta;
-            c = 0.5 * dtheta;
-        } else {
-            s = sinTheta / dtheta;
-            c = (1 - cosTheta) / dtheta;
-        }
-        Transform2d transform = new Transform2d(new Translation2d(dx * s - dy * c, dx * c + dy * s),
-                new Rotation2d(cosTheta, sinTheta));
-
-        return this.plus(transform);
-    }
-
-    /**
-     * Returns a Twist2d that maps this pose to the end pose. If c is the output
-     * of a.Log(b), then a.Exp(c) would yield b.
-     *
-     * @param end The end pose for the transformation.
-     * @return The twist that maps this to end.
-     */
-    public Twist2d log(Pose2d end) {
-        final Pose2d transform = end.relativeTo(this);
-        final double dtheta = transform.getRotation().getRadians();
-        final double halfDtheta = dtheta / 2.0;
-
-        final double cosMinusOne = transform.getRotation().getCos() - 1;
-
-        double halfThetaByTanOfHalfDtheta;
-        if (Math.abs(cosMinusOne) < 1E-9) {
-            halfThetaByTanOfHalfDtheta = 1.0 - 1.0 / 12.0 * dtheta * dtheta;
-        } else {
-            halfThetaByTanOfHalfDtheta = -(halfDtheta * transform.getRotation().getSin()) / cosMinusOne;
-        }
-
-        Translation2d translationPart = transform.getTranslation().rotateBy(
-                new Rotation2d(halfThetaByTanOfHalfDtheta, -halfDtheta)
-        ).times(Math.hypot(halfThetaByTanOfHalfDtheta, halfDtheta));
-
-        return new Twist2d(translationPart.getX(), translationPart.getY(), dtheta);
-    }
-
-    @Override
-    public String toString() {
-        return String.format("Pose2d(%s, %s)", m_translation, m_rotation);
-    }
-
-    /**
-     * Checks equality between this Pose2d and another object.
-     *
-     * @param obj The other object.
-     * @return Whether the two objects are equal or not.
+     * @param obj the other object
+     * @return whether the two objects are equal
      */
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof Pose2d) {
-            return ((Pose2d) obj).m_translation.equals(m_translation)
-                    && ((Pose2d) obj).m_rotation.equals(m_rotation);
+            return m_pos.equals(((Pose2d) obj).getPos()) &&
+                    Math.abs(((Pose2d) obj).getHeading() - m_heading) < 1E-9;
         }
         return false;
     }
 
-    public Pose2d rotate(double deltaTheta) {
-        return new Pose2d(m_translation, new Rotation2d(getHeading() + deltaTheta));
-    }
-
-    public double getHeading() {
-        return m_rotation.getRadians();
+    @Override
+    public String toString() {
+        String position = m_pos.toString();
+        String heading = Double.toString(m_heading);
+        return "Pose: " + position + ", Heading: " + heading;
     }
 }

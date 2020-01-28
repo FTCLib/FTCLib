@@ -64,7 +64,7 @@ public class SimpleMotorImpl implements Motor {
 
     public void setDistance(double target, double wheelDiameter) {
         try {
-            motor.setTargetPosition((int) ((target * cpr)/(wheelDiameter*Math.PI)));
+            motor.setTargetPosition((int) (getRotations()*wheelDiameter*Math.PI));
             motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         } catch(Exception e) {
             telemetry.addData("Error: ", e.getMessage());
