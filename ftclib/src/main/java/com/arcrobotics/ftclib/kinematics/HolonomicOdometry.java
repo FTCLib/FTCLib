@@ -11,7 +11,7 @@ import com.arcrobotics.ftclib.geometry.Translation2d;
  * which has omnidirectional translation and rotational movement.
  * More information on the mecanum system can be found {@link MecanumDrive}.
  */
-public class MecanumOdometry {
+public class HolonomicOdometry {
 
     /**
      * The {@link Pose2d} of the robot.
@@ -37,7 +37,7 @@ public class MecanumOdometry {
     /**
      * Empty constructor. Position is defaulted to (0, 0, 0) and track width is 18 inches.
      */
-    public MecanumOdometry() {
+    public HolonomicOdometry() {
         this(18);
     }
 
@@ -47,7 +47,7 @@ public class MecanumOdometry {
      *
      * @param trackWidth The track width of the robot in inches.
      */
-    public MecanumOdometry(double trackWidth) {
+    public HolonomicOdometry(double trackWidth) {
 
         this(new Pose2d(new Translation2d(0, 0), new Rotation2d(0)), trackWidth);
     }
@@ -58,7 +58,7 @@ public class MecanumOdometry {
      * @param pose          the starting position of the robot
      * @param trackWidth    the track width of the robot in inches
      */
-    public MecanumOdometry(Pose2d pose, double trackWidth) {
+    public HolonomicOdometry(Pose2d pose, double trackWidth) {
         robotPos = pose;
         this.trackWidth = trackWidth;
     }
