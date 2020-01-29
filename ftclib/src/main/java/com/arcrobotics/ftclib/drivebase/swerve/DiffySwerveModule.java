@@ -10,7 +10,7 @@ import com.arcrobotics.ftclib.hardware.motors.Motor;
  */
 public class DiffySwerveModule {
 
-    private Motor m_motorOne, m_motorTwo;
+    protected Motor m_motorOne, m_motorTwo;
 
     public final Vector2d MOTOR_1_POWER = new Vector2d(1/Math.sqrt(2), 1/Math.sqrt(2));
     public final Vector2d MOTOR_2_POWER = new Vector2d(-1/Math.sqrt(2),1/Math.sqrt(2));
@@ -58,10 +58,32 @@ public class DiffySwerveModule {
                 motorPowersScaled[0].angle() != MOTOR_1_POWER.angle() ? -motorPowersScaled[0].magnitude()
                         : motorPowersScaled[0].magnitude();
         double motorTwoPower =
-                motorPowersScaled[1].angle() != MOTOR_1_POWER.angle() ? -motorPowersScaled[1].magnitude()
+                motorPowersScaled[1].angle() != MOTOR_2_POWER.angle() ? -motorPowersScaled[1].magnitude()
                         : motorPowersScaled[1].magnitude();
 
-        driveModule(motorOnePower, motorTwoPower);
+        double[] newSpeed = normalize(new double[]{motorOnePower, motorTwoPower});
+
+        driveModule(newSpeed[0], newSpeed[1]);
+    }
+
+    /**
+     * Normalize the wheel speeds if any value is greater than 1
+     */
+    protected double[] normalize(double[] wheelSpeeds) {
+        double maxMagnitude = Math.abs(wheelSpeeds[0]);
+        for (int i = 1; i < wheelSpeeds.length; i++) {
+            double temp = Math.abs(wheelSpeeds[i]);
+            if (maxMagnitude < temp) {
+                maxMagnitude = temp;
+            }
+        }
+        if (maxMagnitude > 1.0) {
+            for (int i = 0; i < wheelSpeeds.length; i++) {
+                wheelSpeeds[i] = wheelSpeeds[i] / maxMagnitude;
+            }
+        }
+
+        return wheelSpeeds;
     }
 
     /**

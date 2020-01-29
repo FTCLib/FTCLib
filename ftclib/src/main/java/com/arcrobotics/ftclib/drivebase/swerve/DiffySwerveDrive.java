@@ -26,7 +26,19 @@ public class DiffySwerveDrive extends RobotDrive {
         drive(new Vector2d(leftX, leftY), new Vector2d(rightX, rightY));
     }
 
+    /**
+     * Angles must be rotated in order to
+     * account for the way the projections work. If the joystick
+     * is pushed forward, then we want the robot to move forward
+     * and not rotate at all. This means that we want strict translation.
+     * This means we want a vector of (mag, 0) which corresponds to
+     * forward motion. Since the joystick is (0, mag), we want to rotate it
+     * by 90 degrees clockwise.
+     */
     public void drive(Vector2d leftPower, Vector2d rightPower) {
+        leftPower = leftPower.rotateBy(-90);
+        rightPower = rightPower.rotateBy(-90);
+
         left.driveModule(leftPower);
         right.driveModule(rightPower);
     }

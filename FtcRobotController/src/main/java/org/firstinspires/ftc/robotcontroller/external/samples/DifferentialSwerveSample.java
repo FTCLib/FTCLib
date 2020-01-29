@@ -11,7 +11,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 @Disabled
 public class DifferentialSwerveSample extends LinearOpMode {
 
-    protected DiffySwerveDrive driveTrain;
+    private DiffySwerveDrive driveTrain;
     private MotorImplEx moduleOne_LEFT, moduleOne_RIGHT, moduleTwo_LEFT, moduleTwo_RIGHT;
 
     @Override

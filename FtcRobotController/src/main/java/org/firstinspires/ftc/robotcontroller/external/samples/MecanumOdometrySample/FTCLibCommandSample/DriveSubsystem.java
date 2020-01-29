@@ -60,7 +60,6 @@ public class DriveSubsystem implements Subsystem {
 
         gyro = new RevIMU(hw);
 
-
         // Autoinverts right side
         driveTrain = new MecanumDrive(frontLeftMotor, frontRightMotor, backLeftMotor, backRightMotor);
 
