@@ -12,7 +12,7 @@ import org.openftc.easyopencv.OpenCvPipeline;
 import java.util.ArrayList;
 
 public class SkystoneDetector extends OpenCvPipeline {
-    enum SkystonePosition {
+    public enum SkystonePosition {
         LEFT_STONE, CENTER_STONE, RIGHT_STONE
     }
     // These are the mats we need, I will be explaining them as we go
