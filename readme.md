@@ -48,7 +48,7 @@ __Features__:
     + Can square an input
     + Make your own drive base with a certain abstract class
     + Includes robot-centric *and* field-centric driving
-    + Customizable for a specifc robot dimensions
+    + Customizable for specifc robot dimensions
     + Includes many of the most common drive bases
         + Differential (Tank) Drive
         + Mecanum Drive
@@ -70,7 +70,7 @@ __Features__:
         + Many uses including the current state, the recent state, and more
     + TriggerReader class
         + A class that represents a gamepad trigger
-        + Includes simlular state-changing methods like GamepadButton
+        + Includes simular state-changing methods like GamepadButton
         + Can set the trigger name for telemetry
 + Geometry
     + Lots of geometry - related classes and functions
@@ -80,7 +80,7 @@ __Features__:
 + Hardware
     + Has a *lot* of hardware classes, interfaces, and items
     + Includes ready made hardware devices not included in the SDK
-    + Many different types of motors and motor related things
+    + Many different types of motors and motor related objects
         + CRServo
         + EncoderEx
         + Motor
