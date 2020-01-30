@@ -1,11 +1,12 @@
 package com.arcrobotics.ftclib.hardware;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 public class JSTEncoder extends ExternalEncoder {
 
-    private DcMotor encoder;
+    private DcMotorEx encoder;
     /**
      * counts: Current encoder counts
      * offset: Offset encoder to "sync"
@@ -15,7 +16,7 @@ public class JSTEncoder extends ExternalEncoder {
     double dpp;
 
     public JSTEncoder(HardwareMap hw, String encoderName) {
-        encoder = hw.get(DcMotor.class, encoderName);
+        encoder = (DcMotorEx) hw.get(DcMotor.class, encoderName);
         encoder.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         encoder.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         counts = 0;
@@ -66,6 +67,9 @@ public class JSTEncoder extends ExternalEncoder {
         encoder.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         offset = 0;
         encoder.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+    }
 
+    public double getRate() {
+        return encoder.getVelocity() * dpp;
     }
 }
