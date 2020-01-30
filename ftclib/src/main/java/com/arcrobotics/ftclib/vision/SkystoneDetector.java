@@ -25,7 +25,7 @@ public class SkystoneDetector extends OpenCvPipeline {
     private double thirdStonePosition;
 
 
-    SkystonePosition position;
+    volatile SkystonePosition position;
 
     ArrayList<Rect> blocks;
 
@@ -49,9 +49,7 @@ public class SkystoneDetector extends OpenCvPipeline {
                 new Point(thirdStonePosition + (stoneWidth / 2), 0.50 * height + (stoneHeight / 2))));
 
         position = null;
-
-
-
+        
     }
     //These will be the points for our rectangle
 
