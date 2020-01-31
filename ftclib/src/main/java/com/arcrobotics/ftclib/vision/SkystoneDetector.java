@@ -1,6 +1,5 @@
 package com.arcrobotics.ftclib.vision;
 
-
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.Point;
@@ -12,6 +11,7 @@ import org.openftc.easyopencv.OpenCvPipeline;
 import java.util.ArrayList;
 
 public class SkystoneDetector extends OpenCvPipeline {
+
     enum SkystonePosition {
         LEFT_STONE, CENTER_STONE, RIGHT_STONE
     }
@@ -24,7 +24,6 @@ public class SkystoneDetector extends OpenCvPipeline {
     private double secondStonePosition;
     private double thirdStonePosition;
 
-
     SkystonePosition position;
 
     ArrayList<Rect> blocks;
@@ -33,7 +32,8 @@ public class SkystoneDetector extends OpenCvPipeline {
         this(width, height, 25, 25, 50, 50);
     }
 
-    public SkystoneDetector(int width, int height, double firstSkystonePositionPercentage, double percentSpacing, double stoneWidth, double stoneHeight){
+    public SkystoneDetector(int width, int height, double firstSkystonePositionPercentage,
+                            double percentSpacing, double stoneWidth, double stoneHeight){
 
         double spacing = (percentSpacing * width) / 100;
         firstStonePosition  = (firstSkystonePositionPercentage / 100) * width;
@@ -41,20 +41,50 @@ public class SkystoneDetector extends OpenCvPipeline {
         thirdStonePosition  = secondStonePosition + spacing;
         blocks = new ArrayList<Rect>();
 
-        blocks.add(new Rect(new Point(firstStonePosition - (stoneWidth / 2), 0.50 * height - (stoneHeight / 2)),
-                new Point(firstStonePosition + (stoneWidth / 2), 0.50 * height + (stoneHeight / 2))));
-        blocks.add(new Rect(new Point(secondStonePosition - (stoneWidth / 2), 0.50 * height - (stoneHeight / 2)),
-                new Point(secondStonePosition + (stoneWidth / 2), 0.50 * height + (stoneHeight / 2))));
-        blocks.add(new Rect(new Point(thirdStonePosition - (stoneWidth / 2), 0.50 * height - (stoneHeight / 2)),
-                new Point(thirdStonePosition + (stoneWidth / 2), 0.50 * height + (stoneHeight / 2))));
+        blocks.add(
+                new Rect(
+                        new Point(
+                                firstStonePosition - (stoneWidth / 2),
+                                0.50 * height - (stoneHeight / 2)
+                        ),
+                        new Point(
+                                firstStonePosition + (stoneWidth / 2),
+                                0.50 * height + (stoneHeight / 2)
+                        )
+                )
+        );
+
+        blocks.add(
+                new Rect(
+                        new Point(
+                                secondStonePosition - (stoneWidth / 2),
+                                0.50 * height - (stoneHeight / 2)
+                        ),
+                        new Point(
+                                secondStonePosition + (stoneWidth / 2),
+                                0.50 * height + (stoneHeight / 2)
+                        )
+                )
+        );
+
+        blocks.add(
+                new Rect(
+                        new Point(
+                                thirdStonePosition - (stoneWidth / 2),
+                                0.50 * height - (stoneHeight / 2)
+                        ),
+                        new Point(
+                                thirdStonePosition + (stoneWidth / 2),
+                                0.50 * height + (stoneHeight / 2)
+                        )
+                )
+        );
 
         position = null;
 
-
-
     }
-    //These will be the points for our rectangle
 
+    //These will be the points for our rectangle
 
     /**
      * This will create the rectangles
@@ -67,7 +97,6 @@ public class SkystoneDetector extends OpenCvPipeline {
         Imgproc.rectangle(frame, rect, color, thickness);
         //submat simply put is cropping the mat
         return frame.submat(rect);
-
     }
 
     @Override
@@ -81,7 +110,7 @@ public class SkystoneDetector extends OpenCvPipeline {
          */
         Imgproc.cvtColor(input, matYCrCb, Imgproc.COLOR_RGB2YCrCb);
 
-        for(Rect stone: blocks) {
+        for (Rect stone: blocks) {
             Mat currentMat = new Mat();
             Core.extractChannel(drawRectangle(matYCrCb, stone, new Scalar (255, 0, 255), 2), currentMat, 2);
             means.add(Core.mean(currentMat));
@@ -132,8 +161,8 @@ public class SkystoneDetector extends OpenCvPipeline {
         return input;
     }
 
-
     public SkystonePosition getSkystonePosition() {
         return position;
     }
+
 }

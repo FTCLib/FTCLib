@@ -2,10 +2,14 @@ package org.firstinspires.ftc.robotcontroller.external.samples;
 
 import com.arcrobotics.ftclib.drivebase.swerve.DiffySwerveDrive;
 import com.arcrobotics.ftclib.drivebase.swerve.DiffySwerveModuleEx;
-import com.arcrobotics.ftclib.geometry.Vector2d;
 import com.arcrobotics.ftclib.hardware.motors.MotorImplEx;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+
+@TeleOp(name="Diffy Swerve Sample 2")
+@Disabled
 public class DifferentialSwerveSampleV2 extends LinearOpMode {
 
     public final double TICKS_PER_MODULE_REV = 28 * (double)(60)/11 *
