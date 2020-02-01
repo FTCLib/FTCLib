@@ -1,8 +1,10 @@
 com.arcrobotics.ftclib
 com.arcrobotics.ftclib.command
+com.arcrobotics.ftclib.command.commands
 com.arcrobotics.ftclib.controller
 com.arcrobotics.ftclib.controller.wpilibcontroller
 com.arcrobotics.ftclib.drivebase
+com.arcrobotics.ftclib.drivebase.swerve
 com.arcrobotics.ftclib.gamepad
 com.arcrobotics.ftclib.geometry
 com.arcrobotics.ftclib.hardware
