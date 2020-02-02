@@ -31,20 +31,28 @@ public class MecanumDrivingSample extends LinearOpMode {
     }
 
     private void driveWithVector(Vector2d vector) {
-        double m_x, m_y;
+        double[] speeds = normalize(new double[]{vector.getX(), vector.getY()});
+        driveTrain.driveRobotCentric(speeds[0], speeds[1],0);
+    }
 
-        if (Math.abs(vector.getX()) > Math.abs(vector.getY()) && Math.abs(vector.getX()) > 1) {
-            m_x = 1;
-            m_y = vector.getY() / vector.getX();
-        } else if (Math.abs(vector.getY()) > 1) {
-            m_x = vector.getX() / vector.getY();
-            m_y = 1;
-        } else {
-            m_x = vector.getX();
-            m_y = vector.getY();
+    /**
+     * Normalize the wheel speeds if any value is greater than 1
+     */
+    private double[] normalize(double[] wheelSpeeds) {
+        double maxMagnitude = Math.abs(wheelSpeeds[0]);
+        for (int i = 1; i < wheelSpeeds.length; i++) {
+            double temp = Math.abs(wheelSpeeds[i]);
+            if (maxMagnitude < temp) {
+                maxMagnitude = temp;
+            }
+        }
+        if (maxMagnitude > 1.0) {
+            for (int i = 0; i < wheelSpeeds.length; i++) {
+                wheelSpeeds[i] = wheelSpeeds[i] / maxMagnitude;
+            }
         }
 
-        driveTrain.driveRobotCentric(m_x, m_y,0);
+        return wheelSpeeds;
     }
 
 }
