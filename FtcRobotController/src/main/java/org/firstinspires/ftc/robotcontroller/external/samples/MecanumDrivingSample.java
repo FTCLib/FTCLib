@@ -33,10 +33,10 @@ public class MecanumDrivingSample extends LinearOpMode {
     private void driveWithVector(Vector2d vector) {
         double m_x, m_y;
 
-        if (vector.getX() > vector.getY() && vector.getX() > 1) {
+        if (Math.abs(vector.getX()) > Math.abs(vector.getY()) && Math.abs(vector.getX()) > 1) {
             m_x = 1;
             m_y = vector.getY() / vector.getX();
-        } else if (vector.getY() > 1) {
+        } else if (Math.abs(vector.getY()) > 1) {
             m_x = vector.getX() / vector.getY();
             m_y = 1;
         } else {
