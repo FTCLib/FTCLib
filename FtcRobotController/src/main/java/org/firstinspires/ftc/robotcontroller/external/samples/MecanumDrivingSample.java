@@ -31,7 +31,20 @@ public class MecanumDrivingSample extends LinearOpMode {
     }
 
     private void driveWithVector(Vector2d vector) {
-        driveTrain.driveRobotCentric(vector.getX(), vector.getY(),0);
+        double m_x, m_y;
+
+        if (vector.getX() > vector.getY() && vector.getX() > 1) {
+            m_x = 1;
+            m_y = vector.getY() / vector.getX();
+        } else if (vector.getY() > 1) {
+            m_x = vector.getX() / vector.getY();
+            m_y = 1;
+        } else {
+            m_x = vector.getX();
+            m_y = vector.getY();
+        }
+
+        driveTrain.driveRobotCentric(m_x, m_y,0);
     }
 
 }
