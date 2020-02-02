@@ -35,7 +35,7 @@ public class SimpleLinearLift {
         timer.start();
 
         while (!timer.done()) {
-            m_liftMotor.setPower(m_controller.calculate(activeTime, timer.currentTime()));
+            m_liftMotor.setPower(m_controller.calculate(activeTime, timer.currentTime()) / activeTime);
         }
     }
 
