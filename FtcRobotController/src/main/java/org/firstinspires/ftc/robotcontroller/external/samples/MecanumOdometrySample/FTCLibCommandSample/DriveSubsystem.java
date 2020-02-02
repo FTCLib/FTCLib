@@ -16,7 +16,6 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class DriveSubsystem implements Subsystem {
 
-
     GamepadEx driverGamepad;
     Telemetry telemetry;
 
@@ -33,9 +32,7 @@ public class DriveSubsystem implements Subsystem {
     final double WHEEL_DIAMETER = 4; // Inches
     final int PULSES_PER_ROTATION = 280; // NEVEREST 40
 
-
     ButtonReader slowDownButton;
-
 
     public DriveSubsystem(GamepadEx driverGamepad, HardwareMap hw, Telemetry telemetry) {
         this.driverGamepad = driverGamepad;
