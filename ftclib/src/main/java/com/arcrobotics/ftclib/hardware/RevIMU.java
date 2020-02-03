@@ -12,9 +12,15 @@ public class RevIMU extends GyroEx {
     double globalHeading;
     double relativeHeading;
     double offset;
+    private int multiplier;
+
+    public RevIMU(HardwareMap hw, String imuName) {
+        revIMU = hw.get(BNO055IMU.class, imuName);
+        multiplier = 1;
+    }
 
     public RevIMU(HardwareMap hw) {
-        revIMU = hw.get(BNO055IMU.class, "imu");
+        this(hw, "imu");
     }
 
     public void init() {
@@ -41,16 +47,20 @@ public class RevIMU extends GyroEx {
         offset = 0;
     }
 
+    public void invertGyro() {
+        multiplier *= -1;
+    }
+
     public double getHeading() {
         globalHeading = revIMU.getAngularOrientation().firstAngle;
         relativeHeading = globalHeading + offset;
         // Return yaw
-        return relativeHeading;
+        return relativeHeading * multiplier;
     }
 
     @Override
     public double getAbsoluteHeading() {
-        return revIMU.getAngularOrientation().firstAngle;
+        return revIMU.getAngularOrientation().firstAngle * multiplier;
     }
 
     // TODO Find the order of these angles
