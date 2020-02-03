@@ -2,7 +2,10 @@ package com.arcrobotics.ftclib.gamepad;
 
 import com.qualcomm.robotcore.hardware.Gamepad;
 
-
+/**
+ * An extended gamepad for more advanced toggles, key events,
+ * and
+ */
 public class GamepadEx {
     public Gamepad gamepad;
 

@@ -29,7 +29,7 @@ public class PController extends PIDFController {
      * @param speed     The maximum speed the motor should rotate.
      */
     public void pControl(Motor affected, double sp, double pv, double speed) {
-        if (Math.abs(sp) > Math.abs(pv)) affected.set(speed * (affected.get() + super.calculate(pv, sp)));
+        if (Math.abs(sp) > Math.abs(pv)) affected.set(speed * super.calculate(pv, sp));
         else affected.set(0);
     }
 

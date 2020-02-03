@@ -20,7 +20,7 @@ public class SimpleLinearLift {
 
     public void moveLift(double power) {
         double error = m_controller.calculate(power, m_liftMotor.getPower());
-        m_liftMotor.setPower(m_liftMotor.getPower() + error);
+        m_liftMotor.setPower(error);
     }
 
     public void moveToPosition(double desiredTicks) {
