@@ -1,7 +1,7 @@
 package com.arcrobotics.ftclib.vision;
 
-
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.Point;
@@ -32,6 +32,7 @@ public class SkystoneDetector extends OpenCvPipeline {
     private Telemetry tl;
     volatile SkystonePosition position;
 
+
     ArrayList<Rect> blocks;
 
     public SkystoneDetector(Telemetry tl) {
@@ -56,9 +57,10 @@ public class SkystoneDetector extends OpenCvPipeline {
     }
     public SkystoneDetector(double firstSkystonePositionPercentage, double percentSpacing, double stoneWidth, double stoneHeight){
         this(firstSkystonePositionPercentage, percentSpacing, stoneWidth, stoneHeight, null);
-    }
-    //These will be the points for our rectangle
 
+    }
+
+    //These will be the points for our rectangle
 
     /**
      * This will create the rectangles
@@ -71,7 +73,6 @@ public class SkystoneDetector extends OpenCvPipeline {
         Imgproc.rectangle(frame, rect, color, thickness);
         //submat simply put is cropping the mat
         return frame.submat(rect);
-
     }
 
     @Override
@@ -146,7 +147,6 @@ public class SkystoneDetector extends OpenCvPipeline {
         return input;
     }
 
-
     public SkystonePosition getSkystonePosition() {
         return position;
     }
@@ -157,8 +157,8 @@ public class SkystoneDetector extends OpenCvPipeline {
      * @param height Height of Frame
      */
     private void setValues(double width, double height) {
-        if(blocks == null) {
-            if(defaultValues) {
+        if (blocks == null) {
+            if (defaultValues) {
                 // Set default values
                 firstSkystonePercentage = 25;
                 percentSpacing = 25;
