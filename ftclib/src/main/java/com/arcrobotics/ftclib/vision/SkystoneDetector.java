@@ -37,10 +37,11 @@ public class SkystoneDetector extends OpenCvPipeline {
 
     public SkystoneDetector(Telemetry tl) {
         this.tl = tl;
+        defaultValues = true;
+        blocks = null;
     }
     public SkystoneDetector() {
         this(null);
-        defaultValues = true;
     }
 
     public SkystoneDetector(double firstSkystonePositionPercentage, double percentSpacing, double stoneWidth, double stoneHeight, Telemetry tl){
@@ -54,6 +55,7 @@ public class SkystoneDetector extends OpenCvPipeline {
         this.tl = tl;
 
         position = null;
+        blocks = null;
     }
     public SkystoneDetector(double firstSkystonePositionPercentage, double percentSpacing, double stoneWidth, double stoneHeight){
         this(firstSkystonePositionPercentage, percentSpacing, stoneWidth, stoneHeight, null);
@@ -137,11 +139,13 @@ public class SkystoneDetector extends OpenCvPipeline {
 
             if(tl != null) {
                 tl.addData("Skystone Position", position);
+                tl.update();
             }
             means.clear();
         } catch (Exception e) {
             if(tl != null) {
                 tl.addData("Exception", e);
+                tl.update();
             }
         }
         return input;
