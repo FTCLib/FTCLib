@@ -1,5 +1,7 @@
 package com.arcrobotics.ftclib.vision;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.Point;
@@ -11,8 +13,7 @@ import org.openftc.easyopencv.OpenCvPipeline;
 import java.util.ArrayList;
 
 public class SkystoneDetector extends OpenCvPipeline {
-
-    enum SkystonePosition {
+    public enum SkystonePosition {
         LEFT_STONE, CENTER_STONE, RIGHT_STONE
     }
     // These are the mats we need, I will be explaining them as we go
@@ -23,64 +24,39 @@ public class SkystoneDetector extends OpenCvPipeline {
     private double firstStonePosition;
     private double secondStonePosition;
     private double thirdStonePosition;
+    private double firstSkystonePercentage;
+    private double percentSpacing;
+    private double stoneWidth, stoneHeight;
+    private boolean defaultValues;
+    private double spacing;
+    private Telemetry tl;
+    volatile SkystonePosition position;
 
-    SkystonePosition position;
 
     ArrayList<Rect> blocks;
 
-    public SkystoneDetector(int width, int height) {
-        this(width, height, 25, 25, 50, 50);
+    public SkystoneDetector(Telemetry tl) {
+        this.tl = tl;
+    }
+    public SkystoneDetector() {
+        this(null);
+        defaultValues = true;
     }
 
-    public SkystoneDetector(int width, int height, double firstSkystonePositionPercentage,
-                            double percentSpacing, double stoneWidth, double stoneHeight){
+    public SkystoneDetector(double firstSkystonePositionPercentage, double percentSpacing, double stoneWidth, double stoneHeight, Telemetry tl){
+        defaultValues = false;
 
-        double spacing = (percentSpacing * width) / 100;
-        firstStonePosition  = (firstSkystonePositionPercentage / 100) * width;
-        secondStonePosition  = firstStonePosition + spacing;
-        thirdStonePosition  = secondStonePosition + spacing;
-        blocks = new ArrayList<Rect>();
+        this.firstSkystonePercentage = firstSkystonePositionPercentage;
+        this.percentSpacing = percentSpacing;
+        this.stoneWidth = stoneWidth;
+        this.stoneHeight = stoneHeight;
 
-        blocks.add(
-                new Rect(
-                        new Point(
-                                firstStonePosition - (stoneWidth / 2),
-                                0.50 * height - (stoneHeight / 2)
-                        ),
-                        new Point(
-                                firstStonePosition + (stoneWidth / 2),
-                                0.50 * height + (stoneHeight / 2)
-                        )
-                )
-        );
-
-        blocks.add(
-                new Rect(
-                        new Point(
-                                secondStonePosition - (stoneWidth / 2),
-                                0.50 * height - (stoneHeight / 2)
-                        ),
-                        new Point(
-                                secondStonePosition + (stoneWidth / 2),
-                                0.50 * height + (stoneHeight / 2)
-                        )
-                )
-        );
-
-        blocks.add(
-                new Rect(
-                        new Point(
-                                thirdStonePosition - (stoneWidth / 2),
-                                0.50 * height - (stoneHeight / 2)
-                        ),
-                        new Point(
-                                thirdStonePosition + (stoneWidth / 2),
-                                0.50 * height + (stoneHeight / 2)
-                        )
-                )
-        );
+        this.tl = tl;
 
         position = null;
+    }
+    public SkystoneDetector(double firstSkystonePositionPercentage, double percentSpacing, double stoneWidth, double stoneHeight){
+        this(firstSkystonePositionPercentage, percentSpacing, stoneWidth, stoneHeight, null);
 
     }
 
@@ -101,63 +77,73 @@ public class SkystoneDetector extends OpenCvPipeline {
 
     @Override
     public Mat processFrame(Mat input) {
-        /**
-         *input which is in RGB is the frame the camera gives
-         *We convert the input frame to the color space matYCrCb
-         *Then we store this converted color space in the mat matYCrCb
-         *For all the color spaces go to
-         *https://docs.opencv.org/3.4/d8/d01/group__imgproc__color__conversions.html
-         */
-        Imgproc.cvtColor(input, matYCrCb, Imgproc.COLOR_RGB2YCrCb);
+        setValues(input.width(), input.height());
+        try {
+            /**
+             *input which is in RGB is the frame the camera gives
+             *We convert the input frame to the color space matYCrCb
+             *Then we store this converted color space in the mat matYCrCb
+             *For all the color spaces go to
+             *https://docs.opencv.org/3.4/d8/d01/group__imgproc__color__conversions.html
+             */
+            Imgproc.cvtColor(input, matYCrCb, Imgproc.COLOR_RGB2YCrCb);
 
-        for (Rect stone: blocks) {
-            Mat currentMat = new Mat();
-            Core.extractChannel(drawRectangle(matYCrCb, stone, new Scalar (255, 0, 255), 2), currentMat, 2);
-            means.add(Core.mean(currentMat));
-            currentMat.release();
-        }
+            for (Rect stone : blocks) {
+                Mat currentMat = new Mat();
+                Core.extractChannel(drawRectangle(matYCrCb, stone, new Scalar(255, 0, 255), 2), currentMat, 2);
+                means.add(Core.mean(currentMat));
+                currentMat.release();
+            }
 
-        Scalar max = means.get(0);
-        int biggestIndex = 0;
+            Scalar max = means.get(0);
+            int biggestIndex = 0;
 
-        for (Scalar k : means) {
-            if (k.val[0] > max.val[0]) {
-                max = k;
-                biggestIndex = means.indexOf(k);
+            for (Scalar k : means) {
+                if (k.val[0] > max.val[0]) {
+                    max = k;
+                    biggestIndex = means.indexOf(k);
+                }
+            }
+
+            switch (biggestIndex) {
+                case 0:
+                    position = SkystonePosition.LEFT_STONE;
+                    Imgproc.rectangle(input, blocks.get(0), new Scalar(0, 255, 0), 30);
+                    Imgproc.rectangle(input, blocks.get(1), new Scalar(255, 0, 0), 30);
+                    Imgproc.rectangle(input, blocks.get(2), new Scalar(255, 0, 0), 30);
+
+                    break;
+                case 1:
+                    position = SkystonePosition.CENTER_STONE;
+                    Imgproc.rectangle(input, blocks.get(0), new Scalar(255, 0, 0), 30);
+                    Imgproc.rectangle(input, blocks.get(1), new Scalar(0, 255, 0), 30);
+                    Imgproc.rectangle(input, blocks.get(2), new Scalar(255, 0, 0), 30);
+                    break;
+                case 2:
+                    Imgproc.rectangle(input, blocks.get(0), new Scalar(255, 0, 0), 30);
+                    Imgproc.rectangle(input, blocks.get(1), new Scalar(255, 0, 0), 30);
+                    Imgproc.rectangle(input, blocks.get(2), new Scalar(0, 255, 0), 30);
+                    position = SkystonePosition.RIGHT_STONE;
+                    break;
+                default:
+                    position = SkystonePosition.RIGHT_STONE;
+                    Imgproc.rectangle(input, blocks.get(0), new Scalar(255, 0, 0), 30);
+                    Imgproc.rectangle(input, blocks.get(1), new Scalar(255, 0, 0), 30);
+                    Imgproc.rectangle(input, blocks.get(2), new Scalar(255, 0, 0), 30);
+                    // Default go for right stone;
+                    break;
+
+            }
+
+            if(tl != null) {
+                tl.addData("Skystone Position", position);
+            }
+            means.clear();
+        } catch (Exception e) {
+            if(tl != null) {
+                tl.addData("Exception", e);
             }
         }
-
-        switch (biggestIndex) {
-            case 0:
-                position = SkystonePosition.LEFT_STONE;
-                Imgproc.rectangle(input, blocks.get(0), new Scalar(0, 255, 0), 30);
-                Imgproc.rectangle(input, blocks.get(1), new Scalar(255, 0, 0), 30);
-                Imgproc.rectangle(input, blocks.get(2), new Scalar(255, 0, 0), 30);
-
-                break;
-            case 1:
-                position = SkystonePosition.CENTER_STONE;
-                Imgproc.rectangle(input, blocks.get(0), new Scalar(255, 0, 0), 30);
-                Imgproc.rectangle(input, blocks.get(1), new Scalar(0, 255, 0), 30);
-                Imgproc.rectangle(input, blocks.get(2), new Scalar(255, 0, 0), 30);
-                break;
-            case 2:
-                Imgproc.rectangle(input, blocks.get(0), new Scalar(255, 0, 0), 30);
-                Imgproc.rectangle(input, blocks.get(1), new Scalar(255, 0, 0), 30);
-                Imgproc.rectangle(input, blocks.get(2), new Scalar(0, 255, 0), 30);
-                position = SkystonePosition.RIGHT_STONE;
-                break;
-            default:
-                position = SkystonePosition.RIGHT_STONE;
-                Imgproc.rectangle(input, blocks.get(0), new Scalar(255, 0, 0), 30);
-                Imgproc.rectangle(input, blocks.get(1), new Scalar(255, 0, 0), 30);
-                Imgproc.rectangle(input, blocks.get(2), new Scalar(255, 0, 0), 30);
-                // Default go for right stone;
-                break;
-
-        }
-        
-        means.clear();
         return input;
     }
 
@@ -165,4 +151,32 @@ public class SkystoneDetector extends OpenCvPipeline {
         return position;
     }
 
+    /**
+     * Sets the target rectangles only once using input's width and height.
+     * @param width Width of Frame
+     * @param height Height of Frame
+     */
+    private void setValues(double width, double height) {
+        if (blocks == null) {
+            if (defaultValues) {
+                // Set default values
+                firstSkystonePercentage = 25;
+                percentSpacing = 25;
+                stoneHeight = 50;
+                stoneWidth = 50;
+            }
+            spacing = (percentSpacing * width) / 100;
+            firstStonePosition = (firstSkystonePercentage / 100) * width;
+            secondStonePosition = firstStonePosition + spacing;
+            thirdStonePosition = secondStonePosition + spacing;
+            blocks = new ArrayList<Rect>();
+
+            blocks.add(new Rect(new Point(firstStonePosition - (stoneWidth / 2), 0.50 * height - (stoneHeight / 2)),
+                    new Point(firstStonePosition + (stoneWidth / 2), 0.50 * height + (stoneHeight / 2))));
+            blocks.add(new Rect(new Point(secondStonePosition - (stoneWidth / 2), 0.50 * height - (stoneHeight / 2)),
+                    new Point(secondStonePosition + (stoneWidth / 2), 0.50 * height + (stoneHeight / 2))));
+            blocks.add(new Rect(new Point(thirdStonePosition - (stoneWidth / 2), 0.50 * height - (stoneHeight / 2)),
+                    new Point(thirdStonePosition + (stoneWidth / 2), 0.50 * height + (stoneHeight / 2))));
+        }
+    }
 }
