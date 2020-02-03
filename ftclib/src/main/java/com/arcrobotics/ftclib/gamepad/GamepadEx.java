@@ -4,15 +4,27 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 
 /**
  * An extended gamepad for more advanced toggles, key events,
- * and
+ * and other control processors.
  */
 public class GamepadEx {
+
+    /** The retrievable gamepad object */
     public Gamepad gamepad;
 
+    /**
+     * The constructor, that contains the gamepad object from the
+     * opmode.
+     *
+     * @param gamepad the gamepad object from the opmode
+     */
     public GamepadEx(Gamepad gamepad) {
         this.gamepad = gamepad;
     }
 
+    /**
+     * @param button    the button object
+     * @return          the boolean value as to whether the button is active or not
+     */
     public boolean getButton(GamepadKeys.Button button) {
 
         boolean buttonValue = false;
@@ -66,6 +78,10 @@ public class GamepadEx {
         return buttonValue;
     }
 
+    /**
+     * @param trigger   the trigger object
+     * @return          the value returned by the trigger in question
+     */
     public double getTrigger(GamepadKeys.Trigger trigger) {
         double triggerValue = 0;
         switch (trigger) {
@@ -81,19 +97,32 @@ public class GamepadEx {
         return triggerValue;
     }
 
+    /**
+     * @return the y-value on the left analog stick
+     */
     public double getLeftY() {
-        return -gamepad.left_stick_y;
+        return gamepad.left_stick_y;
     }
 
+    /**
+     * @return the y-value on the right analog stick
+     */
     public double getRightY() {
         return gamepad.right_stick_y;
     }
 
+    /**
+     * @return the x-value on the left analog stick
+     */
     public double getLeftX() {
         return gamepad.left_stick_x;
     }
 
+    /**
+     * @return the x-value on the right analog stick
+     */
     public double getRightX() {
         return gamepad.right_stick_x;
     }
+
 }
