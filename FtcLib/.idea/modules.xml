@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/../Blocks/Blocks.iml" filepath="$PROJECT_DIR$/../Blocks/Blocks.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../FTCLib.iml" filepath="$PROJECT_DIR$/../FTCLib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../FtcCommon/FtcCommon.iml" filepath="$PROJECT_DIR$/../FtcCommon/FtcCommon.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../FtcRobotController/FtcRobotController.iml" filepath="$PROJECT_DIR$/../FtcRobotController/FtcRobotController.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../Hardware/Hardware.iml" filepath="$PROJECT_DIR$/../Hardware/Hardware.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../Inspection/Inspection.iml" filepath="$PROJECT_DIR$/../Inspection/Inspection.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../OpenRC/OpenRC.iml" filepath="$PROJECT_DIR$/../OpenRC/OpenRC.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../RobotCore/RobotCore.iml" filepath="$PROJECT_DIR$/../RobotCore/RobotCore.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../RobotServer/RobotServer.iml" filepath="$PROJECT_DIR$/../RobotServer/RobotServer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../TeamCode/TeamCode.iml" filepath="$PROJECT_DIR$/../TeamCode/TeamCode.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ftclib.iml" filepath="$PROJECT_DIR$/ftclib.iml" />
+    </modules>
+  </component>
+</project>

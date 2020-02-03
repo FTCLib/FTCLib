@@ -19,6 +19,7 @@ public class Teleop extends OpMode {
     private GamepadEx driverGamepad;
     private PIDLiftController liftController;
     private SimpleLinearLift lift;
+    private MotorImplEx liftMotor;
 
     public static PIDFController pidf = new PIDFController(
             new double[]{kP, kI, kD, kF}
@@ -33,7 +34,9 @@ public class Teleop extends OpMode {
         pidf.setTolerance(kThreshold);
 
         driveSubsystem.initialize();
-        lift = new SimpleLinearLift(new MotorImplEx(hardwareMap, "lift", 537.6), pidf);
+
+        liftMotor = new MotorImplEx(hardwareMap, "lift", 537.6);
+        lift = new SimpleLinearLift(liftMotor, pidf);
         liftController = new PIDLiftController(lift);
     }
 

@@ -15,6 +15,7 @@ public class Auto extends CommandOpMode {
 
     private PIDLiftController liftController;
     private SimpleLinearLift lift;
+    private MotorImplEx liftMotor;
 
     @Override
     public void initialize() {
@@ -25,10 +26,12 @@ public class Auto extends CommandOpMode {
         Teleop.pidf.reset();
         Teleop.pidf.setTolerance(Teleop.kThreshold);
 
+        liftMotor = new MotorImplEx(hardwareMap, "lift", 537.6);
         lift = new SimpleLinearLift(
-                new MotorImplEx(hardwareMap, "lift", 537.6), Teleop.pidf
+                liftMotor, Teleop.pidf
         );
         liftController = new PIDLiftController(lift);
+
         driveSubsystem.initialize();
     }
 

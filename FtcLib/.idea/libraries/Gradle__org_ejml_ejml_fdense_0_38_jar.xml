@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Gradle: org.ejml:ejml-fdense:0.38@jar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.ejml/ejml-fdense/0.38/426ac05f7fb9b87db4e854b8ded9be4fa57b69df/ejml-fdense-0.38.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.ejml/ejml-fdense/0.38/a1bd3444bd9e895b87d3469ea3e5792b82bd7764/ejml-fdense-0.38-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.ejml/ejml-fdense/0.38/29dd627c080e1d9a15708a2e82d7a5b132868b26/ejml-fdense-0.38-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

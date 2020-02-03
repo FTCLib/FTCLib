@@ -10,16 +10,20 @@ public class MecanumDrivingSample extends LinearOpMode {
 
     private MecanumDrive driveTrain;
 
+    private MotorImplEx fL, fR, bL, bR;
+
     // the motors used here are goBILDA Yellow Jackets, 435 rpm
 
     @Override
     public void runOpMode() throws InterruptedException {
 
+        fL = new MotorImplEx(hardwareMap, "frontLeft", 383.6);
+        fR = new MotorImplEx(hardwareMap, "frontRight", 383.6);
+        bL = new MotorImplEx(hardwareMap, "backLeft", 383.6);
+        bR = new MotorImplEx(hardwareMap, "backRight", 383.6);
+
         driveTrain = new MecanumDrive(
-                new MotorImplEx(hardwareMap, "frontLeft", 383.6),
-                new MotorImplEx(hardwareMap, "frontRight", 383.6),
-                new MotorImplEx(hardwareMap, "backLeft", 383.6),
-                new MotorImplEx(hardwareMap, "backRight", 383.6)
+                fL, fR, bL, bR
         );
 
         waitForStart();
