@@ -19,7 +19,7 @@ public class SkystoneSample extends CommandOpMode {
         camera = OpenCvCameraFactory.getInstance().createInternalCamera(OpenCvInternalCamera.CameraDirection.BACK, cameraMonitorViewId);
         camera.openCameraDevice();
 
-        pipeline = new SkystoneDetector(640, 480);
+        pipeline = new SkystoneDetector();
 
         camera.setPipeline(pipeline);
         camera.startStreaming(640, 480, OpenCvCameraRotation.UPRIGHT);

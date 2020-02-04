@@ -3,9 +3,10 @@ package org.firstinspires.ftc.robotcontroller.external.samples.FTCLibCommandSamp
 import com.arcrobotics.ftclib.controller.PIDFController;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.hardware.motors.MotorImplEx;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-
+@Disabled
 @TeleOp(name = "Command-Based Teleop Sample", group = "Command")
 public class Teleop extends OpMode {
 
