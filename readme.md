@@ -1,30 +1,53 @@
+# FTCLib
 ![Android CI | dev](https://github.com/FTCLib/FTCLib/workflows/Android%20CI/badge.svg?branch=dev)
-[![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/FTCLib/FTCLib) 
+[![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/FTCLib/FTCLib)
 
-## FTCLib
+Project led by Jackson Isenberg and the Alpharetta Robotics Club
+
+FTCLib is the FTC library to end all libraries. By porting features from wpilib for FRC, FTCLib makes the use of advanced systems extremely easy for even rookie programmers. This wiki will teach you how to use the library and what each class means and represents. The first thing you should do is either download the project as a zip or fork the repository and use Git to clone the forked repository.
+
+If you are downloading the .zip, you can find it here:
+
+![clone_zip](docs/readme_pics/download_zip.png)
+
+If you are cloning a fork of the repository, here are the basic steps:
+
+1. Open Git Bash.
+2. In the command line, you should use:
+   `git clone https://github.com/username/FTCLib.git`
+   Replace username with your GitHub username as the fork is under your GitHub account.
+3. Wait for the repository to be cloned.
+
+Once you have the repository, open the project in Android Studio. There you will see the TeamCode folder. This is where you will write your robot code.
+
+FTCLib documentation - <https://ftclib.github.io/FTCLib/docs>
+
 ## How to use developer release
-In your build.common.gradle, insert this line into the repositories block:
+Add this to your build.gradle:
 ```
-maven { url "https://ftclib.bintray.com/FTCLib" }
-``` 
+allprojects {
+    repositories {
+        maven { url "https://ftclib.bintray.com/FTCLib" }
+    }
+}
+```  
 Now, in your TeamCode buid.gradle, add these lines:
 ```
 dependencies {
- implementation 'com.arcrobotics:ftclib:1.0.2'
+    implementation 'com.arcrobotics:ftclib:1.0.2' // Replace 1.0.2 with the latest release
 }
 ```
 And that's it!
 
 ## Origin and Upstream
-origin: https://github.com/FTCLib/FTCLib
+origin: <https://github.com/FTCLib/FTCLib>
 
-upstream: https://github.com/OpenFTC/OpenRC-Turbo
+upstream: <https://github.com/OpenFTC/OpenRC-Turbo>
 
 **Contributors: Please read CONTRIBUTING.md**
 
 OpenRC is a modified version of the official [FTC SDK](https://github.com/FIRST-Tech-Challenge/SkyStone)
 in which all of the source code that is normally tucked away inside the AAR files has been extracted into modules. This makes it easy to see and modify almost the entirety of the Robot Controller app's source code. In addition, the history in Git shows all changes that have been made to the core code since OpenRC's inception. This complements the changelogs that FIRST provides, allowing teams to see exactly what code has been changed.
-
 
 ## Legality for competition use
 
@@ -42,23 +65,22 @@ For the curious: the cause of the incompatibility is the result of a bug in the 
 
 ### Variant Descriptions
 
- - **Stock - 40MB APK** *(oof!)*
-     - Competition legal
+* **Stock - 40MB APK** *(oof!)*
+  - Competition legal
 
- - **Turbo - 10MB APK** *(4x smaller!)*
+* **Turbo - 10MB APK** *(4x smaller!)*
+    *Note: If you would like to use Blocks, you will need to copy your private Vuforia key into the `Blocks/src/main/assets/CzechWolf` file*
+  - Vuforia native library loaded dynamically
+  - Vuforia/TF datasets loaded dynamically
+  - OnBotJava removed
 
-     *Note: If you would like to use Blocks, you will need to copy your private Vuforia key into the `Blocks/src/main/assets/CzechWolf` file*
-     - Vuforia native library loaded dynamically
-     - Vuforia/TF datasets loaded dynamically
-     - OnBotJava removed
-
- - **Extreme Turbo - 4MB APK** *(10x smaller!)*
-     - Vuforia native library loaded dynamically
-     - Vuforia/TF datasets loaded dynamically
-     - OnBotJava removed
-     - Blocks removed
-     - Web management removed
-     - Sound files removed
+* **Extreme Turbo - 4MB APK** *(10x smaller!)*
+  - Vuforia native library loaded dynamically
+  - Vuforia/TF datasets loaded dynamically
+  - OnBotJava removed
+  - Blocks removed
+  - Web management removed
+  - Sound files removed
 
 ### Benchmarks
 
@@ -94,13 +116,7 @@ Note: you may get a "variant conflict" when switching variants. You can fix this
  2. In the dropdown for the **TeamCode module**, select your desired variant
  3. Perform a Gradle sync
 
-![image-here](doc/readme_pics/switching_build_variants.png)
-
-## Versioning Scheme
-
-To prevent confusion, OpenRC does not have its own version number. The version number will directly reflect the SDK version that the release is based on. However, the version number will have a letter appended to the end of it, which will be incremented (A-Z) for each release of OpenRC which is based on the same SDK version. When OpenRC is updated to be based on a new SDK version, the letter will reset to A.
-
-For instance, the 3rd release of OpenRC based on SDK v5.0 would be `5.0C`, whereas the first release of OpenRC based on SDK v5.1 would be `5.1A`.
+![image-here](docs/readme_pics/switching_build_variants.png)
 
 ## Dynamic Loading of TensorFlow and Vuforia Datasets
 
@@ -127,45 +143,16 @@ tfod.loadModelFromFile("/sdcard/FIRST/DatasetName.tflite");
 
 ```
 
-
-
-## Release Notes:
+## Release Notes
 
 ### 5.3B
 
 Released on 22 November 2019
 
- - Fix TFOD crash on stock due to incorrect version of TFOD library being used (which conflicted with pre-compiled official FTC SDK AARs)
-
-### 5.3A
-
-Released on 19 October 2019
-
- - Update to SDK v5.3
-
-### 5.2B
-
-Released on 19 September 2019
-
- - Remove universal Blocks Vuforia key per request of FIRST. If you would like to use Blocks, you will need to copy your private Vuforia key into the `Blocks/src/main/assets/CzechWolf` file.
-
-### 5.2A
-
-Released on 11 September 2019
-
- - Update to SDK v5.2
- - **NOTE:** You will need to copy some additional files to the `FIRST` folder of the internal storage after you update. See step #4 in the *Setup Process* section
- - **NOTE:** The TensorFlow and Vuforia sample OpModes for SKYSTONE have been modified slightly to load the datasets from internal storage. **Use the samples in this repo; the stock samples will fail on variants other than stock.** Please also see the *Dynamic Loading of TensorFlow and Vuforia Datasets* section of this readme.
-
-### 5.1A
-
-Released on 26 August 2019
-
- - Update to SDK v5.1
- - Updated dynamic Vuforia loader to enforce being run on Android 6.0 or higher
+* Fix TFOD crash on stock due to incorrect version of TFOD library being used (which conflicted with pre-compiled official FTC SDK AARs)
 
 ### 5.0A
 
 Released on 21 August 2019
 
- - Initial release.
+* Initial release.
