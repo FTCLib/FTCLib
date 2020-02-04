@@ -23,6 +23,8 @@ public class SimpleLinearLift {
     }
 
     public void moveToPosition(double desiredTicks) {
+        if (m_controller.atSetPoint()) m_controller.reset();
+            
         m_liftMotor.setPower(
                 m_controller.calculate(desiredTicks, m_liftMotor.getEncoderPulses())
                 / desiredTicks
@@ -30,6 +32,8 @@ public class SimpleLinearLift {
     }
 
     public void moveWithTimer(int activeTime) {
+        if (m_controller.atSetPoint()) m_controller.reset();
+        
         Timing.Timer timer = new Timing.Timer(activeTime, TimeUnit.MILLISECONDS);
         timer.start();
 
