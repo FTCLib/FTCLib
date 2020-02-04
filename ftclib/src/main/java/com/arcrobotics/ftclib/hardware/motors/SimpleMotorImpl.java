@@ -42,7 +42,10 @@ public class SimpleMotorImpl implements Motor {
     }
 
     public void reset() {
+        DcMotor.RunMode mode = motor.getMode();
         motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        motor.setMode(mode);
+
     }
 
     public int getRaw() {

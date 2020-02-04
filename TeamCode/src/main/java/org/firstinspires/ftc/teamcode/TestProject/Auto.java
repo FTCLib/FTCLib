@@ -5,9 +5,7 @@ import com.arcrobotics.ftclib.controller.PIDFController;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.hardware.SimpleServo;
 import com.arcrobotics.ftclib.hardware.motors.MotorImplEx;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
-@Disabled
 @com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="Command-based Autonomous Sample")  // @Autonomous(...) is the other common choice
 public class Auto extends CommandOpMode {
 
