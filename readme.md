@@ -14,15 +14,188 @@ the [FTC Discord](https://discord.gg/first-tech-challenge "The FTC Discord") .
 
 
 
-## Alpha v1.0.0! (Dev Release)
+## Alpha 2.0.0 (Dev Release)
 
-This is the first official release of FTCLib! The project is still in the Alpha stage, with many things being untested. The project is being added to constantly, and there will most likely be smaller updates to come in the near future. If you want to contribute to the project, be sure to read the [Contributing.MD](https://github.com/Lunerwalker2/FTCLib-1/blob/dev/CONTRIBUTING.md)
+This is the second official release of FTCLib! The project is still in the Alpha stage, with many things being untested. The project is being added to constantly, and there will most likely be smaller updates to come in the near future. If you want to contribute to the project, be sure to read the [Contributing.MD](https://github.com/FTCLib/FTCLib-1/blob/dev/CONTRIBUTING.md)
 
 There is still a great need for Alpha testers, so also please contact us if you are interested in that.
 
+# Attention Users!
+This library uses Java 8! If you do already have Java 8 on your FTC Project, please do so! If you do not know how to, read further. __Doing this__ *will* __require all other devices to delete and then reclone the project following the change!__ You get weird Android Studio errors other wise. To change, go to the `build.common.gradle` and find the lines that say
+
+```groovy
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
+```
+
+Change the `7` to an `8` and then perform a Gradle Sync. You now have Java 8 (and all the things that come with it)!
+
 __Features__:
 
-+ WPILib - Style code base
++ General Bug Fixes
++ Updated to Java 8
++ Vision Added! (Powered by EasyOpenCv)
+    + Custom Skystone Detector!
++ New WPILib Porting
+    + Trajectories
+    + Kinematics
+    + Controllers
+    + And More!
++ Refactored from `ftclib` to `FtcLib`.
++ New Drive Base Functionality Added
+    + DIFFY SWERVE!
+        + Includes *all* Differential Swerve drive features
+        + Field-Centric (Headless) driving
+        + Robot-Centric driving
+        + Integratable with swerve odometry
++ More examples added in the FtcRobotController sample package
+    + PID Linear Lift Sample
+    + Fixed vision sample and the TurnAngleCommmand
+  
+
+
+## Installation
+
+1. Open up your FTC SDK Project in Android Studio.
+
+2. Go to your `build.common.gradle` file in your project.
+
+    ![BuildCommonGradle](https://github.com/OpenFTC/EasyOpenCV/blob/master/doc/images/build-common-gradle.png)
+    
+3. Add the following to the `repositories` section at the bottom of the file.
+
+    ```groovy
+   maven {
+       url "https://ftclib.bintray.com/FTCLib" 
+   }
+   ```
+    
+4. Open the `build.gradle` file in your TeamCode module. 
+    
+    ![TeamCodeGradle](https://github.com/OpenFTC/EasyOpenCV/blob/master/doc/images/teamcode-gradle.png)
+    
+5. Go to the bottom of the file, and add the following.
+
+    ```groovy
+    dependencies {
+        implementation `com.arcrobotics:ftclib:2.0.0`
+    }
+    ```
+    
+6. Perform a gradle sync to implement your changes.
+
+    ![GradleSync](https://github.com/OpenFTC/EasyOpenCV/blob/master/doc/images/gradle-sync.png)
+
+
+7. When the sync finishes, you are done with the installation!
+
+8. One last thing! Because FtcLib uses the EasyOpenCv library, you must copy over a file from there to the RC phone storage.
+Follow the 7th. step of the installation instructions for [EasyOpenCv](https://github.com/OpenFTC/EasyOpenCV/blob/master/readme.md) , and you should be good.
+
+9. You can now use FtcLib in your code
+
+
+__NOTE:__ If your module has a few dependencies, you might have an error related to multidex on building the project.
+This is caused by the project exceeding the limit for imports enforced by Android Studio. To solve this, 
+add `multiDexEnabled true` to the below location inside the `build.common.gradle` file.
+
+```groovy
+
+    defaultConfig {
+        applicationId 'com.qualcomm.ftcrobotcontroller'
+        minSdkVersion 19
+        targetSdkVersion 26
+
+
+        multiDexEnabled true
+```
+
+## Welcome to FTCLib!
+
+Thank you for using the FTCLib library for your code! All of the people who worked on it have put a lot of effort into making FTCLib an amazing library. We thank you for putting our effort to work with your own projects. We hope you have great luck and success with your programming.
+
+The mission of FTCLib is briefly summarized in the following quote made by Jackson from ARC Robotics, who started the library.
+
+
+> Our goal is to make programming easier and more efficient through effective classes and detailed examples of implementation. - Jackson ARC Robotics
+
+
+
+
+---
+
+
+## Usage
+
+For drivetrain kinematics, you can do:
+```java
+MecanumDrive dt = new MecanumDrive(motors);
+
+x = gp1.joyLeft.x;
+y = gp1.joyLeft.y;
+turn = gp1.joyRight.x;
+
+dt.driveRobotCentric(x, y, turn);
+```
+For a simple CV pipeline that aligns the robot with a skystone using a camera server:
+```java
+// create server
+CameraServer cmr = new CameraServer("webcam");
+
+// obtain server info for a certain instance
+res = cmr.getInstance();
+
+// if the skystone is not in range
+while (!res.hasObject(VisualObject.SKYSTONE)) {
+    robot.strafe(Safety.SWIFT, Direction.RIGHT);
+    res = cmr.getInstance();
+}
+robot.stop(Safety.EASE_OFF)
+
+// align robot with the skystone
+robot.centerRobotWithObject(res.getObject(VisualObject.SKYSTONE));
+```
+If you want to have the robot switch to an automatic mode during teleop:
+```java
+// upon a button pressed on gamepad1
+if (gp1.aButtonPressed()) {
+    // end manual mode -> immediate seize of toolop commands
+    robot.endManual();
+    robot.forceReset(Safety.EASE_OFF); // stop the robot, but easily
+    
+    // set safety mode to determined default
+    robot.setSafetyMode(Safety.DEFAULT);
+    
+    // cycle stones from human player
+    robot.setAutoState(AutoState.CYCLE_STONES);
+}
+```
+---
+As you can see, FTC programming would be much more intuitive with the above systems.
+All we have to do is add enough documentation so that even someone who has never programmed
+in FTC before can write an incredible robot program in a relatively minimal amount of time.
+ 
+## How Can You Help?
+
+You think can help us out? Well, you can make a pull request at any time.
+And, if you have FRC or external FTC library experience, then feel free to contact
+us at any time for potential collaborator status.
+
+## Authors
+
+Jackson from ARC Robotics, Daniel from JDroids, Pranav from TecHounds,
+Noah from Radical Raiders, Peter from E-lemon-ators, Ryan from CircuitRunners
+
+## Sources
+
+Install images linked from the [OpenFTC Team](https://www.openftc.org/) This project would not be made possible for use without the incredible help and explanations of OpenFTC.
+
+## Previous Releases
+
+# Alpah 1.0.0 (Dev Release) - Initial Release
+
 + Commander - Based System
     + Command manager for OpMode
         + Can add a sequential command
@@ -128,134 +301,8 @@ __Features__:
             + Can set a rate
             + Can reset the rate
             + Can see if rate has expired yet for refreshing
-+ Some Examples in the TeamCode module (limited)           
-
-
-## Installation
-
-1. Open up your FTC SDK Project in Android Studio.
-
-2. Go to your `build.common.gradle` file in your project.
-
-    ![BuildCommonGradle](https://github.com/OpenFTC/EasyOpenCV/blob/master/doc/images/build-common-gradle.png)
-    
-3. Add the following to the `repositories` section at the bottom of the file.
-
-    ```groovy
-   maven {
-       url "https://ftclib.bintray.com/FTCLib" 
-   }
-   ```
-    
-4. Open the `build.gradle` file in your TeamCode module. 
-    
-    ![TeamCodeGradle](https://github.com/OpenFTC/EasyOpenCV/blob/master/doc/images/teamcode-gradle.png)
-    
-5. Go to the bottom of the file, and add the following.
-
-    ```groovy
-    dependencies {
-        implementation `com.arcrobotics:ftclib:1.0.0`
-    }
-    ```
-    
-6. Perform a gradle sync to implement your changes.
-
-    ![GradleSync](https://github.com/OpenFTC/EasyOpenCV/blob/master/doc/images/gradle-sync.png)
-
-
-7. When the sync finishes, you are done! You can now use FTCLib in your code.
-
-__NOTE:__ If your module has a few dependencies, you might have an error related to multidex on building the project.
-This is caused by the project exceeding the limit for imports enforced by Android Studio. To solve this, 
-add `multiDexEnabled true` to the below location inside the `build.common.gradle` file.
-
-```groovy
-
-    defaultConfig {
-        applicationId 'com.qualcomm.ftcrobotcontroller'
-        minSdkVersion 19
-        targetSdkVersion 26
-
-
-        multiDexEnabled true
-```
-
-## Welcome to FTCLib!
-
-Thank you for using the FTCLib library for your code! All of the people who worked on it have put a lot of effort into making FTCLib and amazing library. We thank you for putting our effort to work with your own projects. We hope you have great luck and success with your programming.
-
-The mission of FTCLib is briefly summarized in the following quote made by Jackson from ARC Robotics, who started the library.
-
-
-> Our goal is to make programming easier and more efficient through effective classes and detailed examples of implementation. - Jackson ARC Robotics
++ Some Examples in the TeamCode module (limited)  
 
 
 
----
-
-
-## Usage
-
-For drivetrain kinematics, you can do:
-```java
-MecanumDrive dt = new MecanumDrive(motors);
-
-x = gp1.joyLeft.x;
-y = gp1.joyLeft.y;
-turn = gp1.joyRight.x;
-
-dt.driveRobotCentric(x, y, turn);
-```
-For a simple CV pipeline that aligns the robot with a skystone using a camera server:
-```java
-// create server
-CameraServer cmr = new CameraServer("webcam");
-
-// obtain server info for a certain instance
-res = cmr.getInstance();
-
-// if the skystone is not in range
-while (!res.hasObject(VisualObject.SKYSTONE)) {
-    robot.strafe(Safety.SWIFT, Direction.RIGHT);
-    res = cmr.getInstance();
-}
-robot.stop(Safety.EASE_OFF)
-
-// align robot with the skystone
-robot.centerRobotWithObject(res.getObject(VisualObject.SKYSTONE));
-```
-If you want to have the robot switch to an automatic mode during teleop:
-```java
-// upon a button pressed on gamepad1
-if (gp1.aButtonPressed()) {
-    // end manual mode -> immediate seize of toolop commands
-    robot.endManual();
-    robot.forceReset(Safety.EASE_OFF); // stop the robot, but easily
-    
-    // set safety mode to determined default
-    robot.setSafetyMode(Safety.DEFAULT);
-    
-    // cycle stones from human player
-    robot.setAutoState(AutoState.CYCLE_STONES);
-}
-```
----
-As you can see, FTC programming would be much more intuitive with the above systems.
-All we have to do is add enough documentation so that even someone who has never programmed
-in FTC before can write an incredible robot program in a relatively minimal amount of time.
- 
-## How Can You Help?
-
-You think can help us out? Well, you can make a pull request at any time.
-And, if you have FRC or external FTC library experience, then feel free to contact
-us at any time for potential collaborator status.
-
-## Authors
-
-Jackson from ARC Robotics, Daniel from JDroids, Pranav from TecHounds,
-Noah from Radical Raiders, Peter from E-lemon-ators, Ryan from CircuitRunners Green.
-
-## Sources
-
-Install images linked from the [OpenFTC Team](https://www.openftc.org/) This project would not be made possible for use without the incredible help and explanations of OpenFTC.
+PS. Please forgive any typos in this README. Sorry! - Ryan :)
