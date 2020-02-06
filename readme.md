@@ -80,7 +80,7 @@ __Features__:
 
     ```groovy
     dependencies {
-        implementation `com.arcrobotics:ftclib:2.0.0`
+        implementation `com.arcrobotics:FtcLib:2.0.0`
     }
     ```
     
