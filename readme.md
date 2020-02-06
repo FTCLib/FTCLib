@@ -83,18 +83,28 @@ __Features__:
         implementation `com.arcrobotics:ftclib:2.0.1`
     }
     ```
+6. Because FTCLib makes use of advanced features, you need to increase the minSdkVersion to 24. Unfortunately, this means that ZTE  Speed Phones are not supported in this release.
+
+In build.common.gradle, change the minSdkVersion from 19 to 24:
+```groovy
+
+    defaultConfig {
+        applicationId 'com.qualcomm.ftcrobotcontroller'
+        minSdkVersion 24
+        targetSdkVersion 26
+```
     
-6. Perform a gradle sync to implement your changes.
+7. Perform a gradle sync to implement your changes.
 
     ![GradleSync](https://github.com/OpenFTC/EasyOpenCV/blob/master/doc/images/gradle-sync.png)
 
 
-7. When the sync finishes, you are done with the installation!
+8. When the sync finishes, you are done with the installation!
 
-8. One last thing! Because FtcLib uses the EasyOpenCv library, you must copy over a file from there to the RC phone storage.
+9. One last thing! Because FtcLib uses the EasyOpenCv library, you must copy over a file from there to the RC phone storage.
 Follow the 7th. step of the installation instructions for [EasyOpenCv](https://github.com/OpenFTC/EasyOpenCV/blob/master/readme.md) , and you should be good.
 
-9. You can now use FtcLib in your code
+10. You can now use FtcLib in your code
 
 
 __NOTE:__ If your module has a few dependencies, you might have an error related to multidex on building the project.
