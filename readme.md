@@ -115,7 +115,7 @@ add `multiDexEnabled true` to the below location inside the `build.common.gradle
 
     defaultConfig {
         applicationId 'com.qualcomm.ftcrobotcontroller'
-        minSdkVersion 19
+        minSdkVersion 24
         targetSdkVersion 26
 
 
