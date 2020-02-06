@@ -14,7 +14,7 @@ the [FTC Discord](https://discord.gg/first-tech-challenge "The FTC Discord") .
 
 
 
-## Alpha 2.0.0 (Dev Release)
+## Alpha 2.0.1 (Dev Release)
 
 This is the second official release of FTCLib! The project is still in the Alpha stage, with many things being untested. The project is being added to constantly, and there will most likely be smaller updates to come in the near future. If you want to contribute to the project, be sure to read the [Contributing.MD](https://github.com/FTCLib/FTCLib-1/blob/dev/CONTRIBUTING.md)
 
@@ -80,7 +80,7 @@ __Features__:
 
     ```groovy
     dependencies {
-        implementation `com.arcrobotics:FtcLib:2.0.0`
+        implementation `com.arcrobotics:ftclib:2.0.1`
     }
     ```
     
