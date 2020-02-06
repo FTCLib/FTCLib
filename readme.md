@@ -21,7 +21,7 @@ This is the second official release of FTCLib! The project is still in the Alpha
 There is still a great need for Alpha testers, so also please contact us if you are interested in that.
 
 # Attention Users!
-This library uses Java 8! If you do already have Java 8 on your FTC Project, please do so! If you do not know how to, read further. __Doing this__ *will* __require all other devices to delete and then reclone the project following the change!__ You get weird Android Studio errors other wise. To change, go to the `build.common.gradle` and find the lines that say
+This library uses Java 8! If you do not already have Java 8 on your FTC Project, please do so! If you do not know how to, read further. __Doing this__ *will* __require all other devices to delete and then reclone the project following the change!__ You get weird Android Studio errors other wise. To change, go to the `build.common.gradle` and find the lines that say
 
 ```groovy
     compileOptions {
