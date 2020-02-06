@@ -19,13 +19,23 @@ public abstract class CommandOpMode extends LinearOpMode {
      */
     public abstract void run();
 
+
+    /**
+     * Init loop. Runs in a loop until start is pressed.
+     */
+    public void initLoop() {}
+
     @Override
     public void runOpMode() throws InterruptedException {
         commandTimer = new ElapsedTime();
         initialize();
-        waitForStart();
+        while(!isStopRequested() && !isStarted()) {
+            initLoop();
+        }
         run();
     }
+
+
 
     /**
      * addSequential takes in a new command and runs it, delaying any code until the command isFinished. Then, it runs its initialize function.
@@ -81,6 +91,9 @@ public abstract class CommandOpMode extends LinearOpMode {
             throw e;
         }
         command.end();
+
+        telemetry.addData("Command Finished: ", command.isFinished());
+        telemetry.update();
     }
 
 }
