@@ -149,23 +149,52 @@ turn = gp1.joyRight.x;
 
 dt.driveRobotCentric(x, y, turn);
 ```
-For a simple CV pipeline that aligns the robot with a skystone using a camera server:
+For a simple CV example that find skystone using built-in detector:
 ```java
-// create server
-CameraServer cmr = new CameraServer("webcam");
+import com.arcrobotics.ftclib.command.CommandOpMode;
+import com.arcrobotics.ftclib.vision.SkystoneDetector;
 
-// obtain server info for a certain instance
-res = cmr.getInstance();
+import org.openftc.easyopencv.OpenCvCamera;
+import org.openftc.easyopencv.OpenCvCameraFactory;
+import org.openftc.easyopencv.OpenCvCameraRotation;
+import org.openftc.easyopencv.OpenCvInternalCamera;
 
-// if the skystone is not in range
-while (!res.hasObject(VisualObject.SKYSTONE)) {
-    robot.strafe(Safety.SWIFT, Direction.RIGHT);
-    res = cmr.getInstance();
+// You don't need CommandOpMode, LinearOpMode, and other OpModes work well
+public class SkystoneSample extends CommandOpMode {
+
+    OpenCvCamera camera;
+    SkystoneDetector pipeline;
+    @Override
+    public void initialize() {
+
+        int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
+        camera = OpenCvCameraFactory.getInstance().createInternalCamera(OpenCvInternalCamera.CameraDirection.BACK, cameraMonitorViewId);
+        camera.openCameraDevice();
+
+        pipeline = new SkystoneDetector();
+
+        camera.setPipeline(pipeline);
+        camera.startStreaming(640, 480, OpenCvCameraRotation.UPRIGHT);
+    }
+
+    @Override
+    public void run() {
+        // Assuming threaded. It hopefully found the skystone at the end of init.
+        SkystoneDetector.SkystonePosition position = pipeline.getSkystonePosition();
+
+        switch (position) {
+            case LEFT_STONE:
+                break;
+            case CENTER_STONE:
+                break;
+            case RIGHT_STONE:
+                break;
+            default:
+                break;
+        }
+    }
 }
-robot.stop(Safety.EASE_OFF)
 
-// align robot with the skystone
-robot.centerRobotWithObject(res.getObject(VisualObject.SKYSTONE));
 ```
 If you want to have the robot switch to an automatic mode during teleop:
 ```java
