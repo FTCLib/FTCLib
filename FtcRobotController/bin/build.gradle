@@ -1,0 +1,64 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 26
+
+    defaultConfig {
+        minSdkVersion 19
+        targetSdkVersion 26
+        versionCode 35
+        versionName "5.3"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+apply from: '../moduleFlavors.gradle'
+
+dependencies {
+    /*
+     * Other Modules
+     */
+    turboApi project(':FtcCommon')
+    turboApi project(':RobotCore')
+    turboApi project(':Inspection')
+    turboApi project(':Blocks')
+    turboApi project(':Hardware')
+    turboApi project(':RobotServer')
+    turboApi project(':OpenRC')
+
+    extremeTurboApi project(':FtcCommon')
+    extremeTurboApi project(':RobotCore')
+    extremeTurboApi project(':Inspection')
+    extremeTurboApi project(':Hardware')
+    extremeTurboApi project(':OpenRC')
+
+    stockApi 'org.openftc:ftccommon-stock:5.3'
+    stockApi 'org.openftc:robotcore-stock:5.3'
+    stockApi 'org.openftc:inspection-stock:5.3'
+    stockApi 'org.openftc:blocks-stock:5.3'
+    stockApi 'org.openftc:hardware-stock:5.3'
+    stockApi 'org.openftc:onbotjava-stock:5.3'
+    stockApi 'org.openftc:robotserver-stock:5.3'
+    stockApi 'com.android.support:support-compat:26.0.0'
+
+    /*
+     * Things needed regardless of turbo/extremeTurbo/stock
+     * that are normally pulled in by modules but must be
+     * pulled in here for stock
+     */
+    stockApi 'com.android.support:support-annotations:28.0.0'
+    stockApi 'org.openftc:tfod-google-ftcsdk-repackaged:5.0' //Specific version of TFOD core library used by FTC SDK
+    stockApi 'org.openftc:tfod-ftc-repackaged:5.0' //FTC specific addons to core TFOD lib
+
+    /*
+     * External
+     */
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation project(path: ':ftclib')
+}

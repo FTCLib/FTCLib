@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="version_name_for_manifest">OpenRC 5.3B</string>
+    <string name="app_name">OpenRC</string>
+</resources>
