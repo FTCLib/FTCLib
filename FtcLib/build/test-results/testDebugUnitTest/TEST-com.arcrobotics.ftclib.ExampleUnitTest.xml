@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.arcrobotics.ftclib.ExampleUnitTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2020-02-07T16:25:12" hostname="ws-a9d4fe98-eb00-492d-84ad-7cfd7bff8608" time="0.001">
-  <properties/>
-  <testcase name="addition_isCorrect" classname="com.arcrobotics.ftclib.ExampleUnitTest" time="0.001"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>
