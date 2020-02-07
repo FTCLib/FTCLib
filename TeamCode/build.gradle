@@ -14,6 +14,7 @@ dependencies {
     /*
      * Other Modules
      */
+    implementation 'org.openftc:easyopencv:1.3.2'
     implementation project(':FtcRobotController')
-    implementation project(path: ':ftclib')
+    implementation project(path: ':FtcLib')
 }

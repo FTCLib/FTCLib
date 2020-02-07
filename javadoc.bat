@@ -1,0 +1,1 @@
+javadoc -sourcepath ftclib/src/main/java -subpackages com.arcrobotics.ftclib -d docs

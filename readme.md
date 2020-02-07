@@ -1,20 +1,54 @@
-# In Development: ftclib
+# FTCLib
+![Android CI | dev](https://github.com/FTCLib/FTCLib/workflows/Android%20CI/badge.svg?branch=dev)
+[![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/FTCLib/FTCLib)
 
-Modeled off wpilib for FRC, the ftclib uses modularization and class dependencies
-for easy robot programming. No need for multiple third-party libraries. Everything
-can be found right here.
+Project led by Jackson Isenberg and the Alpharetta Robotics Club
 
-## DISCLAIMER! 
-__Before using this project, please acknowledge that the FTCLib project is still in Alpha! That means that there are possibly bugs that exist in the code. The FTCLib library is continuing to grow, and part of that process is testing and fixing. By using this project, you except the risk of possible issues that exist in the library.__
+FTCLib is the FTC library to end all libraries. By porting features from wpilib for FRC, FTCLib makes the use of advanced systems extremely easy for even rookie programmers. This wiki will teach you how to use the library and what each class means and represents. The first thing you should do is either download the project as a zip or fork the repository and use Git to clone the forked repository.
 
-This being said, FTCLib is a still in development, so bugs, exceptions, or errors are being fixed as the project progresses. Fixing bugs, exceptions, problems, and/or issues is a big priority for FTCLib, and your help would be greatly appreciated on that task. If you find an issue with FTCLib, please don't hesitate to contact us for a solution/workaround. Issues can be submitted through GitHub, or by email at `ftclib.release@gmail.com`.
+If you are downloading the .zip, you can find it here:
+
+![clone_zip](docs/readme_pics/download_zip.png)
+
+If you are cloning a fork of the repository, here are the basic steps:
+
+1. Open Git Bash.
+2. In the command line, you should use:
+   `git clone https://github.com/username/FTCLib.git`
+   Replace username with your GitHub username as the fork is under your GitHub account.
+3. Wait for the repository to be cloned.
+
+Once you have the repository, open the project in Android Studio. There you will see the TeamCode folder. This is where you will write your robot code.
+
+FTCLib documentation - <https://ftclib.github.io/FTCLib/docs>
+
+## How to use developer release
+Add this to your build.gradle:
+```
+allprojects {
+    repositories {
+        maven { url "https://ftclib.bintray.com/FTCLib" }
+    }
+}
+```  
+Now, in your TeamCode buid.gradle, add these lines:
+```
+dependencies {
+    implementation 'com.arcrobotics:ftclib:1.0.2' // Replace 1.0.2 with the latest release
+}
+```
+And that's it!
+
+## Origin and Upstream
+origin: <https://github.com/FTCLib/FTCLib>
+
+upstream: <https://github.com/OpenFTC/OpenRC-Turbo>
 
 While those two options are the most convenient for most things, another way it to contact one of our members through
 the [FTC Discord](https://discord.gg/first-tech-challenge "The FTC Discord") .
 
 
-
-## Alpha 2.0.1 (Dev Release)
+## Legality for competition use
 
 This is the second official release of FTCLib! The project is still in the Alpha stage, with many things being untested. The project is being added to constantly, and there will most likely be smaller updates to come in the near future. If you want to contribute to the project, be sure to read the [Contributing.MD](https://github.com/FTCLib/FTCLib-1/blob/dev/CONTRIBUTING.md)
 
@@ -99,13 +133,22 @@ In build.common.gradle, change the minSdkVersion from 19 to 24:
     ![GradleSync](https://github.com/OpenFTC/EasyOpenCV/blob/master/doc/images/gradle-sync.png)
 
 
-8. When the sync finishes, you are done with the installation!
+* **Stock - 40MB APK** *(oof!)*
+  - Competition legal
 
-9. One last thing! Because FtcLib uses the EasyOpenCv library, you must copy over a file from there to the RC phone storage.
-Follow the 7th. step of the installation instructions for [EasyOpenCv](https://github.com/OpenFTC/EasyOpenCV/blob/master/readme.md) , and you should be good.
+* **Turbo - 10MB APK** *(4x smaller!)*
+    *Note: If you would like to use Blocks, you will need to copy your private Vuforia key into the `Blocks/src/main/assets/CzechWolf` file*
+  - Vuforia native library loaded dynamically
+  - Vuforia/TF datasets loaded dynamically
+  - OnBotJava removed
 
-10. You can now use FtcLib in your code
-
+* **Extreme Turbo - 4MB APK** *(10x smaller!)*
+  - Vuforia native library loaded dynamically
+  - Vuforia/TF datasets loaded dynamically
+  - OnBotJava removed
+  - Blocks removed
+  - Web management removed
+  - Sound files removed
 
 __NOTE:__ If your module has a few dependencies, you might have an error related to multidex on building the project.
 This is caused by the project exceeding the limit for imports enforced by Android Studio. To solve this, 
@@ -132,10 +175,7 @@ The mission of FTCLib is briefly summarized in the following quote made by Jacks
 > Our goal is to make programming easier and more efficient through effective classes and detailed examples of implementation. - Jackson ARC Robotics
 
 
-
-
----
-
+![image-here](docs/readme_pics/switching_build_variants.png)
 
 ## Usage
 
@@ -196,152 +236,17 @@ public class SkystoneSample extends CommandOpMode {
 }
 
 ```
-If you want to have the robot switch to an automatic mode during teleop:
-```java
-// upon a button pressed on gamepad1
-if (gp1.aButtonPressed()) {
-    // end manual mode -> immediate seize of toolop commands
-    robot.endManual();
-    robot.forceReset(Safety.EASE_OFF); // stop the robot, but easily
-    
-    // set safety mode to determined default
-    robot.setSafetyMode(Safety.DEFAULT);
-    
-    // cycle stones from human player
-    robot.setAutoState(AutoState.CYCLE_STONES);
-}
-```
----
-As you can see, FTC programming would be much more intuitive with the above systems.
-All we have to do is add enough documentation so that even someone who has never programmed
-in FTC before can write an incredible robot program in a relatively minimal amount of time.
- 
-## How Can You Help?
 
-You think can help us out? Well, you can make a pull request at any time.
-And, if you have FRC or external FTC library experience, then feel free to contact
-us at any time for potential collaborator status.
+## Release Notes
 
-## Authors
+### 5.3B
 
-Jackson from ARC Robotics, Daniel from JDroids, Pranav from TecHounds,
-Noah from Radical Raiders, Peter from E-lemon-ators, Ryan from CircuitRunners
+Released on 22 November 2019
 
-## Sources
+* Fix TFOD crash on stock due to incorrect version of TFOD library being used (which conflicted with pre-compiled official FTC SDK AARs)
 
-Install images linked from the [OpenFTC Team](https://www.openftc.org/) This project would not be made possible for use without the incredible help and explanations of OpenFTC.
+### 5.0A
 
-## Previous Releases
+Released on 21 August 2019
 
-# Alpah 1.0.0 (Dev Release) - Initial Release
-
-+ Commander - Based System
-    + Command manager for OpMode
-        + Can add a sequential command
-        + Commands can have a scheduled timeout before the next command
-        + Commands can have modifiable time between loop iterations
-    + Ability for custom commands
-    + Ability for custom subsystems
-+ Controllers
-    + P Controller
-        + Set the P gain
-        + Runs a given Motor with a given setpoint and a previous value
-    + PIDF Controller
-        + Proportional (P), Integral (I), Derivative, (D), and Feedforward (F) gains
-        + Set a setpoint and a measured value
-        + Can set a custom error tolerance for position and velocity
-        + Can set the time period for the iteration of the control loop
-        + Calculate the output at any time
-+ Drive Bases
-    + Abstract drive base classes for all kinds of drive bases!
-    + Each one has a customizable power range and max speed limit
-    + Can clip a value to fit a range
-    + Can normalize the speeds for a given set of powers
-    + Can square an input
-    + Make your own drive base with a certain abstract class
-    + Includes robot-centric *and* field-centric driving
-    + Customizable for a specifc robot dimensions
-    + Includes many of the most common drive bases
-        + Differential (Tank) Drive
-        + Mecanum Drive
-        + H-Drive
-        + Swerve Drive
-            + Includes a Swerve Module with a built-in P controller
-            + Can turn motor to an angle
-        + Robot Drive
-            + Abstract drive base class with basic methods
-            + Use to create your own drive bases
-+ Gamepad
-    + Has many different functions and classes for getting the most out of a gamepad
-    + GamepadEx class
-        + Set up with a normal Gamepad
-        + Read any button value
-        + Read any trigger value
-    + ButtonReader class
-        + A class that represents a gamepad button
-        + Many uses including the current state, the recent state, and more
-    + TriggerReader class
-        + A class that represents a gamepad trigger
-        + Includes simlular state - changing methods like GamepadButton
-        + Can set the trigger name for telemetry
-+ Geometry
-    + Lots of geometry - related classes and functions
-    + Vector2d
-    + Pose2d
-    + Rotation2d
-+ Hardware
-    + Has a *lot* of hardware classes, interfaces, and items
-    + Includes ready made hardware devices not included in the SDK
-    + Many different types of motors and motor related things
-        + CRServo
-        + EncoderEx
-        + Motor
-        + MotorEx
-        + MotorGroup
-    + Other types of servos
-        + SimpleServo
-        + ServoEx
-    + Lots of different sensors and other items, some can be custom - implemented
-        + ExternalEncoder (abstract)
-        + JSTEncoder
-        + GyroEx (abstract)
-        + Rev IMU
-        + SensorColor
-        + RevColorSensorV3
-        + SensorDistance (interface)
-        + SensorDistanceEx (interface)
-        + SensorRevTOFDistance
-+ Kinematics
-    + Odometry!
-    + Has odometry for a couple of common drive bases
-        + DifferentialOdometry
-        + MecanumOdometry
-    + Easily used and integratable
-    + Supports multiple forms of ododmetry
-        + Two wheel + Gyro
-        + Three wheel + Gyro
-        + Three wheel
-+ Utility
-    + Has a few differnt utility functions
-    + Direction
-        + Represents a logical direction
-        + LEFT, RIGHT, UP, DOWN, FORWARDS, BACKWARDS
-    + Safety
-        + Represents an arbitrary safety level
-        + SWIFT, EASE_OFF, DEFAULT, BREAK
-    + Timing
-        + Has a few different functions for a Timer
-            + Can set the timer
-            + Can pause the timer
-            + Can stop the timer
-            + Can read if timer is done
-            + Can reset the timer
-        + Also includes a Rate
-            + Can set a rate
-            + Can reset the rate
-            + Can see if rate has expired yet for refreshing
-+ Some Examples in the TeamCode module (limited)  
-
-
-
-PS. Please forgive any typos in this README. Sorry! - Ryan :)
+* Initial release.
