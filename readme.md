@@ -68,27 +68,113 @@ Change the `7` to an `8` and then perform a Gradle Sync. You now have Java 8 (an
 
 __Features__:
 
-+ General Bug Fixes
-+ Updated to Java 8
-+ Vision Added! (Powered by EasyOpenCv)
-    + Custom Skystone Detector!
-+ New WPILib Porting
-    + Trajectories
-    + Kinematics
-    + Controllers
-    + And More!
-+ Refactored from `ftclib` to `FtcLib`.
-+ New Drive Base Functionality Added
-    + DIFFY SWERVE!
-        + Includes *all* Differential Swerve drive features
-        + Field-Centric (Headless) driving
-        + Robot-Centric driving
-        + Integratable with swerve odometry
-+ More examples added in the FtcRobotController sample package
-    + PID Linear Lift Sample
-    + Fixed vision sample and the TurnAngleCommmand
-  
-
++ WPILib - Style code base
++ Commander - Based System
+    + Command manager for OpMode
+        + Can add a sequential command
+        + Commands can have a scheduled timeout before the next command
+        + Commands can have modifiable time between loop iterations
+    + Ability for custom commands
+    + Ability for custom subsystems
++ Controllers
+    + P Controller
+        + Set the P gain
+        + Runs a given Motor with a given setpoint and a previous value
+    + PIDF Controller
+        + Proportional (P), Integral (I), Derivative, (D), and Feedforward (F) gains
+        + Set a setpoint and a measured value
+        + Can set a custom error tolerance for position and velocity
+        + Can set the time period for the iteration of the control loop
+        + Calculate the output at any time
++ Drive Bases
+    + Abstract drive base classes for all kinds of drive bases!
+    + Each one has a customizable power range and max speed limit
+    + Can clip a value to fit a range
+    + Can normalize the speeds for a given set of powers
+    + Can square an input
+    + Make your own drive base with a certain abstract class
+    + Includes robot-centric *and* field-centric driving
+    + Customizable for specifc robot dimensions
+    + Includes many of the most common drive bases
+        + Differential (Tank) Drive
+        + Mecanum Drive
+        + H-Drive
+        + Swerve Drive
+            + Includes a Swerve Module with a built-in P controller
+            + Can turn motor to an angle
+        + Robot Drive
+            + Abstract drive base class with basic methods
+            + Use to create your own drive bases
++ Gamepad
+    + Has many different functions and classes for getting the most out of a gamepad
+    + GamepadEx class
+        + Set up with a normal Gamepad
+        + Read any button value
+        + Read any trigger value
+    + ButtonReader class
+        + A class that represents a gamepad button
+        + Many uses including the current state, the recent state, and more
+    + TriggerReader class
+        + A class that represents a gamepad trigger
+        + Includes simular state-changing methods like GamepadButton
+        + Can set the trigger name for telemetry
++ Geometry
+    + Lots of geometry - related classes and functions
+    + Vector2d
+    + Pose2d
+    + Rotation2d
++ Hardware
+    + Has a *lot* of hardware classes, interfaces, and items
+    + Includes ready made hardware devices not included in the SDK
+    + Many different types of motors and motor related objects
+        + CRServo
+        + EncoderEx
+        + Motor
+        + MotorEx
+        + MotorGroup
+    + Other types of servos
+        + SimpleServo
+        + ServoEx
+    + Lots of different sensors and other items, some can be custom - implemented
+        + ExternalEncoder (abstract)
+        + JSTEncoder
+        + GyroEx (abstract)
+        + Rev IMU
+        + SensorColor
+        + RevColorSensorV3
+        + SensorDistance (interface)
+        + SensorDistanceEx (interface)
+        + SensorRevTOFDistance
++ Kinematics
+    + Odometry!
+    + Has odometry for a couple of common drive bases
+        + DifferentialOdometry
+        + MecanumOdometry
+    + Easily used and integratable
+    + Supports multiple forms of ododmetry
+        + Two wheel + Gyro
+        + Three wheel + Gyro
+        + Three wheel
++ Utility
+    + Has a few different utility functions
+    + Direction
+        + Represents a logical direction
+        + LEFT, RIGHT, UP, DOWN, FORWARDS, BACKWARDS
+    + Safety
+        + Represents an arbitrary safety level
+        + SWIFT, EASE_OFF, DEFAULT, BREAK
+    + Timing
+        + Has a few different functions for a Timer
+            + Can set the timer
+            + Can pause the timer
+            + Can stop the timer
+            + Can read if timer is done
+            + Can reset the timer
+        + Also includes a Rate
+            + Can set a rate
+            + Can reset the rate
+            + Can see if rate has expired yet for refreshing
++ Some Examples in the TeamCode module (limited)
 
 ## Installation
 
