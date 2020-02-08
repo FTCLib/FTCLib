@@ -6,22 +6,20 @@ import com.arcrobotics.ftclib.gamepad.ButtonReader;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.arcrobotics.ftclib.geometry.Pose2d;
-import com.arcrobotics.ftclib.hardware.ExternalEncoder;
 import com.arcrobotics.ftclib.hardware.JSTEncoder;
 import com.arcrobotics.ftclib.hardware.RevIMU;
 import com.arcrobotics.ftclib.hardware.motors.SimpleMotorImpl;
-import com.arcrobotics.ftclib.kinematics.MecanumOdometry;
+import com.arcrobotics.ftclib.kinematics.HolonomicOdometry;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class DriveSubsystem implements Subsystem {
 
-
     GamepadEx driverGamepad;
     Telemetry telemetry;
 
-    MecanumOdometry odometry;
+    HolonomicOdometry odometry;
 
     //Gyro
     RevIMU gyro;
@@ -34,15 +32,13 @@ public class DriveSubsystem implements Subsystem {
     final double WHEEL_DIAMETER = 4; // Inches
     final int PULSES_PER_ROTATION = 280; // NEVEREST 40
 
-
     ButtonReader slowDownButton;
-
 
     public DriveSubsystem(GamepadEx driverGamepad, HardwareMap hw, Telemetry telemetry) {
         this.driverGamepad = driverGamepad;
         this.telemetry = telemetry;
 
-        odometry = new MecanumOdometry(trackWidth);
+        odometry = new HolonomicOdometry(trackWidth);
 
         backLeftMotor = new SimpleMotorImpl(hw, telemetry,"backLeftMotor");
         frontLeftMotor = new SimpleMotorImpl(hw, telemetry,"frontLeftMotor");
@@ -60,7 +56,6 @@ public class DriveSubsystem implements Subsystem {
         rightEncoder.setInverted(true);
 
         gyro = new RevIMU(hw);
-
 
         // Autoinverts right side
         driveTrain = new MecanumDrive(frontLeftMotor, frontRightMotor, backLeftMotor, backRightMotor);
@@ -114,7 +109,7 @@ public class DriveSubsystem implements Subsystem {
         driveTrain.driveRobotCentric(driverGamepad.getLeftY()  * maxSpeed,
                  driverGamepad.getLeftX() * maxSpeed, driverGamepad.getRightX() * maxSpeed);
 
-        telemetry.addData("Odometry: ", getRobotPose().getPos().toString());
+        telemetry.addData("Odometry: ", getRobotPose().toString());
         telemetry.addData("Absolute Heading: ", gyro.getAbsoluteHeading());
 
     }

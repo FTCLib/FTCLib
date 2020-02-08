@@ -4,7 +4,7 @@ android {
     compileSdkVersion 26
 
     defaultConfig {
-        minSdkVersion 19
+        minSdkVersion 24
         targetSdkVersion 26
         versionCode 67
         versionName "11.9"

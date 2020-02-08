@@ -1,24 +1,70 @@
-# In Development: ftclib
+# FTCLib
+![Android CI | dev](https://github.com/FTCLib/FTCLib/workflows/Android%20CI/badge.svg?branch=dev)
+[![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/FTCLib/FTCLib)
 
-Modeled off wpilib for FRC, the ftclib uses modularization and class dependencies
-for easy robot programming. No need for multiple third-party libraries. Everything
-can be found right here.
+Project led by Jackson Isenberg and the Alpharetta Robotics Club
 
-## DISCLAIMER! 
-__Before using this project, please acknowledge that the FTCLib project is still in Alpha! That means that there are possibly bugs that exist in the code. The FTCLib library is continuing to grow, and part of that process is testing and fixing. By using this project, you accept the risk of possible issues that exist in the library.__
+FTCLib is the FTC library to end all libraries. By porting features from wpilib for FRC, FTCLib makes the use of advanced systems extremely easy for even rookie programmers. This wiki will teach you how to use the library and what each class means and represents. The first thing you should do is either download the project as a zip or fork the repository and use Git to clone the forked repository.
 
-This being said, FTCLib is a still in development, so bugs, exceptions, or errors are being fixed as the project progresses. Fixing bugs, exceptions, problems, and/or issues is a big priority for FTCLib, and your help would be greatly appreciated on that task. If you find an issue with FTCLib, please don't hesitate to contact us for a solution/workaround. Issues can be submitted through GitHub, or by email at `ftclib.release@gmail.com`.
+If you are downloading the .zip, you can find it here:
+
+![clone_zip](docs/readme_pics/download_zip.png)
+
+If you are cloning a fork of the repository, here are the basic steps:
+
+1. Open Git Bash.
+2. In the command line, you should use:
+   `git clone https://github.com/username/FTCLib.git`
+   Replace username with your GitHub username as the fork is under your GitHub account.
+3. Wait for the repository to be cloned.
+
+Once you have the repository, open the project in Android Studio. There you will see the TeamCode folder. This is where you will write your robot code.
+
+FTCLib documentation - <https://ftclib.gitbook.io/ftclib>
+
+## How to use developer release
+Add this to your build.gradle:
+```
+allprojects {
+    repositories {
+        maven { url "https://ftclib.bintray.com/FTCLib" }
+    }
+}
+```  
+Now, in your TeamCode buid.gradle, add these lines:
+```
+dependencies {
+    implementation 'com.arcrobotics:ftclib:1.0.2' // Replace 1.0.2 with the latest release
+}
+```
+And that's it!
+
+## Origin and Upstream
+origin: <https://github.com/FTCLib/FTCLib>
+
+upstream: <https://github.com/OpenFTC/OpenRC-Turbo>
 
 While those two options are the most convenient for most things, another way it to contact one of our members through
 the [FTC Discord](https://discord.gg/first-tech-challenge "The FTC Discord") .
 
 
+## Legality for competition use
 
-## Alpha v1.0.0! (Dev Release)
-
-This is the first official release of FTCLib! The project is still in the Alpha stage, with many things being untested. The project is being added to constantly, and there will most likely be smaller updates to come in the near future. If you want to contribute to the project, be sure to read the [Contributing.MD](https://github.com/Lunerwalker2/FTCLib-1/blob/dev/CONTRIBUTING.md)
+This is the second official release of FTCLib! The project is still in the Alpha stage, with many things being untested. The project is being added to constantly, and there will most likely be smaller updates to come in the near future. If you want to contribute to the project, be sure to read the [Contributing.MD](https://github.com/FTCLib/FTCLib-1/blob/dev/CONTRIBUTING.md)
 
 There is still a great need for Alpha testers, so also please contact us if you are interested in that.
+
+# Attention Users!
+This library uses Java 8! If you do not already have Java 8 on your FTC Project, please do so! If you do not know how to, read further. __Doing this__ *will* __require all other devices to delete and then reclone the project following the change!__ You get weird Android Studio errors other wise. To change, go to the `build.common.gradle` and find the lines that say
+
+```groovy
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
+```
+
+Change the `7` to an `8` and then perform a Gradle Sync. You now have Java 8 (and all the things that come with it)!
 
 __Features__:
 
@@ -128,8 +174,7 @@ __Features__:
             + Can set a rate
             + Can reset the rate
             + Can see if rate has expired yet for refreshing
-+ Some Examples in the TeamCode module (limited)           
-
++ Some Examples in the TeamCode module (limited)
 
 ## Installation
 
@@ -155,16 +200,41 @@ __Features__:
 
     ```groovy
     dependencies {
-        implementation `com.arcrobotics:ftclib:1.0.0`
+        implementation `com.arcrobotics:ftclib:2.0.1`
     }
     ```
+6. Because FTCLib makes use of advanced features, you need to increase the minSdkVersion to 24. Unfortunately, this means that ZTE  Speed Phones are not supported in this release.
+
+In build.common.gradle, change the minSdkVersion from 19 to 24:
+```groovy
+
+    defaultConfig {
+        applicationId 'com.qualcomm.ftcrobotcontroller'
+        minSdkVersion 24
+        targetSdkVersion 26
+```
     
-6. Perform a gradle sync to implement your changes.
+7. Perform a gradle sync to implement your changes.
 
     ![GradleSync](https://github.com/OpenFTC/EasyOpenCV/blob/master/doc/images/gradle-sync.png)
 
 
-7. When the sync finishes, you are done! You can now use FTCLib in your code.
+* **Stock - 40MB APK** *(oof!)*
+  - Competition legal
+
+* **Turbo - 10MB APK** *(4x smaller!)*
+    *Note: If you would like to use Blocks, you will need to copy your private Vuforia key into the `Blocks/src/main/assets/CzechWolf` file*
+  - Vuforia native library loaded dynamically
+  - Vuforia/TF datasets loaded dynamically
+  - OnBotJava removed
+
+* **Extreme Turbo - 4MB APK** *(10x smaller!)*
+  - Vuforia native library loaded dynamically
+  - Vuforia/TF datasets loaded dynamically
+  - OnBotJava removed
+  - Blocks removed
+  - Web management removed
+  - Sound files removed
 
 __NOTE:__ If your module has a few dependencies, you might have an error related to multidex on building the project.
 This is caused by the project exceeding the limit for imports enforced by Android Studio. To solve this, 
@@ -174,7 +244,7 @@ add `multiDexEnabled true` to the below location inside the `build.common.gradle
 
     defaultConfig {
         applicationId 'com.qualcomm.ftcrobotcontroller'
-        minSdkVersion 19
+        minSdkVersion 24
         targetSdkVersion 26
 
 
@@ -183,7 +253,7 @@ add `multiDexEnabled true` to the below location inside the `build.common.gradle
 
 ## Welcome to FTCLib!
 
-Thank you for using the FTCLib library for your code! All of the people who worked on it have put a lot of effort into making FTCLib and amazing library. We thank you for putting our effort to work with your own projects. We hope you have great luck and success with your programming.
+Thank you for using the FTCLib library for your code! All of the people who worked on it have put a lot of effort into making FTCLib an amazing library. We thank you for putting our effort to work with your own projects. We hope you have great luck and success with your programming.
 
 The mission of FTCLib is briefly summarized in the following quote made by Jackson from ARC Robotics, who started the library.
 
@@ -191,9 +261,7 @@ The mission of FTCLib is briefly summarized in the following quote made by Jacks
 > Our goal is to make programming easier and more efficient through effective classes and detailed examples of implementation. - Jackson ARC Robotics
 
 
-
----
-
+![image-here](docs/readme_pics/switching_build_variants.png)
 
 ## Usage
 
@@ -207,55 +275,64 @@ turn = gp1.joyRight.x;
 
 dt.driveRobotCentric(x, y, turn);
 ```
-For a simple CV pipeline that aligns the robot with a skystone using a camera server:
+For a simple CV example that find skystone using built-in detector:
 ```java
-// create server
-CameraServer cmr = new CameraServer("webcam");
+import com.arcrobotics.ftclib.command.CommandOpMode;
+import com.arcrobotics.ftclib.vision.SkystoneDetector;
 
-// obtain server info for a certain instance
-res = cmr.getInstance();
+import org.openftc.easyopencv.OpenCvCamera;
+import org.openftc.easyopencv.OpenCvCameraFactory;
+import org.openftc.easyopencv.OpenCvCameraRotation;
+import org.openftc.easyopencv.OpenCvInternalCamera;
 
-// if the skystone is not in range
-while (!res.hasObject(VisualObject.SKYSTONE)) {
-    robot.strafe(Safety.SWIFT, Direction.RIGHT);
-    res = cmr.getInstance();
+// You don't need CommandOpMode, LinearOpMode, and other OpModes work well
+public class SkystoneSample extends CommandOpMode {
+
+    OpenCvCamera camera;
+    SkystoneDetector pipeline;
+    @Override
+    public void initialize() {
+
+        int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
+        camera = OpenCvCameraFactory.getInstance().createInternalCamera(OpenCvInternalCamera.CameraDirection.BACK, cameraMonitorViewId);
+        camera.openCameraDevice();
+
+        pipeline = new SkystoneDetector();
+
+        camera.setPipeline(pipeline);
+        camera.startStreaming(640, 480, OpenCvCameraRotation.UPRIGHT);
+    }
+
+    @Override
+    public void run() {
+        // Assuming threaded. It hopefully found the skystone at the end of init.
+        SkystoneDetector.SkystonePosition position = pipeline.getSkystonePosition();
+
+        switch (position) {
+            case LEFT_STONE:
+                break;
+            case CENTER_STONE:
+                break;
+            case RIGHT_STONE:
+                break;
+            default:
+                break;
+        }
+    }
 }
-robot.stop(Safety.EASE_OFF)
 
-// align robot with the skystone
-robot.centerRobotWithObject(res.getObject(VisualObject.SKYSTONE));
 ```
-If you want to have the robot switch to an automatic mode during teleop:
-```java
-// upon a button pressed on gamepad1
-if (gp1.aButtonPressed()) {
-    // end manual mode -> immediate seize of toolop commands
-    robot.endManual();
-    robot.forceReset(Safety.EASE_OFF); // stop the robot, but easily
-    
-    // set safety mode to determined default
-    robot.setSafetyMode(Safety.DEFAULT);
-    
-    // cycle stones from human player
-    robot.setAutoState(AutoState.CYCLE_STONES);
-}
-```
----
-As you can see, FTC programming would be much more intuitive with the above systems.
-All we have to do is add enough documentation so that even someone who has never programmed
-in FTC before can write an incredible robot program in a relatively minimal amount of time.
- 
-## How Can You Help?
 
-You think can help us out? Well, you can make a pull request at any time.
-And, if you have FRC or external FTC library experience, then feel free to contact
-us at any time for potential collaborator status.
+## Release Notes
 
-## Authors
+### 5.3B
 
-Jackson from ARC Robotics, Daniel from JDroids, Pranav from TecHounds,
-Noah from Radical Raiders, Peter from E-lemon-ators, Ryan from CircuitRunners Green.
+Released on 22 November 2019
 
-## Sources
+* Fix TFOD crash on stock due to incorrect version of TFOD library being used (which conflicted with pre-compiled official FTC SDK AARs)
 
-Install images linked from the [OpenFTC Team](https://www.openftc.org/) This project would not be made possible for use without the incredible help and explanations of OpenFTC.
+### 5.0A
+
+Released on 21 August 2019
+
+* Initial release.
