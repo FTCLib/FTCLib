@@ -20,7 +20,7 @@ If you are cloning a fork of the repository, here are the basic steps:
 
 Once you have the repository, open the project in Android Studio. There you will see the TeamCode folder. This is where you will write your robot code.
 
-FTCLib documentation - <https://ftclib.github.io/FTCLib/docs>
+FTCLib documentation - <https://ftclib.gitbook.io/ftclib>
 
 ## How to use developer release
 Add this to your build.gradle:
