@@ -141,7 +141,8 @@ public abstract class MotorEx implements Motor {
         motor = mot;
         COUNTS_PER_REV = cpr;
 
-        pidfController = controller;
+        pidfController = veloController;
+       
         //HOTFIX Stores the P value
         pController = positionController;
 
@@ -204,6 +205,8 @@ public abstract class MotorEx implements Motor {
      * Sets the speed of the motor based on the current run mode.
      *
      * @param speed The speed to set. Value should be between -1.0 and 1.0.
+     * 
+     * HOTFIX: AHHH
      */
     public void set(double speed) {
         if (runMode.equals("rtp")) {
