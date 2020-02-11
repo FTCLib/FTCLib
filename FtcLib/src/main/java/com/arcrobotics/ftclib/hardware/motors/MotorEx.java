@@ -14,7 +14,13 @@ public abstract class MotorEx implements Motor {
      * The PIDF controller for the extended motor.
      */
     private PIDFController pidfController;
-
+    
+    /**
+    * Hotfix! Very bad but works
+    *
+    * The P controller for position
+    */
+    private PController pController;
     /**
      * The motor in question.
      */
@@ -122,14 +128,27 @@ public abstract class MotorEx implements Motor {
      * @param controller    The PIDF controller.
      */
     public MotorEx(Motor mot, double cpr, PIDFController controller) {
+        this(mot, cpr, controller, new PController(1));
+    }
+    
+    /**
+    * The constructor for the extended motor which includes a {@link PIDFController} and a {@link PController}
+    * 
+    * HOTFIX!!
+    * 
+    */
+   public MotorEx(Motor mot, double cpr, PIDFController veloController, PController positionController) {
         motor = mot;
         COUNTS_PER_REV = cpr;
 
         pidfController = controller;
+        //HOTFIX Stores the P value
+        pController = positionController;
 
         encoder = new EncoderEx(this);
     }
-
+    
+    
     /**
      * @return The current tick count of the output shaft.
      */
@@ -178,6 +197,7 @@ public abstract class MotorEx implements Motor {
 
     public void resetController() {
         pidfController.reset();
+        pController.reset();
     }
 
     /**
@@ -187,7 +207,7 @@ public abstract class MotorEx implements Motor {
      */
     public void set(double speed) {
         if (runMode.equals("rtp")) {
-            ((PController)pidfController).pControl(motor, targetPos, encoder.getCurrentTicks(), speed);
+            pController.pControl(motor, targetPos, encoder.getCurrentTicks(), speed);
         } else if (runMode.equals("rue")) {
             motor.set(motor.get() + pidfController.calculate(speed, motor.get()));
         } else if (runMode.equals("sare")) {
@@ -198,10 +218,10 @@ public abstract class MotorEx implements Motor {
 
         if (speed == 0) {
             if (zeroBehavior.equals("float")) {
-                ((PController)pidfController).pControl(motor, 0, motor.get(), 0.5);
+                pController.pControl(motor, 0, motor.get(), 0.5);
             } else if (zeroBehavior.equals("break")) {
                 motor.set(0);
-            } else ((PController)pidfController).pControl(motor, 0, motor.get());
+            } else pController.pControl(motor, 0, motor.get());
         }
     }
 
