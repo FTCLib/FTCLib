@@ -1,6 +1,7 @@
-package org.firstinspires.ftc.robotcontroller.external.samples.FTCLibCommandSample;
+package org.firstinspires.ftc.teamcode.TestProject;
 
 import com.arcrobotics.ftclib.command.Subsystem;
+import com.arcrobotics.ftclib.drivebase.DifferentialDrive;
 import com.arcrobotics.ftclib.drivebase.MecanumDrive;
 import com.arcrobotics.ftclib.gamepad.ButtonReader;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
@@ -20,7 +21,7 @@ public class DriveSubsystem implements Subsystem {
     RevIMU gyro;
 
     public SimpleMotorImpl backLeftMotor, frontLeftMotor, backRightMotor, frontRightMotor;
-    public MecanumDrive driveTrain;
+    public DifferentialDrive driveTrain;
 
     final double WHEEL_DIAMETER = 4; // Inches
     final int PULSES_PER_ROTATION = 280; // NEVEREST 40
@@ -33,10 +34,10 @@ public class DriveSubsystem implements Subsystem {
         this.driverGamepad = driverGamepad;
         this.telemetry = telemetry;
 
-        backLeftMotor = new SimpleMotorImpl(hw, telemetry,"backLeftMotor", 383.6);
-        frontLeftMotor = new SimpleMotorImpl(hw, telemetry,"frontLeftMotor", 383.6);
-        backRightMotor = new SimpleMotorImpl(hw, telemetry, "backRightMotor", 383.6);
-        frontRightMotor = new SimpleMotorImpl(hw, telemetry, "frontRightMotor", 383.6);
+        backLeftMotor = new SimpleMotorImpl(hw, telemetry,"backLeftMotor");
+        frontLeftMotor = new SimpleMotorImpl(hw, telemetry,"frontLeftMotor");
+        backRightMotor = new SimpleMotorImpl(hw, telemetry, "backRightMotor");
+        frontRightMotor = new SimpleMotorImpl(hw, telemetry, "frontRightMotor");
 
         gyro = new RevIMU(hw);
 
@@ -50,9 +51,10 @@ public class DriveSubsystem implements Subsystem {
         frontRightMotor.setCpr(PULSES_PER_ROTATION);
 
 
-        driveTrain = new MecanumDrive(false, frontLeftMotor, frontRightMotor, backLeftMotor, backRightMotor);
+        driveTrain = new DifferentialDrive(false, frontLeftMotor, frontRightMotor, backLeftMotor, backRightMotor);
 
         slowDownButton = new ButtonReader(driverGamepad, GamepadKeys.Button.X);
+        gyro.invertGyro();
     }
 
     public double getHeading() {
@@ -87,13 +89,13 @@ public class DriveSubsystem implements Subsystem {
         else
             maxSpeed = 1;
 
-        driveTrain.driveRobotCentric(driverGamepad.getLeftY()  * maxSpeed,
-                 driverGamepad.getLeftX() * maxSpeed, driverGamepad.getRightX() * maxSpeed);
+        driveTrain.arcadeDrive(driverGamepad.getLeftY()  * maxSpeed,
+                 driverGamepad.getRightX() * maxSpeed, false);
     }
 
     @Override
     public void stop() {
-        driveTrain.driveRobotCentric(0, 0, 0);
+        driveTrain.arcadeDrive(0, 0, false);
     }
 
     @Override
