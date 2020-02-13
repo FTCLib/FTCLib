@@ -101,7 +101,7 @@ public class MecanumDrive extends RobotDrive {
      * @param turnSpeed the turn speed of the robot, derived from input
      */
     public void driveRobotCentric(double strafeSpeed, double forwardSpeed, double turnSpeed) {
-        driveFieldCentric(strafePower, forwardSpeed, turnSpeed, 0.0);
+        driveFieldCentric(strafeSpeed, forwardSpeed, turnSpeed, 0.0);
     }
 
 
