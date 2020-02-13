@@ -132,11 +132,9 @@ public abstract class MotorEx implements Motor {
     }
     
     /**
-    * The constructor for the extended motor which includes a {@link PIDFController} and a {@link PController}
-    * 
-    * HOTFIX!!
-    * 
-    */
+     * The constructor for the extended motor which includes a
+     * {@link PIDFController} and a {@link PController}
+     */
    public MotorEx(Motor mot, double cpr, PIDFController veloController, PController positionController) {
         motor = mot;
         COUNTS_PER_REV = cpr;
