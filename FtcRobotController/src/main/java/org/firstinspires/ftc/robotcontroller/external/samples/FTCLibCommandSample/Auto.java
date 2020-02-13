@@ -42,7 +42,7 @@ public class Auto extends CommandOpMode {
         // Drive Forward for 10 inches with a timeout of 4 seconds.
         addSequential(new DriveForwardCommand(driveSubsystem, 10, 0.5), 2);
         // Turn 90 degrees with a timeout of 2 seconds
-        addSequential(new TurnAngleCommand(driveSubsystem, 90), 2);
+        addSequential(new TurnAngleCommand(driveSubsystem, 90, telemetry), 2);
         // Rotate servo 90 degrees more than it was.
         scoringServo.rotateDegrees(90);
         // Wait for the servo to complete its action
