@@ -12,7 +12,7 @@ public class JSTEncoder extends ExternalEncoder {
      * offset: Offset encoder to "sync"
      * dpp: Distance per pulse
      */
-    int counts, offset;
+    int counts, offset, multiplier;
     double dpp;
 
     public JSTEncoder(HardwareMap hw, String encoderName) {
@@ -21,6 +21,7 @@ public class JSTEncoder extends ExternalEncoder {
         encoder.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         counts = 0;
         offset = 0;
+        multiplier = 1;
         dpp = 0;
     }
 
@@ -39,13 +40,13 @@ public class JSTEncoder extends ExternalEncoder {
 
     public void setInverted(boolean isInverted) {
         if(isInverted)
-            encoder.setDirection(DcMotor.Direction.REVERSE);
+            multiplier = -1;
         else
-            encoder.setDirection(DcMotor.Direction.FORWARD);
+            multiplier = 1;
     }
 
     public boolean getInverted() {
-        if(encoder.getDirection() == DcMotor.Direction.REVERSE)
+        if(multiplier == -1)
             return true;
         else
             return false;
@@ -53,7 +54,7 @@ public class JSTEncoder extends ExternalEncoder {
 
     @Override
     public long getCounts() {
-        counts = encoder.getCurrentPosition() + offset;
+        counts = (encoder.getCurrentPosition() + offset) * multiplier;
         return counts;
     }
 
@@ -70,6 +71,6 @@ public class JSTEncoder extends ExternalEncoder {
     }
 
     public double getRate() {
-        return encoder.getVelocity() * dpp;
+        return encoder.getVelocity() * dpp * multiplier;
     }
 }
