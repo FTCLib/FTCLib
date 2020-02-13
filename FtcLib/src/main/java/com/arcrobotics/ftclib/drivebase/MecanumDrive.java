@@ -96,30 +96,30 @@ public class MecanumDrive extends RobotDrive {
      * Drives the robot from the perspective of the robot itself rather than that
      * of the driver.
      *
-     * @param xSpeed    the horizontal speed of the robot, derived from input
-     * @param ySpeed    the vertical speed of the robot, derived from input
+     * @param strafeSpeed    the horizontal speed of the robot, derived from input
+     * @param forwardSpeed    the vertical speed of the robot, derived from input
      * @param turnSpeed the turn speed of the robot, derived from input
      */
-    public void driveRobotCentric(double xSpeed, double ySpeed, double turnSpeed) {
-        driveFieldCentric(xSpeed, ySpeed, turnSpeed, 0.0);
+    public void driveRobotCentric(double strafeSpeed, double forwardSpeed, double turnSpeed) {
+        driveFieldCentric(strafePower, forwardSpeed, turnSpeed, 0.0);
     }
 
+
     /**
-     * Drives the robot from the perspective of the driver. No matter the orientation of the
-     * robot, pushing forward on the drive stick will always drive the robot away
-     * from the driver.
+     * Drives the robot from the perspective of the robot itself rather than that
+     * of the driver.
      *
-     * @param xSpeed    the horizontal speed of the robot, derived from input
-     * @param ySpeed    the vertical speed of the robot, derived from input
+     * @param strafeSpeed    the horizontal speed of the robot, derived from input
+     * @param forwardSpeed    the vertical speed of the robot, derived from input
      * @param turnSpeed the turn speed of the robot, derived from input
-     * @param squareInputs Square the value of the input to allow for finer control
+     * @param squareInputs Square joystick inputs for finer control
      */
-    public void driveRobotCentric(double xSpeed, double ySpeed, double turnSpeed, boolean squareInputs) {
-        xSpeed = squareInputs ? clipRange(squareInput(xSpeed)) : clipRange(xSpeed);
-        ySpeed = squareInputs ? clipRange(squareInput(ySpeed)) : clipRange(ySpeed);
+    public void driveRobotCentric(double strafeSpeed, double forwardSpeed, double turnSpeed, boolean squareInputs) {
+        strafeSpeed = squareInputs ? clipRange(squareInput(strafeSpeed)) : clipRange(strafeSpeed);
+        forwardSpeed = squareInputs ? clipRange(squareInput(forwardSpeed)) : clipRange(forwardSpeed);
         turnSpeed = squareInputs ? clipRange(squareInput(turnSpeed)) : clipRange(turnSpeed);
 
-        driveRobotCentric(xSpeed, ySpeed, turnSpeed);
+        driveRobotCentric(strafeSpeed, forwardSpeed, turnSpeed);
     }
 
     /**
