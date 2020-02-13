@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.robotcontroller.external.samples.FTCLibCommandSample;
+package org.firstinspires.ftc.teamcode.TestProject;
 
 import com.arcrobotics.ftclib.command.Command;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -28,7 +28,7 @@ public class DriveForwardCommand implements Command {
 
     @Override
     public void execute() {
-        driveSubsystem.driveTrain.driveRobotCentric(speed, 0, 0);
+        driveSubsystem.driveTrain.arcadeDrive(speed, 0, false);
     }
 
 

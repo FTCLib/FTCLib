@@ -12,14 +12,15 @@ import org.openftc.easyopencv.OpenCvPipeline;
 
 import java.util.ArrayList;
 
+@SuppressWarnings("unchecked")
 public class SkystoneDetector extends OpenCvPipeline {
     public enum SkystonePosition {
         LEFT_STONE, CENTER_STONE, RIGHT_STONE
     }
     // These are the mats we need, I will be explaining them as we go
-    private Mat matYCrCb = new Mat();
+    private Mat matYCrCb;
 
-    private ArrayList<Scalar> means = new ArrayList();
+    private ArrayList<Scalar> means;
 
     private double firstStonePosition;
     private double secondStonePosition;
@@ -39,6 +40,8 @@ public class SkystoneDetector extends OpenCvPipeline {
         this.tl = tl;
         defaultValues = true;
         blocks = null;
+        means = new ArrayList();
+        matYCrCb  = new Mat();
     }
     public SkystoneDetector() {
         this(null);
@@ -56,6 +59,9 @@ public class SkystoneDetector extends OpenCvPipeline {
 
         position = null;
         blocks = null;
+        means = new ArrayList();
+        matYCrCb  = new Mat();
+
     }
     public SkystoneDetector(double firstSkystonePositionPercentage, double percentSpacing, double stoneWidth, double stoneHeight){
         this(firstSkystonePositionPercentage, percentSpacing, stoneWidth, stoneHeight, null);
