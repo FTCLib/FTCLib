@@ -101,7 +101,7 @@ public class GamepadEx {
      * @return the y-value on the left analog stick
      */
     public double getLeftY() {
-        return gamepad.left_stick_y;
+        return -gamepad.left_stick_y;
     }
 
     /**

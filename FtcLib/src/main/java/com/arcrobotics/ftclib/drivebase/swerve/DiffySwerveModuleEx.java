@@ -32,7 +32,7 @@ public class DiffySwerveModuleEx extends DiffySwerveModule {
      * @param two the second motor
      */
     public DiffySwerveModuleEx(MotorEx one, MotorEx two) {
-        this(one, two, 1, 1);
+        this(one, two, 1, 1, 0.05);
     }
 
     /**
@@ -48,15 +48,17 @@ public class DiffySwerveModuleEx extends DiffySwerveModule {
      *                  this is a value that needs to be tuned;
      *                  it takes into consideration the gear ratios
      *                  and counts per revolution of the motors
+     * @param kP        the P value for the P controller that limits the freedom
+     *                  of rotation for the module
      */
-    public DiffySwerveModuleEx(MotorEx one, MotorEx two, double kAngle, double kWheel) {
+    public DiffySwerveModuleEx(MotorEx one, MotorEx two, double kAngle, double kWheel,
+                               double kP) {
         super(one, two);
 
         kRevConstant = kAngle;
         kWheelConstant = kWheel;
 
-        //TODO: tune this p-value
-        angleController = new PController(0.05);
+        angleController = new PController(kP);
     }
 
     /**
@@ -78,6 +80,15 @@ public class DiffySwerveModuleEx extends DiffySwerveModule {
                 ((MotorEx)m_motorTwo).encoder.getCurrentTicks()
             };
         return counts;
+    }
+
+    /**
+     * Allows you to set the threshold value of the PController
+     *
+     * @param kThreshold    the desired threshold for the controller
+     */
+    public void setThreshold(double kThreshold) {
+        angleController.setTolerance(kThreshold);
     }
 
     public double[] getLastEncoderCounts() {
