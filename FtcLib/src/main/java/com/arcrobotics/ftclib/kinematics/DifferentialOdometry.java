@@ -106,9 +106,9 @@ public class DifferentialOdometry {
      * @param rightInches   the number of inches travelled by the right side of the robot.
      */
     public void update(double heading, double leftInches, double rightInches) {
-        double centralEncoderVal = leftInches / 2 + rightInches / 2;
+        double centralEncoderVal = (leftInches + rightInches) / 2;
 
-        double phi = rightInches / 2 - leftInches / 2;
+        double phi = (rightInches - leftInches) / trackWidth;
         double theta = robotPose.getHeading();
         double deltaTheta = (heading != 0) ? heading - theta : phi;
 

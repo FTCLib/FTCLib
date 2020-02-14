@@ -82,6 +82,15 @@ public class DiffySwerveModuleEx extends DiffySwerveModule {
         return counts;
     }
 
+    /**
+     * Allows you to set the threshold value of the PController
+     *
+     * @param kThreshold    the desired threshold for the controller
+     */
+    public void setThreshold(double kThreshold) {
+        angleController.setTolerance(kThreshold);
+    }
+
     public double[] getLastEncoderCounts() {
         lastMotor1EncoderCount = getRawEncoderCounts()[0];
         lastMotor2EncoderCount = getRawEncoderCounts()[1];

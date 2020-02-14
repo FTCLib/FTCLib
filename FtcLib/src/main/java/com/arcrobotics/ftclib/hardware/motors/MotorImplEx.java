@@ -1,5 +1,6 @@
 package com.arcrobotics.ftclib.hardware.motors;
 
+import com.arcrobotics.ftclib.controller.PController;
 import com.arcrobotics.ftclib.controller.PIDFController;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -40,6 +41,21 @@ public class MotorImplEx extends MotorEx {
         motor = ex;
         distancePerPulse = -1; // not set yet
     }
+
+    /**
+     * The constructor for the motor that includes an internal
+     * PIDF controller.
+     *
+     * @param ex                the motor in question
+     * @param pidfController    the PIDF controller that controls the output of the motor
+     * @param pController       the P controller that controls the position of the motor
+     */
+    public MotorImplEx(MotorImpl ex, PIDFController pidfController, PController pController) {
+        super(ex.mot, ex.getCPR(), pidfController, pController);
+
+        motor = ex;
+        distancePerPulse = -1; // not set yet
+    }
     
     public MotorImplEx(HardwareMap hMap, String name, double cpr) {
         this(new MotorImpl(hMap, name, cpr));
@@ -49,7 +65,14 @@ public class MotorImplEx extends MotorEx {
     
     public MotorImplEx(HardwareMap hMap, String name, double cpr, PIDFController pidfController) {
         this(new MotorImpl(hMap, name, cpr), pidfController);
-        
+
+        distancePerPulse = -1; // not set yet
+    }
+
+    public MotorImplEx(HardwareMap hMap, String name, double cpr, PIDFController pidfController,
+                       PController pController) {
+        this(new MotorImpl(hMap, name, cpr), pidfController, pController);
+
         distancePerPulse = -1; // not set yet
     }
 
