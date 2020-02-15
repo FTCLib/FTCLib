@@ -165,10 +165,12 @@ public class DiffySwerveModuleEx extends DiffySwerveModule {
     }
 
     private double[] optimalAngleAndDirection(Vector2d vec) {
-        double rawAngleDiff = vec.angle() - Math.toRadians(moduleHeading.getAsDouble());
-        double angleApprox = rawAngleDiff > Math.PI ? vec.angle() - Math.PI :
-                             rawAngleDiff < -Math.PI ? vec.angle() + Math.PI :
-                                     vec.angle();
+        double rawAngle1 = vec.angle();
+        double rawAngle2 = vec.angle() < 0 ? vec.angle() + Math.PI : vec.angle() - Math.PI;
+
+        double angleApprox = Math.abs(rawAngle1 - Math.toRadians(moduleHeading.getAsDouble())) >
+                             Math.abs(rawAngle2 - Math.toRadians(moduleHeading.getAsDouble())) ?
+                                rawAngle2 : rawAngle1;
 
         double direction = vec.angle() < 0 ? -1 : 1;
 
