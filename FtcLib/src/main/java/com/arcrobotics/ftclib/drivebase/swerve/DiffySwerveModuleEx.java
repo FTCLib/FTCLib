@@ -155,7 +155,7 @@ public class DiffySwerveModuleEx extends DiffySwerveModule {
     public void driveModule(Vector2d powerVec) {
         double[] angAndMag = optimalAngleAndDirection(powerVec);
         double angle = angAndMag[0];
-        double magnitude = angAndMag[1];
+        double magnitude = angAndMag[1] * powerVec.magnitude();
 
         double nextError = angleController.calculate(angle, Math.toRadians(moduleHeading.getAsDouble()));
         double oneSpeed = Math.cos(nextError) * magnitude;
@@ -167,10 +167,10 @@ public class DiffySwerveModuleEx extends DiffySwerveModule {
     private double[] optimalAngleAndDirection(Vector2d vec) {
         double rawAngleDiff = vec.angle() - Math.toRadians(moduleHeading.getAsDouble());
         double angleApprox = rawAngleDiff > Math.PI ? vec.angle() - Math.PI :
-                             rawAngleDiff < Math.PI ? vec.angle() + Math.PI :
+                             rawAngleDiff < -Math.PI ? vec.angle() + Math.PI :
                                      vec.angle();
 
-        double direction = angleApprox != vec.angle() ? -1 : 1;
+        double direction = vec.angle() < 0 ? -1 : 1;
 
         return new double[]{angleApprox, direction};
     }
