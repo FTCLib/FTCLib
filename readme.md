@@ -36,7 +36,7 @@ allprojects {
 Now, in your TeamCode buid.gradle, add these lines:
 ```
 dependencies {
-    implementation 'com.arcrobotics:ftclib:2.0.2' // Replace 2.0.2 with the latest release
+    implementation 'com.arcrobotics:ftclib:2.0.4' // Replace 2.0.4 with the latest release
 }
 ```
 And that's it! (May need to follow installation instructions below, however)
@@ -202,7 +202,7 @@ __Features__:
 
     ```groovy
     dependencies {
-        implementation `com.arcrobotics:ftclib:2.0.2`
+        implementation `com.arcrobotics:ftclib:2.0.4`
     }
     ```
 6. Because FTCLib makes use of advanced features, you need to increase the minSdkVersion to 24. Unfortunately, this means that ZTE  Speed Phones are not supported in this release.
