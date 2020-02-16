@@ -172,7 +172,7 @@ public class DiffySwerveModuleEx extends DiffySwerveModule {
                              Math.abs(rawAngle2 - Math.toRadians(moduleHeading.getAsDouble())) ?
                                 rawAngle2 : rawAngle1;
 
-        double direction = vec.angle() < 0 ? -1 : 1;
+        double direction = angleApprox == rawAngle1 ? 1 : -1;
 
         return new double[]{angleApprox, direction};
     }
@@ -181,10 +181,11 @@ public class DiffySwerveModuleEx extends DiffySwerveModule {
      * Turns the module to a desired angle. Use this method in a control
      * loop.
      *
-     * @param angle The desired set angle in degrees
+     * @param angle The desired set angle in radians
      */
     public void turnToAngle(double angle) {
-        double nextError = angleController.calculate(Math.toRadians(angle), getRawHeading());
+        double nextError = angleController.calculate(
+                angle, Math.toRadians(moduleHeading.getAsDouble()));
         driveModule(new Vector2d(Math.cos(nextError), Math.sin(nextError)));
     }
 
