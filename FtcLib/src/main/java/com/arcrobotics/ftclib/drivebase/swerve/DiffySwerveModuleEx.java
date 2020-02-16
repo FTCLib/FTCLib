@@ -4,6 +4,8 @@ import com.arcrobotics.ftclib.controller.PController;
 import com.arcrobotics.ftclib.geometry.Vector2d;
 import com.arcrobotics.ftclib.hardware.motors.MotorEx;
 
+import java.util.function.DoubleSupplier;
+
 public class DiffySwerveModuleEx extends DiffySwerveModule {
 
     /**
@@ -22,6 +24,12 @@ public class DiffySwerveModuleEx extends DiffySwerveModule {
     private double distanceTravelled;
     private double lastMotor1EncoderCount;
     private double lastMotor2EncoderCount;
+
+    /**
+     * This is the heading of the module. You can use it
+     * to determine the heading.
+     */
+    public DoubleSupplier moduleHeading;
 
     private PController angleController;
 
@@ -120,6 +128,16 @@ public class DiffySwerveModuleEx extends DiffySwerveModule {
     }
 
     /**
+     * You can set this to use the value returned by getRawHeading()
+     * or from an external sensor.
+     *
+     * @param headingReader the heading pointer
+     */
+    public void setHeadingInterpol(DoubleSupplier headingReader) {
+        moduleHeading = headingReader;
+    }
+
+    /**
      * @return the distance travelled by the module wheel
      */
     public double getDistanceTravelled() {
@@ -130,17 +148,33 @@ public class DiffySwerveModuleEx extends DiffySwerveModule {
      * Once the difference between the desired angle
      * and the current angle reaches 0, the vector becomes
      * (magnitude, 0), which means it will strictly move forward.
+     * Note that it reads the value from the heading interpolator as
+     * a value in degrees, so it is switched to raidans in the code.
      */
     @Override
     public void driveModule(Vector2d powerVec) {
-        double angle = powerVec.angle();
-        double magnitude = powerVec.magnitude();
+        double[] angAndMag = optimalAngleAndDirection(powerVec);
+        double angle = angAndMag[0];
+        double magnitude = angAndMag[1] * powerVec.magnitude();
 
-        double nextError = angleController.calculate(angle, getRawHeading());
+        double nextError = angleController.calculate(angle, Math.toRadians(moduleHeading.getAsDouble()));
         double oneSpeed = Math.cos(nextError) * magnitude;
         double twoSpeed = Math.sin(nextError) * magnitude;
 
         super.driveModule(new Vector2d(oneSpeed, twoSpeed));
+    }
+
+    private double[] optimalAngleAndDirection(Vector2d vec) {
+        double rawAngle1 = vec.angle();
+        double rawAngle2 = vec.angle() < 0 ? vec.angle() + Math.PI : vec.angle() - Math.PI;
+
+        double angleApprox = Math.abs(rawAngle1 - Math.toRadians(moduleHeading.getAsDouble())) >
+                             Math.abs(rawAngle2 - Math.toRadians(moduleHeading.getAsDouble())) ?
+                                rawAngle2 : rawAngle1;
+
+        double direction = vec.angle() < 0 ? -1 : 1;
+
+        return new double[]{angleApprox, direction};
     }
 
     /**
