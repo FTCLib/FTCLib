@@ -2,8 +2,8 @@ apply plugin: 'com.android.library'
 
 ext {
     PUBLISH_GROUP_ID = 'com.arcrobotics'
-    PUBLISH_ARTIFACT_ID = 'FtcLib'
-    PUBLISH_VERSION = '2.0.0'
+    PUBLISH_ARTIFACT_ID = 'ftclib'
+    PUBLISH_VERSION = '2.0.4'
 }
 
 android {
