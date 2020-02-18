@@ -1,6 +1,7 @@
 package com.arcrobotics.ftclib.drivebase.swerve;
 
 import com.arcrobotics.ftclib.controller.PController;
+import com.arcrobotics.ftclib.controller.PIDFController;
 import com.arcrobotics.ftclib.geometry.Vector2d;
 import com.arcrobotics.ftclib.hardware.motors.MotorEx;
 
@@ -31,7 +32,7 @@ public class DiffySwerveModuleEx extends DiffySwerveModule {
      */
     public DoubleSupplier moduleHeading;
 
-    private PController angleController;
+    private PIDFController angleController;
 
     /**
      * Make sure the motors are already reversed if needed
@@ -40,7 +41,8 @@ public class DiffySwerveModuleEx extends DiffySwerveModule {
      * @param two the second motor
      */
     public DiffySwerveModuleEx(MotorEx one, MotorEx two) {
-        this(one, two, 1, 1, 0.05);
+        this(one, two, 1, 1,
+                new PIDFController(new double[]{0.05,0,0,0}));
     }
 
     /**
@@ -56,17 +58,18 @@ public class DiffySwerveModuleEx extends DiffySwerveModule {
      *                  this is a value that needs to be tuned;
      *                  it takes into consideration the gear ratios
      *                  and counts per revolution of the motors
-     * @param kP        the P value for the P controller that limits the freedom
-     *                  of rotation for the module
+     * @param cont      the pidf controller that controls the rotation of the module
      */
     public DiffySwerveModuleEx(MotorEx one, MotorEx two, double kAngle, double kWheel,
-                               double kP) {
+                               PIDFController cont) {
         super(one, two);
 
         kRevConstant = kAngle;
         kWheelConstant = kWheel;
 
-        angleController = new PController(kP);
+        setHeadingInterpol(this::getRawHeading); // by default, it sets this to the raw heading
+
+        angleController = cont;
     }
 
     /**
@@ -75,6 +78,14 @@ public class DiffySwerveModuleEx extends DiffySwerveModule {
     public void resetEncoders() {
         ((MotorEx)m_motorOne).encoder.resetEncoderCount();
         ((MotorEx)m_motorTwo).encoder.resetEncoderCount();
+    }
+
+    public void setDegreesPerTick(double val) {
+        kRevConstant = val;
+    }
+
+    public void setCmsPerTick(double val) {
+        kWheelConstant = val;
     }
 
     /**
@@ -107,12 +118,12 @@ public class DiffySwerveModuleEx extends DiffySwerveModule {
     }
 
     /**
-     * Returns the raw heading of the module in radians
+     * Returns the raw heading of the module in degrees
      *
      * @return the heading of the module
      */
     public double getRawHeading() {
-        return Math.toRadians(kRevConstant * (getRawEncoderCounts()[0] + getRawEncoderCounts()[1]));
+        return kRevConstant * (getRawEncoderCounts()[0] + getRawEncoderCounts()[1]);
     }
 
     /**
@@ -149,7 +160,7 @@ public class DiffySwerveModuleEx extends DiffySwerveModule {
      * and the current angle reaches 0, the vector becomes
      * (magnitude, 0), which means it will strictly move forward.
      * Note that it reads the value from the heading interpolator as
-     * a value in degrees, so it is switched to raidans in the code.
+     * a value in degrees, so it is switched to radians in the code.
      */
     @Override
     public void driveModule(Vector2d powerVec) {
