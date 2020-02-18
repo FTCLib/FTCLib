@@ -11,14 +11,15 @@ public class DiffySwerveModuleEx extends DiffySwerveModule {
 
     /**
      * This is the constant that corresponds to the
-     * revolutions of the module; this value must be tuned
+     * revolutions of the module; this value must be tuned;
+     * this is in degrees per tick
      */
     public double kRevConstant;
 
     /**
      * This is the constant that corresponds to the revolution
      * of the wheel rather than the rotation of the module;
-     * this value must be tuned
+     * this value must be tuned; this is in centimeters per tick
      */
     public double kWheelConstant;
 
