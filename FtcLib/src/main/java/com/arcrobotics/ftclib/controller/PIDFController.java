@@ -198,7 +198,7 @@ public class PIDFController {
         totalError = period * (setPoint - measuredValue);
 
         // returns u(t)
-        return kP * errorVal_p + kI * totalError + kD * errorVal_v + kF;
+        return kP * errorVal_p + kI * totalError + kD * errorVal_v + kF * setPoint;
     }
 
 }
