@@ -25,18 +25,16 @@ Once you have the repository, open the project in Android Studio. There you will
 FTCLib documentation - <https://ftclib.gitbook.io/ftclib>
 
 ## How to use developer release
-Add this to your build.gradle:
-```
-allprojects {
+Add this to your build.common.gradle:
+```groovy
     repositories {
-        maven { url "https://dl.bintray.com/ftclib-dev/FTCLib/" }
+        jcenter()
     }
-}
 ```  
 Now, in your TeamCode buid.gradle, add these lines:
 ```
 dependencies {
-    implementation 'com.arcrobotics:ftclib:2.0.4' // Replace 2.0.4 with the latest release
+    implementation 'com.arcrobotics:ftclib:2.0.6' // Replace 2.0.6 with the latest release
 }
 ```
 And that's it! (May need to follow installation instructions below, however)
@@ -188,10 +186,8 @@ __Features__:
     
 3. Add the following to the `repositories` section at the bottom of the file.
 
-    ```groovy
-   maven {
-       url "https://dl.bintray.com/ftclib-dev/FTCLib/" 
-   }
+   ```groovy
+   jcenter()
    ```
     
 4. Open the `build.gradle` file in your TeamCode module. 
@@ -202,7 +198,7 @@ __Features__:
 
     ```groovy
     dependencies {
-        implementation `com.arcrobotics:ftclib:2.0.4`
+        implementation `com.arcrobotics:ftclib:2.0.6`
     }
     ```
 6. Because FTCLib makes use of advanced features, you need to increase the minSdkVersion to 24. Unfortunately, this means that ZTE  Speed Phones are not supported in this release.
