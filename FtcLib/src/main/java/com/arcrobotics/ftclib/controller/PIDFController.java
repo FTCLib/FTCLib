@@ -139,6 +139,13 @@ public class PIDFController {
     }
 
     /**
+     * @return the tolerances of the controller
+     */
+    public double[] getTolerance() {
+        return new double[]{errorTolerance_p, errorTolerance_v};
+    }
+
+    /**
      * @return the velocity error e'(t)
      */
     public double getVelocityError() {

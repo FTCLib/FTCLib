@@ -27,6 +27,8 @@ public class DiffySwerveModuleEx extends DiffySwerveModule {
     private double lastMotor1EncoderCount;
     private double lastMotor2EncoderCount;
 
+    private boolean takingShortestPath = false;
+
     /**
      * This is the heading of the module. You can use it
      * to determine the heading.
@@ -180,11 +182,16 @@ public class DiffySwerveModuleEx extends DiffySwerveModule {
         double rawAngle1 = vec.angle();
         double rawAngle2 = vec.angle() < 0 ? vec.angle() + Math.PI : vec.angle() - Math.PI;
 
-        double angleApprox = Math.abs(rawAngle1 - Math.toRadians(moduleHeading.getAsDouble())) >
-                             Math.abs(rawAngle2 - Math.toRadians(moduleHeading.getAsDouble())) ?
-                                rawAngle2 : rawAngle1;
+        double angleDiff = Math.abs(rawAngle1 - Math.toRadians(moduleHeading.getAsDouble()));
 
-        double direction = angleApprox == rawAngle1 ? 1 : -1;
+        takingShortestPath = angleDiff < Math.PI / 2;
+
+        double angleApprox = !takingShortestPath ? rawAngle2 : rawAngle1;
+
+        double direction;
+        if (takingShortestPath) {
+            direction = 1;
+        } else direction = -1;
 
         return new double[]{angleApprox, direction};
     }
