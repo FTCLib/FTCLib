@@ -15,10 +15,11 @@ android {
         minSdkVersion 24
         targetSdkVersion 26
         versionCode 1
-        versionName "2.0"
+        versionName '2.0.7'
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles 'consumer-rules.pro'
+        signingConfig signingConfigs.debug
     }
 
     buildTypes {

@@ -36,8 +36,8 @@ public class DifferentialSwerveSampleV2 extends LinearOpMode {
         moduleTwo_LEFT = new MotorImplEx(hardwareMap, "twoLeft", 383.6);
         moduleTwo_RIGHT = new MotorImplEx(hardwareMap, "twoRight", 383.6);
 
-        left = new DiffySwerveModuleEx(moduleOne_LEFT, moduleOne_RIGHT, DEGREES_PER_TICK, CM_PER_TICK);
-        right = new DiffySwerveModuleEx(moduleTwo_LEFT, moduleTwo_RIGHT, DEGREES_PER_TICK, CM_PER_TICK);
+        left = new DiffySwerveModuleEx(moduleOne_LEFT, moduleOne_RIGHT);
+        right = new DiffySwerveModuleEx(moduleTwo_LEFT, moduleTwo_RIGHT);
 
         driveTrain = new DiffySwerveDrive(
                 left, right
