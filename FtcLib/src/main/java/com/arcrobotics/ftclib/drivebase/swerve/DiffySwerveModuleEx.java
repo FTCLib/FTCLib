@@ -27,6 +27,9 @@ public class DiffySwerveModuleEx extends DiffySwerveModule {
     private double lastMotor1EncoderCount;
     private double lastMotor2EncoderCount;
 
+    private boolean takingShortestPath = false;
+    private boolean reversed = false;
+
     /**
      * This is the heading of the module. You can use it
      * to determine the heading.
@@ -165,9 +168,8 @@ public class DiffySwerveModuleEx extends DiffySwerveModule {
      */
     @Override
     public void driveModule(Vector2d powerVec) {
-        double[] angAndMag = optimalAngleAndDirection(powerVec);
-        double angle = angAndMag[0];
-        double magnitude = angAndMag[1] * powerVec.magnitude();
+        double angle = optimalAngle(powerVec);
+        double magnitude = reversed ? -powerVec.magnitude() : powerVec.magnitude();
 
         double nextError = angleController.calculate(angle, Math.toRadians(moduleHeading.getAsDouble()));
         double oneSpeed = Math.cos(nextError) * magnitude;
@@ -176,17 +178,21 @@ public class DiffySwerveModuleEx extends DiffySwerveModule {
         super.driveModule(new Vector2d(oneSpeed, twoSpeed));
     }
 
-    private double[] optimalAngleAndDirection(Vector2d vec) {
+    private double optimalAngle(Vector2d vec) {
         double rawAngle1 = vec.angle();
-        double rawAngle2 = vec.angle() < 0 ? vec.angle() + Math.PI : vec.angle() - Math.PI;
+        double rawAngle2 = rawAngle1 < 0 ? rawAngle1 + Math.PI : rawAngle1 - Math.PI;
+        double angleDiff = Math.abs(rawAngle1 - Math.toRadians(moduleHeading.getAsDouble()));
 
-        double angleApprox = Math.abs(rawAngle1 - Math.toRadians(moduleHeading.getAsDouble())) >
-                             Math.abs(rawAngle2 - Math.toRadians(moduleHeading.getAsDouble())) ?
-                                rawAngle2 : rawAngle1;
+        if (angleDiff > 90) {
+            if (!takingShortestPath) {
+                reversed = !reversed;
+            }
+            takingShortestPath = true;
+        } else {
+            takingShortestPath = false;
+        }
 
-        double direction = angleApprox == rawAngle1 ? 1 : -1;
-
-        return new double[]{angleApprox, direction};
+        return takingShortestPath ? rawAngle2 : rawAngle1;
     }
 
     /**
