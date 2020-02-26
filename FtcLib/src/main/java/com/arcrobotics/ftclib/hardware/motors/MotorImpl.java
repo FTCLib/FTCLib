@@ -4,6 +4,9 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
+import com.qualcomm.robotcore.hardware.VoltageSensor;
+
+import static com.arcrobotics.ftclib.util.MathUtils.clamp;
 
 /**
  * An implementation of the motor. Utilizes the {@link DcMotorEx}
@@ -17,9 +20,10 @@ public class MotorImpl {
 
         private DcMotorEx motor;
         private double counts_per_rev;
-
+        private HardwareMap hMap;
         public CustomMotor(HardwareMap hMap, String motorName, double cpr) {
             motor = (DcMotorEx)hMap.get(DcMotor.class, motorName);
+            this.hMap = hMap;
             counts_per_rev = cpr;
         }
 
