@@ -22,50 +22,200 @@ If you are cloning a fork of the repository, here are the basic steps:
 
 Once you have the repository, open the project in Android Studio. There you will see the TeamCode folder. This is where you will write your robot code.
 
-FTCLib documentation - <https://ftclib.github.io/FTCLib/docs>
+FTCLib documentation - <https://ftclib.gitbook.io/ftclib>
 
 ## How to use developer release
-Add this to your build.gradle:
-```
-allprojects {
+Add this to your build.common.gradle:
+```groovy
     repositories {
-        maven { url "https://ftclib.bintray.com/FTCLib" }
+        jcenter()
     }
-}
 ```  
 Now, in your TeamCode buid.gradle, add these lines:
 ```
 dependencies {
-    implementation 'com.arcrobotics:ftclib:1.0.2' // Replace 1.0.2 with the latest release
+    implementation 'com.arcrobotics:ftclib:2.0.8' // Replace 2.0.8 with the latest release
 }
 ```
-And that's it!
+And that's it! (May need to follow installation instructions below, however)
 
 ## Origin and Upstream
 origin: <https://github.com/FTCLib/FTCLib>
 
 upstream: <https://github.com/OpenFTC/OpenRC-Turbo>
 
-**Contributors: Please read CONTRIBUTING.md**
+While those two options are the most convenient for most things, another way it to contact one of our members through
+the [FTC Discord](https://discord.gg/first-tech-challenge "The FTC Discord") .
 
-OpenRC is a modified version of the official [FTC SDK](https://github.com/FIRST-Tech-Challenge/SkyStone)
-in which all of the source code that is normally tucked away inside the AAR files has been extracted into modules. This makes it easy to see and modify almost the entirety of the Robot Controller app's source code. In addition, the history in Git shows all changes that have been made to the core code since OpenRC's inception. This complements the changelogs that FIRST provides, allowing teams to see exactly what code has been changed.
 
 ## Legality for competition use
 
-According to the [2019-2020 Game Manual Part 1](https://www.firstinspires.org/sites/default/files/uploads/resource_library/ftc/game-manual-part-1.pdf), teams are not allowed to replace or modify the portions of the SDK which are distributed as AAR files, per `<RS09>`. This means that in its default configuration, OpenRC is **not** legal for competition.
+This is the second official release of FTCLib! The project is still in the Alpha stage, with many things being untested. The project is being added to constantly, and there will most likely be smaller updates to come in the near future. If you want to contribute to the project, be sure to read the [Contributing.MD](https://github.com/FTCLib/FTCLib-1/blob/dev/CONTRIBUTING.md)
 
-**HOWEVER**, in order to address this, OpenRC has a `stock` build variant which will compile the `TeamCode` and `FtcRobotController` modules against the official, unmodified AAR files, rather than against the extracted modules.
+There is still a great need for Alpha testers, so also please contact us if you are interested in that.
 
-## Device compatibility
+# Attention Users!
+This library uses Java 8! If you do not already have Java 8 on your FTC Project, please do so! If you do not know how to, read further. __Doing this__ *will* __require all other devices to delete and then reclone the project following the change!__ You get weird Android Studio errors other wise. To change, go to the `build.common.gradle` and find the lines that say
 
-Unfortunately, OpenRC is only compatible with devices that run Android 6.0 or higher. For FTC, this means that it is incompatible with the ZTE Speed. OpenRC will work fine on all other FTC-legal devices (including the new Control Hub).
+```groovy
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
+```
 
-For the curious: the cause of the incompatibility is the result of a bug in the `dlopen()` function of Android versions prior to 6.0. When loading the `libRobotCore.so` on older Android versions, an `UnsatisfiedLinkError` will be thrown because it cannot find a symbol that is declared in `libVuforia.so` and `dlopen()` is not smart enough to know that `libVuforia.so` has already been loaded into memory. See the "Correct soname/path handling" section of [this](https://android.googlesource.com/platform/bionic/+/master/android-changes-for-ndk-developers.md) page for more details.
+Change the `7` to an `8` and then perform a Gradle Sync. You now have Java 8 (and all the things that come with it)!
 
-## Build variants
+__Features__:
 
-### Variant Descriptions
++ WPILib - Style code base
++ Commander - Based System
+    + Command manager for OpMode
+        + Can add a sequential command
+        + Commands can have a scheduled timeout before the next command
+        + Commands can have modifiable time between loop iterations
+    + Ability for custom commands
+    + Ability for custom subsystems
++ Controllers
+    + P Controller
+        + Set the P gain
+        + Runs a given Motor with a given setpoint and a previous value
+    + PIDF Controller
+        + Proportional (P), Integral (I), Derivative, (D), and Feedforward (F) gains
+        + Set a setpoint and a measured value
+        + Can set a custom error tolerance for position and velocity
+        + Can set the time period for the iteration of the control loop
+        + Calculate the output at any time
++ Drive Bases
+    + Abstract drive base classes for all kinds of drive bases!
+    + Each one has a customizable power range and max speed limit
+    + Can clip a value to fit a range
+    + Can normalize the speeds for a given set of powers
+    + Can square an input
+    + Make your own drive base with a certain abstract class
+    + Includes robot-centric *and* field-centric driving
+    + Customizable for specifc robot dimensions
+    + Includes many of the most common drive bases
+        + Differential (Tank) Drive
+        + Mecanum Drive
+        + H-Drive
+        + Swerve Drive
+            + Includes a Swerve Module with a built-in P controller
+            + Can turn motor to an angle
+        + Robot Drive
+            + Abstract drive base class with basic methods
+            + Use to create your own drive bases
++ Gamepad
+    + Has many different functions and classes for getting the most out of a gamepad
+    + GamepadEx class
+        + Set up with a normal Gamepad
+        + Read any button value
+        + Read any trigger value
+    + ButtonReader class
+        + A class that represents a gamepad button
+        + Many uses including the current state, the recent state, and more
+    + TriggerReader class
+        + A class that represents a gamepad trigger
+        + Includes simular state-changing methods like GamepadButton
+        + Can set the trigger name for telemetry
++ Geometry
+    + Lots of geometry - related classes and functions
+    + Vector2d
+    + Pose2d
+    + Rotation2d
++ Hardware
+    + Has a *lot* of hardware classes, interfaces, and items
+    + Includes ready made hardware devices not included in the SDK
+    + Many different types of motors and motor related objects
+        + CRServo
+        + EncoderEx
+        + Motor
+        + MotorEx
+        + MotorGroup
+    + Other types of servos
+        + SimpleServo
+        + ServoEx
+    + Lots of different sensors and other items, some can be custom - implemented
+        + ExternalEncoder (abstract)
+        + JSTEncoder
+        + GyroEx (abstract)
+        + Rev IMU
+        + SensorColor
+        + RevColorSensorV3
+        + SensorDistance (interface)
+        + SensorDistanceEx (interface)
+        + SensorRevTOFDistance
++ Kinematics
+    + Odometry!
+    + Has odometry for a couple of common drive bases
+        + DifferentialOdometry
+        + MecanumOdometry
+    + Easily used and integratable
+    + Supports multiple forms of ododmetry
+        + Two wheel + Gyro
+        + Three wheel + Gyro
+        + Three wheel
++ Utility
+    + Has a few different utility functions
+    + Direction
+        + Represents a logical direction
+        + LEFT, RIGHT, UP, DOWN, FORWARDS, BACKWARDS
+    + Safety
+        + Represents an arbitrary safety level
+        + SWIFT, EASE_OFF, DEFAULT, BREAK
+    + Timing
+        + Has a few different functions for a Timer
+            + Can set the timer
+            + Can pause the timer
+            + Can stop the timer
+            + Can read if timer is done
+            + Can reset the timer
+        + Also includes a Rate
+            + Can set a rate
+            + Can reset the rate
+            + Can see if rate has expired yet for refreshing
++ Some Examples in the TeamCode module (limited)
+
+## Installation
+
+1. Open up your FTC SDK Project in Android Studio.
+
+2. Go to your `build.common.gradle` file in your project.
+
+    ![BuildCommonGradle](https://github.com/OpenFTC/EasyOpenCV/blob/master/doc/images/build-common-gradle.png)
+    
+3. Add the following to the `repositories` section at the bottom of the file.
+
+   ```groovy
+   jcenter()
+   ```
+    
+4. Open the `build.gradle` file in your TeamCode module. 
+    
+    ![TeamCodeGradle](https://github.com/OpenFTC/EasyOpenCV/blob/master/doc/images/teamcode-gradle.png)
+    
+5. Go to the bottom of the file, and add the following.
+
+    ```groovy
+    dependencies {
+        implementation `com.arcrobotics:ftclib:2.0.8`
+    }
+    ```
+6. Because FTCLib makes use of advanced features, you need to increase the minSdkVersion to 24. Unfortunately, this means that ZTE  Speed Phones are not supported in this release.
+
+In build.common.gradle, change the minSdkVersion from 19 to 24:
+```groovy
+
+    defaultConfig {
+        applicationId 'com.qualcomm.ftcrobotcontroller'
+        minSdkVersion 24
+        targetSdkVersion 26
+```
+    
+7. Perform a gradle sync to implement your changes.
+
+    ![GradleSync](https://github.com/OpenFTC/EasyOpenCV/blob/master/doc/images/gradle-sync.png)
+
 
 * **Stock - 40MB APK** *(oof!)*
   - Competition legal
@@ -84,64 +234,90 @@ For the curious: the cause of the incompatibility is the result of a bug in the 
   - Web management removed
   - Sound files removed
 
-### Benchmarks
+__NOTE:__ If your module has a few dependencies, you might have an error related to multidex on building the project.
+This is caused by the project exceeding the limit for imports enforced by Android Studio. To solve this, 
+add `multiDexEnabled true` to the below location inside the `build.common.gradle` file.
 
-|                            |**Nexus 5 (7.1.2)<br>Intel Centrino Advanced-N 6205 on Linux**|**Nexus 5 (7.1.2)<br>Intel Wireless 8260 on Linux**|
-|:--------------------------:|:-----------------:|:------------------:|
-|**Stock over WiFi**         |    30 sec           |  20 sec           |
-|**Turbo over WiFi**         |    13 sec           |  11 sec           |
-|**Extreme Turbo over WiFi** |    10 sec           |   8 sec           |
+```groovy
 
-## Setup Process
+    defaultConfig {
+        applicationId 'com.qualcomm.ftcrobotcontroller'
+        minSdkVersion 24
+        targetSdkVersion 26
 
- 1. Fork this repository
- 2. Clone your fork
- 3. Do `git remote add upstream https://github.com/OpenFTC/OpenRC-Turbo.git`
- 4. Copy all of the files found in the `filesForDynamicLoad` folder of this repo into the `FIRST` folder on the RC's internal storage
- 5. Select your desired build variant (see the *Switching Build Variants* section)
 
-## Update Process
+        multiDexEnabled true
+```
 
-Assuming you followed the above setup process, all that you need to do to update your fork when a new OpenRC release is available is:
+## Welcome to FTCLib!
 
- 1. `git pull upstream master`
- 2. Perform a Gradle Sync
- 3. If the project fails to build, try *Clean Project*, *Rebuild Project*, and *Invalidate Caches / Restart*
+Thank you for using the FTCLib library for your code! All of the people who worked on it have put a lot of effort into making FTCLib an amazing library. We thank you for putting our effort to work with your own projects. We hope you have great luck and success with your programming.
 
-## Switching Build Variants
+The mission of FTCLib is briefly summarized in the following quote made by Jackson from ARC Robotics, who started the library.
 
-**IMPORTANT: make sure to test that your project compiles correctly with the stock variant at least a week before your competition!**
 
-Note: you may get a "variant conflict" when switching variants. You can fix this by changing the conflicting module's variant to match the variant you want.
+> Our goal is to make programming easier and more efficient through effective classes and detailed examples of implementation. - Jackson ARC Robotics
 
- 1. Open the Build Variants tab in the lower left hand corner of Android Studio
- 2. In the dropdown for the **TeamCode module**, select your desired variant
- 3. Perform a Gradle sync
 
 ![image-here](docs/readme_pics/switching_build_variants.png)
 
-## Dynamic Loading of TensorFlow and Vuforia Datasets
+## Usage
 
-In order to reduce APK size, the Turbo and Extreme Turbo variants do not bundle the Vuforia and TensorFlow datasets in the APK. However, once copied onto the internal storage (see step #4 in the *Setup Process* section), you can still use them in your OpMode by making a very minor change.
-
-**NOTE:** The samples in this repo have already been adjusted with this change.
-
+For drivetrain kinematics, you can do:
 ```java
-/*
- * For Vuforia
- */
-// Find a line similar to this in the program
-vuforia.loadTrackablesFromAsset("DatasetName");
-// And replace it with this (obviously adjusting the DatasetName)
-vuforia.loadTrackablesFromFile("/sdcard/FIRST/DatasetName");
+MecanumDrive dt = new MecanumDrive(motors);
 
-/*
- * For TensorFlow
- */
-// Find a line similar to this in the program
-tfod.loadModelFromAsset("DatasetName.tflite");
-// And replace it with this (obviously adjusting the DatasetName)
-tfod.loadModelFromFile("/sdcard/FIRST/DatasetName.tflite");
+x = gp1.joyLeft.x;
+y = gp1.joyLeft.y;
+turn = gp1.joyRight.x;
+
+dt.driveRobotCentric(x, y, turn);
+```
+For a simple CV example that find skystone using built-in detector:
+```java
+import com.arcrobotics.ftclib.command.CommandOpMode;
+import com.arcrobotics.ftclib.vision.SkystoneDetector;
+
+import org.openftc.easyopencv.OpenCvCamera;
+import org.openftc.easyopencv.OpenCvCameraFactory;
+import org.openftc.easyopencv.OpenCvCameraRotation;
+import org.openftc.easyopencv.OpenCvInternalCamera;
+
+// You don't need CommandOpMode, LinearOpMode, and other OpModes work well
+public class SkystoneSample extends CommandOpMode {
+
+    OpenCvCamera camera;
+    SkystoneDetector pipeline;
+    @Override
+    public void initialize() {
+
+        int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
+        camera = OpenCvCameraFactory.getInstance().createInternalCamera(OpenCvInternalCamera.CameraDirection.BACK, cameraMonitorViewId);
+        camera.openCameraDevice();
+
+        pipeline = new SkystoneDetector();
+
+        camera.setPipeline(pipeline);
+        camera.startStreaming(640, 480, OpenCvCameraRotation.UPRIGHT);
+    }
+
+    @Override
+    public void run() {
+        // Assuming threaded. It hopefully found the skystone at the end of init.
+        SkystoneDetector.SkystonePosition position = pipeline.getSkystonePosition();
+
+        switch (position) {
+            case LEFT_STONE:
+                break;
+            case CENTER_STONE:
+                break;
+            case RIGHT_STONE:
+                break;
+            default:
+                break;
+        }
+    }
+}
 
 ```
 

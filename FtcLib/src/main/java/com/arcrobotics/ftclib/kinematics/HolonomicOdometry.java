@@ -143,7 +143,7 @@ public class HolonomicOdometry {
      */
     public void update(double heading, double horizontalOdoInches, double... verticalOdoInches) {
         double phi = verticalOdoInches[verticalOdoInches.length - 1] - verticalOdoInches[0];
-        phi /= verticalOdoInches.length;
+        phi /= trackWidth;
         double deltaTheta = (heading != 0) ? heading - robotPos.getHeading() : phi;
 
         updateCurve(deltaTheta, verticalOdoInches);

@@ -139,6 +139,13 @@ public class PIDFController {
     }
 
     /**
+     * @return the tolerances of the controller
+     */
+    public double[] getTolerance() {
+        return new double[]{errorTolerance_p, errorTolerance_v};
+    }
+
+    /**
      * @return the velocity error e'(t)
      */
     public double getVelocityError() {
@@ -198,7 +205,7 @@ public class PIDFController {
         totalError = period * (setPoint - measuredValue);
 
         // returns u(t)
-        return kP * errorVal_p + kI * totalError + kD * errorVal_v + kF;
+        return kP * errorVal_p + kI * totalError + kD * errorVal_v + kF * setPoint;
     }
 
 }

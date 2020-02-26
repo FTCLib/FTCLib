@@ -2,8 +2,8 @@ apply plugin: 'com.android.library'
 
 ext {
     PUBLISH_GROUP_ID = 'com.arcrobotics'
-    PUBLISH_ARTIFACT_ID = 'FtcLib'
-    PUBLISH_VERSION = '2.0.0'
+    PUBLISH_ARTIFACT_ID = 'ftclib'
+    PUBLISH_VERSION = '2.0.9'
 }
 
 android {
@@ -15,10 +15,11 @@ android {
         minSdkVersion 24
         targetSdkVersion 26
         versionCode 1
-        versionName "2.0"
+        versionName '2.0.9'
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles 'consumer-rules.pro'
+        signingConfig signingConfigs.debug
     }
 
     buildTypes {
