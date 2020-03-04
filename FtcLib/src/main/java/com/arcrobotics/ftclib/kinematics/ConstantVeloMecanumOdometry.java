@@ -53,7 +53,7 @@ public class ConstantVeloMecanumOdometry {
         double dw = (angle.minus(previousAngle).getRadians());
         
         double dx = (deltaLeftEncoder + deltaRightEncoder) / 2;
-        double dy = deltaCenterEncoder + (centerWheelOffset * dw);
+        double dy = deltaCenterEncoder - (centerWheelOffset * dw);
         
         Twist2d twist2d = new Twist2d(dx, dy, dw);
 
