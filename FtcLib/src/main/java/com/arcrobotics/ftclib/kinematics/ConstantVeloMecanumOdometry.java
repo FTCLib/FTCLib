@@ -9,16 +9,18 @@ public class ConstantVeloMecanumOdometry {
     Rotation2d previousAngle, gyroOffset;
     private Pose2d pose;
     double trackwidth;
+    double centerWheelOffset;
 
-    public ConstantVeloMecanumOdometry(Rotation2d gyroAngle, Pose2d initialPose, double trackwidth) {
+    public ConstantVeloMecanumOdometry(Rotation2d gyroAngle, Pose2d initialPose, double trackwidth, double centerWheelOffset) {
         pose = initialPose;
         gyroOffset = pose.getRotation().minus(gyroAngle);
         previousAngle = initialPose.getRotation();
         this.trackwidth = trackwidth;
+        this.centerWheelOffset = centerWheelOffset;
     }
 
-    public ConstantVeloMecanumOdometry(Rotation2d gyroAngle, double trackwidth) {
-        this(gyroAngle, new Pose2d(), trackwidth);
+    public ConstantVeloMecanumOdometry(Rotation2d gyroAngle, double trackwidth, double centerWheelOffset) {
+        this(gyroAngle, new Pose2d(), trackwidth, centerWheelOffset);
     }
 
     public void resetPosition(Pose2d pose, Rotation2d gyroAngle) {
@@ -46,10 +48,13 @@ public class ConstantVeloMecanumOdometry {
         prevRightEncoder = rightEncoderPos;
         prevCenterEncoder = centerEncoderPos;
 
-        double dx = (deltaLeftEncoder + deltaRightEncoder) / 2;
-        double dy = deltaCenterEncoder;
+        
         // Averaging encoder method with gyro method
         double dw = (angle.minus(previousAngle).getRadians());
+        
+        double dx = (deltaLeftEncoder + deltaRightEncoder) / 2;
+        double dy = deltaCenterEncoder + (centerWheelOffset * dw);
+        
         Twist2d twist2d = new Twist2d(dx, dy, dw);
 
         Pose2d newPose = pose.exp(twist2d);
