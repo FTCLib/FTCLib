@@ -78,7 +78,7 @@ public abstract class RobotDrive {
     public abstract void stopMotor();
 
     /**
-     * Normalize the wheel speeds if any value is greater than 1
+     * Normalize the wheel speeds
      */
     protected void normalize(double[] wheelSpeeds) {
         double maxMagnitude = Math.abs(wheelSpeeds[0]);
@@ -88,11 +88,10 @@ public abstract class RobotDrive {
                 maxMagnitude = temp;
             }
         }
-        if (maxMagnitude > 1.0) {
-            for (int i = 0; i < wheelSpeeds.length; i++) {
-                wheelSpeeds[i] = wheelSpeeds[i] / maxMagnitude;
-            }
+        for (int i = 0; i < wheelSpeeds.length; i++) {
+            wheelSpeeds[i] = wheelSpeeds[i] / maxMagnitude;
         }
+
     }
 
     /**
