@@ -5,13 +5,17 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.VoltageSensor;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+
+import static com.arcrobotics.ftclib.util.MathUtils.clamp;
 
 
 public class SimpleMotorImpl implements Motor {
 
     private DcMotorEx motor;
+    private HardwareMap hMap;
     double cpr;
 
     Telemetry telemetry;
@@ -20,12 +24,15 @@ public class SimpleMotorImpl implements Motor {
         motor = (DcMotorEx)hMap.get(DcMotor.class, motorName);
         cpr = 0;
         this.telemetry = telemetry;
+        this.hMap = hMap;
     }
 
     public SimpleMotorImpl(HardwareMap hMap, Telemetry telemetry, String motorName, double cpr) {
         motor = (DcMotorEx)hMap.get(DcMotor.class, motorName);
         this.cpr = cpr;
         this.telemetry = telemetry;
+        this.hMap = hMap;
+
     }
 
 
@@ -145,4 +152,25 @@ public class SimpleMotorImpl implements Motor {
         set(0);
     }
 
+    public double getMotorVoltage() {
+        return getBatteryVoltage() * motor.getPower();
+    }
+
+
+    public double getBatteryVoltage() {
+        double result = Double.POSITIVE_INFINITY;
+
+        for (VoltageSensor sensor : hMap.voltageSensor) {
+            double voltage = sensor.getVoltage();
+            if (voltage > 0) {
+                result = Math.min(result, voltage);
+            }
+        }
+        return result;
+    }
+
+    public void setVoltage(double volts) {
+        double ratio = clamp(volts/getBatteryVoltage(), -1, 1);
+        motor.setPower(ratio);
+    }
 }

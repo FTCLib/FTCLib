@@ -183,7 +183,7 @@ public class DiffySwerveModuleEx extends DiffySwerveModule {
         double rawAngle2 = rawAngle1 < 0 ? rawAngle1 + Math.PI : rawAngle1 - Math.PI;
         double angleDiff = Math.abs(rawAngle1 - Math.toRadians(moduleHeading.getAsDouble()));
 
-        if (angleDiff > 90) {
+        if (angleDiff > Math.PI / 2) {
             if (!takingShortestPath) {
                 reversed = !reversed;
             }
@@ -191,7 +191,6 @@ public class DiffySwerveModuleEx extends DiffySwerveModule {
         } else {
             takingShortestPath = false;
         }
-
         return takingShortestPath ? rawAngle2 : rawAngle1;
     }
 
