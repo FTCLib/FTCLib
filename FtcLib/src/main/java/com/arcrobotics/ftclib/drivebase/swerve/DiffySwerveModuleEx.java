@@ -191,8 +191,7 @@ public class DiffySwerveModuleEx extends DiffySwerveModule {
         } else {
             takingShortestPath = false;
         }
-
-        return takingShortestPath ? rawAngle1 : rawAngle2;
+        return takingShortestPath ? rawAngle2 : rawAngle1;
     }
 
     /**
