@@ -152,7 +152,12 @@ public class SimpleMotorImpl implements Motor {
         set(0);
     }
 
-    public double getVoltage() {
+    public double getMotorVoltage() {
+        return getBatteryVoltage() * motor.getPower();
+    }
+
+
+    public double getBatteryVoltage() {
         double result = Double.POSITIVE_INFINITY;
 
         for (VoltageSensor sensor : hMap.voltageSensor) {
@@ -165,7 +170,7 @@ public class SimpleMotorImpl implements Motor {
     }
 
     public void setVoltage(double volts) {
-        double ratio = clamp(volts/getVoltage(), -1, 1);
+        double ratio = clamp(volts/getBatteryVoltage(), -1, 1);
         motor.setPower(ratio);
     }
 }
