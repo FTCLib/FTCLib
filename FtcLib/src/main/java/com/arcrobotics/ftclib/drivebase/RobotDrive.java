@@ -80,7 +80,7 @@ public abstract class RobotDrive {
     /**
      * Normalize the wheel speeds
      */
-    protected void normalize(double[] wheelSpeeds) {
+    protected void normalize(double[] wheelSpeeds, double magnitude) {
         double maxMagnitude = Math.abs(wheelSpeeds[0]);
         for (int i = 1; i < wheelSpeeds.length; i++) {
             double temp = Math.abs(wheelSpeeds[i]);
@@ -89,7 +89,26 @@ public abstract class RobotDrive {
             }
         }
         for (int i = 0; i < wheelSpeeds.length; i++) {
-            wheelSpeeds[i] = wheelSpeeds[i] / maxMagnitude;
+            wheelSpeeds[i] = (wheelSpeeds[i] / maxMagnitude) * magnitude;
+        }
+
+    }
+
+    /**
+     * Normalize the wheel speeds
+     */
+    protected void normalize(double[] wheelSpeeds) {
+        double maxMagnitude = Math.abs(wheelSpeeds[0]);
+        for (int i = 1; i < wheelSpeeds.length; i++) {
+            double temp = Math.abs(wheelSpeeds[i]);
+            if (maxMagnitude < temp) {
+                maxMagnitude = temp;
+            }
+        }
+        if(maxMagnitude > 1) {
+            for (int i = 0; i < wheelSpeeds.length; i++) {
+                wheelSpeeds[i] = (wheelSpeeds[i] / maxMagnitude);
+            }
         }
 
     }
