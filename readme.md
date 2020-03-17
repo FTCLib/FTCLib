@@ -6,21 +6,7 @@ Project led by Jackson Isenberg and the Alpharetta Robotics Club
 
 Logo produced by Team RO037
 
-FTCLib is the FTC library to end all libraries. By porting features from wpilib for FRC, FTCLib makes the use of advanced systems extremely easy for even rookie programmers. This wiki will teach you how to use the library and what each class means and represents. The first thing you should do is either download the project as a zip or fork the repository and use Git to clone the forked repository.
-
-If you are downloading the .zip, you can find it here:
-
-![clone_zip](docs/readme_pics/download_zip.png)
-
-If you are cloning a fork of the repository, here are the basic steps:
-
-1. Open Git Bash.
-2. In the command line, you should use:
-   `git clone https://github.com/username/FTCLib.git`
-   Replace username with your GitHub username as the fork is under your GitHub account.
-3. Wait for the repository to be cloned.
-
-Once you have the repository, open the project in Android Studio. There you will see the TeamCode folder. This is where you will write your robot code.
+FTCLib is the FTC library to end all libraries. By porting features from wpilib for FRC, FTCLib makes the use of advanced systems extremely easy for even rookie programmers. This wiki will teach you how to use the library and what each class means and represents.
 
 FTCLib documentation - <https://ftclib.gitbook.io/ftclib>
 
