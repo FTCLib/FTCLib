@@ -10,12 +10,7 @@ import com.arcrobotics.ftclib.geometry.Translation2d;
  * The classfile that performs odometry calculations for a differential drivetrain.
  * For more information on the differential drivebase, see {@link DifferentialDrive}.
  */
-public class DifferentialOdometry {
-
-    /**
-     * The {@link Pose2d} of the robot.
-     */
-    public Pose2d robotPose;
+public class DifferentialOdometry extends Odometry {
 
     /**
      * The x value for the position of the robot.
@@ -58,6 +53,7 @@ public class DifferentialOdometry {
      * @param trackWidth    the track width of the robot in inches
      */
     public DifferentialOdometry(Pose2d pose, double trackWidth) {
+        super(pose);
         this.trackWidth = trackWidth;
         robotPose = pose;
     }
@@ -67,18 +63,9 @@ public class DifferentialOdometry {
      *
      * @param newPose   the new {@link Pose2d}
      */
+    @Override
     public void updatePose(Pose2d newPose) {
         robotPose = newPose;
-    }
-
-    /**
-     * Rotates the heading by the specified value.
-     *
-     * @param deltaTheta the difference between the current heading and
-     *                   the previous heading. Rotates it CCW.
-     */
-    public void rotatePose(double deltaTheta) {
-        updatePose(robotPose.rotate(deltaTheta));
     }
 
     /**
@@ -102,13 +89,13 @@ public class DifferentialOdometry {
      *
      * @param heading       the current heading of the robot, which might be de-synced
      *                      with the heading in the robot position.
-     * @param leftInches    the number of inches travelled by the left side of the robot.
-     * @param rightInches   the number of inches travelled by the right side of the robot.
+     * @param leftDistance    the number of inches travelled by the left side of the robot.
+     * @param rightDistance   the number of inches travelled by the right side of the robot.
      */
-    public void update(double heading, double leftInches, double rightInches) {
-        double centralEncoderVal = (leftInches + rightInches) / 2;
+    public void updatePosition(double heading, double leftDistance, double rightDistance) {
+        double centralEncoderVal = (leftDistance + rightDistance) / 2;
 
-        double phi = (rightInches - leftInches) / trackWidth;
+        double phi = (rightDistance - leftDistance) / trackWidth;
         double theta = robotPose.getHeading();
         double deltaTheta = (heading != 0) ? heading - theta : phi;
 
@@ -123,5 +110,7 @@ public class DifferentialOdometry {
 
         updatePose(new Pose2d(odoX, odoY, new Rotation2d(robotPose.getHeading())));
     }
+
+
 
 }

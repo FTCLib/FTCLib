@@ -4,18 +4,15 @@ import com.arcrobotics.ftclib.geometry.Pose2d;
 import com.arcrobotics.ftclib.geometry.Rotation2d;
 import com.arcrobotics.ftclib.geometry.Twist2d;
 
-public class ConstantVeloMecanumOdometry {
+public class ConstantVeloMecanumOdometry extends Odometry {
     double prevLeftEncoder, prevRightEncoder, prevCenterEncoder;
     Rotation2d previousAngle, gyroOffset;
-    private Pose2d pose;
-    double trackwidth;
     double centerWheelOffset;
 
     public ConstantVeloMecanumOdometry(Rotation2d gyroAngle, Pose2d initialPose, double trackwidth, double centerWheelOffset) {
-        pose = initialPose;
-        gyroOffset = pose.getRotation().minus(gyroAngle);
+        super(initialPose, trackwidth);
+        gyroOffset = robotPose.getRotation().minus(gyroAngle);
         previousAngle = initialPose.getRotation();
-        this.trackwidth = trackwidth;
         this.centerWheelOffset = centerWheelOffset;
     }
 
@@ -23,21 +20,18 @@ public class ConstantVeloMecanumOdometry {
         this(gyroAngle, new Pose2d(), trackwidth, centerWheelOffset);
     }
 
-    public void resetPosition(Pose2d pose, Rotation2d gyroAngle) {
+    @Override
+    public void updatePose(Pose2d pose) {
         previousAngle = pose.getRotation();
-        this.pose = pose;
-        gyroOffset = pose.getRotation().minus(gyroAngle);
+        this.robotPose = pose;
 
         prevLeftEncoder = 0;
         prevRightEncoder = 0;
         prevCenterEncoder = 0;
     }
 
-    public Pose2d getPose() {
-        return pose;
-    }
 
-    public Pose2d update(Rotation2d gyroAngle, double leftEncoderPos, double rightEncoderPos, double centerEncoderPos) {
+    public void update(Rotation2d gyroAngle, double leftEncoderPos, double rightEncoderPos, double centerEncoderPos) {
         double deltaLeftEncoder = leftEncoderPos - prevLeftEncoder;
         double deltaRightEncoder = rightEncoderPos - prevRightEncoder;
         double deltaCenterEncoder = centerEncoderPos - prevCenterEncoder;
@@ -57,12 +51,11 @@ public class ConstantVeloMecanumOdometry {
         
         Twist2d twist2d = new Twist2d(dx, dy, dw);
 
-        Pose2d newPose = pose.exp(twist2d);
+        Pose2d newPose = robotPose.exp(twist2d);
 
         previousAngle = angle;
 
-        pose = new Pose2d(newPose.getTranslation(), angle);
-        return pose;
+        robotPose = new Pose2d(newPose.getTranslation(), angle);
     }
 
 }
