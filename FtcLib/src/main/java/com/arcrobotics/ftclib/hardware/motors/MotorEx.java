@@ -151,9 +151,7 @@ public abstract class MotorEx implements Motor {
     /**
      * @return The current tick count of the output shaft.
      */
-    public double getCurrentPosition() {
-        return encoder.getCurrentTicks();
-    }
+    public abstract double getCurrentPosition();
 
     /**
      * Set the run mode of the motor.
