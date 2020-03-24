@@ -24,7 +24,7 @@ public abstract class MotorEx implements Motor {
     /**
      * The motor in question.
      */
-    private Motor motor;
+    protected Motor motor;
 
     /**
      * The target position of the motor.
@@ -151,7 +151,9 @@ public abstract class MotorEx implements Motor {
     /**
      * @return The current tick count of the output shaft.
      */
-    abstract double getCurrentPosition();
+    public double getCurrentPosition() {
+        return encoder.getCurrentTicks();
+    }
 
     /**
      * Set the run mode of the motor.
