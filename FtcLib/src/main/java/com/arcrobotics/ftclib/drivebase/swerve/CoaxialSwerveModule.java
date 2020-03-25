@@ -50,7 +50,7 @@ public class CoaxialSwerveModule {
     public void driveModule(double speed, double angle) {
         driveMotor.set(speed);
 
-        pController.pControl(turnMotor, angle, this.angle);
+        pController.control(turnMotor, angle, this.angle);
         this.angle = angle;
     }
 

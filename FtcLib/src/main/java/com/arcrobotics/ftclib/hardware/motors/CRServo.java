@@ -44,7 +44,7 @@ public abstract class CRServo implements Motor {
 
     @Override
     public void set(double speed) {
-        pController.pControl(crServo, speed, get(), 0.5);
+        pController.control(crServo, speed, get(), 0.5);
     }
 
     @Override
