@@ -1,5 +1,7 @@
 package com.arcrobotics.ftclib.controller;
 
+import com.arcrobotics.ftclib.hardware.motors.Motor;
+
 /**
  * This is a PID controller (https://en.wikipedia.org/wiki/PID_controller)
  * for your robot. Internally, it performs all the calculations for you.
@@ -67,6 +69,53 @@ public class PIDFController {
         totalError = 0;
         prevErrorVal = 0;
     }
+
+
+    /**
+     * Implements a control calculation onto the affected motor.
+     *
+     * @param affected  The affected motor of the mechanism.
+     * @param sp        The setpoint of the calculation.
+     * @param pv        The previous value of the calculation.
+     * @param speed     The maximum speed the motor should rotate.
+     */
+    public void control(Motor affected, double sp, double pv, double speed) {
+        if (Math.abs(sp) > Math.abs(pv)) affected.set(speed * calculate(pv, sp));
+        else affected.set(0);
+    }
+
+
+
+    /**
+     * Implements a control calculation onto the affected motor.
+     *
+     * @param affected  The affected motor of the mechanism.
+     * @param sp        The setpoint of the calculation.
+     * @param pv        The previous value of the calculation.
+     */
+    public void control(Motor affected, double sp, double pv) {
+        control(affected, sp, pv, 1);
+    }
+
+    /**
+     * Implements a control calculation onto the affected motor.
+     *
+     * @param affected The affected motor of the mechanism.
+     * @param pv The setpoint of the calculation
+     */
+    public void control(Motor affected, double pv){
+        control(affected, setPoint, pv);
+    }
+
+    /**
+     * Implements a control calculation onto the affected motor
+     *
+     * @param affected The affected motor of the mechanism
+     */
+    public void control(Motor affected){
+        control(affected, prevErrorVal);
+    }
+
 
     /**
      * Sets the error which is considered tolerable for use with {@link #atSetPoint()}.
