@@ -5,8 +5,6 @@ name: Release Upload
 #Triggers when any file in the specified dir is touched in the dev branch
 on:
   push:
-    branches:
-      - dev
     paths:
       - 'FtcLib/ReleaseStorage/current/**'
 
