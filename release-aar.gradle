@@ -6,6 +6,9 @@ def artifactId = project.PUBLISH_ARTIFACT_ID
 def version = project.PUBLISH_VERSION
 
 def localReleaseDest = "${buildDir}/release/${version}"
+def releaseStorageDir = "${projectDir}/ReleaseStorage"
+def localReleaseCopyDest = "${releaseStorageDir}/current"
+def pastReleaseStorageDest = "${releaseStorageDir}/releases"
 
 task androidJavadocs(type: Javadoc) {
     failOnError = false
@@ -42,8 +45,20 @@ task zipRelease(type: Zip) {
 
 task generateRelease {
     doLast {
+        copy {
+            from "${buildDir}/release-${version}.zip"
+            into(localReleaseCopyDest)
+        }
+        copy {
+            from "${localReleaseCopyDest}/release-${version}.zip"
+            into(pastReleaseStorageDest)
+        }
+
+
         println "Release ${version} can be found at ${localReleaseDest}/"
         println "Release ${version} zipped can be found ${buildDir}/release-${version}.zip"
+        println "Release ${version} has also been stored at ${localReleaseCopyDest}"
+        println "Past releases can be found at ${pastReleaseStorageDest}"
     }
 }
 

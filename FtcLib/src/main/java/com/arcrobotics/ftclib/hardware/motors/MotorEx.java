@@ -24,7 +24,7 @@ public abstract class MotorEx implements Motor {
     /**
      * The motor in question.
      */
-    private Motor motor;
+    protected Motor motor;
 
     /**
      * The target position of the motor.
@@ -151,7 +151,7 @@ public abstract class MotorEx implements Motor {
     /**
      * @return The current tick count of the output shaft.
      */
-    abstract double getCurrentPosition();
+    public abstract double getCurrentPosition();
 
     /**
      * Set the run mode of the motor.
@@ -208,7 +208,7 @@ public abstract class MotorEx implements Motor {
      */
     public void set(double speed) {
         if (runMode.equals("rtp")) {
-            pController.pControl(motor, targetPos, encoder.getCurrentTicks(), speed);
+            pController.control(motor, targetPos, encoder.getCurrentTicks(), speed);
         } else if (runMode.equals("rue")) {
             motor.set(motor.get() + pidfController.calculate(speed, motor.get()));
         } else if (runMode.equals("sare")) {
@@ -219,10 +219,10 @@ public abstract class MotorEx implements Motor {
 
         if (speed == 0) {
             if (zeroBehavior.equals("float")) {
-                pController.pControl(motor, 0, motor.get(), 0.5);
+                pController.control(motor, 0, motor.get(), 0.5);
             } else if (zeroBehavior.equals("break")) {
                 motor.set(0);
-            } else pController.pControl(motor, 0, motor.get());
+            } else pController.control(motor, 0, motor.get());
         }
     }
 

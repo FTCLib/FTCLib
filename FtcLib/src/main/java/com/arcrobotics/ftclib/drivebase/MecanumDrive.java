@@ -153,7 +153,7 @@ public class MecanumDrive extends RobotDrive {
         wheelSpeeds[MotorType.kBackRight.value] =
                 input.magnitude() * Math.sin(theta + Math.PI / 4) - turnSpeed;
 
-        normalize(wheelSpeeds);
+        normalize(wheelSpeeds, input.magnitude());
 
         motors[MotorType.kFrontLeft.value]
                 .set(wheelSpeeds[MotorType.kFrontLeft.value] * maxOutput);

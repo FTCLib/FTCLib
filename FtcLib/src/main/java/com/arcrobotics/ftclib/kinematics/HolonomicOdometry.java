@@ -11,12 +11,7 @@ import com.arcrobotics.ftclib.geometry.Translation2d;
  * which has omnidirectional translation and rotational movement.
  * More information on the mecanum system can be found {@link MecanumDrive}.
  */
-public class HolonomicOdometry {
-
-    /**
-     * The {@link Pose2d} of the robot.
-     */
-    public Pose2d robotPos;
+public class HolonomicOdometry extends Odometry{
 
     /**
      * The x value for the position of the robot.
@@ -59,7 +54,7 @@ public class HolonomicOdometry {
      * @param trackWidth    the track width of the robot in inches
      */
     public HolonomicOdometry(Pose2d pose, double trackWidth) {
-        robotPos = pose;
+        super(pose);
         this.trackWidth = trackWidth;
     }
 
@@ -69,18 +64,9 @@ public class HolonomicOdometry {
      * @param newPose   the new {@link Pose2d}
      */
     public void updatePose(Pose2d newPose) {
-        robotPos = newPose;
+        robotPose = newPose;
     }
 
-    /**
-     * Rotates the heading by the specified value.
-     *
-     * @param deltaTheta the difference between the current heading and
-     *                   the previous heading. Rotates it CCW.
-     */
-    public void rotatePose(double deltaTheta) {
-        robotPos = robotPos.rotate(deltaTheta);
-    }
 
     /**
      * Updates the values for odoX and odoY by adding the specified amounts.
@@ -100,13 +86,13 @@ public class HolonomicOdometry {
      * @param deltaTheta            the change in the robot's orientation
      * @param parallelEncoderVals   the value of the encoders for the parallel odometers
      */
-    public void updateCurve(double deltaTheta, double... parallelEncoderVals) {
+    private void updateCurve(double deltaTheta, double... parallelEncoderVals) {
         double centralEncoderVal = 0;
         for (double val : parallelEncoderVals) {
             centralEncoderVal += val / parallelEncoderVals.length;
         }
 
-        double theta = robotPos.getHeading();
+        double theta = robotPose.getHeading();
         double deltaX = centralEncoderVal * Math.cos(theta + deltaTheta / 2);
         double deltaY = centralEncoderVal * Math.sin(theta + deltaTheta / 2);
 
@@ -120,8 +106,8 @@ public class HolonomicOdometry {
      * @param deltaTheta                the change in the robot's orientation
      * @param perpendicularEncoderVal   the value of encoders for the perpendicular odometers
      */
-    public void updateStrafe(double deltaTheta, double perpendicularEncoderVal) {
-        double theta = robotPos.getHeading();
+    private void updateStrafe(double deltaTheta, double perpendicularEncoderVal) {
+        double theta = robotPose.getHeading();
         double deltaX = perpendicularEncoderVal * Math.sin(theta + deltaTheta / 2);
         double deltaY = perpendicularEncoderVal * Math.cos(theta + deltaTheta / 2);
 
@@ -138,20 +124,21 @@ public class HolonomicOdometry {
      *
      * @param heading               the current heading of the robot, which might be de-synced
      *                              with the heading in the robot position.
-     * @param horizontalOdoInches   the number of inches travelled by the horizontal odometers.
-     * @param verticalOdoInches     the number of inches travelled by the vertical odometers.
+     * @param centralDistance   the number of inches travelled by the horizontal odometers.
+     * @param leftDistance     the distance travelled by the left vertical encoder
+     * @param rightDistance  the distance travelled by the right vertical encoder
      */
-    public void update(double heading, double horizontalOdoInches, double... verticalOdoInches) {
-        double phi = verticalOdoInches[verticalOdoInches.length - 1] - verticalOdoInches[0];
+    public void update(double heading, double centralDistance, double leftDistance, double rightDistance) {
+        double phi = rightDistance - leftDistance;
         phi /= trackWidth;
-        double deltaTheta = (heading != 0) ? heading - robotPos.getHeading() : phi;
+        double deltaTheta = (heading != 0) ? heading - robotPose.getHeading() : phi;
 
-        updateCurve(deltaTheta, verticalOdoInches);
-        updateStrafe(deltaTheta, horizontalOdoInches);
+        updateCurve(deltaTheta, leftDistance, rightDistance);
+        updateStrafe(deltaTheta, centralDistance);
 
         rotatePose(deltaTheta);
 
-        updatePose(new Pose2d(odoX, odoY, new Rotation2d(robotPos.getHeading())));
+        updatePose(new Pose2d(odoX, odoY, new Rotation2d(robotPose.getHeading())));
     }
 
 }

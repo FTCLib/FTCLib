@@ -77,7 +77,7 @@ public class MotorImplEx extends MotorEx {
     }
 
     @Override
-    double getCurrentPosition() {
+    public double getCurrentPosition() {
         return motor.getCurrentPosition();
     }
 
