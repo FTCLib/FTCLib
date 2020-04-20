@@ -23,16 +23,7 @@ dependencies {
     implementation 'com.arcrobotics:ftclib:2.0.12' // Replace 2.0.12 with the latest release
 }
 ```
-And that's it! (May need to follow installation instructions below, however)
-
-## Origin and Upstream
-origin: <https://github.com/FTCLib/FTCLib>
-
-upstream: <https://github.com/OpenFTC/OpenRC-Turbo>
-
-While those two options are the most convenient for most things, another way it to contact one of our members through
-the [FTC Discord](https://discord.gg/first-tech-challenge "The FTC Discord") .
-
+And that's it! (May need to follow installation instructions below, however
 
 ## Legality for competition use
 
@@ -52,6 +43,133 @@ This library uses Java 8! If you do not already have Java 8 on your FTC Project,
 
 Change the `7` to an `8` and then perform a Gradle Sync. You now have Java 8 (and all the things that come with it)!
 
+## Installation
+
+1. Open up your FTC SDK Project in Android Studio.
+
+2. Go to your `build.common.gradle` file in your project.
+
+    ![BuildCommonGradle](https://github.com/OpenFTC/EasyOpenCV/blob/master/doc/images/build-common-gradle.png)
+    
+3. Add the following to the `repositories` section at the bottom of the file.
+
+   ```groovy
+   jcenter()
+   ```
+    
+4. Open the `build.gradle` file in your TeamCode module. 
+    
+    ![TeamCodeGradle](https://github.com/OpenFTC/EasyOpenCV/blob/master/doc/images/teamcode-gradle.png)
+    
+5. Go to the bottom of the file, and add the following.
+
+    ```groovy
+    dependencies {
+        implementation 'com.arcrobotics:ftclib:2.0.11'
+    }
+    ```
+6. Because FTCLib makes use of advanced features, you need to increase the minSdkVersion to 24. Unfortunately, this means that ZTE  Speed Phones are not supported in this release.
+
+In build.common.gradle, change the minSdkVersion from 19 to 24:
+```groovy
+
+    defaultConfig {
+        applicationId 'com.qualcomm.ftcrobotcontroller'
+        minSdkVersion 24
+        targetSdkVersion 26
+```
+    
+7. Perform a gradle sync to implement your changes.
+
+    ![GradleSync](https://github.com/OpenFTC/EasyOpenCV/blob/master/doc/images/gradle-sync.png)
+
+
+__NOTE:__ If your module has a few dependencies, you might have an error related to multidex on building the project.
+This is caused by the project exceeding the limit for imports enforced by Android Studio. To solve this, 
+add `multiDexEnabled true` to the below location inside the `build.common.gradle` file.
+
+```groovy
+
+    defaultConfig {
+        applicationId 'com.qualcomm.ftcrobotcontroller'
+        minSdkVersion 24
+        targetSdkVersion 26
+
+
+        multiDexEnabled true
+```
+
+## Welcome to FTCLib!
+
+Thank you for using the FTCLib library for your code! All of the people who worked on it have put a lot of effort into making FTCLib an amazing library. We thank you for putting our effort to work with your own projects. We hope you have great luck and success with your programming.
+
+The mission of FTCLib is briefly summarized in the following quote made by Jackson from ARC Robotics, who started the library.
+
+
+> Our goal is to make programming easier and more efficient through effective classes and detailed examples of implementation. - Jackson ARC Robotics
+
+
+![image-here](docs/readme_pics/switching_build_variants.png)
+
+## Usage
+
+For drivetrain kinematics, you can do:
+```java
+MecanumDrive dt = new MecanumDrive(motors);
+
+x = gp1.joyLeft.x;
+y = gp1.joyLeft.y;
+turn = gp1.joyRight.x;
+
+dt.driveRobotCentric(x, y, turn);
+```
+For a simple CV example that find skystone using built-in detector:
+```java
+import com.arcrobotics.ftclib.command.CommandOpMode;
+import com.arcrobotics.ftclib.vision.SkystoneDetector;
+
+import org.openftc.easyopencv.OpenCvCamera;
+import org.openftc.easyopencv.OpenCvCameraFactory;
+import org.openftc.easyopencv.OpenCvCameraRotation;
+import org.openftc.easyopencv.OpenCvInternalCamera;
+
+// You don't need CommandOpMode, LinearOpMode, and other OpModes work well
+public class SkystoneSample extends CommandOpMode {
+
+    OpenCvCamera camera;
+    SkystoneDetector pipeline;
+    @Override
+    public void initialize() {
+
+        int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
+        camera = OpenCvCameraFactory.getInstance().createInternalCamera(OpenCvInternalCamera.CameraDirection.BACK, cameraMonitorViewId);
+        camera.openCameraDevice();
+
+        pipeline = new SkystoneDetector();
+
+        camera.setPipeline(pipeline);
+        camera.startStreaming(640, 480, OpenCvCameraRotation.UPRIGHT);
+    }
+
+    @Override
+    public void run() {
+        // Assuming threaded. It hopefully found the skystone at the end of init.
+        SkystoneDetector.SkystonePosition position = pipeline.getSkystonePosition();
+
+        switch (position) {
+            case LEFT_STONE:
+                break;
+            case CENTER_STONE:
+                break;
+            case RIGHT_STONE:
+                break;
+            default:
+                break;
+        }
+    }
+}
+
+```
 __Features__:
 
 + WPILib - Style code base
@@ -161,162 +279,3 @@ __Features__:
             + Can reset the rate
             + Can see if rate has expired yet for refreshing
 + Some Examples in the TeamCode module (limited)
-
-## Installation
-
-1. Open up your FTC SDK Project in Android Studio.
-
-2. Go to your `build.common.gradle` file in your project.
-
-    ![BuildCommonGradle](https://github.com/OpenFTC/EasyOpenCV/blob/master/doc/images/build-common-gradle.png)
-    
-3. Add the following to the `repositories` section at the bottom of the file.
-
-   ```groovy
-   jcenter()
-   ```
-    
-4. Open the `build.gradle` file in your TeamCode module. 
-    
-    ![TeamCodeGradle](https://github.com/OpenFTC/EasyOpenCV/blob/master/doc/images/teamcode-gradle.png)
-    
-5. Go to the bottom of the file, and add the following.
-
-    ```groovy
-    dependencies {
-        implementation 'com.arcrobotics:ftclib:2.0.11'
-    }
-    ```
-6. Because FTCLib makes use of advanced features, you need to increase the minSdkVersion to 24. Unfortunately, this means that ZTE  Speed Phones are not supported in this release.
-
-In build.common.gradle, change the minSdkVersion from 19 to 24:
-```groovy
-
-    defaultConfig {
-        applicationId 'com.qualcomm.ftcrobotcontroller'
-        minSdkVersion 24
-        targetSdkVersion 26
-```
-    
-7. Perform a gradle sync to implement your changes.
-
-    ![GradleSync](https://github.com/OpenFTC/EasyOpenCV/blob/master/doc/images/gradle-sync.png)
-
-
-* **Stock - 40MB APK** *(oof!)*
-  - Competition legal
-
-* **Turbo - 10MB APK** *(4x smaller!)*
-    *Note: If you would like to use Blocks, you will need to copy your private Vuforia key into the `Blocks/src/main/assets/CzechWolf` file*
-  - Vuforia native library loaded dynamically
-  - Vuforia/TF datasets loaded dynamically
-  - OnBotJava removed
-
-* **Extreme Turbo - 4MB APK** *(10x smaller!)*
-  - Vuforia native library loaded dynamically
-  - Vuforia/TF datasets loaded dynamically
-  - OnBotJava removed
-  - Blocks removed
-  - Web management removed
-  - Sound files removed
-
-__NOTE:__ If your module has a few dependencies, you might have an error related to multidex on building the project.
-This is caused by the project exceeding the limit for imports enforced by Android Studio. To solve this, 
-add `multiDexEnabled true` to the below location inside the `build.common.gradle` file.
-
-```groovy
-
-    defaultConfig {
-        applicationId 'com.qualcomm.ftcrobotcontroller'
-        minSdkVersion 24
-        targetSdkVersion 26
-
-
-        multiDexEnabled true
-```
-
-## Welcome to FTCLib!
-
-Thank you for using the FTCLib library for your code! All of the people who worked on it have put a lot of effort into making FTCLib an amazing library. We thank you for putting our effort to work with your own projects. We hope you have great luck and success with your programming.
-
-The mission of FTCLib is briefly summarized in the following quote made by Jackson from ARC Robotics, who started the library.
-
-
-> Our goal is to make programming easier and more efficient through effective classes and detailed examples of implementation. - Jackson ARC Robotics
-
-
-![image-here](docs/readme_pics/switching_build_variants.png)
-
-## Usage
-
-For drivetrain kinematics, you can do:
-```java
-MecanumDrive dt = new MecanumDrive(motors);
-
-x = gp1.joyLeft.x;
-y = gp1.joyLeft.y;
-turn = gp1.joyRight.x;
-
-dt.driveRobotCentric(x, y, turn);
-```
-For a simple CV example that find skystone using built-in detector:
-```java
-import com.arcrobotics.ftclib.command.CommandOpMode;
-import com.arcrobotics.ftclib.vision.SkystoneDetector;
-
-import org.openftc.easyopencv.OpenCvCamera;
-import org.openftc.easyopencv.OpenCvCameraFactory;
-import org.openftc.easyopencv.OpenCvCameraRotation;
-import org.openftc.easyopencv.OpenCvInternalCamera;
-
-// You don't need CommandOpMode, LinearOpMode, and other OpModes work well
-public class SkystoneSample extends CommandOpMode {
-
-    OpenCvCamera camera;
-    SkystoneDetector pipeline;
-    @Override
-    public void initialize() {
-
-        int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
-        camera = OpenCvCameraFactory.getInstance().createInternalCamera(OpenCvInternalCamera.CameraDirection.BACK, cameraMonitorViewId);
-        camera.openCameraDevice();
-
-        pipeline = new SkystoneDetector();
-
-        camera.setPipeline(pipeline);
-        camera.startStreaming(640, 480, OpenCvCameraRotation.UPRIGHT);
-    }
-
-    @Override
-    public void run() {
-        // Assuming threaded. It hopefully found the skystone at the end of init.
-        SkystoneDetector.SkystonePosition position = pipeline.getSkystonePosition();
-
-        switch (position) {
-            case LEFT_STONE:
-                break;
-            case CENTER_STONE:
-                break;
-            case RIGHT_STONE:
-                break;
-            default:
-                break;
-        }
-    }
-}
-
-```
-
-## Release Notes
-
-### 5.3B
-
-Released on 22 November 2019
-
-* Fix TFOD crash on stock due to incorrect version of TFOD library being used (which conflicted with pre-compiled official FTC SDK AARs)
-
-### 5.0A
-
-Released on 21 August 2019
-
-* Initial release.
