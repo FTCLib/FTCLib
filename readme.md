@@ -108,9 +108,6 @@ The mission of FTCLib is briefly summarized in the following quote made by Jacks
 
 > Our goal is to make programming easier and more efficient through effective classes and detailed examples of implementation. - Jackson ARC Robotics
 
-
-![image-here](docs/readme_pics/switching_build_variants.png)
-
 ## Why Use FTCLib?
 
 FTCLib is a non-profit, open source, community-driven library created solely with the intent of helping rookie teams learn programming easier and maximizing efficiency for veteran teams. By putting everything into one library, with enough documentation to build a rigorous learning experience, all teams can benefit from using FTCLib. It's fast, easy, efficient, and powerful. The idea is that this truly is the last library you will ever need.
