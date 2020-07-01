@@ -6,7 +6,7 @@ Project led by Jackson Isenberg and the Alpharetta Robotics Club
 
 Logo produced by Team RO037
 
-FTCLib is the FTC library to end all libraries. By porting features from wpilib for FRC, FTCLib makes the use of advanced systems extremely easy for even rookie programmers. This wiki will teach you how to use the library and what each class means and represents.
+FTCLib is the FTC library to end all libraries. By porting features from wpilib for FRC, FTCLib makes the use of advanced systems extremely easy for even rookie programmers. This wiki will teach you how to use the library and what each class means and represents. There is also a Gitbook and Java docs for an even greater learning experience.
 
 FTCLib documentation - <https://ftclib.gitbook.io/ftclib>
 
@@ -20,14 +20,14 @@ Add this to your build.common.gradle:
 Now, in your TeamCode buid.gradle, add these lines:
 ```
 dependencies {
-    implementation 'com.arcrobotics:ftclib:2.0.12' // Replace 2.0.12 with the latest release
+    implementation 'com.arcrobotics:ftclib:1.0.0' // Replace 1.0.0 with the latest release
 }
 ```
 And that's it! (May need to follow installation instructions below, however
 
 ## Legality for competition use
 
-This is the second official release of FTCLib! The project is still in the Alpha stage, with many things being untested. The project is being added to constantly, and there will most likely be smaller updates to come in the near future. If you want to contribute to the project, be sure to read the [Contributing.MD](https://github.com/FTCLib/FTCLib-1/blob/dev/CONTRIBUTING.md)
+This is the first full release of FTCLib! Since this is a community-driven, open source library, we are constantly looking for more content. If you feel there is something missing from our library, feel free to contribute! If you want to contribute to the project, be sure to read the [Contributing.MD](https://github.com/FTCLib/FTCLib-1/blob/dev/CONTRIBUTING.md)
 
 There is still a great need for Alpha testers, so also please contact us if you are interested in that.
 
@@ -65,10 +65,10 @@ Change the `7` to an `8` and then perform a Gradle Sync. You now have Java 8 (an
 
     ```groovy
     dependencies {
-        implementation 'com.arcrobotics:ftclib:2.0.11'
+        implementation 'com.arcrobotics:ftclib:1.0.0'
     }
     ```
-6. Because FTCLib makes use of advanced features, you need to increase the minSdkVersion to 24. Unfortunately, this means that ZTE  Speed Phones are not supported in this release.
+6. Because FTCLib makes use of advanced features, you need to increase the minSdkVersion to 24. Unfortunately, this means that ZTE Speed Phones are not supported in this release.
 
 In build.common.gradle, change the minSdkVersion from 19 to 24:
 ```groovy
@@ -110,6 +110,12 @@ The mission of FTCLib is briefly summarized in the following quote made by Jacks
 
 
 ![image-here](docs/readme_pics/switching_build_variants.png)
+
+## Why Use FTCLib?
+
+FTCLib is a non-profit, open source, community-driven library created solely with the intent of helping rookie teams learn programming easier and maximizing efficiency for veteran teams. By putting everything into one library, with enough documentation to build a rigorous learning experience, all teams can benefit from using FTCLib. It's fast, easy, efficient, and powerful. The idea is that this truly is the last library you will ever need.
+
+FTCLib still has the ability to be used along with other libraries without conflict. If you still want to use other libraries alongside ours, go ahead. FTCLib's purpose is solely to improve everyone's programming experience in FTC.
 
 ## Usage
 
