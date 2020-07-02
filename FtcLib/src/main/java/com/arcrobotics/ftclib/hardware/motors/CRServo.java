@@ -11,12 +11,12 @@ public abstract class CRServo implements Motor {
     /**
      * The CR ServoEx motor object.
      */
-    private Motor crServo;
+    protected Motor crServo;
 
     /**
      * The P controller.
      */
-    private PController pController;
+    protected PController pController;
 
     /**
      * The constructor for the CR Servo.
@@ -67,9 +67,15 @@ public abstract class CRServo implements Motor {
         crServo.disable();
     }
 
+    /**
+     * Adds a layer of P control {@link PController} to the
+     * speed of the CR Servo.
+     *
+     * @param output the desired output expressed as a percentage of maximum speed
+     */
     @Override
     public void pidWrite(double output) {
-        set(output);
+        pController.control(crServo, output, get());
     }
 
     @Override

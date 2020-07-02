@@ -3,6 +3,8 @@ package com.arcrobotics.ftclib.hardware.motors;
 /**
  * Allows multiple {@link Motor} objects to be linked together
  * as a single group. Multiple motors will act together.
+ *
+ * @author Jackson Isenberg
  */
 public class MotorGroup implements Motor {
 
@@ -18,6 +20,11 @@ public class MotorGroup implements Motor {
         group = motors;
     }
 
+    /**
+     * Set the speed for each motor in the group
+     *
+     * @param speed The speed to set. Value should be between -1.0 and 1.0.
+     */
     @Override
     public void set(double speed) {
         for (Motor x : group) {
@@ -25,21 +32,36 @@ public class MotorGroup implements Motor {
         }
     }
 
+    /**
+     * @return The speed as a percentage of output
+     */
     @Override
     public double get() {
         return group[0].get();
     }
 
+    /**
+     * @return true if the motor group is inverted
+     */
     @Override
     public boolean getInverted() {
         return isInverted;
     }
 
+    /**
+     * Set the motor group to the inverted direction or forward direction.
+     * This directly affects the speed rather than the direction.
+     *
+     * @param isInverted The state of inversion true is inverted.
+     */
     @Override
     public void setInverted(boolean isInverted) {
         this.isInverted = isInverted;
     }
 
+    /**
+     * Disables all the motor devices.
+     */
     @Override
     public void disable() {
         for (Motor x : group) {
@@ -47,15 +69,28 @@ public class MotorGroup implements Motor {
         }
     }
 
+    /**
+     * @return a string characterizing the device type
+     */
     public String getDeviceType() {
         return "Motor Group";
     }
 
+    /**
+     * Control the speed of the motors using a more controllable method
+     * through PID control. See {@link com.arcrobotics.ftclib.controller.PIDFController}
+     * for more information.
+     *
+     * @param output the specified output of the motor as a percentage of max power
+     */
     @Override
     public void pidWrite(double output) {
         set(output);
     }
 
+    /**
+     * Stops all motors in the group.
+     */
     @Override
     public void stopMotor() {
         for (Motor x : group) {

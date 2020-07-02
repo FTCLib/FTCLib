@@ -4,6 +4,11 @@ import com.arcrobotics.ftclib.controller.PIDController;
 import com.arcrobotics.ftclib.controller.wpilibcontroller.SimpleMotorFeedforward;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+/**
+ * A simple example of a {@link MotorEx} object.
+ *
+ * @author Jackson Isenberg
+ */
 public class SimpleMotorEx extends MotorEx {
 
     public SimpleMotorEx(SimpleMotor motor, double cpr,

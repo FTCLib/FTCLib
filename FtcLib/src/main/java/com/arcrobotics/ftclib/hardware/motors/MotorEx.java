@@ -16,6 +16,9 @@ import com.arcrobotics.ftclib.controller.wpilibcontroller.SimpleMotorFeedforward
  * Please note that this is the <b>abstract class file</b>, so
  * the purpose of this class is for creating your own custom motor class.
  * If you want to use the simple one we have created for you, please use
+ * {@link SimpleMotorEx}.
+ *
+ * @author Jackson Isenberg
  */
 public abstract class MotorEx implements Motor {
 
@@ -172,7 +175,7 @@ public abstract class MotorEx implements Motor {
     }
 
     /**
-     * Disables the motor
+     * Disables the motor.
      */
     @Override
     public void disable() {
@@ -180,7 +183,7 @@ public abstract class MotorEx implements Motor {
     }
 
     /**
-     * Stops the motor
+     * Stops the motor.
      */
     @Override
     public void stopMotor() {
@@ -202,7 +205,7 @@ public abstract class MotorEx implements Motor {
     public void pidWrite(double output) {
         double feedforward = motorFeedforward.calculate(output, (output - get())/output);
 
-        motor.set(velocityController.calculate(get(), output) + feedforward);
+        motor.set(motor.get() + velocityController.calculate(get(), output) + feedforward);
     }
 
     @Override

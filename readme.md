@@ -5,9 +5,11 @@
 
 Project led by Jackson Isenberg and the Alpharetta Robotics Club
 
-Logo produced by Team RO037
+*Logo produced by Team RO037*
 
-FTCLib is the FTC library to end all libraries. By porting features from wpilib for FRC, FTCLib makes the use of advanced systems extremely easy for even rookie programmers. This wiki will teach you how to use the library and what each class means and represents. There is also a Gitbook and Java docs for an even greater learning experience.
+FTCLib is a library designed to be the only library you'll need for FTC programming. The project was initially meant to be a port of WPILib, which is the standard programming library for FRC that almost all teams use. However, with FTC, there are a ton of libraries that not many people have heard about, especially rookie teams who are just starting. The goal of FTCLib is to improve the initial programming experience for new members as well as greatly enhance the efficiency of code for veterans.
+
+Please read the documentation and the rest of the README before you get started with the library.
 
 FTCLib documentation - <https://ftclib.gitbook.io/ftclib>
 
@@ -28,11 +30,15 @@ And that's it! (May need to follow installation instructions below, however
 
 ## Legality for competition use
 
-This is the first full release of FTCLib! Since this is a community-driven, open source library, we are constantly looking for more content. If you feel there is something missing from our library, feel free to contribute! If you want to contribute to the project, be sure to read the [Contributing.MD](https://github.com/FTCLib/FTCLib-1/blob/dev/CONTRIBUTING.md)
+FTCLib is currently in full version 1.0.0. Our library is cloned from [OpenRC-Turbo](https://github.com/OpenFTC/OpenRC-Turbo). Please take a look at the upstream for information regarding legal use, variants, and stock.
 
-There is still a great need for Alpha testers, so also please contact us if you are interested in that.
+## Contributing
 
-# Attention Users!
+Since this is a community-driven, open source library, we are constantly looking for more content. If you feel there is something missing from our library, feel free to contribute! If you want to contribute to the project, be sure to read the [Contributing.MD](https://github.com/FTCLib/FTCLib/blob/dev/CONTRIBUTING.md).
+
+Please make sure to contact us if you have any other questions.
+
+## Attention Users!
 This library uses Java 8! If you do not already have Java 8 on your FTC Project, please do so! If you do not know how to, read further. __Doing this__ *will* __require all other devices to delete and then reclone the project following the change!__ You get weird Android Studio errors other wise. To change, go to the `build.common.gradle` and find the lines that say
 
 ```groovy
@@ -172,114 +178,4 @@ public class SkystoneSample extends CommandOpMode {
         }
     }
 }
-
 ```
-__Features__:
-
-+ WPILib - Style code base
-+ Commander - Based System
-    + Command manager for OpMode
-        + Can add a sequential command
-        + Commands can have a scheduled timeout before the next command
-        + Commands can have modifiable time between loop iterations
-    + Ability for custom commands
-    + Ability for custom subsystems
-+ Controllers
-    + P Controller
-        + Set the P gain
-        + Runs a given Motor with a given setpoint and a previous value
-    + PIDF Controller
-        + Proportional (P), Integral (I), Derivative, (D), and Feedforward (F) gains
-        + Set a setpoint and a measured value
-        + Can set a custom error tolerance for position and velocity
-        + Can set the time period for the iteration of the control loop
-        + Calculate the output at any time
-+ Drive Bases
-    + Abstract drive base classes for all kinds of drive bases!
-    + Each one has a customizable power range and max speed limit
-    + Can clip a value to fit a range
-    + Can normalize the speeds for a given set of powers
-    + Can square an input
-    + Make your own drive base with a certain abstract class
-    + Includes robot-centric *and* field-centric driving
-    + Customizable for specifc robot dimensions
-    + Includes many of the most common drive bases
-        + Differential (Tank) Drive
-        + Mecanum Drive
-        + H-Drive
-        + Swerve Drive
-            + Includes a Swerve Module with a built-in P controller
-            + Can turn motor to an angle
-        + Robot Drive
-            + Abstract drive base class with basic methods
-            + Use to create your own drive bases
-+ Gamepad
-    + Has many different functions and classes for getting the most out of a gamepad
-    + GamepadEx class
-        + Set up with a normal Gamepad
-        + Read any button value
-        + Read any trigger value
-    + ButtonReader class
-        + A class that represents a gamepad button
-        + Many uses including the current state, the recent state, and more
-    + TriggerReader class
-        + A class that represents a gamepad trigger
-        + Includes simular state-changing methods like GamepadButton
-        + Can set the trigger name for telemetry
-+ Geometry
-    + Lots of geometry - related classes and functions
-    + Vector2d
-    + Pose2d
-    + Rotation2d
-+ Hardware
-    + Has a *lot* of hardware classes, interfaces, and items
-    + Includes ready made hardware devices not included in the SDK
-    + Many different types of motors and motor related objects
-        + CRServo
-        + EncoderEx
-        + Motor
-        + MotorEx
-        + MotorGroup
-    + Other types of servos
-        + SimpleServo
-        + ServoEx
-    + Lots of different sensors and other items, some can be custom - implemented
-        + ExternalEncoder (abstract)
-        + JSTEncoder
-        + GyroEx (abstract)
-        + Rev IMU
-        + SensorColor
-        + RevColorSensorV3
-        + SensorDistance (interface)
-        + SensorDistanceEx (interface)
-        + SensorRevTOFDistance
-+ Kinematics
-    + Odometry!
-    + Has odometry for a couple of common drive bases
-        + DifferentialOdometry
-        + MecanumOdometry
-    + Easily used and integratable
-    + Supports multiple forms of ododmetry
-        + Two wheel + Gyro
-        + Three wheel + Gyro
-        + Three wheel
-+ Utility
-    + Has a few different utility functions
-    + Direction
-        + Represents a logical direction
-        + LEFT, RIGHT, UP, DOWN, FORWARDS, BACKWARDS
-    + Safety
-        + Represents an arbitrary safety level
-        + SWIFT, EASE_OFF, DEFAULT, BREAK
-    + Timing
-        + Has a few different functions for a Timer
-            + Can set the timer
-            + Can pause the timer
-            + Can stop the timer
-            + Can read if timer is done
-            + Can reset the timer
-        + Also includes a Rate
-            + Can set a rate
-            + Can reset the rate
-            + Can see if rate has expired yet for refreshing
-+ Some Examples in the TeamCode module (limited)

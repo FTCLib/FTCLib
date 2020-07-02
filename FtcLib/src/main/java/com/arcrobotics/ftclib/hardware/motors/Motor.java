@@ -29,6 +29,8 @@ import com.arcrobotics.ftclib.hardware.HardwareDevice;
  *         Implement the methods and create your own if you would like!
  *     </li>
  * </ol>
+ *
+ * @author Jackson Isenberg
  */
 public interface Motor extends HardwareDevice {
 

@@ -80,11 +80,8 @@ public class PIDFController {
      * @param speed     The maximum speed the motor should rotate.
      */
     public void control(Motor affected, double sp, double pv, double speed) {
-        if (Math.abs(sp) > Math.abs(pv)) affected.set(speed * calculate(pv, sp));
-        else affected.set(0);
+        affected.set(speed * (pv + calculate(pv, sp)));
     }
-
-
 
     /**
      * Implements a control calculation onto the affected motor.
