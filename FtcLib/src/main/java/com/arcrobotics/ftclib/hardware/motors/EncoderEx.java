@@ -5,14 +5,20 @@ import com.arcrobotics.ftclib.hardware.HardwareDevice;
 
 /**
  * An extended encoder object. EncoderEx functions like a normal internal encoder
- * but has more methods and customization than a regular encoder. The primary purpose of this
- * classfile is for PIDF control {@link PIDFController}.
+ * but has more methods and customization than a regular encoder.
  *
- * <p>Uses a {@link MotorEx} object for encoder values.</p>
+ * <p>
+ *     Uses a {@link MotorEx} object for encoder values. This means the encoder is plugged
+ *     into a motor encoder port on the REV Hub and paired to a motor object. Use
+ *     {@link com.arcrobotics.ftclib.hardware.ExternalEncoder} for an external encoder i.e.
+ *     REV through-bore.
+ * </p>
+ *
+ * @author Jackson Isenberg
  */
 public class EncoderEx implements HardwareDevice {
 
-    public static final double kDefaultEncoderMultiplier = 1.0;
+    public static final int kDefaultEncoderMultiplier = 1;
 
     /**
      * The motor that is paired with the encoder. This assumes that the encoder
@@ -23,14 +29,14 @@ public class EncoderEx implements HardwareDevice {
     /**
      * The total number of ticks that have accumulated before the last reset.
      */
-    private double resetVal;
+    private int resetVal;
 
     /**
      * The multiplier for the encoder, which determines its direction.
      *
      * <p>By default, the multiplier is {@value kDefaultEncoderMultiplier}</p>
      */
-    private double multiplier = kDefaultEncoderMultiplier;
+    private int multiplier = kDefaultEncoderMultiplier;
 
     /**
      * The constructor for the extended-use encoder.
@@ -44,7 +50,7 @@ public class EncoderEx implements HardwareDevice {
     /**
      * @return The current number of ticks reached by the output shaft since the last reset.
      */
-    public double getCurrentTicks() {
+    public int getCurrentTicks() {
         return multiplier * (motor_w_encoder.getCurrentPosition() - resetVal);
     }
 
@@ -94,6 +100,46 @@ public class EncoderEx implements HardwareDevice {
     public void disable() {
         multiplier = 0;
         stopAndReset();
+    }
+
+    /**
+     * Sets the tolerance for the position control
+     *
+     * @param tolerance the desired tolerance
+     */
+    public void setPositionTolerance(double tolerance) {
+        motor_w_encoder.positionController.setTolerance(tolerance);
+    }
+
+    /**
+     * Runs the motor to a chosen position in space.
+     *
+     * @param target the desired tick reading of the motor
+     */
+    public void runToPosition(int target) {
+        motor_w_encoder.pidWrite(
+                motor_w_encoder.positionController.calculate(getCurrentTicks(), target)
+        );
+    }
+
+    /**
+     * Runs the motor to a chosen position in space.
+     *
+     * @param target the desired tick reading of the motor
+     * @param speed the defined speed for the motor from 0 to 1
+     */
+    public void runToPosition(int target, double speed) {
+        motor_w_encoder.pidWrite(
+                speed * motor_w_encoder.positionController.calculate(getCurrentTicks(), target)
+        );
+    }
+
+    /**
+     * @return true if the motor has reached its setpoint target from
+     * {@link #runToPosition(int)}.
+     */
+    public boolean reachedTarget() {
+        return motor_w_encoder.positionController.atSetPoint();
     }
 
     /**

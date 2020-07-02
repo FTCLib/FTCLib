@@ -2,7 +2,7 @@ package org.firstinspires.ftc.teamcode.OpModes;
 
 import com.arcrobotics.ftclib.drivebase.DifferentialDrive;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
-import com.arcrobotics.ftclib.hardware.motors.SimpleMotorImpl;
+import com.arcrobotics.ftclib.hardware.motors.SimpleMotor;
 import com.arcrobotics.ftclib.util.Safety;
 
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
@@ -16,7 +16,7 @@ import org.firstinspires.ftc.teamcode.HardwarePushbot;
 public class PushbotTeleOp extends LinearOpMode {
 
     private DifferentialDrive dt;
-    private SimpleMotorImpl left, right;
+    private SimpleMotor left, right;
 
     private GamepadEx controller;
 
@@ -24,8 +24,8 @@ public class PushbotTeleOp extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        left = new SimpleMotorImpl(hardwareMap, telemetry, "left", 383.6);
-        right = new SimpleMotorImpl(hardwareMap, telemetry, "right", 383.6);
+        left = new SimpleMotor("left", hardwareMap);
+        right = new SimpleMotor("right", hardwareMap);
 
         dt = new DifferentialDrive(left, right);
 

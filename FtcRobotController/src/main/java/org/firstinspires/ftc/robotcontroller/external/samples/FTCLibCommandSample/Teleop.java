@@ -1,8 +1,8 @@
 package org.firstinspires.ftc.robotcontroller.external.samples.FTCLibCommandSample;
 
-import com.arcrobotics.ftclib.controller.PIDFController;
+import com.arcrobotics.ftclib.controller.PIDController;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
-import com.arcrobotics.ftclib.hardware.motors.MotorImplEx;
+import com.arcrobotics.ftclib.hardware.motors.SimpleMotorEx;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -13,17 +13,16 @@ public class Teleop extends OpMode {
     public static final double kP = 0.003;
     public static final double kI = 0.12;
     public static final double kD = 0.053;
-    public static final double kF = 0.07;
     public static final double kThreshold = 8;
 
     private DriveSubsystem driveSubsystem;
     private GamepadEx driverGamepad;
     private PIDLiftController liftController;
     private SimpleLinearLift lift;
-    private MotorImplEx liftMotor;
+    private SimpleMotorEx liftMotor;
 
-    public static PIDFController pidf = new PIDFController(
-            new double[]{kP, kI, kD, kF}
+    public static PIDController pid = new PIDController(
+            new double[]{kP, kI, kD}
     );
 
     @Override
@@ -31,13 +30,13 @@ public class Teleop extends OpMode {
         driverGamepad = new GamepadEx(gamepad1);
         driveSubsystem = new DriveSubsystem(driverGamepad, hardwareMap, telemetry);
 
-        pidf.reset();
-        pidf.setTolerance(kThreshold);
-
         driveSubsystem.initialize();
 
-        liftMotor = new MotorImplEx(hardwareMap, "lift", 537.6);
-        lift = new SimpleLinearLift(liftMotor, pidf);
+        pid.setTolerance(kThreshold);
+        pid.reset();
+
+        liftMotor = new SimpleMotorEx("lift", hardwareMap, 537.6, pid);
+        lift = new SimpleLinearLift(liftMotor);
         liftController = new PIDLiftController(lift);
     }
 

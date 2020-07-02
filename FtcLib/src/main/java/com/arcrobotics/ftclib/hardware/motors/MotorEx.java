@@ -1,39 +1,43 @@
 package com.arcrobotics.ftclib.hardware.motors;
 
 import com.arcrobotics.ftclib.controller.PController;
+import com.arcrobotics.ftclib.controller.PIDController;
 import com.arcrobotics.ftclib.controller.PIDFController;
+import com.arcrobotics.ftclib.controller.wpilibcontroller.SimpleMotorFeedforward;
 
 /**
  * An extended motor class that utilizes more features than the
  * regular motor. This is basically a rewrite of DcMotor in the basic
  * SDK, but has more features and a more powerful PIDF control.
+ *
+ * In order to create an extended motor, you will need to have already
+ * created either a custom motor class or use {@link SimpleMotor}.
+ *
+ * Please note that this is the <b>abstract class file</b>, so
+ * the purpose of this class is for creating your own custom motor class.
+ * If you want to use the simple one we have created for you, please use
  */
 public abstract class MotorEx implements Motor {
 
     /**
-     * The PIDF controller for the extended motor.
+     * The PID controller for the extended motor.
      */
-    private PIDFController pidfController;
+    protected PIDController velocityController;
+
+    /**
+     * The feed forward output for the motor.
+     */
+    protected SimpleMotorFeedforward motorFeedforward;
     
     /**
-    * Hotfix! Very bad but works
-    *
-    * The P controller for position
+    * The P controller for position.
     */
-    private PController pController;
+    protected PController positionController;
+
     /**
      * The motor in question.
      */
     protected Motor motor;
-
-    /**
-     * The target position of the motor.
-     *
-     * <p>
-     *     This only works if the motor is in RUN_TO_POSITION.
-     * </p>
-     */
-    private double targetPos;
 
     /**
      * The counts per revolution of the output shaft, usually listed in the specs for
@@ -41,47 +45,7 @@ public abstract class MotorEx implements Motor {
      */
     public final double COUNTS_PER_REV;
 
-    public String runMode = "rwe";
-    public String zeroBehavior = "null";
-
-    /**
-     * The internal encoder for the motor.
-     */
-    public EncoderEx encoder;
-
-    /**
-     * The mode of the motor.
-     *
-     * <p>
-     *     RUN_TO_POSITION uses a P controller to bring the motor shaft to a
-     *     designated target.
-     * </p>
-     * <p>
-     *     RUN_USING_ENCODER uses the encoder to have the motor accelerate to the
-     *     chosen output speed using a PIDF controller.
-     * </p>
-     * <p>
-     *     RUN_WITHOUT_ENCODER is the default run mode, which causes the motor to run
-     *     like a normal {@link Motor}.
-     * </p>
-     * <p>
-     *     STOP_AND_RESET_ENCODER stops the motor and resets the encoder value to 0.
-     * </p>
-     */
-    public enum RunMode {
-        RUN_TO_POSITION("rtp"), RUN_USING_ENCODER("rue"), RUN_WITHOUT_ENCODER("rwe"),
-        STOP_AND_RESET_ENCODER("sare");
-
-        private final String mode;
-
-        RunMode(String mode) {
-            this.mode = mode;
-        }
-
-        public String getMode() {
-            return mode;
-        }
-    }
+    public ZeroPowerBehavior zeroBehavior = ZeroPowerBehavior.UNKNOWN;
 
     /**
      * The behavior of the motor when a speed of 0 is passed.
@@ -97,27 +61,17 @@ public abstract class MotorEx implements Motor {
      * </p>
      */
     public enum ZeroPowerBehavior {
-        BREAK("break"), FLOAT("float"), UNKNOWN("null");
-
-        private final String behavior;
-
-        ZeroPowerBehavior(String behavior) {
-            this.behavior = behavior;
-        }
-
-        public String getBehavior() {
-            return behavior;
-        }
+        BREAK, FLOAT, UNKNOWN
     }
 
     /**
-     * The constructor for the motor without a PIDF controller.
+     * The constructor for the motor without a PID controller.
      *
      * @param mot   The motor in question.
      * @param cpr   The counts per revolution of said motor.
      */
     public MotorEx(Motor mot, double cpr) {
-        this(mot, cpr, new PIDFController(new double[]{1,0,0,0}));
+        this(mot, cpr, new PIDController(new double[]{1,0,0}));
     }
 
     /**
@@ -125,44 +79,56 @@ public abstract class MotorEx implements Motor {
      *
      * @param mot           The motor in question.
      * @param cpr           The counts per revolution of said motor.
-     * @param controller    The PIDF controller.
+     * @param controller    The PID controller.
      */
-    public MotorEx(Motor mot, double cpr, PIDFController controller) {
+    public MotorEx(Motor mot, double cpr, PIDController controller) {
         this(mot, cpr, controller, new PController(1));
     }
     
     /**
      * The constructor for the extended motor which includes a
-     * {@link PIDFController} and a {@link PController}
+     * {@link PIDController} and a {@link PController}
      */
-   public MotorEx(Motor mot, double cpr, PIDFController veloController, PController positionController) {
+   public MotorEx(Motor mot, double cpr,
+                  PIDController veloController,
+                  PController positionController) {
+
+        this(mot, cpr, veloController, positionController,
+                new SimpleMotorFeedforward(0,0));
+
+    }
+
+    /**
+     * The constructor for the extended motor which includes a
+     * {@link PIDController} and a {@link PController} along
+     * with {@link SimpleMotorFeedforward}.
+     */
+    public MotorEx(Motor mot, double cpr,
+                   PIDController veloController,
+                   PController positionController,
+                   SimpleMotorFeedforward feedforward) {
+
         motor = mot;
         COUNTS_PER_REV = cpr;
 
-        pidfController = veloController;
-       
-        //HOTFIX Stores the P value
-        pController = positionController;
+        velocityController = veloController;
 
-        encoder = new EncoderEx(this);
+        this.positionController = positionController;
+
+        motorFeedforward = feedforward;
+
     }
-    
-    
-    /**
-     * @return The current tick count of the output shaft.
-     */
-    public abstract double getCurrentPosition();
 
     /**
-     * Set the run mode of the motor.
-     *
-     * @param mode  The MotorEx.RunMode of the motor.
+     * The constructor for the extended motor which includes a
+     * {@link PIDController} and {@link SimpleMotorFeedforward}.
      */
-    public void setMode(RunMode mode) {
-        runMode = mode.getMode();
-        if (runMode.equals("sare")) {
-            encoder.stopAndReset();
-        }
+    public MotorEx(Motor mot, double cpr,
+                   PIDController veloController,
+                   SimpleMotorFeedforward feedforward) {
+
+        this(mot, cpr, veloController, new PController(1), feedforward);
+
     }
 
     /**
@@ -171,73 +137,87 @@ public abstract class MotorEx implements Motor {
      * @param behavior The MotorEx.ZeroPowerBehavior of the motor.
      */
     public void setZeroPowerBehavior(ZeroPowerBehavior behavior) {
-        zeroBehavior = behavior.getBehavior();
+        zeroBehavior = behavior;
     }
 
     /**
-     * Sets the target position of the motor.
-     *
-     * <p>If the motor is not in RUN_TO_POSITION, this will throw a {@code NullPointerException}.</p>
-     *
-     * @param target The specified target of the motor.
+     * @return the current position of the motor in ticks
      */
-    public void setTargetPosition(double target) {
-        if (runMode.equals("rtp")) {
-            targetPos = target;
-        } else throw null;
-    }
+    public abstract int getCurrentPosition();
 
     /**
-     * @return The target position of the motor.
+     * Resets the controlelrs running the robot
      */
-    public double getTargetPosition() {
-        return (targetPos != 0) ? targetPos : null;
-    }
-
-    public void resetController() {
-        pidfController.reset();
-        pController.reset();
+    public void resetControllers() {
+        velocityController.reset();
+        positionController.reset();
     }
 
     /**
-     * Sets the speed of the motor based on the current run mode.
+     * Sets the speed of the motor. This method needs to be overridden in your
+     * {@link Motor} object.
      *
      * @param speed The speed to set. Value should be between -1.0 and 1.0.
-     * 
-     * HOTFIX: AHHH
      */
     public void set(double speed) {
-        if (runMode.equals("rtp")) {
-            pController.control(motor, targetPos, encoder.getCurrentTicks(), speed);
-        } else if (runMode.equals("rue")) {
-            motor.set(motor.get() + pidfController.calculate(speed, motor.get()));
-        } else if (runMode.equals("sare")) {
-            throw null;
-        } else {
-            motor.set(speed);
-        }
+        motor.set(speed);
 
-        if (speed == 0) {
-            if (zeroBehavior.equals("float")) {
-                pController.control(motor, 0, motor.get(), 0.5);
-            } else if (zeroBehavior.equals("break")) {
-                motor.set(0);
-            } else pController.control(motor, 0, motor.get());
+        if (speed <= 10E-2) {
+            if (zeroBehavior == ZeroPowerBehavior.FLOAT) {
+                positionController.control(motor, 0, motor.get(), 0.5);
+            } else if (zeroBehavior == ZeroPowerBehavior.BREAK) {
+                motor.stopMotor();
+            } else positionController.control(motor, 0, motor.get());
         }
     }
 
     /**
-     * Stops the motor, of course.
+     * Disables the motor
      */
+    @Override
+    public void disable() {
+        motor.disable();
+    }
+
+    /**
+     * Stops the motor
+     */
+    @Override
     public void stopMotor() {
-        set(0);
+        motor.stopMotor();
+    }
+
+    @Override
+    public double get() {
+        return motor.get();
     }
 
     /**
-     * Resets the encoder value to 0 without stopping the motor, of course.
+     * This is the method that does the magic for the extended motor.
+     * It uses a {@link PIDController} and {@link SimpleMotorFeedforward}.
+     *
+     * @param output the desired output from the motor, from -1.0 to 1.0
      */
-    public void resetEncoder() {
-        encoder.resetEncoderCount();
+    @Override
+    public void pidWrite(double output) {
+        double feedforward = motorFeedforward.calculate(output, (output - get())/output);
+
+        motor.set(velocityController.calculate(get(), output) + feedforward);
+    }
+
+    @Override
+    public void setInverted(boolean isInverted) {
+        motor.setInverted(isInverted);
+    }
+
+    @Override
+    public boolean getInverted() {
+        return motor.getInverted();
+    }
+
+    @Override
+    public String getDeviceType() {
+        return "Extended " + motor.getDeviceType();
     }
 
 }

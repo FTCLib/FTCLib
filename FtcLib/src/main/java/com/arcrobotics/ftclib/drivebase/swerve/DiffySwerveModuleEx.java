@@ -76,14 +76,6 @@ public class DiffySwerveModuleEx extends DiffySwerveModule {
         angleController = cont;
     }
 
-    /**
-     * Resets the encoder values of the motors
-     */
-    public void resetEncoders() {
-        ((MotorEx)m_motorOne).encoder.resetEncoderCount();
-        ((MotorEx)m_motorTwo).encoder.resetEncoderCount();
-    }
-
     public void setDegreesPerTick(double val) {
         kRevConstant = val;
     }
@@ -97,10 +89,10 @@ public class DiffySwerveModuleEx extends DiffySwerveModule {
      *
      * @return  the encoder counts as an array
      */
-    public double[] getRawEncoderCounts() {
+    public double[] getRawPositions() {
         double[] counts = new double[] {
-                ((MotorEx)m_motorOne).encoder.getCurrentTicks(),
-                ((MotorEx)m_motorTwo).encoder.getCurrentTicks()
+                ((MotorEx)m_motorOne).getCurrentPosition(),
+                ((MotorEx)m_motorTwo).getCurrentPosition()
             };
         return counts;
     }
@@ -115,8 +107,8 @@ public class DiffySwerveModuleEx extends DiffySwerveModule {
     }
 
     public double[] getLastEncoderCounts() {
-        lastMotor1EncoderCount = getRawEncoderCounts()[0];
-        lastMotor2EncoderCount = getRawEncoderCounts()[1];
+        lastMotor1EncoderCount = getRawPositions()[0];
+        lastMotor2EncoderCount = getRawPositions()[1];
 
         return new double[]{lastMotor1EncoderCount, lastMotor2EncoderCount};
     }
@@ -127,15 +119,15 @@ public class DiffySwerveModuleEx extends DiffySwerveModule {
      * @return the heading of the module
      */
     public double getRawHeading() {
-        return kRevConstant * (getRawEncoderCounts()[0] + getRawEncoderCounts()[1]);
+        return kRevConstant * (getRawPositions()[0] + getRawPositions()[1]);
     }
 
     /**
      * Updates the distance travelled
      */
     public void updateTracking() {
-        double deltaOne = getRawEncoderCounts()[0] - lastMotor1EncoderCount;
-        double deltaTwo = getRawEncoderCounts()[1] - lastMotor2EncoderCount;
+        double deltaOne = getRawPositions()[0] - lastMotor1EncoderCount;
+        double deltaTwo = getRawPositions()[1] - lastMotor2EncoderCount;
 
         distanceTravelled += (deltaOne - deltaTwo)/2.0 * kWheelConstant;
 

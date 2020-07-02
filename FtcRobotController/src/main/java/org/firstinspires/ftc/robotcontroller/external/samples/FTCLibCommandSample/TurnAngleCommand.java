@@ -31,10 +31,6 @@ public class TurnAngleCommand implements Command {
     public void initialize() {
         // Reset gyro and encoders
         driveSubsystem.reset();
-        driveSubsystem.frontLeftMotor.setRunMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        driveSubsystem.frontRightMotor.setRunMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        driveSubsystem.backLeftMotor.setRunMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        driveSubsystem.backRightMotor.setRunMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         // Set target to the target angle
         tl.addData("Heading Setpoint", headingController.getSetPoint());

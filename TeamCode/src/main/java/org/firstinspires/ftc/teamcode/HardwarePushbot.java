@@ -79,11 +79,11 @@ public class HardwarePushbot extends Robot {
     }
 
     public Pose2d getRobotPosition() {
-        return odometry.robotPose;
+        return odometry.getPose();
     }
 
     public void updateRobotPosition(double heading, double leftInches, double rightInches) {
-        odometry.update(heading, leftInches, rightInches);
+        odometry.updatePosition(heading, leftInches, rightInches);
     }
 
 }

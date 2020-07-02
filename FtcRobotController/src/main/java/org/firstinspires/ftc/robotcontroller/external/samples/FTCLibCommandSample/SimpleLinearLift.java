@@ -1,50 +1,45 @@
 package org.firstinspires.ftc.robotcontroller.external.samples.FTCLibCommandSample;
 
-import com.arcrobotics.ftclib.controller.PIDFController;
-import com.arcrobotics.ftclib.hardware.motors.MotorImplEx;
+import com.arcrobotics.ftclib.hardware.motors.EncoderEx;
+import com.arcrobotics.ftclib.hardware.motors.SimpleMotorEx;
+import com.arcrobotics.ftclib.util.Direction;
 import com.arcrobotics.ftclib.util.Timing;
 
 import java.util.concurrent.TimeUnit;
 
 public class SimpleLinearLift {
 
-    MotorImplEx m_liftMotor;
-    PIDFController m_controller;
+    SimpleMotorEx m_liftMotor;
+    EncoderEx m_encoder;
 
-    public SimpleLinearLift(MotorImplEx liftMotor, PIDFController controller) {
+    public SimpleLinearLift(SimpleMotorEx liftMotor) {
         m_liftMotor = liftMotor;
-        m_controller = controller;
+        m_encoder = new EncoderEx(liftMotor);
 
-        m_liftMotor.encoder.resetEncoderCount();
+        resetPositionCounter();
     }
 
     public void moveLift(double power) {
-        double error = m_controller.calculate(power, m_liftMotor.getPower());
-        m_liftMotor.setPower(m_liftMotor.getPower() + error);
+        m_liftMotor.pidWrite(power);
     }
 
-    public void moveToPosition(double desiredTicks) {
-        if (m_controller.atSetPoint()) m_controller.reset();
-            
-        m_liftMotor.setPower(
-                m_controller.calculate(desiredTicks, m_liftMotor.getEncoderPulses())
-                / desiredTicks
-        );
+    public void moveToPosition(int position) {
+        m_encoder.runToPosition(position);
     }
 
-    public void moveWithTimer(int activeTime) {
-        if (m_controller.atSetPoint()) m_controller.reset();
-        
+    public void moveWithTimer(int activeTime, Direction direction) {
         Timing.Timer timer = new Timing.Timer(activeTime, TimeUnit.MILLISECONDS);
         timer.start();
 
+        int multiplier = direction == Direction.UP ? 1 : -1;
+
         while (!timer.done()) {
-            m_liftMotor.setPower(m_controller.calculate(activeTime, timer.currentTime()) / activeTime);
+            m_liftMotor.pidWrite(multiplier * (activeTime - timer.currentTime()) / activeTime);
         }
     }
 
     public void resetPositionCounter() {
-        m_liftMotor.encoder.resetEncoderCount();
+        m_encoder.resetEncoderCount();
     }
 
 }

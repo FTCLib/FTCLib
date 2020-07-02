@@ -2,7 +2,7 @@ package org.firstinspires.ftc.robotcontroller.external.samples;
 
 import com.arcrobotics.ftclib.drivebase.swerve.DiffySwerveDrive;
 import com.arcrobotics.ftclib.drivebase.swerve.DiffySwerveModule;
-import com.arcrobotics.ftclib.hardware.motors.MotorImplEx;
+import com.arcrobotics.ftclib.hardware.motors.SimpleMotorEx;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -12,15 +12,15 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 public class DifferentialSwerveSample extends LinearOpMode {
 
     private DiffySwerveDrive driveTrain;
-    private MotorImplEx moduleOne_LEFT, moduleOne_RIGHT, moduleTwo_LEFT, moduleTwo_RIGHT;
+    private SimpleMotorEx moduleOne_LEFT, moduleOne_RIGHT, moduleTwo_LEFT, moduleTwo_RIGHT;
 
     @Override
     public void runOpMode() throws InterruptedException {
 
-        moduleOne_LEFT = new MotorImplEx(hardwareMap, "oneLeft", 383.6);
-        moduleOne_RIGHT = new MotorImplEx(hardwareMap, "oneRight", 383.6);
-        moduleTwo_LEFT = new MotorImplEx(hardwareMap, "twoLeft", 383.6);
-        moduleTwo_RIGHT = new MotorImplEx(hardwareMap, "twoRight", 383.6);
+        moduleOne_LEFT = new SimpleMotorEx("oneLeft", hardwareMap, 383.6);
+        moduleOne_RIGHT = new SimpleMotorEx("oneRight", hardwareMap, 383.6);
+        moduleTwo_LEFT = new SimpleMotorEx("twoLeft", hardwareMap, 383.6);
+        moduleTwo_RIGHT = new SimpleMotorEx("twoRight", hardwareMap, 383.6);
 
         driveTrain = new DiffySwerveDrive(
                     new DiffySwerveModule(moduleOne_LEFT, moduleOne_RIGHT),

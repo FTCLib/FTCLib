@@ -9,26 +9,21 @@ public class DriveForwardCommand implements Command {
     private ElapsedTime timer;
     private double distance, speed;
     // 4 inches e.g
-    private double wheelDiameter = 4;
 
     public DriveForwardCommand(DriveSubsystem driveSubsystem, double distance, double speed) {
         this.driveSubsystem = driveSubsystem;
         this.distance = distance;
         this.speed = speed;
-
     }
 
     @Override
     public void initialize() {
-        driveSubsystem.backLeftMotor.setDistance(distance, wheelDiameter);
-        driveSubsystem.backRightMotor.setDistance(distance, wheelDiameter);
-        driveSubsystem.frontLeftMotor.setDistance(distance, wheelDiameter);
-        driveSubsystem.frontRightMotor.setDistance(distance, wheelDiameter);
+        driveSubsystem.reset();
     }
 
     @Override
     public void execute() {
-        driveSubsystem.driveTrain.driveRobotCentric(speed, 0, 0);
+        driveSubsystem.driveToPosition((int)distance, speed);
     }
 
 
@@ -36,17 +31,11 @@ public class DriveForwardCommand implements Command {
     public void end() {
         driveSubsystem.reset();
         driveSubsystem.stop();
-
     }
 
 
     @Override
     public boolean isFinished() {
-        // If the robot has traveled the correct distance
-        boolean distanceReached = !driveSubsystem.backLeftMotor.isBusy() && !driveSubsystem.backRightMotor.isBusy()
-                && !driveSubsystem.frontLeftMotor.isBusy() && !driveSubsystem.frontRightMotor.isBusy();
-        // If the timeout has been reached
-
-        return distanceReached;
+        return  driveSubsystem.atTargetPos();
     }
 }

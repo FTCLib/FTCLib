@@ -8,7 +8,7 @@ import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.arcrobotics.ftclib.geometry.Pose2d;
 import com.arcrobotics.ftclib.hardware.JSTEncoder;
 import com.arcrobotics.ftclib.hardware.RevIMU;
-import com.arcrobotics.ftclib.hardware.motors.SimpleMotorImpl;
+import com.arcrobotics.ftclib.hardware.motors.SimpleMotor;
 import com.arcrobotics.ftclib.kinematics.HolonomicOdometry;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
@@ -24,7 +24,7 @@ public class DriveSubsystem implements Subsystem {
     //Gyro
     RevIMU gyro;
 
-    public SimpleMotorImpl backLeftMotor, frontLeftMotor, backRightMotor, frontRightMotor;
+    public SimpleMotor backLeftMotor, frontLeftMotor, backRightMotor, frontRightMotor;
     public MecanumDrive driveTrain;
     public JSTEncoder horizontalEncoder, leftEncoder, rightEncoder;
 
@@ -40,10 +40,10 @@ public class DriveSubsystem implements Subsystem {
 
         odometry = new HolonomicOdometry(trackWidth);
 
-        backLeftMotor = new SimpleMotorImpl(hw, telemetry,"backLeftMotor");
-        frontLeftMotor = new SimpleMotorImpl(hw, telemetry,"frontLeftMotor");
-        backRightMotor = new SimpleMotorImpl(hw, telemetry, "backRightMotor");
-        frontRightMotor = new SimpleMotorImpl(hw, telemetry, "frontRightMotor");
+        backLeftMotor = new SimpleMotor("backLeftMotor", hw);
+        frontLeftMotor = new SimpleMotor("frontLeftMotor", hw);
+        backRightMotor = new SimpleMotor("backRightMotor", hw);
+        frontRightMotor = new SimpleMotor("frontRightMotor", hw);
 
         horizontalEncoder = new JSTEncoder(hw, "hEncoder");
         horizontalEncoder.setDistancePerPulse((WHEEL_DIAMETER * Math.PI) / PULSES_PER_ROTATION);
@@ -75,13 +75,11 @@ public class DriveSubsystem implements Subsystem {
 
     @Override
     public void reset() {
-        backLeftMotor.reset();
-        backRightMotor.reset();
-        frontLeftMotor.reset();
-        frontRightMotor.reset();
+        horizontalEncoder.resetEncoder();
+        leftEncoder.resetEncoder();
+        rightEncoder.resetEncoder();
 
         gyro.reset();
-
     }
 
     public void updateOdometry() {
@@ -91,7 +89,7 @@ public class DriveSubsystem implements Subsystem {
 
     public Pose2d getRobotPose() {
         updateOdometry();
-        return odometry.robotPos;
+        return odometry.getPose();
     }
 
     @Override
@@ -111,7 +109,6 @@ public class DriveSubsystem implements Subsystem {
 
         telemetry.addData("Odometry: ", getRobotPose().toString());
         telemetry.addData("Absolute Heading: ", gyro.getAbsoluteHeading());
-
     }
 
     @Override
