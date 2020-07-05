@@ -9,20 +9,43 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 public class RevIMU extends GyroEx {
 
     private BNO055IMU revIMU;
+    /***
+     * Heading relative to starting position
+     */
     double globalHeading;
+    /**
+     * Heading relative to last offset
+     */
     double relativeHeading;
+
+    /**
+     * Offset between global heading and relative heading
+     */
     double offset;
     private int multiplier;
 
+    /**
+     * Create a new object for the built-in gyro/imu in the Rev Expansion Hub
+     * @param hw Hardware map
+     * @param imuName Name of sensor in configuration
+     */
     public RevIMU(HardwareMap hw, String imuName) {
         revIMU = hw.get(BNO055IMU.class, imuName);
         multiplier = 1;
     }
 
+    /**
+     * Create a new object for the built-in gyro/imu in the Rev Expansion Hub with the default configuration name of "imu"
+     * @param hw Hardware map
+     *
+     */
     public RevIMU(HardwareMap hw) {
         this(hw, "imu");
     }
 
+    /**
+     * Initializes gyro with default parameters.
+     */
     public void init() {
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
         parameters.angleUnit           = BNO055IMU.AngleUnit.DEGREES;
@@ -32,13 +55,12 @@ public class RevIMU extends GyroEx {
         parameters.loggingTag          = "IMU";
         parameters.accelerationIntegrationAlgorithm = new JustLoggingAccelerationIntegrator();
 
-        revIMU.initialize(parameters);
-
-        globalHeading = 0;
-        relativeHeading = 0;
-        offset = 0;
+        init(parameters);
     }
 
+    /**
+     * Initializes gyro with custom parameters.
+     */
     public void init(BNO055IMU.Parameters parameters) {
         revIMU.initialize(parameters);
 
@@ -47,10 +69,17 @@ public class RevIMU extends GyroEx {
         offset = 0;
     }
 
+    /**
+     * Inverts the ouptut of gyro
+     */
     public void invertGyro() {
         multiplier *= -1;
     }
 
+    /**
+     *
+     * @return Relative heading of the robot
+     */
     public double getHeading() {
         globalHeading = revIMU.getAngularOrientation().firstAngle;
         relativeHeading = globalHeading + offset;
@@ -58,12 +87,19 @@ public class RevIMU extends GyroEx {
         return relativeHeading * multiplier;
     }
 
+    /**
+     *
+     * @return Absolute heading of the robot
+     */
     @Override
     public double getAbsoluteHeading() {
         return revIMU.getAngularOrientation().firstAngle * multiplier;
     }
 
-    // TODO Find the order of these angles
+    /**
+     *
+     * @return X, Y, Z angles of gyro
+     */
     public double[] getAngles() {
 
         double[] angles = new double[4];
@@ -75,6 +111,10 @@ public class RevIMU extends GyroEx {
         return angles;
     }
 
+    /**
+     *
+     * @return Transforms heading into rotation2d
+     */
     @Override
     public Rotation2d getRotation2d() {
         return Rotation2d.fromDegrees(getHeading());
@@ -98,6 +138,7 @@ public class RevIMU extends GyroEx {
         return "Rev Expansion Hub IMU";
     }
 
+    /** Get the underlying sensor **/
     public BNO055IMU getRevIMU() {
         return revIMU;
     }
