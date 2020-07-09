@@ -36,7 +36,7 @@ canvas{
 		<form>
 			SVG Renderer
 			<input id='url' type='text' value='logo/color/FTCLib.svg'>
-			<input id='scale' type='number' value='1'>
+			<input id='scale' type='number' value='1' min='0'>
 		</form>
 		<script>
 
@@ -57,7 +57,7 @@ image.addEventListener('load',()=>{
 
 const load_image = () => {
 	image.src = url_input.value
-	scale_factor = Number(scale_input.value || 1)
+	scale_factor = Number(scale_input.value) || 1
 }
 
 form.addEventListener('input',load_image)
