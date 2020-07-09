@@ -1,62 +1,90 @@
 <svg width='128' height='128' viewBox='0 0 128 128' xmlns='http://www.w3.org/2000/svg'>
 <!-- Logo of FTCLib, 2020-07 -->
 
+	<style>
+.ring{
+	fill:	none;
+}
+	.bottom.ring{
+		cx:	66px;
+		cy:	66px;
+	}
+	.top.ring{
+		cx:	62px;
+		cy:	62px;
+	}
+
+	.inner.ring{
+		r:	42px;
+	}
+	.outer.ring{
+		r:	60px;
+	}
+
+	.solid.ring{
+		r:	51px;
+		stroke-width:	18px;
+	}
+	.solid.bottom.ring{
+		stroke:	hsl(0,0%,75%);
+	}
+	.solid.top.ring{
+		stroke: white;
+	}
+
+.outlined{
+	stroke:	black;
+	stroke-width:	2px;
+}
+
+.decoration{
+	stroke-linejoin: round
+}
+
+.triangle{
+	fill:	hsl(-9,90%,54%);
+}
+.diamond{
+	fill:	hsl(-140,100%,54%);
+}
+
+.text.ftc{
+	fill:	white;
+}
+.text.lib{
+	fill:	black;
+}
+
+	</style>
 	<!-- Orange circle -->
 	<circle cx='66' cy='66' r='50' fill='hsl(36,100%,54%)'/>
 
-	<!-- O-ring -->
-	<g fill='none' stroke-width='2' stroke='black'>
+	<circle class='solid bottom ring'/>
+	<circle class='outlined outer bottom ring'/>
+	<circle class='outlined inner bottom ring'/>
 
-		<!-- Bottom layer -->
-		<circle
-			cx='66' cy='66' r='51'
-			stroke-width='18'
-			stroke='hsl(0,0%,75%)'
-		/>
+	<circle class='solid top ring'/>
+	<circle class='outlined outer top ring'/>
+	<circle class='outlined inner top ring'/>
 
-		<!-- Bottom layer outlines -->
-		<circle cx='66' cy='66' r='60'/>
-		<circle cx='66' cy='66' r='42'/>
+	<path class='outlined triangle decoration'
+		d='M 62 6.2
+			l -5.2 9
+			h 10.4
+			z'
+	/>
 
-		<!-- Top layer -->
-		<circle
-			cx='62' cy='62' r='51'
-			stroke-width='18'
-			stroke='white'
-		/>
+	<path class='outlined diamond decoration'
+		d='
+			M 62 108
+			l -5  5
+			l  5  5
+			l  5 -5
+			l -5 -5
+			z'
+	/>
 
-		<!-- Top layer outlines -->
-		<circle cx='62' cy='62' r='60'/>
-		<circle cx='62' cy='62' r='42'/>
-
-		<!-- Decorations -->
-		<g stroke-linejoin='round'>
-
-			<!-- Red triangle -->
-			<path
-				d='M 62 6.2
-					l -5.2 9
-					h 10.4
-					z'
-				fill='hsl(-9,90%,54%)'
-			/>
-
-			<!-- Blue diamond -->
-			<path
-				d='M 62 108
-					l -5  5
-					l  5  5
-					l  5 -5
-					l -5 -5
-					z'
-				fill='hsl(-140,100%,54%)'
-			/>
-		</g>
-
-	</g>
-
-	<!-- FTC -->
-	<path
+	<path class='text ftc'
 		d='
 			M 200.0 310.0
 			v        -9.1
@@ -127,12 +155,10 @@
 			q  -4.4   2.9 -11.0   4.9
 			q  -6.6   2.0 -14.7   2.0
 			z'
-		fill='white'
 		transform='scale(0.18)'
 	/>
 
-	<!-- Lib -->
-	<path
+	<path class='text lib'
 		d='
 			M 180.0 440.0
 			v       -17.0
