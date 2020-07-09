@@ -17,7 +17,7 @@
 		<!--Decorations-->
 		<g stroke-linejoin='round'>
 			<!--Red triangle-->
-			<path d='M62 6.2l-5.2 9h10.4L62 6z' fill='hsl(-9,90%,54%)'/>
+			<path d='M62 6.2l-5.2 9h10.4z' fill='hsl(-9,90%,54%)'/>
 			<!--Blue diamond-->
 			<path d='M62 108l-5 5l5 5l5 -5l-5 -5z' fill='hsl(-140,100%,54%)'/>
 		</g>
