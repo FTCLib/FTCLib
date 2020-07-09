@@ -30,7 +30,7 @@ import com.arcrobotics.ftclib.hardware.HardwareDevice;
  *     </li>
  * </ol>
  *
- * @author Jackson Isenberg
+ * @author Jackson
  */
 public interface Motor extends HardwareDevice {
 

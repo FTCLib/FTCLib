@@ -5,7 +5,7 @@
 
 Project led by Jackson Isenberg and the Alpharetta Robotics Club
 
-*Logo produced by Team RO037*
+*Logo produced by Team RO037 and reworked by Alyssa from 5890*
 
 FTCLib is a library designed to be the only library you'll need for FTC programming. The project was initially meant to be a port of WPILib, which is the standard programming library for FRC that almost all teams use. However, with FTC, there are a ton of libraries that not many people have heard about, especially rookie teams who are just starting. The goal of FTCLib is to improve the initial programming experience for new members as well as greatly enhance the efficiency of code for veterans.
 
@@ -34,7 +34,7 @@ FTCLib is currently in full version 1.0.0. Our library is cloned from [OpenRC-Tu
 
 ## Contributing
 
-Since this is a community-driven, open source library, we are constantly looking for more content. If you feel there is something missing from our library, feel free to contribute! If you want to contribute to the project, be sure to read the [Contributing.MD](https://github.com/FTCLib/FTCLib/blob/dev/CONTRIBUTING.md).
+Since this is a community-driven, open source library, we are constantly looking for more content. If you feel there is something missing from our library, feel free to contribute! If you want to contribute to the project, be sure to read the [CONTRIBUTING.md](https://github.com/FTCLib/FTCLib/blob/dev/CONTRIBUTING.md).
 
 Please make sure to contact us if you have any other questions.
 
@@ -135,7 +135,7 @@ dt.driveRobotCentric(x, y, turn);
 ```
 For a simple CV example that find skystone using built-in detector:
 ```java
-import com.arcrobotics.ftclib.command.CommandOpMode;
+import com.arcrobotics.ftclib2.command.old.CommandOpMode;
 import com.arcrobotics.ftclib.vision.SkystoneDetector;
 
 import org.openftc.easyopencv.OpenCvCamera;

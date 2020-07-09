@@ -18,7 +18,7 @@ import com.arcrobotics.ftclib.controller.wpilibcontroller.SimpleMotorFeedforward
  * If you want to use the simple one we have created for you, please use
  * {@link SimpleMotorEx}.
  *
- * @author Jackson Isenberg
+ * @author Jackson
  */
 public abstract class MotorEx implements Motor {
 

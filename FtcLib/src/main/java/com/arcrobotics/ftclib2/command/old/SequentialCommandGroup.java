@@ -1,10 +1,11 @@
-package com.arcrobotics.ftclib.command;
+package com.arcrobotics.ftclib2.command.old;
 
 import java.util.ArrayList;
 
 /**
  * Allows you to combine multiple commands into one.
  */
+@Deprecated
 public abstract class SequentialCommandGroup implements Command {
 
     private ArrayList<Command> commands;

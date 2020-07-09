@@ -1,11 +1,10 @@
 package org.firstinspires.ftc.robotcontroller.external.samples.FTCLibCommandSample;
 
-import com.arcrobotics.ftclib.command.CommandOpMode;
+import com.arcrobotics.ftclib2.command.old.CommandOpMode;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.hardware.SimpleServo;
 import com.arcrobotics.ftclib.hardware.motors.SimpleMotorEx;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 @Disabled
 @com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="Command-based Autonomous Sample")  // @Autonomous(...) is the other common choice

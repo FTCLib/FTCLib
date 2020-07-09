@@ -13,7 +13,7 @@ import com.arcrobotics.ftclib.hardware.HardwareDevice;
  *     REV through-bore.
  * </p>
  *
- * @author Jackson Isenberg
+ * @author Jackson
  */
 public class EncoderEx implements HardwareDevice {
 

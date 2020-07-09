@@ -1,5 +1,6 @@
-package com.arcrobotics.ftclib.command;
+package com.arcrobotics.ftclib2.command.old;
 
+@Deprecated
 public interface Command {
 
     /**

@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 /**
  * A simple example of a {@link MotorEx} object.
  *
- * @author Jackson Isenberg
+ * @author Jackson
  */
 public class SimpleMotorEx extends MotorEx {
 

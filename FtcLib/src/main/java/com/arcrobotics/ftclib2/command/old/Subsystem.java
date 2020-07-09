@@ -1,4 +1,4 @@
-package com.arcrobotics.ftclib.command;
+package com.arcrobotics.ftclib2.command.old;
 
 /**
  * The interface for a custom susbsystem. A subsystem is a mechanism
@@ -6,6 +6,7 @@ package com.arcrobotics.ftclib.command;
  * of linear slides and a motor connected to a spool is a subsystem on the robot,
  * performing a unique action.
  */
+@Deprecated
 public interface Subsystem {
 
     /**

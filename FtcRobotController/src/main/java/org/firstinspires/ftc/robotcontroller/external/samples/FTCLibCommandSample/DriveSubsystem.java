@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.robotcontroller.external.samples.FTCLibCommandSample;
 
-import com.arcrobotics.ftclib.command.Subsystem;
+import com.arcrobotics.ftclib2.command.old.Subsystem;
 import com.arcrobotics.ftclib.drivebase.MecanumDrive;
 import com.arcrobotics.ftclib.gamepad.ButtonReader;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;

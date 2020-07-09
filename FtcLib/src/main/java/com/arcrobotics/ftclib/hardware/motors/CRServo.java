@@ -5,6 +5,8 @@ import com.arcrobotics.ftclib.controller.PController;
 /**
  * A continuous rotation servo that uses a motor object to
  * and a P controller to limit speed and acceleration.
+ *
+ * @author Jackson
  */
 public abstract class CRServo implements Motor {
 

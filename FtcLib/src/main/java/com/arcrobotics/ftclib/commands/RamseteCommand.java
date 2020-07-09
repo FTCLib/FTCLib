@@ -1,6 +1,6 @@
-package com.arcrobotics.ftclib.command.commands;
+package com.arcrobotics.ftclib.commands;
 
-import com.arcrobotics.ftclib.command.Command;
+import com.arcrobotics.ftclib2.command.old.Command;
 import com.arcrobotics.ftclib.controller.wpilibcontroller.PIDController;
 import com.arcrobotics.ftclib.controller.wpilibcontroller.RamseteController;
 import com.arcrobotics.ftclib.controller.wpilibcontroller.SimpleMotorFeedforward;
