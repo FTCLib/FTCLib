@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">RobotServer</string>
+    <string name="app_result_type_attempting_installation">The APK file was successfully loaded.\nNow attempting installation of the %s.</string>
+    <string name="app_result_type_auto_updated_app">Auto-updated app: %s</string>
+    <string name="app_result_type_failed_and_reverted">The APK failed to install, and the backed up APK failed to restore. Reverted to the version that came with the Control Hub.</string>
+    <string name="app_result_type_failed_to_restore">The APK failed to install, and the backed up APK failed to restore. Try installing the app via ADB.</string>
+    <string name="app_result_type_generic_install_failure">The APK failed to install. Please try again. See the log file for details.</string>
+    <string name="app_result_type_illegal_package">The provided APK is not an allowable application.</string>
+    <string name="app_result_type_incompatible_with_device">The APK is not compatible with this device.</string>
+    <string name="app_result_type_installation_aborted">The APK installation was aborted. Please try again.</string>
+    <string name="app_result_type_installation_blocked">The APK installation was blocked. See the log file for details.</string>
+    <string name="app_result_type_installation_succeeded">The APK file installed successfully.</string>
+    <string name="app_result_type_installed_missing_app">Installed missing app: %s</string>
+    <string name="app_result_type_invalid_apk_file">The APK file is reported as invalid.</string>
+    <string name="app_result_type_io_exception">An IOException occurred while loading the APK. Please try again.</string>
+    <string name="app_result_type_rebooting_with_new_ap_service">Rebooting with new AP service in place.</string>
+    <string name="app_result_type_replaced_wrong_app_variant">Replaced incorrect variant of app: %s</string>
+    <string name="app_result_type_storage_failure">There is an issue with the device\'s storage.</string>
+    <string name="app_result_type_timeout_expired">The APK took too long to install. Please try again.</string>
+    <string name="app_result_type_uninstall_failed">The previously installed app failed to uninstall.</string>
+    <string name="app_result_type_uninstall_required">The provided APK conflicts with the currently installed version of the app. %s\n\n
+        Do you want to uninstall the currently installed app? This will reset the current network name,
+        password, active configuration, and other settings. Your Blocks and OnBotJava programs will stay intact.</string>
+    <string name="app_result_type_uninstalled_wrong_app_variant">Uninstalled incorrect variant of app: %s</string>
+    <string name="app_result_type_uninstalling_existing_app">Uninstalling existing app and installing new one</string>
+    <string name="app_result_type_unknown_install_status">Got unrecognized response from package installer.</string>
+    <string name="common_result_type_busy_with_previous_request">Busy with previous update request.</string>
+    <string name="common_result_type_file_does_not_exist">The specified file does not exist.</string>
+    <string name="common_result_type_no_update_file">No update file provided.</string>
+    <string name="common_result_type_performing_startup_operations">The device has not finished startup operations.</string>
+    <string name="manage_page_no_network">Unavailable. Is WiFi on?</string>
+    <string name="ota_result_type_device_not_supported">This update file does not support this device.</string>
+    <string name="ota_result_type_downgrade_not_authorized">This update file is older than the currently running operating system.\nAre you sure you want to install it?</string>
+    <string name="ota_result_type_error_reading_file">Error reading the uploaded update file. Please try again.</string>
+    <string name="ota_result_type_failed_to_install">Update failed to install. Please try again.</string>
+    <string name="ota_result_type_invalid_file_location">The file must be in the external storage folder.</string>
+    <string name="ota_result_type_invalid_update_file">Invalid update file.</string>
+    <string name="ota_result_type_ota_update_finished">Update installed successfully.</string>
+    <string name="ota_result_type_verification_succeeded">Update verification succeeded. Rebooting device and installing update.</string>
+</resources>

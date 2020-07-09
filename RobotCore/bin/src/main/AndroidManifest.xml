@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.qualcomm.robotcore">
+
+    <uses-permission
+        android:name="android.permission.ACCESS_WIFI_STATE"
+        android:required="true" />
+    <uses-permission
+        android:name="android.permission.CHANGE_WIFI_STATE"
+        android:required="true" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission
+        android:name="android.permission.ACCESS_NETWORK_STATE"
+        android:required="true" />
+    <uses-permission
+        android:name="android.permission.CHANGE_NETWORK_STATE"
+        android:required="true" />
+    <uses-permission
+        android:name="android.permission.INTERNET"
+        android:required="true" />
+
+    <!-- Classified as Dangerous Permission in SDK 26 -->
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:required="true" />
+    <!-- Classified as Dangerous Permission in SDK 26 -->
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:required="true" />
+
+    <!-- Classified as System Permission in SDK 26 -->
+    <uses-permission
+        android:name="android.permission.WRITE_SETTINGS"
+        android:required="true" />
+
+    <!-- see AppUtil.setTimeZone() -->
+    <uses-permission
+        android:name="android.permission.SET_TIME_ZONE"
+        android:required="true" />
+
+    <!--
+  Note: we suspect that this (android.permission.WAKE_LOCK) is no
+  longer needed, but haven't yet found the time necessary to verify
+  that assertion before removing it
+    -->
+    <uses-permission
+        android:name="android.permission.WAKE_LOCK"
+        android:required="true" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission
+        android:name="com.revrobotics.permission.UPDATE_CONTROL_HUB"
+        android:required="true" />
+
+    <uses-feature android:name="android.hardware.usb.accessory" />
+    <uses-feature android:glEsVersion="0x00020000" />
+
+    <!--
+        NOTE: Any application that requests the CAMERA permission but does not
+        declare any camera features with the <uses-feature> element will be
+        assumed to use all camera features (auto-focus and flash). Thus, the
+        application will not be compatible with devices that do not support
+        all camera features. We use <uses-feature> to declare only the
+        camera features that our application does need. For instance, if you
+        request the CAMERA permission, but you do not need auto-focus or
+        flash, then declare only the android.hardware.camera feature. The
+        other camera features that you do not request will no longer be
+        assumed as required.
+    -->
+    <uses-feature android:name="android.hardware.camera" />
+
+    <application android:name="org.firstinspires.ftc.robotcore.internal.system.RobotApplication" >
+
+        <!-- Service that keeps desktop folders up to date with respect to actual phone file system contents -->
+        <service
+            android:name="org.firstinspires.ftc.robotcore.internal.files.MediaTransferProtocolMonitorService"
+            android:enabled="true" />
+
+        <meta-data
+            android:name="autoStartService.org.firstinspires.ftc.robotcore.internal.files.MediaTransferProtocolMonitorService"
+            android:value="BOTH|1000" />
+
+        <!-- Service that provides build services for OnBotJava -->
+        <!--<service-->
+            <!--android:name="org.firstinspires.ftc.onbotjava.OnBotJavaService"-->
+            <!--android:enabled="true" />-->
+
+        <!--<meta-data-->
+            <!--android:name="autoStartService.org.firstinspires.ftc.onbotjava.OnBotJavaService"-->
+            <!--android:value="RC|2000" />-->
+
+        <receiver
+            android:name="org.firstinspires.ftc.robotserver.internal.webserver.controlhubupdater.ChUpdaterCommManager$ChUpdaterBroadcastReceiver"
+            android:exported="true"
+            android:permission="android.permission.INSTALL_PACKAGES" >
+            <intent-filter>
+                <action android:name="com.revrobotics.controlhubupdater.broadcast.RESULT_BROADCAST" />
+            </intent-filter>
+        </receiver>
+    </application>
+
+</manifest>

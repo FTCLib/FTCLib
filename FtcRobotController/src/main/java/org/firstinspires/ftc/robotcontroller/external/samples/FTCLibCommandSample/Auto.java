@@ -1,0 +1,58 @@
+package org.firstinspires.ftc.robotcontroller.external.samples.FTCLibCommandSample;
+
+import com.arcrobotics.ftclib2.command.old.CommandOpMode;
+import com.arcrobotics.ftclib.gamepad.GamepadEx;
+import com.arcrobotics.ftclib.hardware.SimpleServo;
+import com.arcrobotics.ftclib.hardware.motors.SimpleMotorEx;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+
+@Disabled
+@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="Command-based Autonomous Sample")  // @Autonomous(...) is the other common choice
+public class Auto extends CommandOpMode {
+
+    DriveSubsystem driveSubsystem;
+    SimpleServo scoringServo;
+    GamepadEx driverGamepad;
+
+    private PIDLiftController liftController;
+    private SimpleLinearLift lift;
+    private SimpleMotorEx liftMotor;
+
+    @Override
+    public void initialize() {
+        driverGamepad = new GamepadEx(gamepad1);
+        driveSubsystem = new DriveSubsystem(driverGamepad, hardwareMap, telemetry);
+        scoringServo = new SimpleServo(hardwareMap, "scoringServo");
+
+        Teleop.pid.reset();
+        Teleop.pid.setTolerance(Teleop.kThreshold);
+
+        liftMotor = new SimpleMotorEx("lift", hardwareMap, 537.6, Teleop.pid);
+        lift = new SimpleLinearLift(liftMotor);
+        liftController = new PIDLiftController(lift);
+
+        driveSubsystem.initialize();
+    }
+
+    @Override
+    public void run() {
+        // Drive Forward for 10 inches with a timeout of 4 seconds.
+        addSequential(new DriveForwardCommand(driveSubsystem, 10, 0.5), 2);
+        // Turn 90 degrees with a timeout of 2 seconds
+        addSequential(new TurnAngleCommand(driveSubsystem, 90, telemetry), 2);
+        // Rotate servo 90 degrees more than it was.
+        scoringServo.rotateDegrees(90);
+        // Wait for the servo to complete its action
+        sleep(500);
+        // Drive Forward for -10 inches with a timeout of 4 seconds.
+        addSequential(new DriveForwardCommand(driveSubsystem, -10, 0.5), 4);
+        while (!Teleop.pid.atSetPoint()) {
+            liftController.setStageTwo();
+        }
+        addSequential(new DriveForwardCommand(driveSubsystem, 10, 0.75), 3);
+        while (!Teleop.pid.atSetPoint()) {
+            liftController.setStageOne();
+        }
+        scoringServo.rotateDegrees(-90);
+    }
+}

@@ -54,7 +54,7 @@ public class PushbotTeleopPOV_Linear extends LinearOpMode {
 
     /* Declare OpMode members. */
     HardwarePushbot robot           = new HardwarePushbot();   // Use a Pushbot's hardware
-    double          clawOffset      = 0;                       // Servo mid position
+    double          clawOffset      = 0;                       // ServoEx mid position
     final double    CLAW_SPEED      = 0.02 ;                   // sets rate to move servo
 
     @Override
