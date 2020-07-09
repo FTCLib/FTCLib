@@ -1,5 +1,5 @@
+<h1><img src='brand/logo.svg' height='128px' alt='FTCLib'></h1>
 
-# FTCLib
 ![Android CI | dev](https://github.com/FTCLib/FTCLib/workflows/Android%20CI/badge.svg?branch=dev)
 [![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/FTCLib/FTCLib)
 
