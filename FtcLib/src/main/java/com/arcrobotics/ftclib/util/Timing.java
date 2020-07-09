@@ -9,7 +9,6 @@ import java.util.concurrent.TimeUnit;
  */
 public class Timing {
 
-
     /**
      * Class for a timer. This can be used for checking if a duration has passed, only continuing
      * if the timer has finished, and so forth.
@@ -89,13 +88,5 @@ public class Timing {
         }
 
     }
-
-
-
-
-
-
-
-
 
 }

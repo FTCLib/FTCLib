@@ -4,7 +4,7 @@ package com.arcrobotics.ftclib.hardware.motors;
  * Allows multiple {@link Motor} objects to be linked together
  * as a single group. Multiple motors will act together.
  *
- * @author Jackson Isenberg
+ * @author Jackson
  */
 public class MotorGroup implements Motor {
 

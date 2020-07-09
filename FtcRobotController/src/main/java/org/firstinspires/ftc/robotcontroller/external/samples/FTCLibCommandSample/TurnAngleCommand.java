@@ -1,8 +1,7 @@
 package org.firstinspires.ftc.robotcontroller.external.samples.FTCLibCommandSample;
 
-import com.arcrobotics.ftclib.command.Command;
+import com.arcrobotics.ftclib2.command.old.Command;
 import com.arcrobotics.ftclib.controller.PController;
-import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 

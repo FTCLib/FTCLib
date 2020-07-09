@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 /**
  * A simple example of a {@link Motor} object.
  *
- * @author Jackson Isenberg
+ * @author Jackson
  */
 public class SimpleMotor implements Motor {
 

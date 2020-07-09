@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.robotcontroller.external.samples.FTCLibCommandSample;
 
-import com.arcrobotics.ftclib.command.Command;
+import com.arcrobotics.ftclib2.command.old.Command;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 public class DriveForwardCommand implements Command {

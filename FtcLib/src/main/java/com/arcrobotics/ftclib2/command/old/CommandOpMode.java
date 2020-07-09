@@ -1,4 +1,4 @@
-package com.arcrobotics.ftclib.command;
+package com.arcrobotics.ftclib2.command.old;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -7,6 +7,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+@Deprecated
 public abstract class CommandOpMode extends LinearOpMode {
     private ElapsedTime commandTimer;
     /**

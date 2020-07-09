@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.robotcontroller.external.samples;
 
-import com.arcrobotics.ftclib.command.CommandOpMode;
+import com.arcrobotics.ftclib2.command.old.CommandOpMode;
 import com.arcrobotics.ftclib.vision.SkystoneDetector;
 
 import org.openftc.easyopencv.OpenCvCamera;

@@ -1,17 +1,14 @@
 package org.firstinspires.ftc.teamcode.OpModes;
 
 
-import com.arcrobotics.ftclib.command.CommandOpMode;
+import com.arcrobotics.ftclib2.command.old.CommandOpMode;
 import com.arcrobotics.ftclib.vision.SkystoneDetector;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
-import org.openftc.easyopencv.OpenCvInternalCamera;
 
 @Autonomous(name="Sample Skystone Detection OpMode")
 public class SkystoneTest extends CommandOpMode {
