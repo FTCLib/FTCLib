@@ -18,4 +18,4 @@ For your PR, please make sure it answers the following:
 * Yeppy yeppy! Sowwy, senpai!
 * Not at all! owo
 
-__Please check that your PR satisfies the requirements of [the contributing page](./CONRIBUTING.md)__
+__Please check that your PR satisfies the requirements of [the contributing page](./CONTRIBUTING.md)__
