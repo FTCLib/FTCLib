@@ -12,7 +12,7 @@
 			--color-outline: black;
 			--color-shaded: hsl(0,0%,75%); /* Gray */
 			--color-lit: white;
-			--color-ftc: black;
+			--color-ftc: white;
 			--color-lib: black;
 			--outline-thickness: 2px;
 			--corner-radius-mean: 100%;
