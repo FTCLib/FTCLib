@@ -6,49 +6,49 @@
 	<style>
 
 		svg{
-			–color-theme: hsl(36,100%,54%); /* Orange */
-			–color-triangle: hsl(-9,90%,54%); /* Red */
-			–color-diamond: hsl(-140,100%,54%); /* Blue */
-			–color-outline: black;
-			–color-shaded: hsl(0,0%,75%); /* Gray */
-			–color-lit: white;
-			–color-ftc: black;
-			–color-lib: black;
-			–outline-thickness: 2px;
-			–corner-radius-mean: 100%;
+			--color-theme: hsl(36,100%,54%); /* Orange */
+			--color-triangle: hsl(-9,90%,54%); /* Red */
+			--color-diamond: hsl(-140,100%,54%); /* Blue */
+			--color-outline: black;
+			--color-shaded: hsl(0,0%,75%); /* Gray */
+			--color-lit: white;
+			--color-ftc: black;
+			--color-lib: black;
+			--outline-thickness: 2px;
+			--corner-radius-mean: 100%;
 		}
 
 		rect{
-			–center-flag: 0;
-			–center-offset: 2px;
-			–center-mean: 64px;
-			–center: calc(var(--center-mean) - var(--center-flag)*var(--center-offset));
-			–corner: calc(var(--center) - var(--radius));
+			--center-flag: 0;
+			--center-offset: 2px;
+			--center-mean: 64px;
+			--center: calc(var(--center-mean) - var(--center-flag)*var(--center-offset));
+			--corner: calc(var(--center) - var(--radius));
 			x: var(--corner);
 			y: var(--corner);
 
-			–radius-flag: 0;
-			–radius-mean: 51px;
-			–radius-offset-magnitude: 9px;
-			–radius-offset: calc(var(--radius-flag)*var(--radius-offset-magnitude));
-			–radius: calc(var(--radius-mean) + var(--radius-offset));
+			--radius-flag: 0;
+			--radius-mean: 51px;
+			--radius-offset-magnitude: 9px;
+			--radius-offset: calc(var(--radius-flag)*var(--radius-offset-magnitude));
+			--radius: calc(var(--radius-mean) + var(--radius-offset));
 
-			–corner-radius: calc( var(--corner-radius-mean) + var(--radius-offset) );
+			--corner-radius: calc( var(--corner-radius-mean) + var(--radius-offset) );
 			rx: var(--corner-radius);
 			ry: var(--corner-radius);
 
-			–diameter: calc(2*var(--radius));
+			--diameter: calc(2*var(--radius));
 			width: var(--diameter);
 			height: var(--diameter);
 		}
 
 		.bottom {
-			–center-flag: -1;
+			--center-flag: -1;
 			stroke: var(--color-shaded);
 		}
 
 		.top {
-			–center-flag: 1;
+			--center-flag: 1;
 			stroke: var(--color-lit);
 		}
 
@@ -57,11 +57,11 @@
 		}
 
 		.inner{
-			–radius-flag: -1;
+			--radius-flag: -1;
 		}
 
 		.outer{
-			–radius-flag:  1;
+			--radius-flag:  1;
 		}
 
 		.solid {
