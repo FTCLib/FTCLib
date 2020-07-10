@@ -5,7 +5,7 @@
 
 	<style>
 
-		:root{
+		svg{
 			–color-theme: hsl(36,100%,54%); /* Orange */
 			–color-triangle: hsl(-9,90%,54%); /* Red */
 			–color-diamond: hsl(-140,100%,54%); /* Blue */
