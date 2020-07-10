@@ -62,4 +62,5 @@ public class ButtonReader implements KeyReader {
     public boolean stateJustChanged() {
         return (lastState != currState);
     }
+
 }
