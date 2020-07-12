@@ -1,7 +1,7 @@
 package org.firstinspires.ftc.teamcode.OpModes;
 
 
-import com.arcrobotics.ftclib2.command.old.CommandOpMode;
+import com.arcrobotics.ftclib.command.old.CommandOpMode;
 import com.arcrobotics.ftclib.vision.SkystoneDetector;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 

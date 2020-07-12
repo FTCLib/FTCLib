@@ -5,7 +5,7 @@
 
 Project led by Jackson Isenberg and the Alpharetta Robotics Club
 
-*Logo produced by Team Xing from FTC Team 15303*
+*Logo produced by Xing from FTC Team 15303*
 
 FTCLib is a library designed to be the only library you'll need for FTC programming. The project was initially meant to be a port of WPILib, which is the standard programming library for FRC that almost all teams use. However, with FTC, there are a ton of libraries that not many people have heard about, especially rookie teams who are just starting. The goal of FTCLib is to improve the initial programming experience for new members as well as greatly enhance the efficiency of code for veterans.
 
@@ -135,7 +135,7 @@ dt.driveRobotCentric(x, y, turn);
 ```
 For a simple CV example that find skystone using built-in detector:
 ```java
-import com.arcrobotics.ftclib2.command.old.CommandOpMode;
+import com.arcrobotics.ftclib.command.old.CommandOpMode;
 import com.arcrobotics.ftclib.vision.SkystoneDetector;
 
 import org.openftc.easyopencv.OpenCvCamera;
