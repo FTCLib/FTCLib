@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+	<head>
+		<title>SVG Renderer</title>
+		<meta charset='utf-8'>
+		<style>
+html,body{
+	margin:	0;
+	width:	100vw;
+	height:	100vh;
+	overflow:	scroll;
+}
+body{
+	background:	black;
+	display:	flex;
+	justify-content:	center;
+	align-items:	center
+}
+form{
+	position:	fixed;
+	top:	1rem;
+	left:	1rem;
+	font-size:	1rem;
+	font-family:	monospace;
+	width:	12rem;
+	color:	white;
+}
+canvas{
+	max-height:	100vmin;
+	width:	auto
+}
+		</style>
+	</head>
+	<body>
+		<canvas width='2000' height='1000'></canvas>
+		<form>
+			SVG Renderer
+			<input id='url' type='text' value='logo/color/FTCLib.svg'>
+			<input id='scale' type='number' value='1' min='0'>
+		</form>
+		<script>
+
+const image = new Image()
+const canvas = document.querySelector('canvas')
+const context = canvas.getContext('2d')
+const form = document.querySelector('form')
+
+const url_input = document.querySelector('input#url')
+const scale_input = document.querySelector('input#scale')
+const scale = 1
+
+image.addEventListener('load',()=>{
+	[canvas.width,canvas.height] = [image.width,image.height].map(s=>s*scale_factor)
+	context.scale(...[1,1].fill(scale_factor))
+	canvas.getContext('2d').drawImage(image,0,0)
+})
+
+const load_image = () => {
+	image.src = url_input.value
+	scale_factor = Number(scale_input.value) || 1
+}
+
+form.addEventListener('input',load_image)
+
+load_image()
+		</script>
+	</body>
+</html>
