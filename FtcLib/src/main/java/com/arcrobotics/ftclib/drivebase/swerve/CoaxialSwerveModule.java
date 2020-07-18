@@ -65,7 +65,7 @@ public class CoaxialSwerveModule {
     /**
      * Stops the motors.
      */
-    public void stopMotor() {
+    public void stop() {
         turnMotor.stopMotor();
         driveMotor.stopMotor();
     }

@@ -75,7 +75,7 @@ public abstract class RobotDrive {
                 : value;
     }
 
-    public abstract void stopMotor();
+    public abstract void stop();
 
     /**
      * Normalize the wheel speeds

@@ -89,7 +89,8 @@ public class HDrive extends RobotDrive
         super.setMaxSpeed(value);
     }
 
-    public void stopMotor(){
+    @Override
+    public void stop() {
         for (Motor x : motors) {
             x.stopMotor();
         }

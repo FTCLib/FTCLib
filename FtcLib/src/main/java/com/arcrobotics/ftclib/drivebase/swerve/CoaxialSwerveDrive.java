@@ -94,9 +94,9 @@ public class CoaxialSwerveDrive extends RobotDrive {
     }
 
     @Override
-    public void stopMotor() {
+    public void stop() {
         for (CoaxialSwerveModule x : modules) {
-            x.stopMotor();
+            x.stop();
         }
     }
 

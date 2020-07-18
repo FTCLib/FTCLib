@@ -44,7 +44,7 @@ public class DiffySwerveDrive extends RobotDrive {
     }
 
     @Override
-    public void stopMotor() {
+    public void stop() {
         left.stopMotor();
         right.stopMotor();
     }

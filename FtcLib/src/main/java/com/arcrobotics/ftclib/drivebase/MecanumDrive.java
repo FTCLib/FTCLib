@@ -85,7 +85,7 @@ public class MecanumDrive extends RobotDrive {
      * Stop the motors.
      */
     @Override
-    public void stopMotor() {
+    public void stop() {
         for (Motor x : motors) {
             x.stopMotor();
         }
