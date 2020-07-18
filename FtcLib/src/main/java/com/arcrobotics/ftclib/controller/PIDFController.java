@@ -73,6 +73,9 @@ public class PIDFController {
 
     /**
      * Implements a control calculation onto the affected motor.
+     * Please note that what this does is move the motor until it reaches the setpoint.
+     * Once the motor reaches the target, the motor will continue moving
+     * with a speed of kF * setpoint. If you set kF to 0, the motor will stop.
      *
      * @param affected  The affected motor of the mechanism.
      * @param sp        The setpoint of the calculation.
@@ -80,7 +83,7 @@ public class PIDFController {
      * @param speed     The maximum speed the motor should rotate.
      */
     public void control(Motor affected, double sp, double pv, double speed) {
-        affected.set(speed * (pv + calculate(pv, sp)));
+         affected.set(atSetPoint() ? speed * calculate(pv, sp) : kF * sp);
     }
 
     /**
@@ -252,6 +255,49 @@ public class PIDFController {
 
         // returns u(t)
         return kP * errorVal_p + kI * totalError + kD * errorVal_v + kF * setPoint;
+    }
+
+    public void setPIDF(double kp, double ki, double kd, double kf) {
+        kP = kp;
+        kI = ki;
+        kD = kd;
+        kF = kf;
+    }
+
+    public void setP(double kp) {
+        kP = kp;
+    }
+
+    public void setI(double ki) {
+        kI = ki;
+    }
+
+    public void setD(double kd) {
+        kD = kd;
+    }
+
+    public void setF(double kf) {
+        kF = kf;
+    }
+
+    public double getP() {
+        return kP;
+    }
+
+    public double getI() {
+        return kI;
+    }
+
+    public double getD() {
+        return kD;
+    }
+
+    public double getF() {
+        return kF;
+    }
+
+    public void setPeriod(double period) {
+        this.period = period;
     }
 
 }

@@ -20,5 +20,8 @@ public class PIDController extends PIDFController {
         super(new double[]{coeffs[0], coeffs[1], coeffs[2], 0}, sp, pv, period);
     }
 
+    public void setPID(double kp, double ki, double kd) {
+        setPIDF(kp,ki,kd,0);
+    }
 
 }

@@ -7,6 +7,7 @@
 
 package com.arcrobotics.ftclib.controller.wpilibcontroller;
 
+import com.arcrobotics.ftclib.controller.PIDController;
 import com.arcrobotics.ftclib.trajectory.TrapezoidProfile;
 
 /**
@@ -50,7 +51,8 @@ public class ProfiledPIDController {
   public ProfiledPIDController(double Kp, double Ki, double Kd,
                         TrapezoidProfile.Constraints constraints,
                         double period) {
-    m_controller = new PIDController(Kp, Ki, Kd, period);
+    m_controller = new PIDController(new double[]{Kp, Ki, Kd,0});
+    m_controller.setPeriod(period);
     m_constraints = constraints;
   }
 
@@ -192,41 +194,7 @@ public class ProfiledPIDController {
    * <p>This will return false until at least one input value has been computed.
    */
   public boolean atSetpoint() {
-    return m_controller.atSetpoint();
-  }
-
-  /**
-   * Enables continuous input.
-   *
-   * <p>Rather then using the max and min input range as constraints, it considers
-   * them to be the same point and automatically calculates the shortest route
-   * to the setpoint.
-   *
-   * @param minimumInput The minimum value expected from the input.
-   * @param maximumInput The maximum value expected from the input.
-   */
-  public void enableContinuousInput(double minimumInput, double maximumInput) {
-    m_controller.enableContinuousInput(minimumInput, maximumInput);
-  }
-
-  /**
-   * Disables continuous input.
-   */
-  public void disableContinuousInput() {
-    m_controller.disableContinuousInput();
-  }
-
-  /**
-   * Sets the minimum and maximum values for the integrator.
-   *
-   * <p>When the cap is reached, the integrator value is added to the controller
-   * output rather than the integrator value times the integral gain.
-   *
-   * @param minimumIntegral The minimum value of the integrator.
-   * @param maximumIntegral The maximum value of the integrator.
-   */
-  public void setIntegratorRange(double minimumIntegral, double maximumIntegral) {
-    m_controller.setIntegratorRange(minimumIntegral, maximumIntegral);
+    return m_controller.atSetPoint();
   }
 
   /**

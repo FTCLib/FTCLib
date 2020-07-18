@@ -1,8 +1,7 @@
-package com.arcrobotics.ftclib.commands;
+package com.arcrobotics.ftclib.command;
 
 
-import com.arcrobotics.ftclib.command.old.Command;
-import com.arcrobotics.ftclib.controller.wpilibcontroller.PIDController;
+import com.arcrobotics.ftclib.controller.PIDController;
 import com.arcrobotics.ftclib.controller.wpilibcontroller.ProfiledPIDController;
 import com.arcrobotics.ftclib.controller.wpilibcontroller.SimpleMotorFeedforward;
 import com.arcrobotics.ftclib.geometry.Pose2d;
@@ -36,7 +35,7 @@ import java.util.function.Supplier;
  */
 
 @SuppressWarnings({"PMD.TooManyFields", "MemberName"})
-public class MecanumControllerCommand implements Command {
+public class MecanumControllerCommand extends CommandBase {
     private final ElapsedTime m_timer;
     private MecanumDriveWheelSpeeds m_prevSpeeds;
     private double m_prevTime;
@@ -318,10 +317,6 @@ public class MecanumControllerCommand implements Command {
 
         m_prevTime = curTime;
         m_prevSpeeds = targetWheelSpeeds;
-    }
-
-    @Override
-    public void end() {
     }
 
     @Override

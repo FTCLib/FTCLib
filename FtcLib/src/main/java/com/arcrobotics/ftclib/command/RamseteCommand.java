@@ -1,7 +1,6 @@
-package com.arcrobotics.ftclib.commands;
+package com.arcrobotics.ftclib.command;
 
-import com.arcrobotics.ftclib.command.old.Command;
-import com.arcrobotics.ftclib.controller.wpilibcontroller.PIDController;
+import com.arcrobotics.ftclib.controller.PIDController;
 import com.arcrobotics.ftclib.controller.wpilibcontroller.RamseteController;
 import com.arcrobotics.ftclib.controller.wpilibcontroller.SimpleMotorFeedforward;
 import com.arcrobotics.ftclib.geometry.Pose2d;
@@ -28,7 +27,7 @@ import java.util.function.Supplier;
  * controller.
  */
 @SuppressWarnings("PMD.TooManyFields")
-public class RamseteCommand implements Command {
+public class RamseteCommand extends CommandBase {
     private final ElapsedTime m_timer;
     private final boolean m_usePID;
     private final Trajectory m_trajectory;
@@ -178,11 +177,6 @@ public class RamseteCommand implements Command {
 
         m_prevTime = curTime;
         m_prevSpeeds = targetWheelSpeeds;
-    }
-
-    @Override
-    public void end() {
-
     }
 
     @Override

@@ -203,9 +203,7 @@ public abstract class MotorEx implements Motor {
      */
     @Override
     public void pidWrite(double output) {
-        double feedforward = motorFeedforward.calculate(output, (output - get())/output);
-
-        motor.set(motor.get() + velocityController.calculate(get(), output) + feedforward);
+        motor.set(velocityController.calculate(get(), output) + motorFeedforward.calculate(output));
     }
 
     @Override
