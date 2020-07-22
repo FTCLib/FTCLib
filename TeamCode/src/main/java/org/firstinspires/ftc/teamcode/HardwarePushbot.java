@@ -74,7 +74,7 @@ public class HardwarePushbot extends Robot {
      */
     public void stop(Safety mode) throws Exception {
         if (mode.value == 1 || mode.value == 2 || mode.value == 3) {
-            driveTrain.stopMotor();
+            driveTrain.stop();
         } else throw new Exception("Illegal mode of safety for this action.");
     }
 

@@ -165,7 +165,7 @@ public class Path extends ArrayList<Waypoint> {
 			
 		}
 		// After the path is completed, turn off motors and return false;
-		mecanumDrive.stopMotor();
+		mecanumDrive.stop();
 		return true;
 	}
 	
@@ -371,7 +371,6 @@ public class Path extends ArrayList<Waypoint> {
 	 * 2. If the list contains no point turn points, then it chooses the intersection that is farthest along the path. 
 	 * 
 	 * @param intersections Intersection list.
-	 * @param robotPos Robot's current position/rotation.
 	 * @return The best intersection in the form of a TaggedIntersection.
 	 */
 	private TaggedIntersection selectWaypointOrderingControlledIntersection(List<TaggedIntersection> intersections) {
