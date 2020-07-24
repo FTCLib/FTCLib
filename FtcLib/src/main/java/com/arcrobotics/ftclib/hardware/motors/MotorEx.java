@@ -165,7 +165,7 @@ public abstract class MotorEx implements Motor {
     public void set(double speed) {
         motor.set(speed);
 
-        if (speed <= 10E-2) {
+        if (Math.abs(speed) <= 10E-2) {
             if (zeroBehavior == ZeroPowerBehavior.FLOAT) {
                 positionController.control(motor, 0, motor.get(), 0.5);
             } else if (zeroBehavior == ZeroPowerBehavior.BREAK) {

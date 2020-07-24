@@ -24,10 +24,12 @@ public class SampleRobot extends Robot {
     private GamepadButton m_grabButton;
     private GamepadButton m_releaseButton;
 
-    public SampleRobot(LinearOpMode opMode) {
+    public SampleRobot(LinearOpMode opMode, boolean teleop) {
         m_opMode = opMode;
 
         initHardware();
+
+        if (teleop) initTeleOp();
     }
 
     public void initHardware() {
