@@ -61,11 +61,4 @@ public class Robot {
         CommandScheduler.getInstance().registerSubsystem(subsystems);
     }
 
-    /**
-     * Adds a button binding to the scheduler
-     */
-    public void addButton(Runnable button) {
-        CommandScheduler.getInstance().addButton(button);
-    }
-
 }
