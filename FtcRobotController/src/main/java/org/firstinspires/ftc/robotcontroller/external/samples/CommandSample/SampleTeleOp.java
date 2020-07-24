@@ -1,8 +1,5 @@
 package org.firstinspires.ftc.robotcontroller.external.samples.CommandSample;
 
-import com.arcrobotics.ftclib.Robot;
-import com.arcrobotics.ftclib.command.button.GamepadButton;
-import com.arcrobotics.ftclib.hardware.motors.SimpleMotorEx;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
