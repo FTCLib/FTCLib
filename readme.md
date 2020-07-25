@@ -1,152 +1,186 @@
-<h1><img src='brand/logo.svg' height='128px' alt='FTCLib'></h1>
+<h1><img src='brand/logo/color/FTCLib.svg' height='128px' alt='FTCLib'></h1>
+
+*Logo produced by Xing from FTC Team 15303*
+
+![Android CI | dev](https://github.com/FTCLib/FTCLib/workflows/Android%20CI/badge.svg?branch=dev)
+[![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/FTCLib/FTCLib)
 
 Origin: https://github.com/FTCLib/FTCLib
 Upstream: https://github.com/OpenFTC/OpenRC-Turbo
 
-OpenRC is a modified version of the official [FTC SDK](https://github.com/FIRST-Tech-Challenge/SkyStone)
-in which all of the source code that is normally tucked away inside the AAR files has been extracted into modules. This makes it easy to see and modify almost the entirety of the Robot Controller app's source code. In addition, the history in Git shows all changes that have been made to the core code since OpenRC's inception. This complements the changelogs that FIRST provides, allowing teams to see exactly what code has been changed.
+Project led by Jackson Isenberg and the Alpharetta Robotics Club
 
+=====
+
+FTCLib is a library designed to be the only library you'll need for FTC programming. The project was initially meant to be a port of WPILib, which is the standard programming library for FRC that almost all teams use. However, with FTC, there are a ton of libraries that not many people have heard about, especially rookie teams who are just starting. The goal of FTCLib is to improve the initial programming experience for new members as well as greatly enhance the efficiency of code for veterans.
+
+Please read the documentation and the rest of the README before you get started with the library.
+
+FTCLib documentation - <https://ftclib.gitbook.io/ftclib>
+
+## How to use developer release
+Add this to your build.common.gradle:
+```groovy
+    repositories {
+        jcenter()
+    }
+```  
+Now, in your TeamCode buid.gradle, add these lines:
+```
+dependencies {
+    implementation 'com.arcrobotics:ftclib:1.0.0' // Replace 1.0.0 with the latest release
+}
+```
+And that's it! (May need to follow installation instructions below, however
 
 ## Legality for competition use
 
-According to the [2019-2020 Game Manual Part 1](https://www.firstinspires.org/sites/default/files/uploads/resource_library/ftc/game-manual-part-1.pdf), teams are not allowed to replace or modify the portions of the SDK which are distributed as AAR files, per `<RS09>`. This means that in its default configuration, OpenRC is **not** legal for competition.
+FTCLib is currently in full version 1.0.0. Our library is cloned from [OpenRC-Turbo](https://github.com/OpenFTC/OpenRC-Turbo). Please take a look at the upstream for information regarding legal use, variants, and stock.
 
-**HOWEVER**, in order to address this, OpenRC has a `stock` build variant which will compile the `TeamCode` and `FtcRobotController` modules against the official, unmodified AAR files, rather than against the extracted modules.
+## Contributing
 
-## Device compatibility
+Since this is a community-driven, open source library, we are constantly looking for more content. If you feel there is something missing from our library, feel free to contribute! If you want to contribute to the project, be sure to read the [CONTRIBUTING.md](https://github.com/FTCLib/FTCLib/blob/dev/CONTRIBUTING.md).
 
-Unfortunately, OpenRC is only compatible with devices that run Android 6.0 or higher. For FTC, this means that it is incompatible with the ZTE Speed. OpenRC will work fine on all other FTC-legal devices (including the new Control Hub).
+Please make sure to contact us if you have any other questions.
 
-For the curious: the cause of the incompatibility is the result of a bug in the `dlopen()` function of Android versions prior to 6.0. When loading the `libRobotCore.so` on older Android versions, an `UnsatisfiedLinkError` will be thrown because it cannot find a symbol that is declared in `libVuforia.so` and `dlopen()` is not smart enough to know that `libVuforia.so` has already been loaded into memory. See the "Correct soname/path handling" section of [this](https://android.googlesource.com/platform/bionic/+/master/android-changes-for-ndk-developers.md) page for more details.
+## Attention Users!
+This library uses Java 8! If you do not already have Java 8 on your FTC Project, please do so! If you do not know how to, read further. __Doing this__ *will* __require all other devices to delete and then reclone the project following the change!__ You get weird Android Studio errors other wise. To change, go to the `build.common.gradle` and find the lines that say
 
-## Build variants
-
-### Variant Descriptions
-
- - **Stock - 40MB APK** *(oof!)*
-     - Competition legal
-
- - **Turbo - 10MB APK** *(4x smaller!)*
-
-     *Note: If you would like to use Blocks, you will need to copy your private Vuforia key into the `Blocks/src/main/assets/CzechWolf` file*
-     - Vuforia native library loaded dynamically
-     - Vuforia/TF datasets loaded dynamically
-     - OnBotJava removed
-
- - **Extreme Turbo - 4MB APK** *(10x smaller!)*
-     - Vuforia native library loaded dynamically
-     - Vuforia/TF datasets loaded dynamically
-     - OnBotJava removed
-     - Blocks removed
-     - Web management removed
-     - Sound files removed
-
-### Benchmarks
-
-|                            |**Nexus 5 (7.1.2)<br>Intel Centrino Advanced-N 6205 on Linux**|**Nexus 5 (7.1.2)<br>Intel Wireless 8260 on Linux**|
-|:--------------------------:|:-----------------:|:------------------:|
-|**Stock over WiFi**         |    30 sec           |  20 sec           |
-|**Turbo over WiFi**         |    13 sec           |  11 sec           |
-|**Extreme Turbo over WiFi** |    10 sec           |   8 sec           |
-
-## Setup Process
-
- 1. Fork this repository
- 2. Clone your fork
- 3. Do `git remote add upstream https://github.com/OpenFTC/OpenRC-Turbo.git`
- 4. Copy all of the files found in the `filesForDynamicLoad` folder of this repo into the `FIRST` folder on the RC's internal storage
- 5. Select your desired build variant (see the *Switching Build Variants* section)
-
-## Update Process
-
-Assuming you followed the above setup process, all that you need to do to update your fork when a new OpenRC release is available is:
-
- 1. `git pull upstream master`
- 2. Perform a Gradle Sync
- 3. If the project fails to build, try *Clean Project*, *Rebuild Project*, and *Invalidate Caches / Restart*
-
-## Switching Build Variants
-
-**IMPORTANT: make sure to test that your project compiles correctly with the stock variant at least a week before your competition!**
-
-Note: you may get a "variant conflict" when switching variants. You can fix this by changing the conflicting module's variant to match the variant you want.
-
- 1. Open the Build Variants tab in the lower left hand corner of Android Studio
- 2. In the dropdown for the **TeamCode module**, select your desired variant
- 3. Perform a Gradle sync
-
-![image-here](doc/readme_pics/switching_build_variants.png)
-
-## Versioning Scheme
-
-To prevent confusion, OpenRC does not have its own version number. The version number will directly reflect the SDK version that the release is based on. However, the version number will have a letter appended to the end of it, which will be incremented (A-Z) for each release of OpenRC which is based on the same SDK version. When OpenRC is updated to be based on a new SDK version, the letter will reset to A.
-
-For instance, the 3rd release of OpenRC based on SDK v5.0 would be `5.0C`, whereas the first release of OpenRC based on SDK v5.1 would be `5.1A`.
-
-## Dynamic Loading of TensorFlow and Vuforia Datasets
-
-In order to reduce APK size, the Turbo and Extreme Turbo variants do not bundle the Vuforia and TensorFlow datasets in the APK. However, once copied onto the internal storage (see step #4 in the *Setup Process* section), you can still use them in your OpMode by making a very minor change.
-
-**NOTE:** The samples in this repo have already been adjusted with this change.
-
-```java
-/*
- * For Vuforia
- */
-// Find a line similar to this in the program
-vuforia.loadTrackablesFromAsset("DatasetName");
-// And replace it with this (obviously adjusting the DatasetName)
-vuforia.loadTrackablesFromFile("/sdcard/FIRST/DatasetName");
-
-/*
- * For TensorFlow
- */
-// Find a line similar to this in the program
-tfod.loadModelFromAsset("DatasetName.tflite");
-// And replace it with this (obviously adjusting the DatasetName)
-tfod.loadModelFromFile("/sdcard/FIRST/DatasetName.tflite");
-
+```groovy
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
 ```
 
+Change the `7` to an `8` and then perform a Gradle Sync. You now have Java 8 (and all the things that come with it)!
+
+## Installation
+
+1. Open up your FTC SDK Project in Android Studio.
+
+2. Go to your `build.common.gradle` file in your project.
+
+    ![BuildCommonGradle](https://github.com/OpenFTC/EasyOpenCV/blob/master/doc/images/build-common-gradle.png)
+    
+3. Add the following to the `repositories` section at the bottom of the file.
+
+   ```groovy
+   jcenter()
+   ```
+    
+4. Open the `build.gradle` file in your TeamCode module. 
+    
+    ![TeamCodeGradle](https://github.com/OpenFTC/EasyOpenCV/blob/master/doc/images/teamcode-gradle.png)
+    
+5. Go to the bottom of the file, and add the following.
+
+    ```groovy
+    dependencies {
+        implementation 'com.arcrobotics:ftclib:1.0.0'
+    }
+    ```
+6. Because FTCLib makes use of advanced features, you need to increase the minSdkVersion to 24. Unfortunately, this means that ZTE Speed Phones are not supported in this release.
+
+In build.common.gradle, change the minSdkVersion from 19 to 24:
+```groovy
+
+    defaultConfig {
+        applicationId 'com.qualcomm.ftcrobotcontroller'
+        minSdkVersion 24
+        targetSdkVersion 26
+```
+    
+7. Perform a gradle sync to implement your changes.
+
+    ![GradleSync](https://github.com/OpenFTC/EasyOpenCV/blob/master/doc/images/gradle-sync.png)
 
 
-## Release Notes:
+__NOTE:__ If your module has a few dependencies, you might have an error related to multidex on building the project.
+This is caused by the project exceeding the limit for imports enforced by Android Studio. To solve this, 
+add `multiDexEnabled true` to the below location inside the `build.common.gradle` file.
 
-### 5.3B
+```groovy
 
-Released on 22 November 2019
+    defaultConfig {
+        applicationId 'com.qualcomm.ftcrobotcontroller'
+        minSdkVersion 24
+        targetSdkVersion 26
 
- - Fix TFOD crash on stock due to incorrect version of TFOD library being used (which conflicted with pre-compiled official FTC SDK AARs)
 
-### 5.3A
+        multiDexEnabled true
+```
 
-Released on 19 October 2019
+## Welcome to FTCLib!
 
- - Update to SDK v5.3
+Thank you for using the FTCLib library for your code! All of the people who worked on it have put a lot of effort into making FTCLib an amazing library. We thank you for putting our effort to work with your own projects. We hope you have great luck and success with your programming.
 
-### 5.2B
+The mission of FTCLib is briefly summarized in the following quote made by Jackson from ARC Robotics, who started the library.
 
-Released on 19 September 2019
 
- - Remove universal Blocks Vuforia key per request of FIRST. If you would like to use Blocks, you will need to copy your private Vuforia key into the `Blocks/src/main/assets/CzechWolf` file.
+> Our goal is to make programming easier and more efficient through effective classes and detailed examples of implementation. - Jackson ARC Robotics
 
-### 5.2A
+## Why Use FTCLib?
 
-Released on 11 September 2019
+FTCLib is a non-profit, open source, community-driven library created solely with the intent of helping rookie teams learn programming easier and maximizing efficiency for veteran teams. By putting everything into one library, with enough documentation to build a rigorous learning experience, all teams can benefit from using FTCLib. It's fast, easy, efficient, and powerful. The idea is that this truly is the last library you will ever need.
 
- - Update to SDK v5.2
- - **NOTE:** You will need to copy some additional files to the `FIRST` folder of the internal storage after you update. See step #4 in the *Setup Process* section
- - **NOTE:** The TensorFlow and Vuforia sample OpModes for SKYSTONE have been modified slightly to load the datasets from internal storage. **Use the samples in this repo; the stock samples will fail on variants other than stock.** Please also see the *Dynamic Loading of TensorFlow and Vuforia Datasets* section of this readme.
+FTCLib still has the ability to be used along with other libraries without conflict. If you still want to use other libraries alongside ours, go ahead. FTCLib's purpose is solely to improve everyone's programming experience in FTC.
 
-### 5.1A
+## Usage
 
-Released on 26 August 2019
+For drivetrain kinematics, you can do:
+```java
+MecanumDrive dt = new MecanumDrive(motors);
 
- - Update to SDK v5.1
- - Updated dynamic Vuforia loader to enforce being run on Android 6.0 or higher
+x = gp1.joyLeft.x;
+y = gp1.joyLeft.y;
+turn = gp1.joyRight.x;
 
-### 5.0A
+dt.driveRobotCentric(x, y, turn);
+```
+For a simple CV example that find skystone using built-in detector:
+```java
+import com.arcrobotics.ftclib.command.old.CommandOpMode;
+import com.arcrobotics.ftclib.vision.SkystoneDetector;
 
-Released on 21 August 2019
+import org.openftc.easyopencv.OpenCvCamera;
+import org.openftc.easyopencv.OpenCvCameraFactory;
+import org.openftc.easyopencv.OpenCvCameraRotation;
+import org.openftc.easyopencv.OpenCvInternalCamera;
 
- - Initial release.
+// You don't need CommandOpMode, LinearOpMode, and other OpModes work well
+public class SkystoneSample extends CommandOpMode {
+
+    OpenCvCamera camera;
+    SkystoneDetector pipeline;
+    @Override
+    public void initialize() {
+
+        int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
+        camera = OpenCvCameraFactory.getInstance().createInternalCamera(OpenCvInternalCamera.CameraDirection.BACK, cameraMonitorViewId);
+        camera.openCameraDevice();
+
+        pipeline = new SkystoneDetector();
+
+        camera.setPipeline(pipeline);
+        camera.startStreaming(640, 480, OpenCvCameraRotation.UPRIGHT);
+    }
+
+    @Override
+    public void run() {
+        // Assuming threaded. It hopefully found the skystone at the end of init.
+        SkystoneDetector.SkystonePosition position = pipeline.getSkystonePosition();
+
+        switch (position) {
+            case LEFT_STONE:
+                break;
+            case CENTER_STONE:
+                break;
+            case RIGHT_STONE:
+                break;
+            default:
+                break;
+        }
+    }
+}
+```

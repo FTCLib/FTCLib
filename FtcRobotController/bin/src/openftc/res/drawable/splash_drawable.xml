@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:drawable="@color/splash_bgcolor"/>
+
+    <item android:gravity="center">
+        <bitmap
+            android:gravity="center"
+            android:src="@drawable/new_openftc_logo"/>
+    </item>
+
+</layer-list>
