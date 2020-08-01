@@ -18,6 +18,22 @@ Please read the documentation and the rest of the README before you get started 
 
 FTCLib documentation - <https://ftclib.gitbook.io/ftclib>
 
+
+## Welcome to FTCLib!
+
+Thank you for using the FTCLib library for your code! All of the people who worked on it have put a lot of effort into making FTCLib an amazing library. We thank you for putting our effort to work with your own projects. We hope you have great luck and success with your programming.
+
+The mission of FTCLib is briefly summarized in the following quote made by Jackson from ARC Robotics, who started the library.
+
+
+> Our goal is to make programming easier and more efficient through effective classes and detailed examples of implementation. - Jackson ARC Robotics
+
+## Why Use FTCLib?
+
+FTCLib is a non-profit, open source, community-driven library created solely with the intent of helping rookie teams learn programming easier and maximizing efficiency for veteran teams. By putting everything into one library, with enough documentation to build a rigorous learning experience, all teams can benefit from using FTCLib. It's fast, easy, efficient, and powerful. The idea is that this truly is the last library you will ever need.
+
+FTCLib still has the ability to be used along with other libraries without conflict. If you still want to use other libraries alongside ours, go ahead. FTCLib's purpose is solely to improve everyone's programming experience in FTC.
+
 ## How to use developer release
 Add this to your build.common.gradle:
 ```groovy
@@ -31,17 +47,7 @@ dependencies {
     implementation 'com.arcrobotics:ftclib:1.0.0' // Replace 1.0.0 with the latest release
 }
 ```
-And that's it! (May need to follow installation instructions below, however
-
-## Legality for competition use
-
-FTCLib is currently in full version 1.0.0. Our library is cloned from [OpenRC-Turbo](https://github.com/OpenFTC/OpenRC-Turbo). Please take a look at the upstream for information regarding legal use, variants, and stock.
-
-## Contributing
-
-Since this is a community-driven, open source library, we are constantly looking for more content. If you feel there is something missing from our library, feel free to contribute! If you want to contribute to the project, be sure to read the [CONTRIBUTING.md](https://github.com/FTCLib/FTCLib/blob/dev/CONTRIBUTING.md).
-
-Please make sure to contact us if you have any other questions.
+To ensure the project builds correctly, please follow steps below: 
 
 ## Attention Users!
 This library uses Java 8! If you do not already have Java 8 on your FTC Project, please do so! If you do not know how to, read further. __Doing this__ *will* __require all other devices to delete and then reclone the project following the change!__ You get weird Android Studio errors other wise. To change, go to the `build.common.gradle` and find the lines that say
@@ -111,76 +117,13 @@ add `multiDexEnabled true` to the below location inside the `build.common.gradle
         multiDexEnabled true
 ```
 
-## Welcome to FTCLib!
+## Legality for competition use
 
-Thank you for using the FTCLib library for your code! All of the people who worked on it have put a lot of effort into making FTCLib an amazing library. We thank you for putting our effort to work with your own projects. We hope you have great luck and success with your programming.
+FTCLib is currently in full version 1.0.0. Our library is cloned from [OpenRC-Turbo](https://github.com/OpenFTC/OpenRC-Turbo). Please take a look at the upstream for information regarding legal use, variants, and stock.
 
-The mission of FTCLib is briefly summarized in the following quote made by Jackson from ARC Robotics, who started the library.
+## Contributing
 
+Since this is a community-driven, open source library, we are constantly looking for more content. If you feel there is something missing from our library, feel free to contribute! If you want to contribute to the project, be sure to read the [CONTRIBUTING.md](https://github.com/FTCLib/FTCLib/blob/dev/CONTRIBUTING.md).
 
-> Our goal is to make programming easier and more efficient through effective classes and detailed examples of implementation. - Jackson ARC Robotics
+Please make sure to contact us if you have any other questions.
 
-## Why Use FTCLib?
-
-FTCLib is a non-profit, open source, community-driven library created solely with the intent of helping rookie teams learn programming easier and maximizing efficiency for veteran teams. By putting everything into one library, with enough documentation to build a rigorous learning experience, all teams can benefit from using FTCLib. It's fast, easy, efficient, and powerful. The idea is that this truly is the last library you will ever need.
-
-FTCLib still has the ability to be used along with other libraries without conflict. If you still want to use other libraries alongside ours, go ahead. FTCLib's purpose is solely to improve everyone's programming experience in FTC.
-
-## Usage
-
-For drivetrain kinematics, you can do:
-```java
-MecanumDrive dt = new MecanumDrive(motors);
-
-x = gp1.joyLeft.x;
-y = gp1.joyLeft.y;
-turn = gp1.joyRight.x;
-
-dt.driveRobotCentric(x, y, turn);
-```
-For a simple CV example that find skystone using built-in detector:
-```java
-import com.arcrobotics.ftclib.command.old.CommandOpMode;
-import com.arcrobotics.ftclib.vision.SkystoneDetector;
-
-import org.openftc.easyopencv.OpenCvCamera;
-import org.openftc.easyopencv.OpenCvCameraFactory;
-import org.openftc.easyopencv.OpenCvCameraRotation;
-import org.openftc.easyopencv.OpenCvInternalCamera;
-
-// You don't need CommandOpMode, LinearOpMode, and other OpModes work well
-public class SkystoneSample extends CommandOpMode {
-
-    OpenCvCamera camera;
-    SkystoneDetector pipeline;
-    @Override
-    public void initialize() {
-
-        int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
-        camera = OpenCvCameraFactory.getInstance().createInternalCamera(OpenCvInternalCamera.CameraDirection.BACK, cameraMonitorViewId);
-        camera.openCameraDevice();
-
-        pipeline = new SkystoneDetector();
-
-        camera.setPipeline(pipeline);
-        camera.startStreaming(640, 480, OpenCvCameraRotation.UPRIGHT);
-    }
-
-    @Override
-    public void run() {
-        // Assuming threaded. It hopefully found the skystone at the end of init.
-        SkystoneDetector.SkystonePosition position = pipeline.getSkystonePosition();
-
-        switch (position) {
-            case LEFT_STONE:
-                break;
-            case CENTER_STONE:
-                break;
-            case RIGHT_STONE:
-                break;
-            default:
-                break;
-        }
-    }
-}
-```
