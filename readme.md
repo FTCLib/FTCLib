@@ -6,11 +6,12 @@
 [![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/FTCLib/FTCLib)
 
 Origin: https://github.com/FTCLib/FTCLib
+
 Upstream: https://github.com/OpenFTC/OpenRC-Turbo
 
 Project led by Jackson Isenberg and the Alpharetta Robotics Club
 
-=====
+- - -
 
 FTCLib is a library designed to be the only library you'll need for FTC programming. The project was initially meant to be a port of WPILib, which is the standard programming library for FRC that almost all teams use. However, with FTC, there are a ton of libraries that not many people have heard about, especially rookie teams who are just starting. The goal of FTCLib is to improve the initial programming experience for new members as well as greatly enhance the efficiency of code for veterans.
 
@@ -126,4 +127,3 @@ FTCLib is currently in full version 1.0.0. Our library is cloned from [OpenRC-Tu
 Since this is a community-driven, open source library, we are constantly looking for more content. If you feel there is something missing from our library, feel free to contribute! If you want to contribute to the project, be sure to read the [CONTRIBUTING.md](https://github.com/FTCLib/FTCLib/blob/dev/CONTRIBUTING.md).
 
 Please make sure to contact us if you have any other questions.
-
