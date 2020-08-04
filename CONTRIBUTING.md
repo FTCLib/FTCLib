@@ -1,12 +1,12 @@
 # Contributing
 Welcome to the FTCLib project! We hope we have something useful for you!
 
-## Project Contributors
+## Project Developers
 
 - [Jackson](https://github.com/jiceberg) from ARC Robotics
 - [Pranav](https://github.com/pranavavva) from TecHounds
-- [Daniel](https://github.com/dansman805) from JDroids
 - [Peter](https://github.com/codeNinjaDev) from E-Lemon-ators
+- [Ryan](https://github.com/Lunerwalker2) from CircuitRunners Green
 
 ## Branch Naming
 
