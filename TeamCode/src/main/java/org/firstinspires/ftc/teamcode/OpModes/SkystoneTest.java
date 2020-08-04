@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.OpModes;
 
 import com.arcrobotics.ftclib.command.old.CommandOpMode;
 import com.arcrobotics.ftclib.vision.SkystoneDetector;
+import com.arcrobotics.ftclib.vision.SkystoneDetectorPipeline;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
@@ -14,7 +15,7 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 public class SkystoneTest extends CommandOpMode {
 
     OpenCvCamera camera;
-    SkystoneDetector pipeline;
+    SkystoneDetectorPipeline pipeline;
     @Override
     public void initialize() {
 
@@ -22,7 +23,7 @@ public class SkystoneTest extends CommandOpMode {
         camera = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
         camera.openCameraDevice();
 
-        pipeline = new SkystoneDetector(10, 30, 50, 50);
+        pipeline = new SkystoneDetectorPipeline(10, 30, 50, 50);
 
         camera.setPipeline(pipeline);
         camera.startStreaming(640, 480, OpenCvCameraRotation.UPRIGHT);
@@ -31,7 +32,7 @@ public class SkystoneTest extends CommandOpMode {
     @Override
     public void run() {
         // Assuming threaded. It hopefully found the skystone at the end of init.
-        SkystoneDetector.SkystonePosition position = pipeline.getSkystonePosition();
+        SkystoneDetectorPipeline.SkystonePosition position = pipeline.getSkystonePosition();
 
         switch (position) {
             case LEFT_STONE:
