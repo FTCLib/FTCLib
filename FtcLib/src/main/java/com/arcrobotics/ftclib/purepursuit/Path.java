@@ -162,7 +162,7 @@ public class Path extends ArrayList<Waypoint> {
 				if (pathAborted)
 					return false;
 			}
-			
+			odometry.updatePose();
 		}
 		// After the path is completed, turn off motors and return false;
 		mecanumDrive.stop();
