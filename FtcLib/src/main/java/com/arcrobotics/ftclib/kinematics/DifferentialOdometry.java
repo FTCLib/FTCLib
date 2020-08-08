@@ -6,6 +6,8 @@ import com.arcrobotics.ftclib.geometry.Rotation2d;
 import com.arcrobotics.ftclib.geometry.Transform2d;
 import com.arcrobotics.ftclib.geometry.Translation2d;
 
+import java.util.function.DoubleSupplier;
+
 /**
  * The classfile that performs odometry calculations for a differential drivetrain.
  * For more information on the differential drivebase, see {@link DifferentialDrive}.
@@ -22,12 +24,16 @@ public class DifferentialOdometry extends Odometry {
      */
     public double odoY;
 
+    // the suppliers
+    DoubleSupplier m_left, m_right, m_heading;
 
-    /**
-     * The distance between the left and right main wheels on the robot.
-     * This defaults to 18.
-     */
-    public double trackWidth;
+    public DifferentialOdometry(DoubleSupplier leftEncoder, DoubleSupplier rightEncoder,
+                                DoubleSupplier headingSupplier, double trackWidth) {
+        this(trackWidth);
+        m_heading = headingSupplier;
+        m_left = leftEncoder;
+        m_right = rightEncoder;
+    }
 
     /**
      * Empty constructor. Position is defaulted to (0, 0, 0) and track width is 18 inches.
@@ -53,9 +59,7 @@ public class DifferentialOdometry extends Odometry {
      * @param trackWidth    the track width of the robot in inches
      */
     public DifferentialOdometry(Pose2d pose, double trackWidth) {
-        super(pose);
-        this.trackWidth = trackWidth;
-        robotPose = pose;
+        super(pose, trackWidth);
     }
 
     /**
@@ -66,6 +70,14 @@ public class DifferentialOdometry extends Odometry {
     @Override
     public void updatePose(Pose2d newPose) {
         robotPose = newPose;
+    }
+
+    /**
+     * This does everything for you.
+     */
+    @Override
+    public void updatePose() {
+        updatePosition(m_heading.getAsDouble(), m_left.getAsDouble(), m_right.getAsDouble());
     }
 
     /**

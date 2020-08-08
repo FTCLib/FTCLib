@@ -1,50 +1,50 @@
 package com.arcrobotics.ftclib.kinematics;
 
-import com.arcrobotics.ftclib.drivebase.MecanumDrive;
 import com.arcrobotics.ftclib.geometry.Pose2d;
 import com.arcrobotics.ftclib.geometry.Rotation2d;
 import com.arcrobotics.ftclib.geometry.Translation2d;
 
+import java.util.function.DoubleSupplier;
+
 /**
  * The classfile that performs the calculations for the robot's odometry,
- * which is used for tracking position. This is specifically for a mecanum drivebase,
+ * which is used for tracking position. This is specifically for a holonomic drivebase,
  * which has omnidirectional translation and rotational movement.
- * More information on the mecanum system can be found {@link MecanumDrive}.
  */
-public class HolonomicOdometry extends Odometry{
+public class HolonomicOdometry extends Odometry {
 
     /**
-     * The x value for the position of the robot.
+     * The odometry count for the x position
      */
-    public double odoX;
+    double odoX;
 
     /**
-     * The y value for the position of the robot.
+     * The odometry count for the y position
      */
-    public double odoY;
+    double odoY;
+
+    // the suppliers for the position tracking
+    private DoubleSupplier m_left, m_right, m_horizontal;
 
     /**
-     * The distance between the left and right main wheels on the robot.
-     * This defaults to 18.
+     * Use this constructor for a more clean odometry system. This uses three odometers.
      */
-    public double trackWidth;
-
-    /**
-     * Empty constructor. Position is defaulted to (0, 0, 0) and track width is 18 inches.
-     */
-    public HolonomicOdometry() {
-        this(18);
+    public HolonomicOdometry(DoubleSupplier leftOdometer,
+                             DoubleSupplier rightOdometer,
+                             DoubleSupplier horizontalOdometer, double trackWidth) {
+        this(trackWidth);
+        m_left = leftOdometer;
+        m_right = rightOdometer;
+        m_horizontal = horizontalOdometer;
     }
 
     /**
-     * The constructor that specifies the track width of the robot but defaults
-     * the position to (0, 0, 0).
+     * The constructor that specifies the track width.
      *
-     * @param trackWidth The track width of the robot in inches.
+     * @param trackWidth    the track width of the robot in inches
      */
     public HolonomicOdometry(double trackWidth) {
-
-        this(new Pose2d(new Translation2d(0, 0), new Rotation2d(0)), trackWidth);
+        super(new Pose2d(new Translation2d(0,0), new Rotation2d(0)), trackWidth);
     }
 
     /**
@@ -54,19 +54,24 @@ public class HolonomicOdometry extends Odometry{
      * @param trackWidth    the track width of the robot in inches
      */
     public HolonomicOdometry(Pose2d pose, double trackWidth) {
-        super(pose);
-        this.trackWidth = trackWidth;
+        super(pose, trackWidth);
     }
 
     /**
      * Updates the position of the robot.
-     *
-     * @param newPose   the new {@link Pose2d}
      */
+    @Override
     public void updatePose(Pose2d newPose) {
-        robotPose = newPose;
+       robotPose = newPose;
     }
 
+    /**
+     * This handles all the calculations for you.
+     */
+    @Override
+    public void updatePose() {
+        update(0, m_horizontal.getAsDouble(), m_left.getAsDouble(), m_right.getAsDouble());
+    }
 
     /**
      * Updates the values for odoX and odoY by adding the specified amounts.
@@ -120,21 +125,21 @@ public class HolonomicOdometry extends Odometry{
      * second is the representation of the feedback frequency in Hertz (1/s). If we have
      * a frequency of 60 Hz, then the update method is called 60 times in 1 second.
      * If you have no heading, pass in a value of 0 for each update. If you have no horizontal odometers,
-     * pass in a value of 0 for horizontalOdoInches.
+     * pass in a value of 0 for horizontalDistance.
      *
      * @param heading               the current heading of the robot, which might be de-synced
      *                              with the heading in the robot position.
-     * @param centralDistance   the number of inches travelled by the horizontal odometers.
-     * @param leftDistance     the distance travelled by the left vertical encoder
-     * @param rightDistance  the distance travelled by the right vertical encoder
+     * @param horozontalDistance    the number of inches travelled by the horizontal odometers.
+     * @param leftDistance          the distance travelled by the left vertical encoder
+     * @param rightDistance         the distance travelled by the right vertical encoder
      */
-    public void update(double heading, double centralDistance, double leftDistance, double rightDistance) {
+    public void update(double heading, double horozontalDistance, double leftDistance, double rightDistance) {
         double phi = rightDistance - leftDistance;
         phi /= trackWidth;
         double deltaTheta = (heading != 0) ? heading - robotPose.getHeading() : phi;
 
         updateCurve(deltaTheta, leftDistance, rightDistance);
-        updateStrafe(deltaTheta, centralDistance);
+        updateStrafe(deltaTheta, horozontalDistance);
 
         rotatePose(deltaTheta);
 

@@ -5,60 +5,49 @@ import com.arcrobotics.ftclib.geometry.Rotation2d;
 
 public abstract class Odometry {
 
-
     /**
      * The {@link Pose2d} of the robot.
      */
-    Pose2d robotPose;
-
+    protected Pose2d robotPose;
 
     /**
      * The trackwidth of the odometers
      */
-    double trackWidth;
-
+    protected double trackWidth;
 
     Odometry(Pose2d robotPose){
         this(robotPose, 18);
     }
 
-    Odometry(Pose2d robotPose, double trackWidth){
+    Odometry(Pose2d robotPose, double trackWidth) {
         this.robotPose = robotPose;
         this.trackWidth = trackWidth;
     }
 
+    /**
+     * Updates the position of the robot.
+     */
+    public abstract void updatePose(Pose2d newPose);
 
     /**
-     * Sets the robot pose to the given pose
-     * @param newPose The given pose
+     * Uses suppliers to update the position of the robot
      */
-    abstract void updatePose(Pose2d newPose);
-
+    public abstract void updatePose();
 
     /**
      * Returns the Pose2d object that represents the current robot position
      * @return The robot pose
      */
-    public Pose2d getPose(){
+    public Pose2d getPose() {
         return robotPose;
     }
 
-
     /**
-     * Rotates the heading by the specified value.
-     *
-     * @param deltaTheta the difference between the current heading and
-     *                   the previous heading. Rotates it CCW.
+     * Rotates the position of the robot by a given angle
+     * @param byAngle   the angle to be rotated by, preferably in radians
      */
-    public void rotatePose(double deltaTheta) {
-        updatePose(robotPose.rotate(deltaTheta));
+    public void rotatePose(double byAngle) {
+        robotPose.rotate(byAngle);
     }
-
-
-
-
-
-
-
 
 }
