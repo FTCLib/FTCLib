@@ -105,7 +105,7 @@ public class HDrive extends RobotDrive
         Vector2d vector = new Vector2d(xSpeed, ySpeed);
         vector = vector.rotateBy(-heading);
 
-        double theta = Math.atan2(ySpeed, xSpeed);
+        double theta = vector.angle();
 
         double[] speeds = new double[motors.length];
 
