@@ -141,7 +141,7 @@ public class MecanumDrive extends RobotDrive {
         Vector2d input = new Vector2d(xSpeed, ySpeed);
         input = input.rotateBy(-gyroAngle);
 
-        double theta = Math.atan2(ySpeed, xSpeed);
+        double theta = input.angle();
 
         double[] wheelSpeeds = new double[4];
         wheelSpeeds[MotorType.kFrontLeft.value] =
