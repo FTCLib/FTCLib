@@ -105,7 +105,7 @@ public class HDrive extends RobotDrive
         Vector2d vector = new Vector2d(xSpeed, ySpeed);
         vector = vector.rotateBy(-heading);
 
-        double theta = Math.atan2(ySpeed, xSpeed);
+        double theta = vector.angle();
 
         double[] speeds = new double[motors.length];
 
@@ -118,7 +118,9 @@ public class HDrive extends RobotDrive
             speeds[MotorType.kRight.value] = vector.scalarProject(rightVec) + turn;
             speeds[MotorType.kSlide.value] = vector.scalarProject(slideVec) + turn;
 
-            normalize(speeds);
+            if (vector.magnitude() != 0)
+                normalize(speeds, vector.magnitude());
+            else normalize(speeds);
 
             motors[MotorType.kLeft.value].set(speeds[MotorType.kRight.value] * maxOutput);
             motors[MotorType.kRight.value].set(speeds[MotorType.kLeft.value] * maxOutput);
