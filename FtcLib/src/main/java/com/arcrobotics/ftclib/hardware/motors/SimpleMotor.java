@@ -1,6 +1,6 @@
 package com.arcrobotics.ftclib.hardware.motors;
 
-import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 /**
@@ -10,25 +10,25 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
  */
 public class SimpleMotor implements Motor {
 
-    private DcMotor motor;
+    DcMotorEx motor;
 
     /**
-     * Creates an {@link DcMotor} object using the given name
+     * Creates an {@link DcMotorEx} object using the given name
      * in the configuration file.
      *
      * @param name the name of the motor in the RC config
      * @param hMap the hardware map that locates the designated device
      */
     public SimpleMotor(String name, HardwareMap hMap) {
-        this(hMap.get(DcMotor.class, name));
+        this(hMap.get(DcMotorEx.class, name));
     }
 
     /**
-     * Points the motor to a specific {@link DcMotor}.
+     * Points the motor to a specific {@link DcMotorEx}.
      *
      * @param motor the motor being used for the Motor object
      */
-    public SimpleMotor(DcMotor motor) {
+    public SimpleMotor(DcMotorEx motor) {
         this.motor = motor;
     }
 
@@ -44,12 +44,12 @@ public class SimpleMotor implements Motor {
 
     @Override
     public void setInverted(boolean isInverted) {
-        motor.setDirection(isInverted ? DcMotor.Direction.REVERSE : DcMotor.Direction.FORWARD);
+        motor.setDirection(isInverted ? DcMotorEx.Direction.REVERSE : DcMotorEx.Direction.FORWARD);
     }
 
     @Override
     public boolean getInverted() {
-        return motor.getDirection() == DcMotor.Direction.REVERSE;
+        return motor.getDirection() == DcMotorEx.Direction.REVERSE;
     }
 
     @Override

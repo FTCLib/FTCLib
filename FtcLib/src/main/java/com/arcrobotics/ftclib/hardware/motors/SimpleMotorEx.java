@@ -2,6 +2,8 @@ package com.arcrobotics.ftclib.hardware.motors;
 
 import com.arcrobotics.ftclib.controller.PIDController;
 import com.arcrobotics.ftclib.controller.wpilibcontroller.SimpleMotorFeedforward;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 /**
@@ -11,11 +13,14 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
  */
 public class SimpleMotorEx extends MotorEx {
 
+    DcMotorEx motor;
+
     public SimpleMotorEx(SimpleMotor motor, double cpr,
                          PIDController veloController,
                          SimpleMotorFeedforward feedforward) {
 
         super(motor, cpr, veloController, feedforward);
+        this.motor = motor.motor;
 
     }
 
@@ -24,6 +29,7 @@ public class SimpleMotorEx extends MotorEx {
                          SimpleMotorFeedforward feedforward) {
 
         this(new SimpleMotor(name, hMap), cpr, veloController, feedforward);
+        this.motor = (DcMotorEx)hMap.get(DcMotor.class, name);
 
     }
 
@@ -38,6 +44,7 @@ public class SimpleMotorEx extends MotorEx {
                          PIDController veloController) {
 
         super(motor, cpr, veloController);
+        this.motor = motor.motor;
 
     }
 
@@ -45,6 +52,7 @@ public class SimpleMotorEx extends MotorEx {
                          PIDController veloController) {
 
         super(new SimpleMotor(name, hMap), cpr, veloController);
+        this.motor = (DcMotorEx)hMap.get(DcMotor.class, name);
 
     }
 
