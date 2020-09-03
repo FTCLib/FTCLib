@@ -45,8 +45,8 @@ dependencies {
     }
     
     implementation 'org.openftc:easyopencv:1.4.1'
-    compileOnly project(path: ':RobotCore')
-    compileOnly project(path: ':Hardware')
+    api project(path: ':RobotCore')
+    api project(path: ':Hardware')
     testImplementation 'junit:junit:4.12'
 }
 

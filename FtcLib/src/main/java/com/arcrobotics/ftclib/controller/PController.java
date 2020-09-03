@@ -16,8 +16,8 @@ public class PController extends PDController {
     /**
      * The extended constructor.
      */
-    public PController(double p, double sp, double pv, double period) {
-        super(new double[]{p, 0, 0, 0}, sp, pv, period);
+    public PController(double p, double sp, double pv) {
+        super(new double[]{p, 0, 0, 0}, sp, pv);
     }
 
 }

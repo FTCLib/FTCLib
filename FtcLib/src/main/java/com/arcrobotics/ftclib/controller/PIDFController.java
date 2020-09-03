@@ -29,15 +29,13 @@ public class PIDFController {
     private double errorTolerance_p = 0.05;
     private double errorTolerance_v = Double.POSITIVE_INFINITY;
 
-    private double period;
+    private double lastTimeStamp;
 
     /**
      * Pre-Condition: coeff is a four-element array: {kP, kI, kD, kF}
-     *
-     * <p>The {@link #period} is automatically set to 0.02.</p>
      */
     public PIDFController(double[] coeff) {
-        this(coeff, 0, 0, 0.02);
+        this(coeff, 0, 0);
     }
 
     /**
@@ -49,9 +47,8 @@ public class PIDFController {
      * @param sp        The setpoint of the pid control loop.
      * @param pv        The measured value of he pid control loop. We want sp = pv, or to the degree
      *                  such that sp - pv, or e(t) < tolerance.
-     * @param period    The interval of time between the iteration of the control loop.
      */
-    public PIDFController(double[] coeff, double sp, double pv, double period) {
+    public PIDFController(double[] coeff, double sp, double pv) {
         kP = coeff[0];
         kI = coeff[1];
         kD = coeff[2];
@@ -61,7 +58,6 @@ public class PIDFController {
         measuredValue = pv;
 
         errorVal_p = setPoint - measuredValue;
-        this.period = period;
         reset();
     }
 
@@ -167,13 +163,6 @@ public class PIDFController {
     }
 
     /**
-     * @return the period of time between the interval
-     */
-    public double getPeriod() {
-        return period;
-    }
-
-    /**
      * @return the PIDF coefficients
      */
     public double[] getCoefficients() {
@@ -234,6 +223,11 @@ public class PIDFController {
     public double calculate(double pv) {
         prevErrorVal = errorVal_p;
 
+        double currentTimeStamp = (double)System.nanoTime() / 1E9;
+        if (lastTimeStamp == 0) lastTimeStamp = currentTimeStamp;
+        double dt = currentTimeStamp - lastTimeStamp;
+        lastTimeStamp = currentTimeStamp;
+
         if (measuredValue == pv) {
             errorVal_p = setPoint - measuredValue;
         } else {
@@ -241,8 +235,8 @@ public class PIDFController {
             measuredValue = pv;
         }
 
-        if (period != 0) {
-            errorVal_v = (errorVal_p - prevErrorVal) / period;
+        if (Math.abs(dt) > 10E-4) {
+            errorVal_v = (errorVal_p - prevErrorVal) / dt;
         } else {
             errorVal_v = 0;
         }
@@ -251,7 +245,7 @@ public class PIDFController {
         if total error is the integral from 0 to t of e(t')dt', and
         e(t) = sp - pv, then the total error, E(t), equals sp*t - pv*t.
          */
-        totalError = period * (setPoint - measuredValue);
+        totalError = dt * (setPoint - measuredValue);
 
         // returns u(t)
         return kP * errorVal_p + kI * totalError + kD * errorVal_v + kF * setPoint;
@@ -262,6 +256,11 @@ public class PIDFController {
         kI = ki;
         kD = kd;
         kF = kf;
+    }
+
+    // used to clear kI gains
+    public void clearTotalError() {
+        totalError = 0;
     }
 
     public void setP(double kp) {
@@ -294,10 +293,6 @@ public class PIDFController {
 
     public double getF() {
         return kF;
-    }
-
-    public void setPeriod(double period) {
-        this.period = period;
     }
 
 }

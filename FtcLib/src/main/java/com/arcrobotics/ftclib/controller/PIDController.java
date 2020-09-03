@@ -1,8 +1,6 @@
 package com.arcrobotics.ftclib.controller;
 
-
 public class PIDController extends PIDFController {
-
 
     /**
      * Default constructor, just takes a 3 element array containing the {P, I, D} values
@@ -16,8 +14,8 @@ public class PIDController extends PIDFController {
     /**
      * The extended constructor.
      */
-    public PIDController(double[] coeffs, double sp, double pv, double period) {
-        super(new double[]{coeffs[0], coeffs[1], coeffs[2], 0}, sp, pv, period);
+    public PIDController(double[] coeffs, double sp, double pv) {
+        super(new double[]{coeffs[0], coeffs[1], coeffs[2], 0}, sp, pv);
     }
 
     public void setPID(double kp, double ki, double kd) {
