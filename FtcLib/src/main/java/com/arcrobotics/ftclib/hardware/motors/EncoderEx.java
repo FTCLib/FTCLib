@@ -20,15 +20,14 @@ public class EncoderEx implements HardwareDevice {
     public static final int kDefaultEncoderMultiplier = 1;
 
     /**
-     * The motor that is paired with the encoder. This assumes that the encoder
-     * is internal rather than external.
-     */
-    private MotorEx motor_w_encoder;
-
-    /**
      * The total number of ticks that have accumulated before the last reset.
      */
     private int resetVal;
+
+    /**
+     * The current number of ticks
+     */
+    private int ticks;
 
     /**
      * The multiplier for the encoder, which determines its direction.
@@ -36,15 +35,6 @@ public class EncoderEx implements HardwareDevice {
      * <p>By default, the multiplier is {@value kDefaultEncoderMultiplier}</p>
      */
     private int multiplier = kDefaultEncoderMultiplier;
-
-    /**
-     * The constructor for the extended-use encoder.
-     *
-     * @param motor The motor tied to said encoder.
-     */
-    public EncoderEx(MotorEx motor) {
-        motor_w_encoder = motor;
-    }
 
     /**
      * @return The current number of ticks reached by the output shaft since the last reset.

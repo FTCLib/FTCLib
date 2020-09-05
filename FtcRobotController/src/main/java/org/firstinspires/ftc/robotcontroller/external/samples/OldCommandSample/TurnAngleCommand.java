@@ -20,7 +20,7 @@ public class TurnAngleCommand implements Command {
         this.tl = telemetry;
         // At 180 degrees, we should spin almost as fast as we can to correct
         // 1 is full power. 180 * 0.05 = 0.9
-        headingController = new PController(0.05, angle, driveSubsystem.getHeading(), 0.02);
+        headingController = new PController(0.05, angle, driveSubsystem.getHeading());
         headingController.setSetPoint(angle);
 
     }

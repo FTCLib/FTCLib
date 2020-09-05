@@ -44,7 +44,7 @@ dependencies {
         exclude group: 'org.ejml', module: 'ejml-cdense'
     }
     
-    implementation 'org.openftc:easyopencv:1.4.1'
+    api 'org.openftc:easyopencv:1.4.1'
     api project(path: ':RobotCore')
     api project(path: ':Hardware')
     testImplementation 'junit:junit:4.12'

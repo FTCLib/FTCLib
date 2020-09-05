@@ -6,7 +6,7 @@ package com.arcrobotics.ftclib.hardware.motors;
  *
  * @author Jackson
  */
-public class MotorGroup implements Motor {
+public class MotorGroup extends Motor {
 
     private Motor[] group;
     private boolean isInverted;
@@ -72,20 +72,9 @@ public class MotorGroup implements Motor {
     /**
      * @return a string characterizing the device type
      */
+    @Override
     public String getDeviceType() {
         return "Motor Group";
-    }
-
-    /**
-     * Control the speed of the motors using a more controllable method
-     * through PID control. See {@link com.arcrobotics.ftclib.controller.PIDFController}
-     * for more information.
-     *
-     * @param output the specified output of the motor as a percentage of max power
-     */
-    @Override
-    public void pidWrite(double output) {
-        set(output);
     }
 
     /**

@@ -32,10 +32,10 @@ public class PIDFController {
     private double lastTimeStamp;
 
     /**
-     * Pre-Condition: coeff is a four-element array: {kP, kI, kD, kF}
+     * The base constructor for the PIDF controller
      */
-    public PIDFController(double[] coeff) {
-        this(coeff, 0, 0);
+    public PIDFController(double kp, double ki, double kd, double kf) {
+        this(kp, ki, kd, kf, 0, 0);
     }
 
     /**
@@ -43,16 +43,15 @@ public class PIDFController {
      * includes a feed-forward value which is useful for fighting friction and gravity.
      * Our errorVal represents the return of e(t) and prevErrorVal is the previous error.
      *
-     * @param coeff     The coefficient array as specified in the pre-condition of the basic constructor.
      * @param sp        The setpoint of the pid control loop.
      * @param pv        The measured value of he pid control loop. We want sp = pv, or to the degree
      *                  such that sp - pv, or e(t) < tolerance.
      */
-    public PIDFController(double[] coeff, double sp, double pv) {
-        kP = coeff[0];
-        kI = coeff[1];
-        kD = coeff[2];
-        kF = coeff[3];
+    public PIDFController(double kp, double ki, double kd, double kf, double sp, double pv) {
+        kP = kp;
+        kI = ki;
+        kD = kd;
+        kF = kf;
 
         setPoint = sp;
         measuredValue = pv;
@@ -293,6 +292,10 @@ public class PIDFController {
 
     public double getF() {
         return kF;
+    }
+
+    public double getPeriod() {
+        return System.nanoTime() / 1E9 - lastTimeStamp;
     }
 
 }

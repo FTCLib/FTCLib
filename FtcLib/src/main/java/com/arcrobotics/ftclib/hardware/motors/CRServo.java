@@ -1,6 +1,7 @@
 package com.arcrobotics.ftclib.hardware.motors;
 
 import com.arcrobotics.ftclib.controller.PController;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 
 /**
  * A continuous rotation servo that uses a motor object to
@@ -8,12 +9,12 @@ import com.arcrobotics.ftclib.controller.PController;
  *
  * @author Jackson
  */
-public abstract class CRServo implements Motor {
+public class CRServo extends Motor {
 
     /**
      * The CR ServoEx motor object.
      */
-    protected Motor crServo;
+    protected com.qualcomm.robotcore.hardware.CRServo crServo;
 
     /**
      * The P controller.
@@ -22,66 +23,50 @@ public abstract class CRServo implements Motor {
 
     /**
      * The constructor for the CR Servo.
-     *
-     * @param servo The servo in question.
      */
-    public CRServo(Motor servo) {
-        crServo = servo;
+    public CRServo(HardwareMap hMap, String id) {
+        this(hMap, id, 0.3);
+    }
+
+    /**
+     * The constructor for the CR Servo that includes a custom
+     * proportional error coefficient.
+     *
+     * @param kP    The desired coefficient for the P controller.
+     */
+    public CRServo(HardwareMap hMap, String id, double kP) {
+        crServo = hMap.get(com.qualcomm.robotcore.hardware.CRServo.class, id);
 
         pController = new PController(0.3);
     }
 
-    /**
-     * The constructor for the CR Servo that incldues a custom
-     * proportional error coefficient.
-     *
-     * @param servo The servo in question.
-     * @param kP    The desired coefficient for the P controller.
-     */
-    public CRServo(Motor servo, double kP) {
-        crServo = servo;
-
-        pController = new PController(kP);
-    }
-
     @Override
     public void set(double speed) {
-        pController.control(crServo, speed, get(), 0.5);
+        crServo.setPower(get() + pController.calculate(get(), speed));
     }
 
     @Override
     public double get() {
-        return crServo.get();
+        return crServo.getPower();
     }
 
     @Override
     public void setInverted(boolean isInverted) {
-        crServo.setInverted(isInverted);
+        crServo.setDirection(isInverted ? com.qualcomm.robotcore.hardware.CRServo.Direction.REVERSE
+                : com.qualcomm.robotcore.hardware.CRServo.Direction.FORWARD);
     }
 
     @Override
     public boolean getInverted() {
-        return crServo.getInverted();
+        return crServo.getDirection() == com.qualcomm.robotcore.hardware.CRServo.Direction.REVERSE;
     }
 
     @Override
     public void disable() {
-        crServo.disable();
+        crServo.close();
     }
 
-    /**
-     * Adds a layer of P control {@link PController} to the
-     * speed of the CR Servo.
-     *
-     * @param output the desired output expressed as a percentage of maximum speed
-     */
-    @Override
-    public void pidWrite(double output) {
-        pController.control(crServo, output, get());
-    }
-
-    @Override
-    public void stopMotor() {
+    public void stop() {
         set(0);
     }
 

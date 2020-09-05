@@ -1,6 +1,6 @@
 package com.arcrobotics.ftclib.hardware.motors;
 
-import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 /**
@@ -8,27 +8,27 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
  *
  * @author Jackson
  */
-public class SimpleMotor implements Motor {
+public class SimpleMotor extends Motor {
 
-    DcMotorEx motor;
+    DcMotor motor;
 
     /**
-     * Creates an {@link DcMotorEx} object using the given name
+     * Creates an {@link DcMotor} object using the given name
      * in the configuration file.
      *
      * @param name the name of the motor in the RC config
      * @param hMap the hardware map that locates the designated device
      */
     public SimpleMotor(String name, HardwareMap hMap) {
-        this(hMap.get(DcMotorEx.class, name));
+        this(hMap.get(DcMotor.class, name));
     }
 
     /**
-     * Points the motor to a specific {@link DcMotorEx}.
+     * Points the motor to a specific {@link DcMotor}.
      *
      * @param motor the motor being used for the Motor object
      */
-    public SimpleMotor(DcMotorEx motor) {
+    public SimpleMotor(DcMotor motor) {
         this.motor = motor;
     }
 
@@ -44,12 +44,12 @@ public class SimpleMotor implements Motor {
 
     @Override
     public void setInverted(boolean isInverted) {
-        motor.setDirection(isInverted ? DcMotorEx.Direction.REVERSE : DcMotorEx.Direction.FORWARD);
+        motor.setDirection(isInverted ? DcMotor.Direction.REVERSE : DcMotor.Direction.FORWARD);
     }
 
     @Override
     public boolean getInverted() {
-        return motor.getDirection() == DcMotorEx.Direction.REVERSE;
+        return motor.getDirection() == DcMotor.Direction.REVERSE;
     }
 
     @Override
@@ -63,17 +63,6 @@ public class SimpleMotor implements Motor {
     @Override
     public String getDeviceType() {
         return motor.getDeviceName() + " at port " + motor.getPortNumber();
-    }
-
-    /**
-     * Adds a layer of control to the motor speed by introducing
-     * P control. See {@link com.arcrobotics.ftclib.controller.PController} for more.
-     *
-     * @param output the desired output speed
-     */
-    @Override
-    public void pidWrite(double output) {
-        set( (output - get()) / output );
     }
 
     @Override

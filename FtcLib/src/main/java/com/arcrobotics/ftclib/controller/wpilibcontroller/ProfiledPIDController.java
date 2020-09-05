@@ -33,26 +33,7 @@ public class ProfiledPIDController {
   @SuppressWarnings("ParameterName")
   public ProfiledPIDController(double Kp, double Ki, double Kd,
                         TrapezoidProfile.Constraints constraints) {
-    this(Kp, Ki, Kd, constraints, 0.02);
-  }
-
-  /**
-   * Allocates a ProfiledPIDController with the given constants for Kp, Ki, and
-   * Kd.
-   *
-   * @param Kp          The proportional coefficient.
-   * @param Ki          The integral coefficient.
-   * @param Kd          The derivative coefficient.
-   * @param constraints Velocity and acceleration constraints for goal.
-   * @param period      The period between controller updates in seconds. The
-   *                    default is 0.02 seconds.
-   */
-  @SuppressWarnings("ParameterName")
-  public ProfiledPIDController(double Kp, double Ki, double Kd,
-                        TrapezoidProfile.Constraints constraints,
-                        double period) {
-    m_controller = new PIDController(new double[]{Kp, Ki, Kd,0});
-    m_controller.setPeriod(period);
+    m_controller = new PIDController(Kp, Ki, Kd);
     m_constraints = constraints;
   }
 

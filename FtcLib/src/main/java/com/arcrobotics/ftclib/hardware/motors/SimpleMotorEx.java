@@ -20,7 +20,7 @@ public class SimpleMotorEx extends MotorEx {
                          SimpleMotorFeedforward feedforward) {
 
         super(motor, cpr, veloController, feedforward);
-        this.motor = motor.motor;
+        this.motor = (DcMotorEx)motor.motor;
 
     }
 
@@ -44,7 +44,7 @@ public class SimpleMotorEx extends MotorEx {
                          PIDController veloController) {
 
         super(motor, cpr, veloController);
-        this.motor = motor.motor;
+        this.motor = (DcMotorEx)motor.motor;
 
     }
 
