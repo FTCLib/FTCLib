@@ -3,7 +3,7 @@ package org.firstinspires.ftc.robotcontroller.external.samples.OldCommandSample;
 import com.arcrobotics.ftclib.command.old.CommandOpMode;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.hardware.SimpleServo;
-import com.arcrobotics.ftclib.hardware.motors.SimpleMotorEx;
+import com.arcrobotics.ftclib.hardware.motors.MotorEx;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 @Disabled
@@ -16,7 +16,7 @@ public class Auto extends CommandOpMode {
 
     private PIDLiftController liftController;
     private SimpleLinearLift lift;
-    private SimpleMotorEx liftMotor;
+    private MotorEx liftMotor;
 
     @Override
     public void initialize() {
@@ -27,7 +27,8 @@ public class Auto extends CommandOpMode {
         Teleop.pid.reset();
         Teleop.pid.setTolerance(Teleop.kThreshold);
 
-        liftMotor = new SimpleMotorEx("lift", hardwareMap, 537.6, Teleop.pid);
+        liftMotor = new MotorEx(hardwareMap, "lift");
+        liftMotor.setVeloCoefficients(Teleop.kP, Teleop.kI, Teleop.kD);
         lift = new SimpleLinearLift(liftMotor);
         liftController = new PIDLiftController(lift);
 

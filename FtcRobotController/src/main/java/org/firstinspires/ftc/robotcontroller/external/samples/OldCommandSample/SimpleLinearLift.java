@@ -1,7 +1,7 @@
 package org.firstinspires.ftc.robotcontroller.external.samples.OldCommandSample;
 
-import com.arcrobotics.ftclib.hardware.motors.EncoderEx;
-import com.arcrobotics.ftclib.hardware.motors.SimpleMotorEx;
+import com.arcrobotics.ftclib.hardware.motors.Motor;
+import com.arcrobotics.ftclib.hardware.motors.MotorEx;
 import com.arcrobotics.ftclib.util.Direction;
 import com.arcrobotics.ftclib.util.Timing;
 
@@ -9,22 +9,24 @@ import java.util.concurrent.TimeUnit;
 
 public class SimpleLinearLift {
 
-    SimpleMotorEx m_liftMotor;
-    EncoderEx m_encoder;
+    MotorEx m_liftMotor;
 
-    public SimpleLinearLift(SimpleMotorEx liftMotor) {
+    public SimpleLinearLift(MotorEx liftMotor) {
         m_liftMotor = liftMotor;
-        m_encoder = new EncoderEx(liftMotor);
+        m_liftMotor.setRunMode(MotorEx.RunMode.PositionControl);
 
         resetPositionCounter();
     }
 
     public void moveLift(double power) {
-        m_liftMotor.pidWrite(power);
+        m_liftMotor.setRunMode(MotorEx.RunMode.VelocityControl);
+        m_liftMotor.set(power);
     }
 
     public void moveToPosition(int position) {
-        m_encoder.runToPosition(position);
+        m_liftMotor.setTargetPosition(position);
+        m_liftMotor.setRunMode(MotorEx.RunMode.PositionControl);
+        m_liftMotor.set(position);
     }
 
     public void moveWithTimer(int activeTime, Direction direction) {
@@ -34,12 +36,12 @@ public class SimpleLinearLift {
         int multiplier = direction == Direction.UP ? 1 : -1;
 
         while (!timer.done()) {
-            m_liftMotor.pidWrite(multiplier * (activeTime - timer.currentTime()) / activeTime);
+            m_liftMotor.set(multiplier * (activeTime - timer.currentTime()) / (double)activeTime);
         }
     }
 
     public void resetPositionCounter() {
-        m_encoder.resetEncoderCount();
+        m_liftMotor.resetEncoder();
     }
 
 }

@@ -3,24 +3,25 @@ package org.firstinspires.ftc.robotcontroller.external.samples;
 import com.arcrobotics.ftclib.drivebase.MecanumDrive;
 import com.arcrobotics.ftclib.geometry.Vector2d;
 
-import com.arcrobotics.ftclib.hardware.motors.SimpleMotorEx;
+import com.arcrobotics.ftclib.hardware.motors.Motor;
+import com.arcrobotics.ftclib.hardware.motors.MotorEx;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 public class MecanumDrivingSample extends LinearOpMode {
 
     private MecanumDrive driveTrain;
 
-    private SimpleMotorEx fL, fR, bL, bR;
+    private MotorEx fL, fR, bL, bR;
 
     // the motors used here are goBILDA Yellow Jackets, 435 rpm
 
     @Override
     public void runOpMode() throws InterruptedException {
 
-        fL = new SimpleMotorEx("frontLeft", hardwareMap, 383.6);
-        fR = new SimpleMotorEx("frontRight", hardwareMap, 383.6);
-        bL = new SimpleMotorEx("backLeft", hardwareMap, 383.6);
-        bR = new SimpleMotorEx("backRight", hardwareMap, 383.6);
+        fL = new MotorEx(hardwareMap, "frontLeft", MotorEx.GoBILDA.RPM_435);
+        fR = new MotorEx(hardwareMap, "frontRight", MotorEx.GoBILDA.RPM_435);
+        bL = new MotorEx(hardwareMap, "backLeft", MotorEx.GoBILDA.RPM_435);
+        bR = new MotorEx(hardwareMap, "backRight", MotorEx.GoBILDA.RPM_435);
 
         driveTrain = new MecanumDrive(
                 fL, fR, bL, bR

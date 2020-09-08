@@ -6,8 +6,8 @@ import com.arcrobotics.ftclib.gamepad.ButtonReader;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.arcrobotics.ftclib.hardware.RevIMU;
-import com.arcrobotics.ftclib.hardware.motors.EncoderEx;
-import com.arcrobotics.ftclib.hardware.motors.SimpleMotorEx;
+import com.arcrobotics.ftclib.hardware.motors.Motor;
+import com.arcrobotics.ftclib.hardware.motors.MotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -20,10 +20,8 @@ public class DriveSubsystem implements Subsystem {
     //Gyro
     RevIMU gyro;
 
-    private SimpleMotorEx backLeftMotor, frontLeftMotor, backRightMotor, frontRightMotor;
+    private MotorEx backLeftMotor, frontLeftMotor, backRightMotor, frontRightMotor;
     public MecanumDrive driveTrain;
-
-    EncoderEx backLeftEncoder, frontLeftEncoder, backRightEncoder, frontRightEncoder;
 
     final double WHEEL_DIAMETER = 4; // Inches
     final int PULSES_PER_ROTATION = 280; // NEVEREST 40
@@ -34,15 +32,10 @@ public class DriveSubsystem implements Subsystem {
         this.driverGamepad = driverGamepad;
         this.telemetry = telemetry;
 
-        backLeftMotor = new SimpleMotorEx("backLeftMotor", hw, 383.6);
-        frontLeftMotor = new SimpleMotorEx("frontLeftMotor", hw, 383.6);
-        backRightMotor = new SimpleMotorEx("backRightMotor", hw, 383.6);
-        frontRightMotor = new SimpleMotorEx("frontRightMotor", hw, 383.6);
-
-        frontLeftEncoder = new EncoderEx(frontLeftMotor);
-        backLeftEncoder = new EncoderEx(backLeftMotor);
-        frontRightEncoder = new EncoderEx(frontRightMotor);
-        backRightEncoder = new EncoderEx(backRightMotor);
+        backLeftMotor = new MotorEx(hw,"backLeftMotor");
+        frontLeftMotor = new MotorEx(hw,"frontLeftMotor");
+        backRightMotor = new MotorEx(hw,"backRightMotor");
+        frontRightMotor = new MotorEx(hw,"frontRightMotor");
 
         gyro = new RevIMU(hw);
 
@@ -59,28 +52,33 @@ public class DriveSubsystem implements Subsystem {
     }
 
     public boolean atTargetPos() {
-        return  frontLeftEncoder.reachedTarget() &&
-                backLeftEncoder.reachedTarget() &&
-                frontRightEncoder.reachedTarget() &&
-                backRightEncoder.reachedTarget();
+        return  frontLeftMotor.atTargetPosition() &&
+                backLeftMotor.atTargetPosition() &&
+                frontRightMotor.atTargetPosition() &&
+                backRightMotor.atTargetPosition();
     }
 
     public void driveToPosition(int target) {
-        target *= PULSES_PER_ROTATION / WHEEL_DIAMETER; // convert from inches -> ticks
-
-        frontLeftEncoder.runToPosition(target);
-        backLeftEncoder.runToPosition(target);
-        frontRightEncoder.runToPosition(target);
-        backRightEncoder.runToPosition(target);
+        driveToPosition(target, 1.0);
     }
 
     public void driveToPosition(int target, double speed) {
         target *= PULSES_PER_ROTATION / WHEEL_DIAMETER; // convert from inches -> ticks
 
-        frontLeftEncoder.runToPosition(target, speed);
-        backLeftEncoder.runToPosition(target, speed);
-        frontRightEncoder.runToPosition(target, speed);
-        backRightEncoder.runToPosition(target, speed);
+        frontLeftMotor.setTargetPosition(target);
+        backLeftMotor.setTargetPosition(target);
+        frontRightMotor.setTargetPosition(target);
+        backRightMotor.setTargetPosition(target);
+
+        frontLeftMotor.setRunMode(Motor.RunMode.PositionControl);
+        backLeftMotor.setRunMode(Motor.RunMode.PositionControl);
+        frontRightMotor.setRunMode(Motor.RunMode.PositionControl);
+        backRightMotor.setRunMode(Motor.RunMode.PositionControl);
+
+        frontLeftMotor.set(speed);
+        backLeftMotor.set(target);
+        frontRightMotor.set(target);
+        backRightMotor.set(target);
     }
 
     @Override
@@ -93,10 +91,10 @@ public class DriveSubsystem implements Subsystem {
     public void reset() {
         gyro.reset();
 
-        backRightEncoder.resetEncoderCount();
-        frontRightEncoder.resetEncoderCount();
-        backLeftEncoder.resetEncoderCount();
-        frontLeftEncoder.resetEncoderCount();
+        backRightMotor.resetEncoder();
+        frontRightMotor.resetEncoder();
+        backLeftMotor.resetEncoder();
+        frontLeftMotor.resetEncoder();
     }
 
     @Override

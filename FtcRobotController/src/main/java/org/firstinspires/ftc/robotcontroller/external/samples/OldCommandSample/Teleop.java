@@ -2,7 +2,7 @@ package org.firstinspires.ftc.robotcontroller.external.samples.OldCommandSample;
 
 import com.arcrobotics.ftclib.controller.PIDController;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
-import com.arcrobotics.ftclib.hardware.motors.SimpleMotorEx;
+import com.arcrobotics.ftclib.hardware.motors.MotorEx;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -19,10 +19,10 @@ public class Teleop extends OpMode {
     private GamepadEx driverGamepad;
     private PIDLiftController liftController;
     private SimpleLinearLift lift;
-    private SimpleMotorEx liftMotor;
+    private MotorEx liftMotor;
 
     public static PIDController pid = new PIDController(
-            new double[]{kP, kI, kD}
+            kP, kI, kD
     );
 
     @Override
@@ -35,7 +35,7 @@ public class Teleop extends OpMode {
         pid.setTolerance(kThreshold);
         pid.reset();
 
-        liftMotor = new SimpleMotorEx("lift", hardwareMap, 537.6, pid);
+        liftMotor = new MotorEx(hardwareMap, "lift");
         lift = new SimpleLinearLift(liftMotor);
         liftController = new PIDLiftController(lift);
     }

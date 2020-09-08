@@ -4,7 +4,7 @@ import com.arcrobotics.ftclib.Robot;
 import com.arcrobotics.ftclib.command.button.GamepadButton;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
-import com.arcrobotics.ftclib.hardware.motors.SimpleMotorEx;
+import com.arcrobotics.ftclib.hardware.motors.MotorEx;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 public class SampleRobot extends Robot {
@@ -14,7 +14,7 @@ public class SampleRobot extends Robot {
 
     private LinearOpMode m_opMode;
 
-    private SimpleMotorEx m_left, m_right;
+    private MotorEx m_left, m_right;
     private DriveSubsystem m_drive;
     private GamepadEx m_driverOp;
     private DefaultDrive m_driveCommand;
@@ -33,8 +33,8 @@ public class SampleRobot extends Robot {
     }
 
     public void initHardware() {
-        m_left = new SimpleMotorEx("drive_left", m_opMode.hardwareMap, DRIVE_CPR);
-        m_right = new SimpleMotorEx("drive_right", m_opMode.hardwareMap, DRIVE_CPR);
+        m_left = new MotorEx(m_opMode.hardwareMap, "drive_left");
+        m_right = new MotorEx(m_opMode.hardwareMap, "drive_right");
         m_drive = new DriveSubsystem(m_left, m_right, WHEEL_DIAMETER);
 
         m_driverOp = new GamepadEx(m_opMode.gamepad1);

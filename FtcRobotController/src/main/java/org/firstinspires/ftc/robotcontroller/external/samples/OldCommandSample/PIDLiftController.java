@@ -9,7 +9,7 @@ public class PIDLiftController {
     public PIDLiftController(SimpleLinearLift lift) {
         m_lift = lift;
 
-        STAGE_CONSTANT = (int)(lift.m_liftMotor.COUNTS_PER_REV);
+        STAGE_CONSTANT = (int)(lift.m_liftMotor.getCPR());
     }
 
     // let's say that one stage is 3.2 rotations of the motor

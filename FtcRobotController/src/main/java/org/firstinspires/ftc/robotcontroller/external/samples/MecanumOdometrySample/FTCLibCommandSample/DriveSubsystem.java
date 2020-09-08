@@ -8,7 +8,7 @@ import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.arcrobotics.ftclib.geometry.Pose2d;
 import com.arcrobotics.ftclib.hardware.JSTEncoder;
 import com.arcrobotics.ftclib.hardware.RevIMU;
-import com.arcrobotics.ftclib.hardware.motors.SimpleMotor;
+import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.arcrobotics.ftclib.kinematics.HolonomicOdometry;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
@@ -24,7 +24,7 @@ public class DriveSubsystem implements Subsystem {
     //Gyro
     RevIMU gyro;
 
-    public SimpleMotor backLeftMotor, frontLeftMotor, backRightMotor, frontRightMotor;
+    public Motor backLeftMotor, frontLeftMotor, backRightMotor, frontRightMotor;
     public MecanumDrive driveTrain;
     public JSTEncoder horizontalEncoder, leftEncoder, rightEncoder;
 
@@ -40,10 +40,10 @@ public class DriveSubsystem implements Subsystem {
 
         odometry = new HolonomicOdometry(trackWidth);
 
-        backLeftMotor = new SimpleMotor("backLeftMotor", hw);
-        frontLeftMotor = new SimpleMotor("frontLeftMotor", hw);
-        backRightMotor = new SimpleMotor("backRightMotor", hw);
-        frontRightMotor = new SimpleMotor("frontRightMotor", hw);
+        backLeftMotor = new Motor(hw,"backLeftMotor");
+        frontLeftMotor = new Motor(hw, "frontLeftMotor");
+        backRightMotor = new Motor(hw, "backRightMotor");
+        frontRightMotor = new Motor(hw, "frontRightMotor");
 
         horizontalEncoder = new JSTEncoder(hw, "hEncoder");
         horizontalEncoder.setDistancePerPulse((WHEEL_DIAMETER * Math.PI) / PULSES_PER_ROTATION);

@@ -2,8 +2,7 @@ package org.firstinspires.ftc.teamcode.OpModes;
 
 import com.arcrobotics.ftclib.drivebase.DifferentialDrive;
 import com.arcrobotics.ftclib.hardware.RevIMU;
-import com.arcrobotics.ftclib.hardware.motors.EncoderEx;
-import com.arcrobotics.ftclib.hardware.motors.SimpleMotorEx;
+import com.arcrobotics.ftclib.hardware.motors.MotorEx;
 import com.arcrobotics.ftclib.util.Safety;
 import com.arcrobotics.ftclib.util.Timing;
 
@@ -22,19 +21,15 @@ public class PushbotAuto_Odometry extends LinearOpMode {
     public static final double INCHES_PER_REV = 3 * 2 * Math.PI;
 
     private DifferentialDrive dt;
-    private SimpleMotorEx left, right;
-    private EncoderEx leftEncoder, rightEncoder;
+    private MotorEx left, right;
     private RevIMU imu;
 
     private HardwarePushbot robot;
 
     @Override
     public void runOpMode() throws InterruptedException {
-        left = new SimpleMotorEx("left", hardwareMap, 383.6);
-        right = new SimpleMotorEx("right", hardwareMap, 383.6);
-
-        leftEncoder = new EncoderEx(left);
-        rightEncoder = new EncoderEx(right);
+        left = new MotorEx(hardwareMap, "left");
+        right = new MotorEx(hardwareMap, "right");
 
         dt = new DifferentialDrive(left, right);
         imu = new RevIMU(hardwareMap);
@@ -64,8 +59,8 @@ public class PushbotAuto_Odometry extends LinearOpMode {
         robot.driveRobot(ySpeed, turnSpeed);
         try {
             robot.updateRobotPosition(imu.getHeading(),
-                    leftEncoder.getNumRevolutions() * INCHES_PER_REV,
-                    rightEncoder.getNumRevolutions() * INCHES_PER_REV);
+                    left.encoder.getRevolutions() * INCHES_PER_REV,
+                    right.encoder.getRevolutions() * INCHES_PER_REV);
         } catch (Exception e) {
             telemetry.addData("Error Thrown", e.getMessage());
             telemetry.update();
