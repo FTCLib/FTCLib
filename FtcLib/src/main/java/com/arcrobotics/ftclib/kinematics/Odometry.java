@@ -15,11 +15,11 @@ public abstract class Odometry {
      */
     protected double trackWidth;
 
-    Odometry(Pose2d robotPose){
+    public Odometry(Pose2d robotPose){
         this(robotPose, 18);
     }
 
-    Odometry(Pose2d robotPose, double trackWidth) {
+    public Odometry(Pose2d robotPose, double trackWidth) {
         this.robotPose = robotPose;
         this.trackWidth = trackWidth;
     }
