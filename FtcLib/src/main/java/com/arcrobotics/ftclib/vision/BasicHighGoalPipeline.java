@@ -8,6 +8,7 @@ import org.opencv.core.MatOfPoint;
 import org.opencv.core.Point;
 import org.opencv.core.Rect;
 import org.opencv.core.RotatedRect;
+import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
 import org.openftc.easyopencv.OpenCvPipeline;
 
@@ -78,6 +79,8 @@ public class BasicHighGoalPipeline extends OpenCvPipeline {
             });
 
             blueRect = Imgproc.boundingRect(biggestBlueContour);
+
+            Imgproc.rectangle(input, blueRect, new Scalar(0, 0, 255));
         }
 
         if (redContours.size() != 0) {
@@ -89,9 +92,11 @@ public class BasicHighGoalPipeline extends OpenCvPipeline {
             });
 
             redRect = Imgproc.boundingRect(biggestRedContour);
+            Imgproc.rectangle(input, redRect, new Scalar(255, 0, 0));
+
         }
 
-        return null;
+        return input;
     }
 
     public Rect getRedRect() {

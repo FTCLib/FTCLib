@@ -92,9 +92,8 @@ public class AngleHighGoalPipeline extends BasicHighGoalPipeline {
             verticalFocalLength = this.imageHeight / (2 * Math.tan(verticalView /2));
         }
 
-        super.processFrame(input);
+        return super.processFrame(input);
 
-        return null;
     }
 
     public double calculateYaw(Target color) {
