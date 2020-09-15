@@ -118,9 +118,7 @@ public class HDrive extends RobotDrive
             speeds[MotorType.kRight.value] = vector.scalarProject(rightVec) + turn;
             speeds[MotorType.kSlide.value] = vector.scalarProject(slideVec) + turn;
 
-            if (vector.magnitude() != 0)
-                normalize(speeds, vector.magnitude());
-            else normalize(speeds);
+            if (Math.abs(vector.magnitude()) > 10E-2) normalize(speeds, vector.magnitude());
 
             motors[MotorType.kLeft.value].set(speeds[MotorType.kRight.value] * maxOutput);
             motors[MotorType.kRight.value].set(speeds[MotorType.kLeft.value] * maxOutput);

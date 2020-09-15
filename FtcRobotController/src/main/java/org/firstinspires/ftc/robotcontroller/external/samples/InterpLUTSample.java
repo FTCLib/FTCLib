@@ -6,7 +6,7 @@ import com.arcrobotics.ftclib.geometry.Translation2d;
 import com.arcrobotics.ftclib.hardware.JSTEncoder;
 import com.arcrobotics.ftclib.hardware.RevIMU;
 import com.arcrobotics.ftclib.hardware.motors.Motor;
-import com.arcrobotics.ftclib.kinematics.PoseExponentialHolonomic;
+import com.arcrobotics.ftclib.kinematics.HolonomicOdometry;
 import com.arcrobotics.ftclib.util.InterpLUT;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -20,8 +20,7 @@ public class InterpLUTSample extends LinearOpMode
     // our lookup table of distances from the goal and respective speeds of the shooter
     InterpLUT lut;
 
-
-    private PoseExponentialHolonomic odometry;
+    private HolonomicOdometry odometry;
     private JSTEncoder leftEncoder, rightEncoder, perpEncoder;
     private Motor shooter = new Motor(hardwareMap, "shooter");
     private RevIMU gyro = new RevIMU(hardwareMap);
@@ -43,11 +42,11 @@ public class InterpLUTSample extends LinearOpMode
         perpEncoder = new JSTEncoder(hardwareMap, "perp");
 
         // REVcoders
-        leftEncoder.setDistancePerPulse(2 / (double) 8092);
-        rightEncoder.setDistancePerPulse(2 / (double) 8092);
-        perpEncoder.setDistancePerPulse(2 / (double) 8092);
+        leftEncoder.setDistancePerPulse(2 / (double)8192);
+        rightEncoder.setDistancePerPulse(2 / (double)8192);
+        perpEncoder.setDistancePerPulse(2 / (double)8192);
 
-        odometry = new PoseExponentialHolonomic(
+        odometry = new HolonomicOdometry(
                 gyro::getHeading,
                 leftEncoder::getDistance,
                 rightEncoder::getDistance,

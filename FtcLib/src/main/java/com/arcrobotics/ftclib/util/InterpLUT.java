@@ -24,11 +24,11 @@ public class InterpLUT {
 
     /**
      * Creates a monotone cubic spline from a given set of control points.
+     *
      * <p>
      * The spline is guaranteed to pass through each control point exactly. Moreover, assuming the control points are
      * monotonic (Y is non-decreasing or non-increasing) then the interpolated values will also be monotonic.
      *
-     * @return
      * @throws IllegalArgumentException if the X or Y arrays are null, have different lengths or have fewer than 2 values.
      */
     //public static LUTWithInterpolator createLUT(List<Double> x, List<Double> y) {
@@ -134,4 +134,5 @@ public class InterpLUT {
         str.append("]");
         return str.toString();
     }
+
 }

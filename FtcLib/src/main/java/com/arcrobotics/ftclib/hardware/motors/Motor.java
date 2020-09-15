@@ -118,6 +118,25 @@ public class Motor implements HardwareDevice {
             return getPosition() / getCPR();
         }
 
+        public double getRawVelocity() {
+            return getVelocity();
+        }
+
+        private final static int CPS_STEP = 0x10000;
+
+        /**
+         * Corrects for velocity overflow
+         *
+         * @return the corrected velocity
+         */
+        public double getCorrectedVelocity() {
+            double real = getRawVelocity();
+            while (Math.abs(veloEstimate - real) > CPS_STEP / 2.0) {
+                real += Math.signum(veloEstimate - real) * CPS_STEP;
+            }
+            return real;
+        }
+
     }
 
     /**
@@ -233,6 +252,13 @@ public class Motor implements HardwareDevice {
      */
     public int getCurrentPosition() {
         return encoder.getPosition();
+    }
+
+    /**
+     * @return  the corrected velocity for overflow
+     */
+    public double getCorrectedVelocity() {
+        return encoder.getCorrectedVelocity();
     }
 
     /**
