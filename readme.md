@@ -27,7 +27,8 @@ Thank you for using the FTCLib library for your code! All of the people who work
 The mission of FTCLib is briefly summarized in the following quote made by Jackson from ARC Robotics, who started the library.
 
 
-> Our goal is to make programming easier and more efficient through effective classes and detailed examples of implementation. - Jackson ARC Robotics
+> Our goal is to make programming easier and more efficient through effective classes and detailed examples of implementation.
+- Jackson ARC Robotics
 
 ## Why Use FTCLib?
 
@@ -45,7 +46,7 @@ Add this to your build.common.gradle:
 Now, in your TeamCode buid.gradle, add these lines:
 ```
 dependencies {
-    implementation 'com.arcrobotics:ftclib:1.0.0' // Replace 1.0.0 with the latest release
+    implementation 'com.arcrobotics:ftclib:1.0.1' // Replace 1.0.1 with the latest release
 }
 ```
 To ensure the project builds correctly, please follow steps below: 
@@ -96,6 +97,7 @@ In build.common.gradle, change the minSdkVersion from 19 to 24:
         applicationId 'com.qualcomm.ftcrobotcontroller'
         minSdkVersion 24
         targetSdkVersion 26
+    }
 ```
     
 7. Perform a gradle sync to implement your changes.
@@ -116,6 +118,7 @@ add `multiDexEnabled true` to the below location inside the `build.common.gradle
 
 
         multiDexEnabled true
+    }
 ```
 
 ## Legality for competition use
