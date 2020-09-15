@@ -56,6 +56,8 @@ public class PIDFController {
         setPoint = sp;
         measuredValue = pv;
 
+        lastTimeStamp = 0;
+
         errorVal_p = setPoint - measuredValue;
         reset();
     }
@@ -63,6 +65,7 @@ public class PIDFController {
     public void reset() {
         totalError = 0;
         prevErrorVal = 0;
+        lastTimeStamp = 0;
     }
 
 

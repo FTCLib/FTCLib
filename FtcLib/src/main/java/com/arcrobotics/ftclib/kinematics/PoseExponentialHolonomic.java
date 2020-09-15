@@ -6,7 +6,7 @@ import com.arcrobotics.ftclib.geometry.Twist2d;
 
 import java.util.function.DoubleSupplier;
 
-public class ConstantVeloMecanumOdometry extends Odometry {
+public class PoseExponentialHolonomic extends Odometry {
 
     private double prevLeftEncoder, prevRightEncoder, prevHorizontalEncoder;
     private Rotation2d previousAngle, gyroOffset;
@@ -15,9 +15,9 @@ public class ConstantVeloMecanumOdometry extends Odometry {
     // the suppliers
     DoubleSupplier m_heading, m_left, m_right, m_horizontal;
 
-    public ConstantVeloMecanumOdometry(DoubleSupplier headingSupplier,
-                                       DoubleSupplier leftEncoder, DoubleSupplier rightEncoder,
-                                       DoubleSupplier horizontalEncoder, double trackWidth, double centerWheelOffset) {
+    public PoseExponentialHolonomic(DoubleSupplier headingSupplier,
+                                    DoubleSupplier leftEncoder, DoubleSupplier rightEncoder,
+                                    DoubleSupplier horizontalEncoder, double trackWidth, double centerWheelOffset) {
         this(new Rotation2d(headingSupplier.getAsDouble()), trackWidth, centerWheelOffset);
         m_heading = headingSupplier;
         m_left = leftEncoder;
@@ -25,14 +25,14 @@ public class ConstantVeloMecanumOdometry extends Odometry {
         m_horizontal = horizontalEncoder;
     }
 
-    public ConstantVeloMecanumOdometry(Rotation2d gyroAngle, Pose2d initialPose, double trackwidth, double centerWheelOffset) {
+    public PoseExponentialHolonomic(Rotation2d gyroAngle, Pose2d initialPose, double trackwidth, double centerWheelOffset) {
         super(initialPose, trackwidth);
         gyroOffset = robotPose.getRotation().minus(gyroAngle);
         previousAngle = initialPose.getRotation();
         this.centerWheelOffset = centerWheelOffset;
     }
 
-    public ConstantVeloMecanumOdometry(Rotation2d gyroAngle, double trackwidth, double centerWheelOffset) {
+    public PoseExponentialHolonomic(Rotation2d gyroAngle, double trackwidth, double centerWheelOffset) {
         this(gyroAngle, new Pose2d(), trackwidth, centerWheelOffset);
     }
 
