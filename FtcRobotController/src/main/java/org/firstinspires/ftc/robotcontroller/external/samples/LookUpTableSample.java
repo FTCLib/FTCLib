@@ -38,9 +38,9 @@ public class LookUpTableSample extends LinearOpMode {
         perpEncoder = new JSTEncoder(hardwareMap, "perp");
 
         // REVcoders
-        leftEncoder.setDistancePerPulse(2 / (double)8092);
-        rightEncoder.setDistancePerPulse(2 / (double)8092);
-        perpEncoder.setDistancePerPulse(2 / (double)8092);
+        leftEncoder.setDistancePerPulse(2 / (double)8192);
+        rightEncoder.setDistancePerPulse(2 / (double)8192);
+        perpEncoder.setDistancePerPulse(2 / (double)8192);
 
         odometry = new PoseExponentialHolonomic(
                 gyro::getHeading,

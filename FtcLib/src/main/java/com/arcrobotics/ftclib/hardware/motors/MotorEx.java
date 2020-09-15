@@ -20,39 +20,6 @@ public class MotorEx extends Motor {
      */
     public DcMotorEx motorEx;
 
-    public class EncoderEx extends Encoder {
-
-        /**
-         * The encoder object for the motor.
-         *
-         * @param position the position supplier which just points to the
-         *                 current position of the motor in ticks
-         */
-        public EncoderEx(Supplier<Integer> position) {
-            super(position);
-        }
-
-        public double getRawVelocity() {
-            return motorEx.getVelocity();
-        }
-
-        private final static int CPS_STEP = 0x10000;
-
-        /**
-         * Corrects for velocity overflow
-         *
-         * @return the corrected velocity
-         */
-        public double getCorrectedVelocity() {
-            double real = getRawVelocity();
-            while (Math.abs(veloEstimate - real) > CPS_STEP / 2.0) {
-                real += Math.signum(veloEstimate - real) * CPS_STEP;
-            }
-            return real;
-        }
-
-    }
-
     /**
      * Constructs the instance motor for the wrapper
      *
@@ -76,7 +43,7 @@ public class MotorEx extends Motor {
         runmode = RunMode.RawPower;
         type = gobildaType;
         ACHIEVABLE_MAX_TICKS_PER_SECOND = gobildaType.getAchievableMaxTicksPerSecond();
-        encoder = new EncoderEx(motorEx::getCurrentPosition);
+        encoder = new Encoder(motorEx::getCurrentPosition);
     }
 
     @Override
@@ -90,7 +57,7 @@ public class MotorEx extends Motor {
 
     @Override
     public double getVelocity() {
-        return ((EncoderEx) encoder).getCorrectedVelocity();
+        return encoder.getCorrectedVelocity();
     }
 
     @Override
