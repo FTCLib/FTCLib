@@ -94,10 +94,10 @@ public class InterpLUT {
             return in;
         }
         if (in <= mX.get(0)) {
-            throw new IllegalArgumentException("User requested value outside of bounds of LUT. Bounds are: "+ mX.get(0).toString()+" to "+mX.get(n-1).toString()+". Value requested was: "+in);
+            throw new IllegalArgumentException("User requested value outside of bounds of LUT. Bounds are: " + mX.get(0).toString() + " to " + mX.get(n - 1).toString() + ". Value provided was: " + in);
         }
         if (in >= mX.get(n - 1)) {
-            return mY.get(n - 1);
+            throw new IllegalArgumentException("User requested value outside of bounds of LUT. Bounds are: " + mX.get(0).toString() + " to " + mX.get(n - 1).toString() + ". Value provided was: " + in);
         }
 
         // Find the index 'i' of the last point with smaller X.
