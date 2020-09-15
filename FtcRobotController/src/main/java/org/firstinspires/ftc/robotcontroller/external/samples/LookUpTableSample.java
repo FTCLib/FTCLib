@@ -6,7 +6,7 @@ import com.arcrobotics.ftclib.geometry.Translation2d;
 import com.arcrobotics.ftclib.hardware.JSTEncoder;
 import com.arcrobotics.ftclib.hardware.RevIMU;
 import com.arcrobotics.ftclib.hardware.motors.Motor;
-import com.arcrobotics.ftclib.kinematics.PoseExponentialHolonomic;
+import com.arcrobotics.ftclib.kinematics.HolonomicOdometry;
 import com.arcrobotics.ftclib.util.LUT;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -25,7 +25,7 @@ public class LookUpTableSample extends LinearOpMode {
         add(1.0, 0.2);
     }};
 
-    private PoseExponentialHolonomic odometry;
+    private HolonomicOdometry odometry;
     private JSTEncoder leftEncoder, rightEncoder, perpEncoder;
     private Motor shooter = new Motor(hardwareMap, "shooter");
     private RevIMU gyro = new RevIMU(hardwareMap);
@@ -42,7 +42,7 @@ public class LookUpTableSample extends LinearOpMode {
         rightEncoder.setDistancePerPulse(2 / (double)8092);
         perpEncoder.setDistancePerPulse(2 / (double)8092);
 
-        odometry = new PoseExponentialHolonomic(
+        odometry = new HolonomicOdometry(
                 gyro::getHeading,
                 leftEncoder::getDistance,
                 rightEncoder::getDistance,

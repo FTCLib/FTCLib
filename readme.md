@@ -28,7 +28,6 @@ The mission of FTCLib is briefly summarized in the following quote made by Jacks
 
 
 > Our goal is to make programming easier and more efficient through effective classes and detailed examples of implementation.
-- Jackson ARC Robotics
 
 ## Why Use FTCLib?
 

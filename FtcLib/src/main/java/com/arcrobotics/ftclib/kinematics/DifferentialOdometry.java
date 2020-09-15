@@ -11,6 +11,9 @@ import java.util.function.DoubleSupplier;
 /**
  * The classfile that performs odometry calculations for a differential drivetrain.
  * For more information on the differential drivebase, see {@link DifferentialDrive}.
+ *
+ * FIXME: @JarnaChao09
+ * Change this to pose exponential.
  */
 public class DifferentialOdometry extends Odometry {
 
