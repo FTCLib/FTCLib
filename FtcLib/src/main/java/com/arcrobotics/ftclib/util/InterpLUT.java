@@ -4,10 +4,8 @@ import java.util.List;
 
 /**
  * Performs spline interpolation given a set of control points.
- *
  */
-public class InterpLUT
-{
+public class InterpLUT {
 
     private final List<Double> mX;
     private final List<Double> mY;
@@ -18,7 +16,8 @@ public class InterpLUT
         mY = y;
         mM = m;
     }
-    public void add(double in, double out){
+
+    public void add(double in, double out) {
         mX.add(in);
         mY.add(out);
     }
@@ -26,20 +25,16 @@ public class InterpLUT
     /**
      * Creates a monotone cubic spline from a given set of control points.
      *
+     * <p>
      * The spline is guaranteed to pass through each control point exactly. Moreover, assuming the control points are
      * monotonic (Y is non-decreasing or non-increasing) then the interpolated values will also be monotonic.
      *
-
-     * @return
-     *
-     * @throws IllegalArgumentException
-     *             if the X or Y arrays are null, have different lengths or have fewer than 2 values.
+     * @throws IllegalArgumentException if the X or Y arrays are null, have different lengths or have fewer than 2 values.
      */
     //public static LUTWithInterpolator createLUT(List<Double> x, List<Double> y) {
-
-        public InterpLUT createLUT() {
-            List<Double> x = this.mX;
-            List<Double> y = this.mY;
+    public InterpLUT createLUT() {
+        List<Double> x = this.mX;
+        List<Double> y = this.mY;
 
         if (x == null || y == null || x.size() != y.size() || x.size() < 2) {
             throw new IllegalArgumentException("There must be at least two control "
@@ -89,8 +84,7 @@ public class InterpLUT
     /**
      * Interpolates the value of Y = f(X) for given X. Clamps X to the domain of the spline.
      *
-     * @param in
-     *            The X value.
+     * @param in The X value.
      * @return The interpolated Y = f(X) value.
      */
     public double get(double in) {
@@ -140,4 +134,5 @@ public class InterpLUT
         str.append("]");
         return str.toString();
     }
+
 }
