@@ -12,9 +12,10 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-@TeleOp(name="LUT Sample")
+@TeleOp(name = "LUT Sample")
 @Disabled
-public class InterpLUTSample extends LinearOpMode {
+public class InterpLUTSample extends LinearOpMode
+{
 
     // our lookup table of distances from the goal and respective speeds of the shooter
     InterpLUT lut;
@@ -26,13 +27,14 @@ public class InterpLUTSample extends LinearOpMode {
     private RevIMU gyro = new RevIMU(hardwareMap);
 
     @Override
-    public void runOpMode() throws InterruptedException {
+    public void runOpMode() throws InterruptedException
+    {
         //Adding each val with a key
-        lut.add(5,1);
-        lut.add(4.1,0.9);
-        lut.add(3.6,0.75);
-        lut.add(2.7,.5);
-        lut.add(1.1,0.2);
+        lut.add(5, 1);
+        lut.add(4.1, 0.9);
+        lut.add(3.6, 0.75);
+        lut.add(2.7, .5);
+        lut.add(1.1, 0.2);
         //generating final equation
         lut.createLUT();
 
@@ -41,9 +43,9 @@ public class InterpLUTSample extends LinearOpMode {
         perpEncoder = new JSTEncoder(hardwareMap, "perp");
 
         // REVcoders
-        leftEncoder.setDistancePerPulse(2 / (double)8092);
-        rightEncoder.setDistancePerPulse(2 / (double)8092);
-        perpEncoder.setDistancePerPulse(2 / (double)8092);
+        leftEncoder.setDistancePerPulse(2 / (double) 8092);
+        rightEncoder.setDistancePerPulse(2 / (double) 8092);
+        perpEncoder.setDistancePerPulse(2 / (double) 8092);
 
         odometry = new PoseExponentialHolonomic(
                 gyro::getHeading,
@@ -59,8 +61,10 @@ public class InterpLUTSample extends LinearOpMode {
         waitForStart();
 
         // let's say our goal is at (5, 10) in our global field coordinates
-        while (opModeIsActive() && !isStopRequested()) {
-            if (gamepad1.a) {
+        while (opModeIsActive() && !isStopRequested())
+        {
+            if (gamepad1.a)
+            {
                 double distance = odometry.getPose().getTranslation().getDistance(new Translation2d(5, 10));
                 shooter.set(lut.get(distance));
             }
