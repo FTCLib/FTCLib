@@ -37,7 +37,7 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation('org.ejml:ejml-simple:0.38') {
+    implementation('org.ejml:ejml-simple:0.39') {
         exclude group: 'org.ejml', module: 'ejml-ddense'
         exclude group: 'org.ejml', module: 'ejml-fdense'
         exclude group: 'org.ejml', module: 'ejml-zdense'
