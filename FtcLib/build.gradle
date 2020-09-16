@@ -34,7 +34,9 @@ android {
     }
 
 }
-
+repositories {
+    mavenCentral()
+}
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation('org.ejml:ejml-simple:0.39') {
@@ -47,7 +49,8 @@ dependencies {
     api 'org.openftc:easyopencv:1.4.1'
     api project(path: ':RobotCore')
     api project(path: ':Hardware')
-    testImplementation 'junit:junit:4.12'
+    testImplementation(platform('org.junit:junit-bom:5.7.0'))
+    testImplementation('org.junit.jupiter:junit-jupiter')
 }
 
 apply from: '../release-aar.gradle'
