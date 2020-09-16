@@ -41,6 +41,7 @@ android {
         minSdkVersion 24
         targetSdkVersion 26
         multiDexEnabled true
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         /**
          * We keep the versionCode and versionName of robot controller applications in sync with

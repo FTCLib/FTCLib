@@ -1,5 +1,7 @@
 package com.arcrobotics.ftclib.util;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -7,14 +9,20 @@ import java.util.List;
  */
 public class InterpLUT {
 
-    private final List<Double> mX;
-    private final List<Double> mY;
-    private final Double[] mM;
+    private List<Double> mX = new ArrayList<>();
+    private List<Double> mY = new ArrayList<>();
+    private List<Double> mM = new ArrayList<>();
 
-    private InterpLUT(List<Double> x, List<Double> y, Double[] m) {
+    private InterpLUT(List<Double> x, List<Double> y, List<Double> m) {
         mX = x;
         mY = y;
         mM = m;
+
+    }
+
+
+    public InterpLUT() {
+
     }
 
     public void add(double in, double out) {
@@ -78,7 +86,7 @@ public class InterpLUT {
                 }
             }
         }
-        return new InterpLUT(x, y, m);
+        return new InterpLUT(x, y, Arrays.asList(m));
     }
 
     /**
@@ -113,8 +121,8 @@ public class InterpLUT {
         // Perform cubic Hermite spline interpolation.
         double h = mX.get(i + 1) - mX.get(i);
         double t = (in - mX.get(i)) / h;
-        return (mY.get(i) * (1 + 2 * t) + h * mM[i] * t) * (1 - t) * (1 - t)
-                + (mY.get(i + 1) * (3 - 2 * t) + h * mM[i + 1] * (t - 1)) * t * t;
+        return (mY.get(i) * (1 + 2 * t) + h * mM.get(i) * t) * (1 - t) * (1 - t)
+                + (mY.get(i + 1) * (3 - 2 * t) + h * mM.get(i+1) * (t - 1)) * t * t;
     }
 
     // For debugging.
@@ -129,7 +137,7 @@ public class InterpLUT {
             }
             str.append("(").append(mX.get(i));
             str.append(", ").append(mY.get(i));
-            str.append(": ").append(mM[i]).append(")");
+            str.append(": ").append(mM.get(i)).append(")");
         }
         str.append("]");
         return str.toString();
