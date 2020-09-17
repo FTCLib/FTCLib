@@ -60,7 +60,7 @@ public class InterpLUTTest {
             lut.add(i, i+1);
         }
         lut.createLUT();
-        assertEquals(lut.get(88), 89);
+        assertEquals(lut.get(85.5), 86.5);
     }
 
 }

@@ -36,7 +36,7 @@ public class InterpLUT {
      * @throws IllegalArgumentException if the X or Y arrays are null, have different lengths or have fewer than 2 values.
      */
     //public static LUTWithInterpolator createLUT(List<Double> x, List<Double> y) {
-    public InterpLUT createLUT() {
+    public void createLUT() {
         List<Double> x = this.mX;
         List<Double> y = this.mY;
 
@@ -82,7 +82,9 @@ public class InterpLUT {
                 }
             }
         }
-        return new InterpLUT(x, y, Arrays.asList(m));
+        mX = x;
+        mY = y;
+        mM = Arrays.asList(m);
     }
 
     /**

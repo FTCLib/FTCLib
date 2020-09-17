@@ -23,6 +23,7 @@ class PIDInputOutputTest {
     @Test
     void integralGainOutputTest() {
         m_controller.setI(4);
+        m_controller.setIntegrationBounds(-180,180);
 
         double out = 0;
 

@@ -3,7 +3,7 @@ apply plugin: 'com.android.library'
 ext {
     PUBLISH_GROUP_ID = 'com.arcrobotics'
     PUBLISH_ARTIFACT_ID = 'ftclib'
-    PUBLISH_VERSION = '1.0.1'
+    PUBLISH_VERSION = '1.1.0'
 }
 
 android {
@@ -15,7 +15,7 @@ android {
         minSdkVersion 24
         targetSdkVersion 26
         versionCode 1
-        versionName 'v1.0.1'
+        versionName 'v1.1.0'
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles 'consumer-rules.pro'
@@ -32,8 +32,13 @@ android {
         sourceCompatibility = 1.8
         targetCompatibility = 1.8
     }
-
+    testOptions {
+        unitTests.all {
+            useJUnitPlatform()
+        }
+    }
 }
+
 repositories {
     mavenCentral()
 }
@@ -47,8 +52,10 @@ dependencies {
     api project(path: ':RobotCore')
     api project(path: ':Hardware')
     testImplementation(platform('org.junit:junit-bom:5.7.0'))
-    testImplementation('org.junit.jupiter:junit-jupiter')
+    testImplementation('org.junit.jupiter:junit-jupiter-api:5.7.0')
+    testRuntimeOnly('org.junit.jupiter:junit-jupiter-engine:5.7.0')
     testImplementation('org.mockito:mockito-core:3.5.10')
+    testImplementation "org.junit.jupiter:junit-jupiter-params:5.7.0"
 }
 
 apply from: '../release-aar.gradle'
