@@ -17,13 +17,9 @@ public class InterpLUT {
         mX = x;
         mY = y;
         mM = m;
-
     }
 
-
-    public InterpLUT() {
-
-    }
+    public InterpLUT() {}
 
     public void add(double in, double out) {
         mX.add(in);
