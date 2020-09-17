@@ -16,4 +16,4 @@ jobs:
     - name: Build with Gradle
       run: ./gradlew --stacktrace
     - name: Test with Gradle
-        run: ./gradlew :FtcLib:test --stacktrace
+      run: ./gradlew :FtcLib:test --stacktrace
