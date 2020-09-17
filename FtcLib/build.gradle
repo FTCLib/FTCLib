@@ -40,10 +40,7 @@ repositories {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation('org.ejml:ejml-simple:0.39') {
-        exclude group: 'org.ejml', module: 'ejml-ddense'
-        exclude group: 'org.ejml', module: 'ejml-fdense'
-        exclude group: 'org.ejml', module: 'ejml-zdense'
-        exclude group: 'org.ejml', module: 'ejml-cdense'
+        exclude group: 'org.ejml', module: 'ejml-all'
     }
     
     api 'org.openftc:easyopencv:1.4.1'

@@ -30,6 +30,7 @@ public class PIDFController {
     private double errorTolerance_v = Double.POSITIVE_INFINITY;
 
     private double lastTimeStamp;
+    private double period;
 
     /**
      * The base constructor for the PIDF controller
@@ -57,6 +58,7 @@ public class PIDFController {
         measuredValue = pv;
 
         lastTimeStamp = 0;
+        period = 0;
 
         errorVal_p = setPoint - measuredValue;
         reset();
@@ -227,7 +229,7 @@ public class PIDFController {
 
         double currentTimeStamp = (double)System.nanoTime() / 1E9;
         if (lastTimeStamp == 0) lastTimeStamp = currentTimeStamp;
-        double dt = currentTimeStamp - lastTimeStamp;
+        period = currentTimeStamp - lastTimeStamp;
         lastTimeStamp = currentTimeStamp;
 
         if (measuredValue == pv) {
@@ -237,8 +239,8 @@ public class PIDFController {
             measuredValue = pv;
         }
 
-        if (Math.abs(dt) > 10E-4) {
-            errorVal_v = (errorVal_p - prevErrorVal) / dt;
+        if (Math.abs(period) > 1E-6) {
+            errorVal_v = (errorVal_p - prevErrorVal) / period;
         } else {
             errorVal_v = 0;
         }
@@ -247,7 +249,7 @@ public class PIDFController {
         if total error is the integral from 0 to t of e(t')dt', and
         e(t) = sp - pv, then the total error, E(t), equals sp*t - pv*t.
          */
-        totalError = dt * (setPoint - measuredValue);
+        totalError = period * (setPoint - measuredValue);
 
         // returns u(t)
         return kP * errorVal_p + kI * totalError + kD * errorVal_v + kF * setPoint;
@@ -298,7 +300,7 @@ public class PIDFController {
     }
 
     public double getPeriod() {
-        return System.nanoTime() / 1E9 - lastTimeStamp;
+        return period;
     }
 
 }
