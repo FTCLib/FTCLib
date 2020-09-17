@@ -18,14 +18,13 @@
 			--corner-radius-mean: 100%;
 		}
 
-		rect{
+		circle{
 			--center-flag: 0;
 			--center-offset: 2px;
 			--center-mean: 64px;
 			--center: calc(var(--center-mean) - var(--center-flag)*var(--center-offset));
-			--corner: calc(var(--center) - var(--radius));
-			x: var(--corner);
-			y: var(--corner);
+			cx: var(--center);
+			cy: var(--center);
 
 			--radius-flag: 0;
 			--radius-mean: 51px;
@@ -33,13 +32,9 @@
 			--radius-offset: calc(var(--radius-flag)*var(--radius-offset-magnitude));
 			--radius: calc(var(--radius-mean) + var(--radius-offset));
 
-			--corner-radius: calc( var(--corner-radius-mean) + var(--radius-offset) );
-			rx: var(--corner-radius);
-			ry: var(--corner-radius);
+			r: var(--radius);
 
 			--diameter: calc(2*var(--radius));
-			width: var(--diameter);
-			height: var(--diameter);
 		}
 
 		.bottom {
@@ -75,15 +70,15 @@
 
 	</style>
 
-	<rect fill='var(--color-theme)'/>
+	<circle fill='var(--color-theme)'/>
 
-	<rect class='solid bottom ring'/>
-	<rect class='outlined outer bottom ring'/>
-	<rect class='outlined inner bottom ring'/>
+	<circle class='solid bottom ring'/>
+	<circle class='outlined outer bottom ring'/>
+	<circle class='outlined inner bottom ring'/>
 
-	<rect class='solid top ring'/>
-	<rect class='outlined outer top ring'/>
-	<rect class='outlined inner top ring'/>
+	<circle class='solid top ring'/>
+	<circle class='outlined outer top ring'/>
+	<circle class='outlined inner top ring'/>
 
 	<path class='outlined' fill='var(--color-triangle)' d='
 			M 62 6.2
