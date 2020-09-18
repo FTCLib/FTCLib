@@ -19,6 +19,7 @@ public class PIDFController {
     private double kP, kI, kD, kF;
     private double setPoint;
     private double measuredValue;
+    private double minIntegral, maxIntegral;
 
     private double errorVal_p;
     private double errorVal_v;
@@ -30,6 +31,7 @@ public class PIDFController {
     private double errorTolerance_v = Double.POSITIVE_INFINITY;
 
     private double lastTimeStamp;
+    private double period;
 
     /**
      * The base constructor for the PIDF controller
@@ -56,6 +58,12 @@ public class PIDFController {
         setPoint = sp;
         measuredValue = pv;
 
+        minIntegral = -1.0;
+        maxIntegral = 1.0;
+
+        lastTimeStamp = 0;
+        period = 0;
+
         errorVal_p = setPoint - measuredValue;
         reset();
     }
@@ -63,6 +71,7 @@ public class PIDFController {
     public void reset() {
         totalError = 0;
         prevErrorVal = 0;
+        lastTimeStamp = 0;
     }
 
 
@@ -224,7 +233,7 @@ public class PIDFController {
 
         double currentTimeStamp = (double)System.nanoTime() / 1E9;
         if (lastTimeStamp == 0) lastTimeStamp = currentTimeStamp;
-        double dt = currentTimeStamp - lastTimeStamp;
+        period = currentTimeStamp - lastTimeStamp;
         lastTimeStamp = currentTimeStamp;
 
         if (measuredValue == pv) {
@@ -234,8 +243,8 @@ public class PIDFController {
             measuredValue = pv;
         }
 
-        if (Math.abs(dt) > 10E-4) {
-            errorVal_v = (errorVal_p - prevErrorVal) / dt;
+        if (Math.abs(period) > 1E-6) {
+            errorVal_v = (errorVal_p - prevErrorVal) / period;
         } else {
             errorVal_v = 0;
         }
@@ -244,7 +253,8 @@ public class PIDFController {
         if total error is the integral from 0 to t of e(t')dt', and
         e(t) = sp - pv, then the total error, E(t), equals sp*t - pv*t.
          */
-        totalError = dt * (setPoint - measuredValue);
+        totalError = period * (setPoint - measuredValue);
+        totalError = totalError < minIntegral ? minIntegral : Math.min(maxIntegral, totalError);
 
         // returns u(t)
         return kP * errorVal_p + kI * totalError + kD * errorVal_v + kF * setPoint;
@@ -255,6 +265,11 @@ public class PIDFController {
         kI = ki;
         kD = kd;
         kF = kf;
+    }
+
+    public void setIntegrationBounds(double integralMin, double integralMax) {
+        minIntegral = integralMin;
+        maxIntegral = integralMax;
     }
 
     // used to clear kI gains
@@ -295,7 +310,7 @@ public class PIDFController {
     }
 
     public double getPeriod() {
-        return System.nanoTime() / 1E9 - lastTimeStamp;
+        return period;
     }
 
 }

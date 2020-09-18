@@ -44,10 +44,26 @@ public class Motor implements HardwareDevice {
         }
     }
 
+    public enum Direction {
+        FORWARD(1), REVERSE(-1);
+
+        private int val;
+
+        Direction(int multiplier) {
+            val = multiplier;
+        }
+
+        public int getMultiplier() {
+            return val;
+        }
+    }
+
     public class Encoder {
 
         private Supplier<Integer> m_position;
-        private int resetVal;
+        private int resetVal, lastPosition;
+        private Direction direction;
+        protected double lastTimeStamp, veloEstimate;
 
         /**
          * The encoder object for the motor.
@@ -58,13 +74,25 @@ public class Motor implements HardwareDevice {
         public Encoder(Supplier<Integer> position) {
             m_position = position;
             resetVal = 0;
+            lastPosition = 0;
+            veloEstimate = 0;
+            direction = Direction.FORWARD;
+            lastTimeStamp = (double)System.nanoTime() / 1E9;
         }
 
         /**
          * @return  the current position of the internal encoder
          */
         public int getPosition() {
-            return m_position.get() - resetVal;
+            int currentPosition = m_position.get();
+            if (currentPosition != lastPosition) {
+                double currentTime = (double)System.nanoTime() / 1E9;
+                double dt = currentTime - lastTimeStamp;
+                veloEstimate = (currentPosition - lastPosition) / dt;
+                lastPosition = m_position.get();
+                lastTimeStamp = currentTime;
+            }
+            return direction.getMultiplier() * (currentPosition - resetVal);
         }
 
         /**
@@ -75,10 +103,38 @@ public class Motor implements HardwareDevice {
         }
 
         /**
+         * Sets the direction of the encoder to forward or reverse
+         *
+         * @param direction  the desired direction
+         */
+        public void setDirection(Direction direction) {
+            this.direction = direction;
+        }
+
+        /**
          * @return  the number of revolutions turned by the motor
          */
         public double getRevolutions() {
             return getPosition() / getCPR();
+        }
+
+        public double getRawVelocity() {
+            return getVelocity();
+        }
+
+        private final static int CPS_STEP = 0x10000;
+
+        /**
+         * Corrects for velocity overflow
+         *
+         * @return the corrected velocity
+         */
+        public double getCorrectedVelocity() {
+            double real = getRawVelocity();
+            while (Math.abs(veloEstimate - real) > CPS_STEP / 2.0) {
+                real += Math.signum(veloEstimate - real) * CPS_STEP;
+            }
+            return real;
         }
 
     }
@@ -195,7 +251,14 @@ public class Motor implements HardwareDevice {
      * @return  the current position of the motor in ticks
      */
     public int getCurrentPosition() {
-        return getInverted() ? -encoder.getPosition() : encoder.getPosition();
+        return encoder.getPosition();
+    }
+
+    /**
+     * @return  the corrected velocity for overflow
+     */
+    public double getCorrectedVelocity() {
+        return encoder.getCorrectedVelocity();
     }
 
     /**
@@ -209,7 +272,7 @@ public class Motor implements HardwareDevice {
      * @return the max RPM of the motor
      */
     public double getMaxRPM() {
-        return type == GoBILDA.NONE ?motor.getMotorType().getMaxRPM() : type.getRPM();
+        return type == GoBILDA.NONE ? motor.getMotorType().getMaxRPM() : type.getRPM();
     }
 
     /**
@@ -258,6 +321,7 @@ public class Motor implements HardwareDevice {
      */
     public void setInverted(boolean isInverted) {
         motor.setDirection(isInverted ? DcMotor.Direction.REVERSE : DcMotor.Direction.FORWARD);
+        encoder.setDirection(isInverted ? Direction.REVERSE : Direction.FORWARD);
     }
 
     /**

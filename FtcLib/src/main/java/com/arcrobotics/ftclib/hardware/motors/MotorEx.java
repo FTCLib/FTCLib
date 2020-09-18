@@ -16,7 +16,7 @@ public class MotorEx extends Motor {
     /**
      * The motor for the MotorEx class.
      */
-    public DcMotorEx motor;
+    public DcMotorEx motorEx;
 
     /**
      * Constructs the instance motor for the wrapper
@@ -25,10 +25,8 @@ public class MotorEx extends Motor {
      * @param id   the device id from the RC config
      */
     public MotorEx(@NonNull HardwareMap hMap, String id) {
-        motor = hMap.get(DcMotorEx.class, id);
-        runmode = RunMode.RawPower;
-        type = GoBILDA.NONE;
-        ACHIEVABLE_MAX_TICKS_PER_SECOND = motor.getMotorType().getAchieveableMaxTicksPerSecond();
+        this(hMap, id, GoBILDA.NONE);
+        ACHIEVABLE_MAX_TICKS_PER_SECOND = motorEx.getMotorType().getAchieveableMaxTicksPerSecond();
     }
 
     /**
@@ -39,17 +37,17 @@ public class MotorEx extends Motor {
      * @param gobildaType the type of gobilda 5202 series motor being used
      */
     public MotorEx(@NonNull HardwareMap hMap, String id, @NonNull GoBILDA gobildaType) {
-        motor = hMap.get(DcMotorEx.class, id);
+        motorEx = hMap.get(DcMotorEx.class, id);
         runmode = RunMode.RawPower;
         type = gobildaType;
         ACHIEVABLE_MAX_TICKS_PER_SECOND = gobildaType.getAchievableMaxTicksPerSecond();
-        encoder = new Encoder(motor::getCurrentPosition);
+        encoder = new Encoder(motorEx::getCurrentPosition);
     }
 
     @Override
     public void set(double output) {
         if (runmode == RunMode.VelocityControl) {
-            motor.setVelocity(output * ACHIEVABLE_MAX_TICKS_PER_SECOND);
+            motorEx.setVelocity(output * ACHIEVABLE_MAX_TICKS_PER_SECOND);
         } else {
             super.set(output);
         }
@@ -57,7 +55,7 @@ public class MotorEx extends Motor {
 
     @Override
     public double getVelocity() {
-        return motor.getVelocity();
+        return encoder.getCorrectedVelocity();
     }
 
     @Override
