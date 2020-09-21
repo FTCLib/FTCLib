@@ -26,25 +26,25 @@ public class DriveSubsystem implements Subsystem {
     RevIMU gyro;
 
     public Motor backLeftMotor, frontLeftMotor, backRightMotor, frontRightMotor;
-    public MecanumDrive driveTrain;
-    public JSTEncoder horizontalEncoder, leftEncoder, rightEncoder;
+        public MecanumDrive driveTrain;
+        public JSTEncoder horizontalEncoder, leftEncoder, rightEncoder;
 
-    final double trackWidth = 16; // Distance from center of left wheel to center of right wheel
-    final double WHEEL_DIAMETER = 4; // Inches
-    final int PULSES_PER_ROTATION = 280; // NEVEREST 40
+        final double trackWidth = 16; // Distance from center of left wheel to center of right wheel
+        final double WHEEL_DIAMETER = 4; // Inches
+        final int PULSES_PER_ROTATION = 280; // NEVEREST 40
 
-    ButtonReader slowDownButton;
+        ButtonReader slowDownButton;
 
     public DriveSubsystem(GamepadEx driverGamepad, HardwareMap hw, Telemetry telemetry) {
-        this.driverGamepad = driverGamepad;
-        this.telemetry = telemetry;
+            this.driverGamepad = driverGamepad;
+            this.telemetry = telemetry;
 
-        odometry = new HolonomicOdometry(new Rotation2d(0), trackWidth, 0.3);
+            odometry = new HolonomicOdometry(new Rotation2d(0), trackWidth, 0.3);
 
-        backLeftMotor = new Motor(hw,"backLeftMotor");
-        frontLeftMotor = new Motor(hw, "frontLeftMotor");
-        backRightMotor = new Motor(hw, "backRightMotor");
-        frontRightMotor = new Motor(hw, "frontRightMotor");
+            backLeftMotor = new Motor(hw,"backLeftMotor");
+            frontLeftMotor = new Motor(hw, "frontLeftMotor");
+            backRightMotor = new Motor(hw, "backRightMotor");
+            frontRightMotor = new Motor(hw, "frontRightMotor");
 
         horizontalEncoder = new JSTEncoder(hw, "hEncoder");
         horizontalEncoder.setDistancePerPulse((WHEEL_DIAMETER * Math.PI) / PULSES_PER_ROTATION);

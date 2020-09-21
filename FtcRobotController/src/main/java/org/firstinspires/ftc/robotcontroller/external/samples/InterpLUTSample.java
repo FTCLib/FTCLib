@@ -55,6 +55,8 @@ public class InterpLUTSample extends LinearOpMode
                 2.1
         );
 
+        gyro.init();
+
         odometry.updatePose(new Pose2d(3, 4, new Rotation2d(0)));
 
         waitForStart();
