@@ -266,4 +266,34 @@ public class ProfiledPIDController {
     m_controller.reset();
   }
 
+  /**
+   * Reset the previous error and the integral term.
+   *
+   * @param measurement The current measured State of the system.
+   */
+  public void reset(TrapezoidProfile.State measurement) {
+    m_controller.reset();
+    m_setpoint = measurement;
+  }
+
+  /**
+   * Reset the previous error and the integral term.
+   *
+   * @param measuredPosition The current measured position of the system.
+   * @param measuredVelocity The current measured velocity of the system.
+   */
+  public void reset(double measuredPosition, double measuredVelocity) {
+    reset(new TrapezoidProfile.State(measuredPosition, measuredVelocity));
+  }
+
+  /**
+   * Reset the previous error and the integral term.
+   *
+   * @param measuredPosition The current measured position of the system. The velocity is
+   *     assumed to be zero.
+   */
+  public void reset(double measuredPosition) {
+    reset(measuredPosition, 0.0);
+  }
+
 }

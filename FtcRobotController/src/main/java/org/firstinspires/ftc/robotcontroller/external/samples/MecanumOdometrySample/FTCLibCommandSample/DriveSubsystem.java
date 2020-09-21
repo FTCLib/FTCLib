@@ -6,6 +6,7 @@ import com.arcrobotics.ftclib.gamepad.ButtonReader;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.arcrobotics.ftclib.geometry.Pose2d;
+import com.arcrobotics.ftclib.geometry.Rotation2d;
 import com.arcrobotics.ftclib.hardware.JSTEncoder;
 import com.arcrobotics.ftclib.hardware.RevIMU;
 import com.arcrobotics.ftclib.hardware.motors.Motor;
@@ -38,7 +39,7 @@ public class DriveSubsystem implements Subsystem {
         this.driverGamepad = driverGamepad;
         this.telemetry = telemetry;
 
-        odometry = new HolonomicOdometry(trackWidth);
+        odometry = new HolonomicOdometry(new Rotation2d(0), trackWidth, 0.3);
 
         backLeftMotor = new Motor(hw,"backLeftMotor");
         frontLeftMotor = new Motor(hw, "frontLeftMotor");
@@ -83,7 +84,7 @@ public class DriveSubsystem implements Subsystem {
     }
 
     public void updateOdometry() {
-        odometry.update(gyro.getAbsoluteHeading(), horizontalEncoder.getDistance(),
+        odometry.update(new Rotation2d(gyro.getAbsoluteHeading()), horizontalEncoder.getDistance(),
                 leftEncoder.getDistance(), rightEncoder.getDistance());
     }
 

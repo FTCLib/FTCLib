@@ -28,7 +28,6 @@ The mission of FTCLib is briefly summarized in the following quote made by Jacks
 
 
 > Our goal is to make programming easier and more efficient through effective classes and detailed examples of implementation.
-- Jackson ARC Robotics
 
 ## Why Use FTCLib?
 
@@ -46,7 +45,7 @@ Add this to your build.common.gradle:
 Now, in your TeamCode buid.gradle, add these lines:
 ```
 dependencies {
-    implementation 'com.arcrobotics:ftclib:1.0.0' // Replace 1.0.0 with the latest release
+    implementation 'com.arcrobotics:ftclib:1.0.1' // Replace 1.0.1 with the latest release
 }
 ```
 To ensure the project builds correctly, please follow steps below: 

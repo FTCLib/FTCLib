@@ -50,7 +50,7 @@ dependencies {
     stockApi 'org.openftc:hardware-stock:5.3'
     stockApi 'org.openftc:onbotjava-stock:5.3'
     stockApi 'org.openftc:robotserver-stock:5.3'
-    stockApi 'com.android.support:support-compat:26.0.0'
+    stockApi 'com.android.support:support-compat:28.0.0'
 
     /*
      * Things needed regardless of turbo/extremeTurbo/stock

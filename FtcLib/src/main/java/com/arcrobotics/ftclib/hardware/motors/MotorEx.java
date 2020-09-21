@@ -5,8 +5,6 @@ import android.support.annotation.NonNull;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import java.util.function.Supplier;
-
 /**
  * An extended motor class that utilizes more features than the
  * regular motor.

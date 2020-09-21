@@ -25,8 +25,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.function.BiConsumer;
 
-
-
 public final class TrajectoryGenerator {
   private static final Trajectory kDoNothingTrajectory =
       new Trajectory(Arrays.asList(new Trajectory.State()));

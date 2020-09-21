@@ -7,25 +7,18 @@ import com.arcrobotics.ftclib.hardware.JSTEncoder;
 import com.arcrobotics.ftclib.hardware.RevIMU;
 import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.arcrobotics.ftclib.kinematics.HolonomicOdometry;
-import com.arcrobotics.ftclib.util.LUT;
+import com.arcrobotics.ftclib.util.InterpLUT;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 @TeleOp(name = "LUT Sample")
 @Disabled
-public class LookUpTableSample extends LinearOpMode
+public class InterpLUTSample extends LinearOpMode
 {
 
     // our lookup table of distances from the goal and respective speeds of the shooter
-    LUT<Double, Double> speeds = new LUT<Double, Double>()
-    {{
-        add(5.0, 1.0);
-        add(4.0, 0.9);
-        add(3.0, 0.75);
-        add(2.0, 0.5);
-        add(1.0, 0.2);
-    }};
+    InterpLUT lut;
 
     private HolonomicOdometry odometry;
     private JSTEncoder leftEncoder, rightEncoder, perpEncoder;
@@ -35,15 +28,23 @@ public class LookUpTableSample extends LinearOpMode
     @Override
     public void runOpMode() throws InterruptedException
     {
+        //Adding each val with a key
+        lut.add(5, 1);
+        lut.add(4.1, 0.9);
+        lut.add(3.6, 0.75);
+        lut.add(2.7, .5);
+        lut.add(1.1, 0.2);
+        //generating final equation
+        lut.createLUT();
 
         leftEncoder = new JSTEncoder(hardwareMap, "left");
         rightEncoder = new JSTEncoder(hardwareMap, "right");
         perpEncoder = new JSTEncoder(hardwareMap, "perp");
 
         // REVcoders
-        leftEncoder.setDistancePerPulse(2 / (double) 8092);
-        rightEncoder.setDistancePerPulse(2 / (double) 8092);
-        perpEncoder.setDistancePerPulse(2 / (double) 8092);
+        leftEncoder.setDistancePerPulse(2 / (double)8192);
+        rightEncoder.setDistancePerPulse(2 / (double)8192);
+        perpEncoder.setDistancePerPulse(2 / (double)8192);
 
         odometry = new HolonomicOdometry(
                 gyro::getHeading,
@@ -64,7 +65,7 @@ public class LookUpTableSample extends LinearOpMode
             if (gamepad1.a)
             {
                 double distance = odometry.getPose().getTranslation().getDistance(new Translation2d(5, 10));
-                shooter.set(speeds.getClosest(distance));
+                shooter.set(lut.get(distance));
             }
             odometry.updatePose();
         }

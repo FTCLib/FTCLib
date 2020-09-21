@@ -17,7 +17,7 @@ dependencies {
      * inherit these dependencies as well
      */
     api fileTree(include: ['*.jar', '*.aar'], dir: 'libs')
-    api 'com.google.code.gson:gson:2.8.0'
+    api 'com.google.code.gson:gson:2.8.6'
     api 'com.android.support:support-annotations:28.0.0'
     api 'org.openftc:tfod-google-ftcsdk-repackaged:5.0' //Specific version of TFOD core library used by FTC SDK
     api 'org.openftc:tfod-ftc-repackaged:5.0' //FTC specific addons to core TFOD lib
@@ -25,5 +25,5 @@ dependencies {
     /*
      * These are only for us, nobody else needs them, so we use 'implementation'
      */
-    implementation 'com.android.support:support-compat:26.0.0'
+    implementation 'com.android.support:support-compat:28.0.0'
 }
