@@ -1,2 +1,2 @@
-include ':Examples'
+include ':FTCLibExamples'
 include ':FtcLib'
