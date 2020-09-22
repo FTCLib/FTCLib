@@ -8,7 +8,7 @@
 package com.arcrobotics.ftclib.trajectory;
 
 import android.os.Build;
-import android.support.annotation.RequiresApi;
+import androidx.annotation.RequiresApi;
 
 import com.arcrobotics.ftclib.geometry.Pose2d;
 import com.arcrobotics.ftclib.geometry.Transform2d;

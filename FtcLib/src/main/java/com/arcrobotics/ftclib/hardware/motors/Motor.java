@@ -1,6 +1,6 @@
 package com.arcrobotics.ftclib.hardware.motors;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.arcrobotics.ftclib.controller.PController;
 import com.arcrobotics.ftclib.controller.PIDController;
