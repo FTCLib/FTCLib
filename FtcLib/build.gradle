@@ -7,8 +7,8 @@ ext {
 }
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion '29.0.0'
+    compileSdkVersion 28
+    buildToolsVersion '29.0.2'
 
 
     defaultConfig {
@@ -49,13 +49,22 @@ dependencies {
     }
     
     api 'org.openftc:easyopencv:1.4.1'
-    api project(path: ':RobotCore')
-    api project(path: ':Hardware')
     testImplementation(platform('org.junit:junit-bom:5.7.0'))
     testImplementation('org.junit.jupiter:junit-jupiter-api:5.7.0')
     testRuntimeOnly('org.junit.jupiter:junit-jupiter-engine:5.7.0')
-    testImplementation('org.mockito:mockito-core:3.5.10')
+    testImplementation('org.mockito:mockito-core:3.5.11')
     testImplementation "org.junit.jupiter:junit-jupiter-params:5.7.0"
+
+    implementation 'org.firstinspires.ftc:Inspection:5.5'
+    implementation 'org.firstinspires.ftc:Blocks:5.5'
+    implementation 'org.firstinspires.ftc:RobotCore:5.5'
+    implementation 'org.firstinspires.ftc:RobotServer:5.5'
+    implementation 'org.firstinspires.ftc:OnBotJava:5.5'
+    implementation 'org.firstinspires.ftc:Hardware:5.5'
+    implementation 'org.firstinspires.ftc:FtcCommon:5.5'
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+
+
 }
 
 apply from: '../release-aar.gradle'

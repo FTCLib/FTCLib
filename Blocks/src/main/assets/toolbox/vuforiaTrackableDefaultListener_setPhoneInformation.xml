@@ -1,5 +1,0 @@
-      <block type="vuforiaTrackableDefaultListener_setPhoneInformation">
-        <value name="VUFORIA_TRACKABLE_DEFAULT_LISTENER"><block type="variables_get"><field name="VAR">{vuforiaTrackableDefaultListenerVariable}</field></block></value>
-        <value name="PHONE_LOCATION_ON_ROBOT"><block type="variables_get"><field name="VAR">{matrixVariable}</field></block></value>
-        <value name="CAMERA_DIRECTION"><shadow type="navigation_typedEnum_cameraDirection"></shadow></value>
-      </block>
