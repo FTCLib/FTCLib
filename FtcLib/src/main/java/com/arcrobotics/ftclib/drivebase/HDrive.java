@@ -118,7 +118,7 @@ public class HDrive extends RobotDrive
             speeds[MotorType.kRight.value] = vector.scalarProject(rightVec) + turn;
             speeds[MotorType.kSlide.value] = vector.scalarProject(slideVec) + turn;
 
-            if (Math.abs(vector.magnitude()) > 10E-2) normalize(speeds, vector.magnitude());
+            normalize(speeds);
 
             motors[MotorType.kLeft.value].set(speeds[MotorType.kRight.value] * maxOutput);
             motors[MotorType.kRight.value].set(speeds[MotorType.kLeft.value] * maxOutput);
@@ -126,16 +126,17 @@ public class HDrive extends RobotDrive
         }
         // this looks similar to mecanum because mecanum is a four wheel holonomic drivebase
         else {
-            speeds[MotorType.kFrontLeft.value] =
-                    vector.magnitude() * Math.sin(theta + Math.PI / 4) + turn;
-            speeds[MotorType.kFrontRight.value] =
-                    vector.magnitude() * Math.sin(theta - Math.PI / 4) - turn;
-            speeds[MotorType.kBackLeft.value] =
-                    vector.magnitude() * Math.sin(theta - Math.PI / 4) + turn;
-            speeds[MotorType.kBackRight.value] =
-                    vector.magnitude() * Math.sin(theta + Math.PI / 4) - turn;
+            speeds[MotorType.kFrontLeft.value] = Math.sin(theta + Math.PI / 4);
+            speeds[MotorType.kFrontRight.value] = Math.sin(theta - Math.PI / 4);
+            speeds[MotorType.kBackLeft.value] = Math.sin(theta - Math.PI / 4);
+            speeds[MotorType.kBackRight.value] = Math.sin(theta + Math.PI / 4);
 
-            normalize(speeds);
+            normalize(speeds, vector.magnitude());
+
+            speeds[MotorType.kFrontLeft.value] += turn;
+            speeds[MotorType.kFrontRight.value] -= turn;
+            speeds[MotorType.kBackLeft.value] += turn;
+            speeds[MotorType.kBackRight.value] -= turn;
 
             motors[MotorType.kFrontLeft.value]
                     .set(speeds[MotorType.kFrontLeft.value] * maxOutput);

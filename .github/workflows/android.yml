@@ -17,3 +17,5 @@ jobs:
       run: ./gradlew --stacktrace
     - name: Test with Gradle
       run: ./gradlew :FtcLib:test --stacktrace
+    - name: Run Examples
+      run: ./gradlew :FTCLibExamples:build --stacktrace

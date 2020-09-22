@@ -144,16 +144,19 @@ public class MecanumDrive extends RobotDrive {
         double theta = input.angle();
 
         double[] wheelSpeeds = new double[4];
-        wheelSpeeds[MotorType.kFrontLeft.value] =
-                input.magnitude() * Math.sin(theta + Math.PI / 4) + turnSpeed;
-        wheelSpeeds[MotorType.kFrontRight.value] =
-                input.magnitude() * Math.sin(theta - Math.PI / 4) - turnSpeed;
-        wheelSpeeds[MotorType.kBackLeft.value] =
-                input.magnitude() * Math.sin(theta - Math.PI / 4) + turnSpeed;
-        wheelSpeeds[MotorType.kBackRight.value] =
-                input.magnitude() * Math.sin(theta + Math.PI / 4) - turnSpeed;
+        wheelSpeeds[MotorType.kFrontLeft.value] = Math.sin(theta + Math.PI / 4);
+        wheelSpeeds[MotorType.kFrontRight.value] = Math.sin(theta - Math.PI / 4);
+        wheelSpeeds[MotorType.kBackLeft.value] = Math.sin(theta - Math.PI / 4);
+        wheelSpeeds[MotorType.kBackRight.value] = Math.sin(theta + Math.PI / 4);
 
-        if (Math.abs(input.magnitude()) > 10E-2) normalize(wheelSpeeds, input.magnitude());
+        normalize(wheelSpeeds, input.magnitude());
+
+        wheelSpeeds[MotorType.kFrontLeft.value] += turnSpeed;
+        wheelSpeeds[MotorType.kFrontRight.value] -= turnSpeed;
+        wheelSpeeds[MotorType.kBackLeft.value] += turnSpeed;
+        wheelSpeeds[MotorType.kBackRight.value] -= turnSpeed;
+
+        normalize(wheelSpeeds);
 
         motors[MotorType.kFrontLeft.value]
                 .set(wheelSpeeds[MotorType.kFrontLeft.value] * maxOutput);
