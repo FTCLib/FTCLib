@@ -3,11 +3,8 @@
 *Logo produced by Xing from FTC Team 15303*
 
 ![Android CI | dev](https://github.com/FTCLib/FTCLib/workflows/Android%20CI/badge.svg?branch=dev)
-[![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/FTCLib/FTCLib)
 
 Origin: https://github.com/FTCLib/FTCLib
-
-Upstream: https://github.com/OpenFTC/OpenRC-Turbo
 
 Project led by Jackson Isenberg and the Alpharetta Robotics Club
 
@@ -45,7 +42,7 @@ Add this to your build.common.gradle:
 Now, in your TeamCode buid.gradle, add these lines:
 ```
 dependencies {
-    implementation 'com.arcrobotics:ftclib:1.0.1' // Replace 1.0.1 with the latest release
+    implementation 'com.arcrobotics:ftclib:1.1.0' // Replace 1.1.0 with the latest release
 }
 ```
 To ensure the project builds correctly, please follow steps below: 
@@ -84,7 +81,7 @@ Change the `7` to an `8` and then perform a Gradle Sync. You now have Java 8 (an
 
     ```groovy
     dependencies {
-        implementation 'com.arcrobotics:ftclib:1.0.0'
+        implementation 'com.arcrobotics:ftclib:1.1.0'
     }
     ```
 6. Because FTCLib makes use of advanced features, you need to increase the minSdkVersion to 24. Unfortunately, this means that ZTE Speed Phones are not supported in this release.
@@ -95,7 +92,7 @@ In build.common.gradle, change the minSdkVersion from 19 to 24:
     defaultConfig {
         applicationId 'com.qualcomm.ftcrobotcontroller'
         minSdkVersion 24
-        targetSdkVersion 26
+        targetSdkVersion 28
     }
 ```
     
@@ -113,19 +110,15 @@ add `multiDexEnabled true` to the below location inside the `build.common.gradle
     defaultConfig {
         applicationId 'com.qualcomm.ftcrobotcontroller'
         minSdkVersion 24
-        targetSdkVersion 26
+        targetSdkVersion 28
 
 
         multiDexEnabled true
     }
 ```
 
-## Legality for competition use
-
-FTCLib is currently in full version 1.0.0. Our library is cloned from [OpenRC-Turbo](https://github.com/OpenFTC/OpenRC-Turbo). Please take a look at the upstream for information regarding legal use, variants, and stock.
-
 ## Contributing
 
-Since this is a community-driven, open source library, we are constantly looking for more content. If you feel there is something missing from our library, feel free to contribute! If you want to contribute to the project, be sure to read the [CONTRIBUTING.md](https://github.com/FTCLib/FTCLib/blob/dev/CONTRIBUTING.md).
+Since this is a community-driven, open source library, we are constantly looking for more content. If you feel there is something missing from our library, feel free to contribute! If you want to contribute to the project, be sure to read the [CONTRIBUTING.md](.github/CONTRIBUTING.md).
 
 Please make sure to contact us if you have any other questions.
