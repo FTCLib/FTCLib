@@ -1,2 +1,3 @@
+include ':core:vision'
 include ':FTCLibExamples'
-include ':FtcLib'
+include ':core'

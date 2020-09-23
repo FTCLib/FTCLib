@@ -29,7 +29,7 @@ android {
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation 'androidx.appcompat:appcompat:1.2.0'
-    implementation project(path: ':FtcLib')
+    implementation project(path: ':core')
 
     implementation 'org.firstinspires.ftc:Inspection:5.5'
     implementation 'org.firstinspires.ftc:Blocks:5.5'
@@ -39,6 +39,6 @@ dependencies {
     implementation 'org.firstinspires.ftc:Hardware:5.5'
     implementation 'org.firstinspires.ftc:FtcCommon:5.5'
     implementation 'androidx.appcompat:appcompat:1.2.0'
-
+    implementation project(path: ':core:vision')
 
 }

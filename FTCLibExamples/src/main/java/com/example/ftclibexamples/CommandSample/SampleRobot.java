@@ -1,6 +1,6 @@
 package com.example.ftclibexamples.CommandSample;
 
-import com.arcrobotics.ftclib.Robot;
+import com.arcrobotics.ftclib.command.Robot;
 import com.arcrobotics.ftclib.command.button.GamepadButton;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
