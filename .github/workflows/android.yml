@@ -18,6 +18,6 @@ jobs:
     - name: Test with Gradle
       run: ./gradlew :core:test --stacktrace
     - name: Run Examples
-      run: ./gradlew :FTCLibExamples:build --stacktrace
+      run: ./gradlew :examples:build --stacktrace
     - name: Build Project
       run: ./gradlew build
