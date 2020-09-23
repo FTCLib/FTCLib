@@ -7,6 +7,9 @@ Welcome to the FTCLib project! We hope we have something useful for you!
 - [Pranav](https://github.com/pranavavva) from TecHounds
 - [Peter](https://github.com/codeNinjaDev) from E-Lemon-ators
 - [Ryan](https://github.com/Lunerwalker2) from CircuitRunners Green
+- [Jiaming](https://github.com/Jaiming724) from IguTech
+- [Jaran](https://github.com/JarnaChao09) from The "NUTS!"
+- [Purav](https://github.com/puravdatta-sudo) from Electro
 
 ## Branch Naming
 
@@ -14,7 +17,6 @@ Welcome to the FTCLib project! We hope we have something useful for you!
 |---------|---------|----------------------------------|
 |Stable|`master`|Accepts merges from Working and Hotfixes|
 |Working|`dev`|Accepts merges from Features/Issues and Hotfixes|
-|GitHub Pages|`gh-pages`|Reserved for GitHub Pages
 |Features/Issues|`feat-*`|Always branches off HEAD of Working|
 |Hotfix|`hotfix-*`|Always branches off of Stable|
 
@@ -24,24 +26,20 @@ Welcome to the FTCLib project! We hope we have something useful for you!
 |-------------|--------------|-------------|-------------|
 | New Feature | `feat: ***`  | Describe the new feature added| A new feature is added|
 | Fixed bug   | `fix: ***`   | Describe bug fix | A bug is fixed|
-| Documentation | `docs: ***`| Describe what documentation was added| New docs are added or existing docs are updated|
 | Refactor | `refactor: ***` | Describe what was moved around | Nothing new added but files or file content reorganized|
 
 ## Main Branches
 
-The main repository will always hold three evergreen branches:
+The main repository will always hold two evergreen branches:
 
 - `dev`
 - `master`
-- `gh-pages`
 
 The main branch should be considered `origin/dev` and will be the main branch where the source code of `HEAD` always reflects a state with the latest delivered development changes for the next release. As a developer, you will be branching and merging from `dev`.
 
 Consider `origin/master` to always represent the latest code deployed to production. During day to day development, the `master` branch will not be interacted with.
 
 When the source code in `dev` is stable and has been deployed, all of the changes will be merged into `master` and tagged with a release number.
-
-`gh-pages` is reserved for the use of GitHub Pages. No deployable code will be maintained on `gh-pages`.
 
 ## Supporting Branches
 
@@ -50,8 +48,8 @@ Supporting branches are used to aid parallel development between team members, e
 The different types of branches we may use are:
 
 * Feature branches
-* Bug branches
 * Hotfix branches
+* Release branches
 
 Each of these branches have a specific purpose and are bound to strict rules as to which branches may be their originating branch and which branches must be their merge targets. Each branch and its usage is explained below.
 
@@ -65,7 +63,7 @@ During the lifespan of the feature development, the lead should watch the `dev` 
 
 * Must branch from: `dev`
 * Must merge back into: `dev`
-* Branch naming convention: `feature-<tbd number>`
+* Branch naming convention: `feat-<tbd number>`
 
 #### Working with a feature branch
 
@@ -89,42 +87,6 @@ $ git checkout dev                                  // change to the master bran
 $ git merge --no-ff feature-id                      // makes sure to create a commit object during merge
 $ git push origin dev                               // push merge changes
 $ git push origin :feature-id                       // deletes the remote branch
-```
-
-### Bug Branches
-
-Bug branches differ from feature branches only semantically. Bug branches will be created when there is a bug on the live site that should be fixed and merged into the next deployment. For that reason, a bug branch typically will not last longer than one deployment cycle. Additionally, bug branches are used to explicitly track the difference between bug development and feature development. No matter when the bug branch will be finished, it will always be merged back into `dev`.
-
-Although likelihood will be less, during the lifespan of the bug development, the lead should watch the `dev` branch (network tool or branch tool in GitHub) to see if there have been commits since the bug was branched. Any and all changes to `dev` should be merged into the bug before merging back to `dev`; this can be done at various times during the project or at the end, but time to handle merge conflicts should be accounted for.
-
-`<tbd number>` represents the Basecamp project to which Project Management will be tracked. 
-
-* Must branch from: `dev`
-* Must merge back into: `dev`
-* Branch naming convention: `bug-<tbd number>`
-
-#### Working with a bug branch
-
-If the branch does not exist yet (check with the Lead), create the branch locally and then push to GitHub. A bug branch should always be 'publicly' available. That is, development should never exist in just one developer's local branch.
-
-```
-$ git checkout -b bug-id dev                        // creates a local branch for the new bug
-$ git push origin bug-id                            // makes the new bug remotely available
-```
-
-Periodically, changes made to `dev` (if any) should be merged back into your bug branch.
-
-```
-$ git merge dev                                     // merges changes from master into bug branch
-```
-
-When development on the bug is complete, [the Lead] should merge changes into `master` and then make sure the remote branch is deleted.
-
-```
-$ git checkout dev                                  // change to the master branch  
-$ git merge --no-ff bug-id                          // makes sure to create a commit object during merge
-$ git push origin dev                               // push merge changes
-$ git push origin :bug-id                           // deletes the remote branch
 ```
 
 ### Hotfix Branches
@@ -204,10 +166,10 @@ This ensures that your working branch has the latest changes.
 
 ### 6. Test
 
-Please make sure your latest code builds correctly. For the purposes of FTCLib, you only need to build the `:ftclib` module. If you are building on the command line, ensure you are cleaning and building only the `:ftclib` module:
+Please make sure your latest code builds correctly. For the purposes of FTCLib, you only need to build the `:core` module. If you are building on the command line, ensure you are cleaning and building only the `:core` module:
 
 ```bash
-./gradlew :ftclib:clean :ftclib:build
+./gradlew :core:clean :core:build :core:test
 ```
 
 ### 7. Push

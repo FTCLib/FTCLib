@@ -1,1 +1,0 @@
-javadoc -d docs/ $(find Ftclib/ -name *.java)
