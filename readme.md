@@ -92,7 +92,7 @@ In build.common.gradle, change the minSdkVersion from 19 to 24:
     defaultConfig {
         applicationId 'com.qualcomm.ftcrobotcontroller'
         minSdkVersion 24
-        targetSdkVersion 26
+        targetSdkVersion 28
     }
 ```
     
