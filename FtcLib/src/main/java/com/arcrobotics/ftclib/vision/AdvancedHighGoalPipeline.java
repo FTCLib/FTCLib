@@ -47,14 +47,14 @@ public class AdvancedHighGoalPipeline extends AngleHighGoalPipeline {
             offset = distanceOfClosestPuck;
         } else if (shot == Powershot.CenterShot) {
             offset = distanceOfClosestPuck + puckSpacing;
-        } else if (shot == Powershot.RightShot){
+        } else if (shot == Powershot.RightShot) {
             offset = distanceOfClosestPuck + puckSpacing * 2;
         }
 
-        if (color == Target.RED) {
+        if (color == Target.Blue) {
             offset *= -1;
         }
-        return Math.toDegrees(Math.atan(Math.tan(Math.toRadians(angle)) + (offset / getDistanceToGoal(color))));
+        return Math.toDegrees(Math.toRadians(calculateYaw(color) - Math.asin(offset / getDistanceToGoal(color))));
     }
 
     public double getPowerShotDistance(Target color, Powershot shot) {
