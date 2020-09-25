@@ -22,7 +22,7 @@ apply plugin: 'com.android.application'
 android {
 
 
-    compileSdkVersion 26
+    compileSdkVersion 28
 
     signingConfigs {
         debug {
@@ -39,8 +39,8 @@ android {
 
     defaultConfig {
         applicationId 'com.qualcomm.ftcrobotcontroller'
-        minSdkVersion 24
-        targetSdkVersion 26
+        minSdkVersion 23
+        targetSdkVersion 28
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
