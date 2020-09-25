@@ -8,38 +8,38 @@ class Pose2dTest {
     Pose2d base = new Pose2d(new Translation2d(0,0),new Rotation2d(0));
 
     @Test
-    void plus() {
+    void testPlus() {
         Pose2d output = base.plus(new Transform2d(new Translation2d(1,1),new Rotation2d(90)));
         Pose2d expected = new Pose2d(new Translation2d(1,1),new Rotation2d(90));
         assertEquals(output,expected);
     }
 
     @Test
-    void minus() {
+    void testMinus() {
     }
 
     @Test
-    void getTranslation() {
+    void testGetTranslation() {
     }
 
     @Test
-    void getRotation() {
+    void testGetRotation() {
     }
 
     @Test
-    void transformBy() {
+    void testTransformBy() {
     }
 
     @Test
-    void relativeTo() {
+    void testRelativeTo() {
     }
 
     @Test
-    void exp() {
+    void testExp() {
     }
 
     @Test
-    void log() {
+    void testLog() {
     }
 
     @Test
@@ -51,10 +51,10 @@ class Pose2dTest {
     }
 
     @Test
-    void rotate() {
+    void testRotate() {
     }
 
     @Test
-    void getHeading() {
+    void testGetHeading() {
     }
 }
