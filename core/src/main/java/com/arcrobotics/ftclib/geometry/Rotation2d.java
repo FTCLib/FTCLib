@@ -38,6 +38,8 @@ public class Rotation2d {
      * @param value The value of the angle in radians.
      */
     public Rotation2d(double value) {
+        while (value > Math.PI) value -= 2 * Math.PI;
+        while (value < -Math.PI) value += 2 * Math.PI;
         m_value = value;
         m_cos = Math.cos(value);
         m_sin = Math.sin(value);

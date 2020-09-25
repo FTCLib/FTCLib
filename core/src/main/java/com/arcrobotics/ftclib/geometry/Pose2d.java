@@ -117,6 +117,20 @@ public class Pose2d {
     }
 
     /**
+     * @return the x value from the {@link Translation2d}
+     */
+    public double getX() {
+        return m_translation.getX();
+    }
+
+    /**
+     * @return the y value from the {@link Translation2d}
+     */
+    public double getY() {
+        return m_translation.getY();
+    }
+
+    /**
      * Obtain a new Pose2d from a (constant curvature) velocity.
      *
      * <p>See <a href="https://file.tavsys.net/control/state-space-guide.pdf">
