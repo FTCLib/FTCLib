@@ -10,7 +10,7 @@ public class Robot {
      * Cancels all previous commands
      */
     public void reset() {
-        CommandScheduler.getInstance().cancelAll();
+        CommandScheduler.getInstance().reset();
     }
 
     /**

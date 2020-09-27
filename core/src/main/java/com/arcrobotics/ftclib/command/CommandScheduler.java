@@ -274,6 +274,20 @@ public final class CommandScheduler {
     }
 
     /**
+     * Resets the CommandScheduler instance
+     */
+    public void reset() {
+        m_subsystems.clear();
+        clearButtons();
+        cancelAll();
+        m_executeActions.clear();
+        m_finishActions.clear();
+        m_initActions.clear();
+        m_interruptActions.clear();
+        m_requirements.clear();
+    }
+
+    /**
      * Sets the default command for a subsystem.  Registers that subsystem if it is not already
      * registered.  Default commands will run whenever there is no other command currently scheduled
      * that requires the subsystem.  Default commands should be written to never end (i.e. their
