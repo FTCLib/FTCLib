@@ -90,5 +90,18 @@ public class Transform2d {
         return false;
     }
 
+    /**
+     * Invert the transformation. This is useful for undoing a transformation.
+     *
+     * @return The inverted transformation.
+     */
+    public Transform2d inverse() {
+        // We are rotating the difference between the translations
+        // using a clockwise rotation matrix. This transforms the global
+        // delta into a local delta (relative to the initial pose).
+        return new Transform2d(getTranslation().unaryMinus().rotateBy(getRotation().unaryMinus()),
+                getRotation().unaryMinus());
+    }
+
 
 }
