@@ -17,13 +17,12 @@ public class HolonomicOdometry extends Odometry {
      * @JarnaChao09 FIXME
      * Remove heading supplier and use (left - right) / trackwidth instead
      */
-    DoubleSupplier m_heading, m_left, m_right, m_horizontal;
+    DoubleSupplier m_left, m_right, m_horizontal;
 
-    public HolonomicOdometry(DoubleSupplier headingSupplier,
+    public HolonomicOdometry(Rotation2d initialHeading,
                              DoubleSupplier leftEncoder, DoubleSupplier rightEncoder,
                              DoubleSupplier horizontalEncoder, double trackWidth, double centerWheelOffset) {
-        this(new Rotation2d(headingSupplier.getAsDouble()), trackWidth, centerWheelOffset);
-        m_heading = headingSupplier;
+        this(initialHeading,trackWidth, centerWheelOffset);
         m_left = leftEncoder;
         m_right = rightEncoder;
         m_horizontal = horizontalEncoder;
@@ -45,7 +44,7 @@ public class HolonomicOdometry extends Odometry {
      */
     @Override
     public void updatePose() {
-        update(new Rotation2d(m_heading.getAsDouble()), m_left.getAsDouble(),
+        update(new Rotation2d((m_left.getAsDouble() - m_right.getAsDouble()) / trackWidth), m_left.getAsDouble(),
                               m_right.getAsDouble(), m_horizontal.getAsDouble());
     }
 
