@@ -46,7 +46,7 @@ public class LookUpTableSample extends LinearOpMode
         perpEncoder.setDistancePerPulse(2 / (double) 8092);
 
         odometry = new HolonomicOdometry(
-                gyro::getHeading,
+                gyro.getRotation2d(),
                 leftEncoder::getDistance,
                 rightEncoder::getDistance,
                 perpEncoder::getDistance,

@@ -47,7 +47,7 @@ public class InterpLUTSample extends LinearOpMode
         perpEncoder.setDistancePerPulse(2 / (double)8192);
 
         odometry = new HolonomicOdometry(
-                gyro::getHeading,
+                gyro.getRotation2d(),
                 leftEncoder::getDistance,
                 rightEncoder::getDistance,
                 perpEncoder::getDistance,
