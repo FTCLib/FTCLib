@@ -60,8 +60,8 @@ class Pose2dTest {
         final Transform2d transform = last.minus(initial);
 
         assertAll(
-                () -> assertEquals(transform.getX(), 5.0 * Math.sqrt(2.0), kEpsilon),
-                () -> assertEquals(transform.getY(), 0.0, kEpsilon),
+                () -> assertEquals(transform.getTranslation().getX(), 5.0 * Math.sqrt(2.0), kEpsilon),
+                () -> assertEquals(transform.getTranslation().getY(), 0.0, kEpsilon),
                 () -> assertEquals(transform.getRotation().getDegrees(), 0.0, kEpsilon)
         );
     }
