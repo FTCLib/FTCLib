@@ -29,7 +29,7 @@ public class AutoStaticRobotPose extends LinearOpMode {
         imu.init();
 
         odometry = new HolonomicOdometry(
-                imu::getHeading,
+                imu.getRotation2d(),
                 leftEncoder::getCurrentPosition,
                 rightEncoder::getCurrentPosition,
                 perpEncoder::getCurrentPosition,

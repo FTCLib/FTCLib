@@ -5,6 +5,7 @@ import com.arcrobotics.ftclib.geometry.Pose2d;
 import com.arcrobotics.ftclib.geometry.Rotation2d;
 import com.arcrobotics.ftclib.geometry.Transform2d;
 import com.arcrobotics.ftclib.geometry.Translation2d;
+import com.arcrobotics.ftclib.geometry.Twist2d;
 
 import java.util.function.DoubleSupplier;
 
@@ -17,62 +18,56 @@ import java.util.function.DoubleSupplier;
  */
 public class DifferentialOdometry extends Odometry {
 
-    /**
-     * The x value for the position of the robot.
-     */
-    public double odoX;
-
-    /**
-     * The y value for the position of the robot.
-     */
-    public double odoY;
+    private double prevLeftEncoder, prevRightEncoder;
+    private Rotation2d previousAngle, gyroOffset;
 
     // the suppliers
-    DoubleSupplier m_left, m_right, m_heading;
+    DoubleSupplier m_left, m_right;
 
-    public DifferentialOdometry(DoubleSupplier leftEncoder, DoubleSupplier rightEncoder,
-                                DoubleSupplier headingSupplier, double trackWidth) {
-        this(trackWidth);
-        m_heading = headingSupplier;
+    public DifferentialOdometry(Rotation2d gyroAngle,
+                                DoubleSupplier leftEncoder, DoubleSupplier rightEncoder,
+                                double trackWidth) {
+        this(gyroAngle, trackWidth);
         m_left = leftEncoder;
         m_right = rightEncoder;
-    }
-
-    /**
-     * Empty constructor. Position is defaulted to (0, 0, 0) and track width is 18 inches.
-     */
-    public DifferentialOdometry() {
-        this(18);
     }
 
     /**
      * The constructor that specifies the track width of the robot but defaults
      * the position to (0, 0, 0).
      *
-     * @param trackWidth The track width of the robot in inches.
+     * @param gyroAngle  the starting heading of the robot
+     * @param trackWidth the track width of the robot in inches.
      */
-    public DifferentialOdometry(double trackWidth) {
-        this(new Pose2d(new Translation2d(0, 0), new Rotation2d(0)), trackWidth);
+    public DifferentialOdometry(Rotation2d gyroAngle, double trackWidth) {
+        this(gyroAngle, new Pose2d(), trackWidth);
     }
 
     /**
      * The constructor that specifies the starting position and the track width.
      *
-     * @param pose          the starting position of the robot
-     * @param trackWidth    the track width of the robot in inches
+     * @param gyroAngle   the starting heading of the robot
+     * @param initialPose the starting position of the robot
+     * @param trackWidth  the track width of the robot in inches
      */
-    public DifferentialOdometry(Pose2d pose, double trackWidth) {
-        super(pose, trackWidth);
+    public DifferentialOdometry(Rotation2d gyroAngle, Pose2d initialPose, double trackWidth) {
+        super(initialPose, trackWidth);
+        gyroOffset = robotPose.getRotation().minus(gyroAngle);
+        previousAngle = initialPose.getRotation();
     }
 
     /**
      * Updates the position of the robot.
      *
-     * @param newPose   the new {@link Pose2d}
+     * @param newPose the new {@link Pose2d}
      */
     @Override
     public void updatePose(Pose2d newPose) {
+        previousAngle = newPose.getRotation();
         robotPose = newPose;
+
+        prevLeftEncoder = 0;
+        prevRightEncoder = 0;
     }
 
     /**
@@ -80,19 +75,13 @@ public class DifferentialOdometry extends Odometry {
      */
     @Override
     public void updatePose() {
-        updatePosition(m_heading.getAsDouble(), m_left.getAsDouble(), m_right.getAsDouble());
+        updatePosition(
+                new Rotation2d((m_left.getAsDouble() - m_right.getAsDouble()) / trackWidth),
+                m_left.getAsDouble(),
+                m_right.getAsDouble()
+        );
     }
 
-    /**
-     * Updates the values for odoX and odoY by adding the specified amounts.
-     *
-     * @param xVal the additive x-value
-     * @param yVal the additive y-value
-     */
-    public void updateOdometryCounts(double xVal, double yVal) {
-        odoX += xVal;
-        odoY += yVal;
-    }
 
     /**
      * The update method that updates the robot's position over a relatively small amount of time.
@@ -102,30 +91,27 @@ public class DifferentialOdometry extends Odometry {
      * If you have no heading, pass in a value of 0 for each update. If you have no horizontal odometers,
      * pass in a value of 0 for horizontalOdoInches.
      *
-     * @param heading       the current heading of the robot, which might be de-synced
-     *                      with the heading in the robot position.
-     * @param leftDistance    the number of inches travelled by the left side of the robot.
-     * @param rightDistance   the number of inches travelled by the right side of the robot.
+     * @param gyroAngle       the current heading of the robot, which might be de-synced
+     *                        with the heading in the robot position.
+     * @param leftEncoderPos  the encoder position of the left encoder.
+     * @param rightEncoderPos the encoder position of the right encoder.
      */
-    public void updatePosition(double heading, double leftDistance, double rightDistance) {
-        double centralEncoderVal = (leftDistance + rightDistance) / 2;
+    public void updatePosition(Rotation2d gyroAngle, double leftEncoderPos, double rightEncoderPos) {
+        double deltaLeftDistance = leftEncoderPos - prevLeftEncoder;
+        double deltaRightDistance = rightEncoderPos - prevRightEncoder;
 
-        double phi = (rightDistance - leftDistance) / trackWidth;
-        double theta = robotPose.getHeading();
-        double deltaTheta = (heading != 0) ? heading - theta : phi;
+        prevLeftEncoder = leftEncoderPos;
+        prevRightEncoder = rightEncoderPos;
 
-        double deltaX = centralEncoderVal * Math.cos(theta + deltaTheta / 2);
-        double deltaY = centralEncoderVal * Math.sin(theta + deltaTheta / 2);
+        double dx = (deltaLeftDistance + deltaRightDistance) / 2.0;
+        Rotation2d angle = gyroAngle.plus(gyroOffset);
 
-        deltaX -= centralEncoderVal * Math.sin(theta + deltaTheta / 2);
-        deltaY += centralEncoderVal * Math.cos(theta + deltaTheta / 2);
+        Pose2d newPose = robotPose.exp(
+                new Twist2d(dx, 0.0, angle.minus(previousAngle).getRadians())
+        );
 
-        updateOdometryCounts(deltaX, deltaY);
-        rotatePose(deltaTheta);
+        previousAngle = angle;
 
-        updatePose(new Pose2d(odoX, odoY, new Rotation2d(robotPose.getHeading())));
+        robotPose = new Pose2d(newPose.getTranslation(), angle);
     }
-
-
-
 }
