@@ -3,7 +3,6 @@ package com.example.ftclibexamples.CommandSample;
 import com.arcrobotics.ftclib.command.CommandOpMode;
 import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.button.GamepadButton;
-import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.arcrobotics.ftclib.hardware.SimpleServo;
 
@@ -13,8 +12,6 @@ import com.arcrobotics.ftclib.hardware.SimpleServo;
  */
 public class SimpleTeleOp extends CommandOpMode {
 
-    private GamepadEx toolOp = new GamepadEx(gamepad2);
-    private GamepadEx driverOp = new GamepadEx(gamepad1);
     private GamepadButton grabButton = new GamepadButton(toolOp, GamepadKeys.Button.A);
     private GamepadButton releaseButton = new GamepadButton(toolOp, GamepadKeys.Button.B);
     private SimpleServo servo = new SimpleServo(hardwareMap, "gripper");
@@ -27,6 +24,7 @@ public class SimpleTeleOp extends CommandOpMode {
         grabButton.whenPressed(new InstantCommand(() -> servo.setPosition(0.76)));
         releaseButton.whenPressed(new InstantCommand(() -> servo.setPosition(0)));
 
+        drive.setDefaultCommand(driveCommand);
         register(drive);
 
         // run the scheduler

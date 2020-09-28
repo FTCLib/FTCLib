@@ -1,5 +1,6 @@
 package com.arcrobotics.ftclib.command;
 
+import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 /**
@@ -9,6 +10,9 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
  * @author Jackson
  */
 public abstract class CommandOpMode extends LinearOpMode {
+
+    protected GamepadEx driverOp = new GamepadEx(gamepad1);
+    protected GamepadEx toolOp = new GamepadEx(gamepad2);
 
     /**
      * Cancels all previous commands
