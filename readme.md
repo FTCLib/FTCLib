@@ -15,6 +15,7 @@ FTCLib is a library designed to be the only library you'll need for FTC programm
 Please read the documentation and the rest of the README before you get started with the library.
 
 FTCLib documentation - <https://ftclib.gitbook.io/ftclib>
+<br />
 JavaDocs - <https://javadoc.io/doc/com.arcrobotics/ftclib/1.0.1/index.html>
 
 
