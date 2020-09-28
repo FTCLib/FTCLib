@@ -135,8 +135,7 @@ $ git push origin :hotfix-id                        // deletes the remote branch
 Clone this project [on GitHub](https://github.com/FTCLib/FTCLib).
 
 ```bash
-$ git clone git@github.com:FTCLib/FTCLib.git
-$ cd FTCLib
+$ git clone https://github.com/FTCLib/FTCLib.git
 ```
 
 ### 2. Build
