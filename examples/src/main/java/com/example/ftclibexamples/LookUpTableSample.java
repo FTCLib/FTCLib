@@ -30,7 +30,6 @@ public class LookUpTableSample extends LinearOpMode
     private HolonomicOdometry odometry;
     private JSTEncoder leftEncoder, rightEncoder, perpEncoder;
     private Motor shooter = new Motor(hardwareMap, "shooter");
-    private RevIMU gyro = new RevIMU(hardwareMap);
 
     @Override
     public void runOpMode() throws InterruptedException
@@ -46,7 +45,6 @@ public class LookUpTableSample extends LinearOpMode
         perpEncoder.setDistancePerPulse(2 / (double) 8092);
 
         odometry = new HolonomicOdometry(
-                gyro.getRotation2d(),
                 leftEncoder::getDistance,
                 rightEncoder::getDistance,
                 perpEncoder::getDistance,

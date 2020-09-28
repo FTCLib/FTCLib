@@ -127,18 +127,18 @@ public class MecanumDrive extends RobotDrive {
      * robot, pushing forward on the drive stick will always drive the robot away
      * from the driver.
      *
-     * @param xSpeed    the horizontal speed of the robot, derived from input
-     * @param ySpeed    the vertical speed of the robot, derived from input
+     * @param strafeSpeed    the horizontal speed of the robot, derived from input
+     * @param forwardSpeed    the vertical speed of the robot, derived from input
      * @param turnSpeed the turn speed of the robot, derived from input
      * @param gyroAngle the heading of the robot, derived from the gyro
      */
-    public void driveFieldCentric(double xSpeed, double ySpeed,
+    public void driveFieldCentric(double strafeSpeed, double forwardSpeed,
                                   double turnSpeed, double gyroAngle) {
-        xSpeed = clipRange(xSpeed);
-        ySpeed = clipRange(ySpeed);
+        strafeSpeed = clipRange(strafeSpeed);
+        forwardSpeed = clipRange(forwardSpeed);
         turnSpeed = clipRange(turnSpeed);
 
-        Vector2d input = new Vector2d(xSpeed, ySpeed);
+        Vector2d input = new Vector2d(strafeSpeed, forwardSpeed);
         input = input.rotateBy(-gyroAngle);
 
         double theta = input.angle();

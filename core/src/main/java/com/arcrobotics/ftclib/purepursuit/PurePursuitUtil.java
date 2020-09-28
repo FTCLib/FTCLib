@@ -88,7 +88,7 @@ public final class PurePursuitUtil {
 	 * @param ty Target Y position.
 	 * @param ta Target rotation (angle).
 	 * @param turnOnly True if the robot should only turn.
-	 * @return A double array containing raw motor powers. a[0] is x power, a[1] is y power and a[2] is turn power.
+	 * @return A double array containing raw motor powers. a[0] is strafe power, a[1] is vertical power and a[2] is turn power.
 	 */
 	public static double[] moveToPosition(double cx, double cy, double ca, double tx, double ty, double ta, boolean turnOnly) {
 		
