@@ -19,10 +19,10 @@ public class HolonomicOdometry extends Odometry {
      */
     DoubleSupplier m_left, m_right, m_horizontal;
 
-    public HolonomicOdometry(Rotation2d initialHeading,
+    public HolonomicOdometry(Rotation2d gyroAngle,
                              DoubleSupplier leftEncoder, DoubleSupplier rightEncoder,
                              DoubleSupplier horizontalEncoder, double trackWidth, double centerWheelOffset) {
-        this(initialHeading,trackWidth, centerWheelOffset);
+        this(gyroAngle, trackWidth, centerWheelOffset);
         m_left = leftEncoder;
         m_right = rightEncoder;
         m_horizontal = horizontalEncoder;
