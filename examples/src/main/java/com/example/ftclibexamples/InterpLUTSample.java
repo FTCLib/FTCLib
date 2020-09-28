@@ -23,7 +23,6 @@ public class InterpLUTSample extends LinearOpMode
     private HolonomicOdometry odometry;
     private JSTEncoder leftEncoder, rightEncoder, perpEncoder;
     private Motor shooter = new Motor(hardwareMap, "shooter");
-    private RevIMU gyro = new RevIMU(hardwareMap);
 
     @Override
     public void runOpMode() throws InterruptedException
@@ -47,15 +46,12 @@ public class InterpLUTSample extends LinearOpMode
         perpEncoder.setDistancePerPulse(2 / (double)8192);
 
         odometry = new HolonomicOdometry(
-                gyro.getRotation2d(),
                 leftEncoder::getDistance,
                 rightEncoder::getDistance,
                 perpEncoder::getDistance,
                 14,
                 2.1
         );
-
-        gyro.init();
 
         odometry.updatePose(new Pose2d(3, 4, new Rotation2d(0)));
 

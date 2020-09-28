@@ -9,34 +9,28 @@ import java.util.function.DoubleSupplier;
 public class HolonomicOdometry extends Odometry {
 
     private double prevLeftEncoder, prevRightEncoder, prevHorizontalEncoder;
-    private Rotation2d previousAngle, gyroOffset;
+    private Rotation2d previousAngle;
     private double centerWheelOffset;
 
     // the suppliers
-    /**
-     * @JarnaChao09 FIXME
-     * Remove heading supplier and use (left - right) / trackwidth instead
-     */
     DoubleSupplier m_left, m_right, m_horizontal;
 
-    public HolonomicOdometry(Rotation2d gyroAngle,
-                             DoubleSupplier leftEncoder, DoubleSupplier rightEncoder,
+    public HolonomicOdometry(DoubleSupplier leftEncoder, DoubleSupplier rightEncoder,
                              DoubleSupplier horizontalEncoder, double trackWidth, double centerWheelOffset) {
-        this(gyroAngle, trackWidth, centerWheelOffset);
+        this(trackWidth, centerWheelOffset);
         m_left = leftEncoder;
         m_right = rightEncoder;
         m_horizontal = horizontalEncoder;
     }
 
-    public HolonomicOdometry(Rotation2d gyroAngle, Pose2d initialPose, double trackwidth, double centerWheelOffset) {
+    public HolonomicOdometry(Pose2d initialPose, double trackwidth, double centerWheelOffset) {
         super(initialPose, trackwidth);
-        gyroOffset = robotPose.getRotation().minus(gyroAngle);
         previousAngle = initialPose.getRotation();
         this.centerWheelOffset = centerWheelOffset;
     }
 
-    public HolonomicOdometry(Rotation2d gyroAngle, double trackwidth, double centerWheelOffset) {
-        this(gyroAngle, new Pose2d(), trackwidth, centerWheelOffset);
+    public HolonomicOdometry(double trackwidth, double centerWheelOffset) {
+        this(new Pose2d(), trackwidth, centerWheelOffset);
     }
 
     /**
@@ -44,8 +38,7 @@ public class HolonomicOdometry extends Odometry {
      */
     @Override
     public void updatePose() {
-        update(new Rotation2d((m_left.getAsDouble() - m_right.getAsDouble()) / trackWidth), m_left.getAsDouble(),
-                              m_right.getAsDouble(), m_horizontal.getAsDouble());
+        update(m_left.getAsDouble(), m_right.getAsDouble(), m_horizontal.getAsDouble());
     }
 
     @Override
@@ -58,12 +51,16 @@ public class HolonomicOdometry extends Odometry {
         prevHorizontalEncoder = 0;
     }
 
-    public void update(Rotation2d gyroAngle, double leftEncoderPos, double rightEncoderPos, double horizontalEncoderPos) {
+    public void update(double leftEncoderPos, double rightEncoderPos, double horizontalEncoderPos) {
         double deltaLeftEncoder = leftEncoderPos - prevLeftEncoder;
         double deltaRightEncoder = rightEncoderPos - prevRightEncoder;
         double deltaHorizontalEncoder = horizontalEncoderPos - prevHorizontalEncoder;
 
-        Rotation2d angle = gyroAngle.plus(gyroOffset);
+        Rotation2d angle = previousAngle.plus(
+                new Rotation2d(
+                        (deltaLeftEncoder - deltaRightEncoder) / trackWidth
+                )
+        );
 
         prevLeftEncoder = leftEncoderPos;
         prevRightEncoder = rightEncoderPos;

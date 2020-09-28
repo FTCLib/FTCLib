@@ -17,7 +17,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class RamseteControllerTest {
+public class RamseteControllerTest {
 
     private static final double kTolerance = 1 / 12.0;
 
