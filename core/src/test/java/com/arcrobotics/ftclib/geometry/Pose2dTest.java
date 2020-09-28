@@ -9,6 +9,12 @@ class Pose2dTest {
     Pose2d base = new Pose2d(new Translation2d(0,0),new Rotation2d(0));
 
     @Test
+    void testPlus(){
+        Pose2d output = base.plus(new Transform2d(new Translation2d(1,1),new Rotation2d(90)));
+        Pose2d expected = new Pose2d(new Translation2d(1,1),new Rotation2d(90));
+        assertEquals(output,expected);
+    }
+    @Test
     void testTransformBy() {
         Pose2d initial = new Pose2d(new Translation2d(1.0, 2.0), Rotation2d.fromDegrees(45.0));
         Transform2d transformation = new Transform2d(new Translation2d(5.0, 0.0),
