@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class PIDInputOutputTest {
+public class PIDInputOutputTest {
     private PIDController m_controller;
 
     @BeforeEach

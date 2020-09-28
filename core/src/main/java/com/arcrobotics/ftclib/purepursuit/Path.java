@@ -150,7 +150,7 @@ public class Path extends ArrayList<Waypoint> {
 			// Get the robot's current position using the odometry.
 			Pose2d robotPosition = odometry.getPose();
 			// Call the loop function to get the motor powers.
-			double[] motorPowers = loop(robotPosition.getTranslation().getX(), robotPosition.getTranslation().getY(), robotPosition.getHeading());
+			double[] motorPowers = loop(robotPosition.getX(), robotPosition.getY(), robotPosition.getHeading());
 			// Update motor speeds.
 			mecanumDrive.driveRobotCentric(motorPowers[0], motorPowers[1], motorPowers[2]);
 			if (!isFinished()) {
@@ -171,17 +171,17 @@ public class Path extends ArrayList<Waypoint> {
 	
 	/**
 	 * This is the principle path method. After everything is configured and initiated, this method can be used.
-	 * Using the robot's x, y, and rotation, this method calculates the appropriate motor powers for the 
+	 * Using the robot's horizontal, y, and rotation, this method calculates the appropriate motor powers for the
 	 * robot to follow the path. This method calls all triggered/interrupted actions automatically. If this 
 	 * returns zero motor speeds {0, 0, 0} that means the path has either (1) timed out, (2) lost the path and
 	 * retrace was disabled, or (3) reached the destination. Use isFinished() and timedOut() to troubleshoot.
-	 * 
-	 * @param xPosition Robot's current x position.
-	 * @param yPosition Robot's current y position.
+	 *
+	 * @param vPosition Robot's current vertical position.
+	 * @param hPosition Robot's current horizontal position.
 	 * @param rotation Robot's current rotation.
 	 * @return A double array containing the motor powers. a[0] is the x power, a[1] is the y power, and a[2] is the turn power.
 	 */
-	public double[] loop(double xPosition, double yPosition, double rotation) {
+	public double[] loop(double vPosition, double hPosition, double rotation) {
 		// First, make sure the init has been called. While this does not guarantee the program will run without errors, it is better than nothing.
 		if (!initComplete)
 			throw new IllegalStateException("You must call the init() function before calling loop()");
@@ -208,15 +208,15 @@ public class Path extends ArrayList<Waypoint> {
 			Translation2d linePoint1 = get(i - 1).getPose().getTranslation();
 			Translation2d linePoint2 = get(i).getPose().getTranslation();
 			double radius = get(i).getFollowDistance();
-			Translation2d robotPosition = new Translation2d(xPosition, yPosition);
+			Translation2d robotPosition = new Translation2d(vPosition, hPosition);
 			List<Translation2d> points = PurePursuitUtil.lineCircleIntersection(robotPosition, radius, linePoint1, linePoint2);
 			for (Translation2d point : points)
 				// Add results to list.
 				intersections.add(new TaggedIntersection(point, get(i), i));
 			if (get(i) instanceof PointTurnWaypoint) {
 				// If the second waypoint is a point turn waypoint, decrease the follow radius so the next point is always found.
-				double dx = linePoint2.getX() - xPosition;
-				double dy = linePoint2.getY() - yPosition;
+				double dx = linePoint2.getX() - vPosition;
+				double dy = linePoint2.getY() - hPosition;
 				double adjustedRadius = Math.hypot(dx, dy) - 1e-9;
 				if (adjustedRadius < radius) {
 					// Add the point to the list.
@@ -228,13 +228,13 @@ public class Path extends ArrayList<Waypoint> {
 		// If there are no intersections found, the path is lost.
 		if (intersections.size() == 0) {
 			if (retracing)
-				return retrace(xPosition, yPosition, rotation);
+				return retrace(vPosition, hPosition, rotation);
 			// If retrace is enabled, we can try to re-find the path.
 			if (retraceEnabled) { 
 				if (lastKnownIntersection == null)
 					lastKnownIntersection = get(0).getPose().getTranslation();
 				retracing = true;
-				return retrace(xPosition, yPosition, rotation);
+				return retrace(vPosition, hPosition, rotation);
 			} else 
 				return new double[] {0, 0, 0};
 		} else
@@ -243,7 +243,7 @@ public class Path extends ArrayList<Waypoint> {
 		TaggedIntersection bestIntersection = intersections.get(0);
 		switch(pathType) {
 		case HEADING_CONTROLLED:
-			bestIntersection = selectHeadingControlledIntersection(intersections, new Pose2d(xPosition, yPosition, new Rotation2d(rotation)));
+			bestIntersection = selectHeadingControlledIntersection(intersections, new Pose2d(vPosition, hPosition, new Rotation2d(rotation)));
 			break;
 		case WAYPOINT_ORDERING_CONTROLLED:
 			bestIntersection = selectWaypointOrderingControlledIntersection(intersections);
@@ -266,7 +266,7 @@ public class Path extends ArrayList<Waypoint> {
 			}
 		// After the best intersection is found, the robot behaves differently depending on the type of waypoint.
 		double[] motorPowers = new double[] {0, 0, 0};
-		Pose2d robotPos =  new Pose2d(xPosition, yPosition, new Rotation2d(rotation));
+		Pose2d robotPos =  new Pose2d(vPosition, hPosition, new Rotation2d(rotation));
 		switch(bestIntersection.taggedPoint.getType()) {
 		case GENERAL:
 			motorPowers = handleGeneralIntersection(bestIntersection, robotPos);

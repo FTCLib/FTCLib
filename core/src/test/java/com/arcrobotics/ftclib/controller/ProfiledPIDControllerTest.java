@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class ProfiledPIDControllerTest {
+public class ProfiledPIDControllerTest {
     @Test
     void testStartFromNonZeroPosition() {
         ProfiledPIDController controller = new ProfiledPIDController(1.0, 0.0, 0.0,

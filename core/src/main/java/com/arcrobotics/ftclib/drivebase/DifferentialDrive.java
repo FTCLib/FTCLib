@@ -111,16 +111,16 @@ public class DifferentialDrive extends RobotDrive {
     /**
      * Drives the robot using the arcade system.
      *
-     * @param ySpeed    The input value that determines the vertical speed of the robot.
+     * @param forwardSpeed    The input value that determines the vertical speed of the robot.
      * @param turnSpeed The input value that determines the rotational speed of the robot.
      */
-    public void arcadeDrive(double ySpeed, double turnSpeed) {
-        ySpeed = clipRange(ySpeed);
+    public void arcadeDrive(double forwardSpeed, double turnSpeed) {
+        forwardSpeed = clipRange(forwardSpeed);
         turnSpeed = clipRange(turnSpeed);
 
         double[] wheelSpeeds = new double[2];
-        wheelSpeeds[MotorType.kLeft.value] = ySpeed + turnSpeed;
-        wheelSpeeds[MotorType.kRight.value] = ySpeed - turnSpeed;
+        wheelSpeeds[MotorType.kLeft.value] = forwardSpeed + turnSpeed;
+        wheelSpeeds[MotorType.kRight.value] = forwardSpeed - turnSpeed;
 
         normalize(wheelSpeeds);
 
@@ -131,15 +131,15 @@ public class DifferentialDrive extends RobotDrive {
     /**
      * Drives the robot using the arcade system.
      *
-     * @param ySpeed    The input value that determines the vertical speed of the robot.
+     * @param forwardSpeed    The input value that determines the vertical speed of the robot.
      * @param turnSpeed The input value that determines the rotational speed of the robot.
      * @param squareInputs Square the value of the input to allow for finer control
      */
-    public void arcadeDrive(double ySpeed, double turnSpeed, boolean squareInputs) {
-        ySpeed = squareInputs ? clipRange(squareInput(ySpeed)) : clipRange(ySpeed);
+    public void arcadeDrive(double forwardSpeed, double turnSpeed, boolean squareInputs) {
+        forwardSpeed = squareInputs ? clipRange(squareInput(forwardSpeed)) : clipRange(forwardSpeed);
         turnSpeed = squareInputs ? clipRange(squareInput(turnSpeed)) : clipRange(turnSpeed);
 
-        arcadeDrive(ySpeed, turnSpeed);
+        arcadeDrive(forwardSpeed, turnSpeed);
     }
 
 

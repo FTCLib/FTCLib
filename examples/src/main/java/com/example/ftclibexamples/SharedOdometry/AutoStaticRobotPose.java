@@ -14,7 +14,6 @@ public class AutoStaticRobotPose extends LinearOpMode {
 
     private MotorEx leftEncoder, rightEncoder, perpEncoder;
     private HolonomicOdometry odometry;
-    private RevIMU imu;
 
     public static final double TRACKWIDTH = 14.31;
     public static final double CENTER_WHEEL_OFFSET = 0.477;
@@ -24,12 +23,8 @@ public class AutoStaticRobotPose extends LinearOpMode {
         leftEncoder = new MotorEx(hardwareMap, "left odometer");
         rightEncoder = new MotorEx(hardwareMap, "right odometer");
         perpEncoder = new MotorEx(hardwareMap, "center odometer");
-        imu = new RevIMU(hardwareMap);
-
-        imu.init();
 
         odometry = new HolonomicOdometry(
-                imu::getHeading,
                 leftEncoder::getCurrentPosition,
                 rightEncoder::getCurrentPosition,
                 perpEncoder::getCurrentPosition,
