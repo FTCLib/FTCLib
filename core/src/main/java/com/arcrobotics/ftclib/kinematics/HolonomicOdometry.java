@@ -65,8 +65,7 @@ public class HolonomicOdometry extends Odometry {
         prevLeftEncoder = leftEncoderPos;
         prevRightEncoder = rightEncoderPos;
         prevHorizontalEncoder = horizontalEncoderPos;
-        
-        // Averaging encoder method with gyro method
+
         double dw = (angle.minus(previousAngle).getRadians());
         
         double dx = (deltaLeftEncoder + deltaRightEncoder) / 2;
