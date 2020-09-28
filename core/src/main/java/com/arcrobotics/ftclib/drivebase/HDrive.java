@@ -96,13 +96,13 @@ public class HDrive extends RobotDrive
         }
     }
 
-    public void driveFieldCentric(double xSpeed, double ySpeed, double turn, double heading)
+    public void driveFieldCentric(double strafeSpeed, double forwardSpeed, double turn, double heading)
     {
-        xSpeed = clipRange(xSpeed);
-        ySpeed = clipRange(ySpeed);
+        strafeSpeed = clipRange(strafeSpeed);
+        forwardSpeed = clipRange(forwardSpeed);
         turn = clipRange(turn);
 
-        Vector2d vector = new Vector2d(xSpeed, ySpeed);
+        Vector2d vector = new Vector2d(strafeSpeed, forwardSpeed);
         vector = vector.rotateBy(-heading);
 
         double theta = vector.angle();
@@ -150,7 +150,7 @@ public class HDrive extends RobotDrive
 
     }
 
-    public void driveRobotCentric(double xSpeed, double ySpeed, double turn){
-        driveFieldCentric(xSpeed, ySpeed, turn, 0.0);
+    public void driveRobotCentric(double strafeSpeed, double forwardSpeed, double turn){
+        driveFieldCentric(strafeSpeed, forwardSpeed, turn, 0.0);
     }
 }

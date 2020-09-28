@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class Pose2dTest {
+public class Pose2dTest {
     private static final double kEpsilon = 1E-9;
     Pose2d base = new Pose2d(new Translation2d(0,0),new Rotation2d(0));
 
