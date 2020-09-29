@@ -24,7 +24,7 @@ public class SampleTeleOp extends CommandOpMode {
     private GamepadButton m_releaseButton;
 
     @Override
-    public void runOpMode() throws InterruptedException {
+    public void initialize() {
         m_left = new MotorEx(hardwareMap, "drive_left");
         m_right = new MotorEx(hardwareMap, "drive_right");
         m_drive = new DriveSubsystem(m_left, m_right, WHEEL_DIAMETER);
@@ -43,13 +43,6 @@ public class SampleTeleOp extends CommandOpMode {
         m_grabButton.whenPressed(m_grabCommand);
         m_releaseButton.whenPressed(m_releaseCommand);
         register(m_drive, m_gripper);
-
-        // run the scheduler
-        while (!isStopRequested()) {
-            run();
-        }
-
-        reset();
     }
 
 }

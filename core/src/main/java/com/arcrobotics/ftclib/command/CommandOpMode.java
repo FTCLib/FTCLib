@@ -42,4 +42,15 @@ public abstract class CommandOpMode extends LinearOpMode {
         CommandScheduler.getInstance().registerSubsystem(subsystems);
     }
 
+    @Override
+    public void runOpMode() throws InterruptedException {
+        // run the scheduler
+        while (!isStopRequested()) {
+            run();
+        }
+        reset();
+    }
+
+    public abstract void initialize();
+
 }
