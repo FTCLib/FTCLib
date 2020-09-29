@@ -276,15 +276,8 @@ public final class CommandScheduler {
     /**
      * Resets the CommandScheduler instance
      */
-    public void reset() {
-        m_subsystems.clear();
-        clearButtons();
-        cancelAll();
-        m_executeActions.clear();
-        m_finishActions.clear();
-        m_initActions.clear();
-        m_interruptActions.clear();
-        m_requirements.clear();
+    public synchronized void reset() {
+        instance = null;
     }
 
     /**
