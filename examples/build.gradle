@@ -31,13 +31,13 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation project(path: ':core')
 
-    compileOnly 'org.firstinspires.ftc:Inspection:6.0'
-    compileOnly 'org.firstinspires.ftc:Blocks:6.0'
-    compileOnly 'org.firstinspires.ftc:RobotCore:6.0'
-    compileOnly 'org.firstinspires.ftc:RobotServer:6.0'
-    compileOnly 'org.firstinspires.ftc:OnBotJava:6.0'
-    compileOnly 'org.firstinspires.ftc:Hardware:6.0'
-    compileOnly 'org.firstinspires.ftc:FtcCommon:6.0'
+    compileOnly 'org.firstinspires.ftc:Inspection:6.0.1'
+    compileOnly 'org.firstinspires.ftc:Blocks:6.0.1'
+    compileOnly 'org.firstinspires.ftc:RobotCore:6.0.1'
+    compileOnly 'org.firstinspires.ftc:RobotServer:6.0.1'
+    compileOnly 'org.firstinspires.ftc:OnBotJava:6.0.1'
+    compileOnly 'org.firstinspires.ftc:Hardware:6.0.1'
+    compileOnly 'org.firstinspires.ftc:FtcCommon:6.0.1'
     compileOnly 'androidx.appcompat:appcompat:1.2.0'
     implementation project(path: ':core:vision')
 

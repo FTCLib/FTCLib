@@ -54,13 +54,13 @@ dependencies {
     testImplementation('org.mockito:mockito-core:3.5.13')
     testImplementation "org.junit.jupiter:junit-jupiter-params:5.7.0"
 
-    compileOnly 'org.firstinspires.ftc:Inspection:6.0'
-    compileOnly 'org.firstinspires.ftc:Blocks:6.0'
-    compileOnly 'org.firstinspires.ftc:RobotCore:6.0'
-    compileOnly 'org.firstinspires.ftc:RobotServer:6.0'
-    compileOnly 'org.firstinspires.ftc:OnBotJava:6.0'
-    compileOnly 'org.firstinspires.ftc:Hardware:6.0'
-    compileOnly 'org.firstinspires.ftc:FtcCommon:6.0'
+    compileOnly 'org.firstinspires.ftc:Inspection:6.0.1'
+    compileOnly 'org.firstinspires.ftc:Blocks:6.0.1'
+    compileOnly 'org.firstinspires.ftc:RobotCore:6.0.1'
+    compileOnly 'org.firstinspires.ftc:RobotServer:6.0.1'
+    compileOnly 'org.firstinspires.ftc:OnBotJava:6.0.1'
+    compileOnly 'org.firstinspires.ftc:Hardware:6.0.1'
+    compileOnly 'org.firstinspires.ftc:FtcCommon:6.0.1'
     compileOnly 'androidx.appcompat:appcompat:1.2.0'
 }
 
