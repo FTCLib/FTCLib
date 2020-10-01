@@ -44,6 +44,8 @@ public abstract class CommandOpMode extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
+        initialize();
+
         // run the scheduler
         while (!isStopRequested()) {
             run();
