@@ -1,7 +1,7 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
-    
+
     repositories {
         google()
         jcenter()
@@ -21,6 +21,8 @@ allprojects {
         maven {
             url 'https://dl.bintray.com/openftc/maven';
         }
+        maven { url = "https://dl.bintray.com/first-tech-challenge/ftcsdk/" }
+
     }
 }
 
