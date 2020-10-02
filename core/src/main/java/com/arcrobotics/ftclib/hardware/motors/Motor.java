@@ -239,6 +239,20 @@ public class Motor implements HardwareDevice {
     }
 
     /**
+     * @return the velocity coefficients
+     */
+    public double[] getVeloCoefficients() {
+        return veloController.getCoefficients();
+    }
+
+    /**
+     * @return the position coefficient
+     */
+    public double[] getPositionCoefficient() {
+        return positionController.getCoefficients();
+    }
+
+    /**
      * A wrapper method for the zero power behavior
      *
      * @param behavior the behavior desired
