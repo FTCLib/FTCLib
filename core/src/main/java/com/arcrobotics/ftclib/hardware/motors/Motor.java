@@ -248,8 +248,8 @@ public class Motor implements HardwareDevice {
     /**
      * @return the position coefficient
      */
-    public double[] getPositionCoefficient() {
-        return positionController.getCoefficients();
+    public double getPositionCoefficient() {
+        return positionController.getP();
     }
 
     /**
