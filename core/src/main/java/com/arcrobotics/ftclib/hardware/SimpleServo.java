@@ -2,6 +2,7 @@ package com.arcrobotics.ftclib.hardware;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.technototes.logger.Log;
 
 public class SimpleServo implements ServoEx {
 
@@ -78,6 +79,7 @@ public class SimpleServo implements ServoEx {
             return false;
     }
 
+    @Log
     @Override
     public double getPosition() {
         return servo.getPosition();

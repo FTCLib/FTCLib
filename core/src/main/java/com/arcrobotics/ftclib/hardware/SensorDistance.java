@@ -1,5 +1,7 @@
 package com.arcrobotics.ftclib.hardware;
 
+import com.technototes.logger.Log;
+
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 public interface SensorDistance extends HardwareDevice {
@@ -14,6 +16,7 @@ public interface SensorDistance extends HardwareDevice {
      * @return the distance in the indicated unit.
      *
      **/
+    @Log
     double getDistance(DistanceUnit unit);
 
 

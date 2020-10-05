@@ -5,6 +5,7 @@ import android.graphics.Color;
 
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.technototes.logger.Log;
 
 public class SensorColor implements HardwareDevice {
 
@@ -67,6 +68,10 @@ public class SensorColor implements HardwareDevice {
         return "Color Sensor";
     }
 
+    @Log
+    public int getColor(){
+        return Color.argb(alpha(), red(), green(), blue());
+    }
     /*
     alpha(int) to extract the alpha component
     red(int) to extract the red component

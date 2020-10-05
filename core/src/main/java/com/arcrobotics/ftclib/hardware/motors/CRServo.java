@@ -2,6 +2,7 @@ package com.arcrobotics.ftclib.hardware.motors;
 
 import com.arcrobotics.ftclib.controller.PController;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.technototes.logger.Log;
 
 /**
  * A continuous rotation servo that uses a motor object to
@@ -46,6 +47,7 @@ public class CRServo extends Motor {
     }
 
     @Override
+    @Log
     public double get() {
         return crServo.getPower();
     }

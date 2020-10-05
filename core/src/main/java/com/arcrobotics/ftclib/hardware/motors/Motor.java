@@ -8,6 +8,7 @@ import com.arcrobotics.ftclib.controller.wpilibcontroller.SimpleMotorFeedforward
 import com.arcrobotics.ftclib.hardware.HardwareDevice;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.technototes.logger.Log;
 
 import java.util.function.Supplier;
 
@@ -83,6 +84,7 @@ public class Motor implements HardwareDevice {
         /**
          * @return  the current position of the internal encoder
          */
+        @Log
         public int getPosition() {
             int currentPosition = m_position.get();
             if (currentPosition != lastPosition) {
@@ -316,6 +318,7 @@ public class Motor implements HardwareDevice {
      *
      * @return The current set speed. Value is between -1.0 and 1.0.
      */
+    @Log
     public double get() {
         return motor.getPower();
     }

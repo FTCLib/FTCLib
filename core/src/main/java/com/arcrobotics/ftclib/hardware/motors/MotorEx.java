@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.technototes.logger.Log;
 
 /**
  * An extended motor class that utilizes more features than the
@@ -65,4 +66,9 @@ public class MotorEx extends Motor {
         return "Extended " + super.getDeviceType();
     }
 
+    @Override
+    @Log
+    public double get() {
+        return super.get();
+    }
 }

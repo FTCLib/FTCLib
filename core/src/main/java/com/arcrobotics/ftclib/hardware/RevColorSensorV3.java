@@ -5,6 +5,7 @@ import android.graphics.Color;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
+import com.technototes.logger.Log;
 
 
 /**
@@ -47,6 +48,12 @@ import com.qualcomm.robotcore.hardware.DistanceSensor;
         //@Override
         public String getDeviceType() {
             return "Rev Color Sensor V3";
+        }
+
+        //returns argb
+        @Log
+        public int getColor(){
+            return Color.argb(getSensorColor().alpha(), getSensorColor().red(), getSensorColor().green(), getSensorColor().blue());
         }
 
 

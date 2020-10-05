@@ -1,5 +1,7 @@
 package com.arcrobotics.ftclib.hardware.motors;
 
+import com.technototes.logger.Log;
+
 /**
  * Allows multiple {@link Motor} objects to be linked together
  * as a single group. Multiple motors will act together.
@@ -36,6 +38,7 @@ public class MotorGroup extends Motor {
      * @return The speed as a percentage of output
      */
     @Override
+    @Log
     public double get() {
         return group[0].get();
     }

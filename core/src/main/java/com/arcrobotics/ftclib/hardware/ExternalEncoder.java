@@ -1,6 +1,7 @@
 package com.arcrobotics.ftclib.hardware;
 
 
+import com.technototes.logger.Log;
 
 /** This abstract class can be extended to make your own external encoder
 * hardware classes.
@@ -19,7 +20,7 @@ package com.arcrobotics.ftclib.hardware;
  * */
 
 public abstract class ExternalEncoder {
-
+@Log
 public abstract long getCounts();
 
 /**

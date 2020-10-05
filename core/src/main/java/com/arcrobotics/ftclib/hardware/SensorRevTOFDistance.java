@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 import com.qualcomm.robotcore.util.Range;
+import com.technototes.logger.Log;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -86,6 +87,7 @@ public class SensorRevTOFDistance implements SensorDistanceEx {
      * {@inheritDoc}
      */
     @Override
+    @Log
     public double getDistance(DistanceUnit unit) {
         return distanceSensor.getDistance(unit);
     }

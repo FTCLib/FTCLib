@@ -3,6 +3,7 @@ package com.arcrobotics.ftclib.hardware;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.technototes.logger.Log;
 
 public class JSTEncoder extends ExternalEncoder {
 
@@ -34,6 +35,7 @@ public class JSTEncoder extends ExternalEncoder {
         this.dpp = dpp;
     }
 
+    @Log
     public double getDistance() {
         return dpp * getCounts();
     }

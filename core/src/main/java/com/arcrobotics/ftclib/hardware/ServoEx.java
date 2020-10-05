@@ -1,5 +1,7 @@
 package com.arcrobotics.ftclib.hardware;
 
+import com.technototes.logger.Log;
+
 /**
  * An extended servo interface.
  */
@@ -58,6 +60,7 @@ public interface ServoEx extends HardwareDevice {
     /**
      * @return The current position of the servo from 0 to 1.
      */
+    @Log
     double getPosition();
 
     /**

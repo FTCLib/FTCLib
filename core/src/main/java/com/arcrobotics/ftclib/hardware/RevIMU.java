@@ -4,6 +4,7 @@ import com.arcrobotics.ftclib.geometry.Rotation2d;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.technototes.logger.Log;
 
 
 public class RevIMU extends GyroEx {
@@ -80,6 +81,7 @@ public class RevIMU extends GyroEx {
      *
      * @return Relative heading of the robot
      */
+    @Log
     public double getHeading() {
         globalHeading = revIMU.getAngularOrientation().firstAngle;
         relativeHeading = globalHeading + offset;

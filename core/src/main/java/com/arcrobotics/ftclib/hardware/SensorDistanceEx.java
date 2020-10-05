@@ -1,6 +1,7 @@
 package com.arcrobotics.ftclib.hardware;
 
 import com.qualcomm.robotcore.util.Range;
+import com.technototes.logger.Log;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
@@ -178,5 +179,7 @@ public interface SensorDistanceEx extends SensorDistance {
      */
     Map<SensorRevTOFDistance.DistanceTarget, Boolean> checkAllTargets();
 
-
+    @Override
+    @Log
+    double getDistance(DistanceUnit unit);
 }
