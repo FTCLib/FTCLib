@@ -41,4 +41,6 @@ dependencies {
     compileOnly 'androidx.appcompat:appcompat:1.2.0'
     implementation project(path: ':core:vision')
 
+    implementation 'com.github.technototes.TechnoLog:Logger:0.1.0'
+
 }
