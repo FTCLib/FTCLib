@@ -27,4 +27,12 @@ public class OdometrySubsystem extends SubsystemBase {
         m_odometry.updatePose();
     }
 
+    /**
+     * Updates the pose every cycle
+     */
+    @Override
+    public void periodic() {
+        m_odometry.updatePose();
+    }
+
 }
