@@ -47,7 +47,9 @@ public class MotorEx extends Motor {
     @Override
     public void set(double output) {
         if (runmode == RunMode.VelocityControl) {
-            motorEx.setVelocity(output * ACHIEVABLE_MAX_TICKS_PER_SECOND);
+            double speed = output * ACHIEVABLE_MAX_TICKS_PER_SECOND;
+            double velocity = veloController.calculate(getVelocity(), speed) + feedforward.calculate(speed);
+            motorEx.setVelocity(velocity);
         } else {
             super.set(output);
         }

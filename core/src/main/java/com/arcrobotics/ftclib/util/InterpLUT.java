@@ -21,8 +21,8 @@ public class InterpLUT {
 
     public InterpLUT() {}
 
-    public void add(double in, double out) {
-        mX.add(in);
+    public void add(double input, double out) {
+        mX.add(input);
         mY.add(out);
     }
 
@@ -90,35 +90,35 @@ public class InterpLUT {
     /**
      * Interpolates the value of Y = f(X) for given X. Clamps X to the domain of the spline.
      *
-     * @param in The X value.
+     * @param input The X value.
      * @return The interpolated Y = f(X) value.
      */
-    public double get(double in) {
+    public double get(double input) {
         // Handle the boundary cases.
         final int n = mX.size();
-        if (Double.isNaN(in)) {
-            return in;
+        if (Double.isNaN(input)) {
+            return input;
         }
-        if (in <= mX.get(0)) {
-            throw new IllegalArgumentException("User requested value outside of bounds of LUT. Bounds are: " + mX.get(0).toString() + " to " + mX.get(n - 1).toString() + ". Value provided was: " + in);
+        if (input <= mX.get(0)) {
+            throw new IllegalArgumentException("User requested value outside of bounds of LUT. Bounds are: " + mX.get(0).toString() + " to " + mX.get(n - 1).toString() + ". Value provided was: " + input);
         }
-        if (in >= mX.get(n - 1)) {
-            throw new IllegalArgumentException("User requested value outside of bounds of LUT. Bounds are: " + mX.get(0).toString() + " to " + mX.get(n - 1).toString() + ". Value provided was: " + in);
+        if (input >= mX.get(n - 1)) {
+            throw new IllegalArgumentException("User requested value outside of bounds of LUT. Bounds are: " + mX.get(0).toString() + " to " + mX.get(n - 1).toString() + ". Value provided was: " + input);
         }
 
         // Find the index 'i' of the last point with smaller X.
         // We know this will be within the spline due to the boundary tests.
         int i = 0;
-        while (in >= mX.get(i + 1)) {
+        while (input >= mX.get(i + 1)) {
             i += 1;
-            if (in == mX.get(i)) {
+            if (input == mX.get(i)) {
                 return mY.get(i);
             }
         }
 
         // Perform cubic Hermite spline interpolation.
         double h = mX.get(i + 1) - mX.get(i);
-        double t = (in - mX.get(i)) / h;
+        double t = (input - mX.get(i)) / h;
         return (mY.get(i) * (1 + 2 * t) + h * mM.get(i) * t) * (1 - t) * (1 - t)
                 + (mY.get(i + 1) * (3 - 2 * t) + h * mM.get(i+1) * (t - 1)) * t * t;
     }

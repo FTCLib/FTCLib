@@ -150,7 +150,7 @@ Checkout the `dev` branch to start contributing. Follow the [Branch Naming Conve
 
 ### 4. Commit
 
-Please keep your changes grouped logically witihng individual commits. Each commit should be prefixed with an appropriate prefix, as noted [above](#commit-naming). A commit could contain a new feature, or new documentation, but never both, especially not in different files. Following these guidelines make it easier to review changes split across multiple commits.
+Please keep your changes grouped logically within individual commits. Each commit should be prefixed with an appropriate prefix, as noted [above](#commit-naming). A commit could contain a new feature, or new documentation, but never both, especially not in different files. Following these guidelines make it easier to review changes split across multiple commits.
 
 ### 5. Rebase
 

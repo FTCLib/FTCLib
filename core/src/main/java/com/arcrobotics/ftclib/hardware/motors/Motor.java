@@ -164,10 +164,10 @@ public class Motor implements HardwareDevice {
      */
     protected GoBILDA type;
 
-    private PIDController veloController;
-    private PController positionController;
+    protected PIDController veloController;
+    protected PController positionController;
 
-    private SimpleMotorFeedforward feedforward;
+    protected SimpleMotorFeedforward feedforward;
 
     public Motor() {}
 
@@ -250,6 +250,13 @@ public class Motor implements HardwareDevice {
      */
     public double getPositionCoefficient() {
         return positionController.getP();
+    }
+
+    /**
+     * @return the feedforward coefficients
+     */
+    public double[] getFeedforwardCoefficients() {
+        return new double[]{feedforward.ks, feedforward.kv};
     }
 
     /**
