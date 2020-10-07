@@ -74,53 +74,6 @@ public class PIDFController {
         lastTimeStamp = 0;
     }
 
-
-    /**
-     * Implements a control calculation onto the affected motor.
-     * Please note that what this does is move the motor until it reaches the setpoint.
-     * Once the motor reaches the target, the motor will continue moving
-     * with a speed of kF * setpoint. If you set kF to 0, the motor will stop.
-     *
-     * @param affected  The affected motor of the mechanism.
-     * @param sp        The setpoint of the calculation.
-     * @param pv        The previous value of the calculation.
-     * @param speed     The maximum speed the motor should rotate.
-     */
-    public void control(Motor affected, double sp, double pv, double speed) {
-         affected.set(atSetPoint() ? speed * calculate(pv, sp) : kF * sp);
-    }
-
-    /**
-     * Implements a control calculation onto the affected motor.
-     *
-     * @param affected  The affected motor of the mechanism.
-     * @param sp        The setpoint of the calculation.
-     * @param pv        The previous value of the calculation.
-     */
-    public void control(Motor affected, double sp, double pv) {
-        control(affected, sp, pv, 1);
-    }
-
-    /**
-     * Implements a control calculation onto the affected motor.
-     *
-     * @param affected The affected motor of the mechanism.
-     * @param pv The setpoint of the calculation
-     */
-    public void control(Motor affected, double pv){
-        control(affected, setPoint, pv);
-    }
-
-    /**
-     * Implements a control calculation onto the affected motor
-     *
-     * @param affected The affected motor of the mechanism
-     */
-    public void control(Motor affected){
-        control(affected, prevErrorVal);
-    }
-
-
     /**
      * Sets the error which is considered tolerable for use with {@link #atSetPoint()}.
      *
