@@ -5,6 +5,8 @@ import androidx.annotation.NonNull;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+
 /**
  * An extended motor class that utilizes more features than the
  * regular motor.
@@ -50,9 +52,20 @@ public class MotorEx extends Motor {
             double speed = output * ACHIEVABLE_MAX_TICKS_PER_SECOND;
             double velocity = veloController.calculate(getVelocity(), speed) + feedforward.calculate(speed);
             motorEx.setVelocity(velocity);
+        } else if (runmode == RunMode.PositionControl) {
+            double error = positionController.calculate(encoder.getPosition());
+            motorEx.setPower(output * error);
         } else {
-            super.set(output);
+            motorEx.setPower(output);
         }
+    }
+
+    public void setVelocity(double velocity) {
+        motorEx.setVelocity(velocity);
+    }
+
+    public void setVelocity(double velocity, AngleUnit angleUnit) {
+        motorEx.setVelocity(velocity, angleUnit);
     }
 
     @Override
