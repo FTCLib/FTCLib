@@ -3,7 +3,6 @@ package com.arcrobotics.ftclib.command;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import com.arcrobotics.ftclib.command.*;
 
 public class CommandSchedulerTests {
 

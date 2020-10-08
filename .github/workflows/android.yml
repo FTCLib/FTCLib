@@ -14,10 +14,22 @@ jobs:
       with:
         java-version: 1.8
     - name: Build with Gradle
+      uses: actions/setup-java@v1
+        with:
+          java-version: 1.8
       run: ./gradlew --stacktrace
     - name: Test with Gradle
+      uses: actions/setup-java@v1
+        with:
+          java-version: 1.8
       run: ./gradlew :core:test --stacktrace
     - name: Run Examples
+      uses: actions/setup-java@v1
+        with:
+          java-version: 1.8
       run: ./gradlew :examples:build --stacktrace
     - name: Build Project
+      uses: actions/setup-java@v1
+        with:
+          java-version: 1.8
       run: ./gradlew build
