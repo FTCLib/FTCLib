@@ -215,7 +215,7 @@ public final class CommandScheduler {
              iterator.hasNext(); ) {
             Command command = iterator.next();
 
-            if (!command.runsWhenDisabled()) {
+            if (!command.runsWhenDisabled() && m_disabled) {
                 command.end(true);
                 for (Consumer<Command> action : m_interruptActions) {
                     action.accept(command);
