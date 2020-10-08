@@ -6,6 +6,8 @@ package com.arcrobotics.ftclib.command;
  */
 public class Robot {
 
+    public static boolean isDisabled = false;
+
     /**
      * Cancels all previous commands
      */
@@ -32,6 +34,14 @@ public class Robot {
      */
     public void register(Subsystem... subsystems) {
         CommandScheduler.getInstance().registerSubsystem(subsystems);
+    }
+
+    public void disable() {
+        isDisabled = true;
+    }
+
+    public void enable() {
+        isDisabled = false;
     }
 
 }
