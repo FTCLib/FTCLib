@@ -127,7 +127,7 @@ public final class CommandScheduler {
 
         // Do nothing if the scheduler is disabled, the robot is disabled and the command doesn't
         // run when disabled, or the command is already scheduled.
-        if (m_disabled || (!command.runsWhenDisabled() && (Robot.isDisabled || CommandOpMode.isDisabled))
+        if (m_disabled || (!command.runsWhenDisabled() && Robot.isDisabled)
                 || m_scheduledCommands.containsKey(command)) {
             return;
         }
@@ -215,7 +215,7 @@ public final class CommandScheduler {
              iterator.hasNext(); ) {
             Command command = iterator.next();
 
-            if (!command.runsWhenDisabled() && (Robot.isDisabled || CommandOpMode.isDisabled)) {
+            if (!command.runsWhenDisabled() && Robot.isDisabled) {
                 command.end(true);
                 for (Consumer<Command> action : m_interruptActions) {
                     action.accept(command);

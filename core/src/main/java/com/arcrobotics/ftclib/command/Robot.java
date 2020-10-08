@@ -36,11 +36,11 @@ public class Robot {
         CommandScheduler.getInstance().registerSubsystem(subsystems);
     }
 
-    public void disable() {
+    public static void disable() {
         isDisabled = true;
     }
 
-    public void enable() {
+    public static void enable() {
         isDisabled = false;
     }
 

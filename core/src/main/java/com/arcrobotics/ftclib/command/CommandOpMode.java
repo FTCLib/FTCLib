@@ -11,8 +11,6 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
  */
 public abstract class CommandOpMode extends LinearOpMode {
 
-    public static boolean isDisabled = false;
-
     protected GamepadEx driverOp = new GamepadEx(gamepad1);
     protected GamepadEx toolOp = new GamepadEx(gamepad2);
 
@@ -57,12 +55,12 @@ public abstract class CommandOpMode extends LinearOpMode {
 
     public abstract void initialize();
 
-    public void disable() {
-        isDisabled = true;
+    public static void disable() {
+        Robot.disable();
     }
 
-    public void enable() {
-        isDisabled = false;
+    public static void enable() {
+        Robot.enable();
     }
 
 

@@ -11,7 +11,7 @@ public class CommandSchedulerTests {
     @Test
     public void testAddCommand() {
         x = 3;
-        Robot.isDisabled = false;
+        Robot.enable();
         CommandScheduler.getInstance().schedule(new CommandBase(){
             @Override
             public void execute() {
@@ -32,7 +32,7 @@ public class CommandSchedulerTests {
     @Test
     public void testNotRunWhenDisabled() {
         x = 3;
-        Robot.isDisabled = true;
+        Robot.disable();
         CommandScheduler.getInstance().schedule(new CommandBase(){
             @Override
             public void execute() {
@@ -53,7 +53,7 @@ public class CommandSchedulerTests {
     @Test
     public void testRunWhenDisabled() {
         x = 3;
-        Robot.isDisabled = true;
+        Robot.disable();
         CommandScheduler.getInstance().schedule(new CommandBase(){
             @Override
             public void execute() {
@@ -74,7 +74,7 @@ public class CommandSchedulerTests {
     @Test
     public void testSubsystemPeriodic() {
         x = 3;
-        Robot.isDisabled = false;
+        Robot.enable();
         CommandScheduler.getInstance().registerSubsystem(new SubsystemBase() {
             @Override
             public void periodic() {
