@@ -16,6 +16,7 @@ public class InterpLUTTest {
         lut.add(4,1);
         try {
             lut.createLUT();
+            //computing the spline
         } catch (IllegalArgumentException ex) {
             assertEquals("The control points must all have strictly increasing X values.", ex.getMessage());
         }
