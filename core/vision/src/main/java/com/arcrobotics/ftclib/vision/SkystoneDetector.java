@@ -13,7 +13,6 @@ import org.openftc.easyopencv.OpenCvInternalCamera;
  * For more examples such as using a webcam and switching between different cameras
  * visit https://github.com/OpenFTC/EasyOpenCV/tree/master/examples/src/main/java/org/openftc/easyopencv/examples
  */
-@TeleOp
 public class SkystoneDetector extends LinearOpMode
 {
   OpenCvCamera phoneCam;
