@@ -47,7 +47,7 @@ public abstract class CommandOpMode extends LinearOpMode {
         initialize();
 
         // run the scheduler
-        while (!isStopRequested()) {
+        while (!isStopRequested() && opModeIsActive()) {
             run();
         }
         reset();

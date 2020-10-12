@@ -23,24 +23,26 @@ public class MecanumDrive extends RobotDrive {
      * Sets up the constructor for the mecanum drive.
      * Automatically inverts right side by default
      *
-     * @param myMotors The motors in order of:
-     *                 frontLeft, frontRight, backLeft, backRight.
-     *                 Do not input in any other order.
+     * @param frontLeft     the front left motor
+     * @param frontRight    the front right motor
+     * @param backLeft      the back left motor
+     * @param backRight     the back right motor
      */
-    public MecanumDrive(Motor... myMotors) {
-        motors = myMotors;
-        setRightSideInverted(true);
+    public MecanumDrive(Motor frontLeft, Motor frontRight, Motor backLeft, Motor backRight) {
+        this(true, frontLeft, frontRight, backLeft, backRight);
     }
 
     /**
      * Sets up the constructor for the mecanum drive.
      *
-     * @param autoInvert Whether or not to automatically invert the right motors
-     * @param myMotors The motors in order of: frontLeft, frontRight, backLeft, backRight.
-          Do not input in any other order.
+     * @param autoInvert    Whether or not to automatically invert the right motors
+     * @param frontLeft     the front left motor
+     * @param frontRight    the front right motor
+     * @param backLeft      the back left motor
+     * @param backRight     the back right motor
      */
-    public MecanumDrive(boolean autoInvert, Motor... myMotors) {
-        motors = myMotors;
+    public MecanumDrive(boolean autoInvert, Motor frontLeft, Motor frontRight, Motor backLeft, Motor backRight) {
+        motors = new Motor[]{frontLeft, frontRight, backLeft, backRight};
         setRightSideInverted(autoInvert);
     }
 

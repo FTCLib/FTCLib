@@ -4,7 +4,8 @@ import com.arcrobotics.ftclib.command.CommandOpMode;
 import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.button.GamepadButton;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
-import com.arcrobotics.ftclib.hardware.SimpleServo;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 /**
  * Does the same thing as {@link SampleTeleOp} but is much simpler
@@ -14,6 +15,8 @@ import com.arcrobotics.ftclib.hardware.SimpleServo;
  * where most things are set up as commands/subsystems to avoid potential drawbacks
  * of the {@link InstantCommand}.
  */
+@TeleOp
+@Disabled
 public class SimpleTeleOp extends CommandOpMode {
 
     private GamepadButton grabButton = new GamepadButton(toolOp, GamepadKeys.Button.A);
