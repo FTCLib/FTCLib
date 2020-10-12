@@ -73,7 +73,7 @@ public class AdvancedHighGoalPipeline extends AngleHighGoalPipeline {
             return angle - Math.toDegrees(Math.asin(offset / hypotenuse));
         } else {
             double alpha = Math.toDegrees(Math.atan((Math.abs(offset) + Math.abs(distanceFromWallToGoal))/getDistanceToGoalWall(color))) - angle;
-            return Math.signum(angle) * alpha;
+            return (Math.signum(angle) * alpha) + angle;
         }
 
 
