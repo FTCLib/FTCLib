@@ -1,5 +1,7 @@
 package com.arcrobotics.ftclib.vision;
 
+import org.opencv.core.Mat;
+
 public class AdvancedHighGoalPipeline extends AngleHighGoalPipeline {
     private double centerOfLogoHeight;
     private double cameraHeight;
@@ -47,14 +49,38 @@ public class AdvancedHighGoalPipeline extends AngleHighGoalPipeline {
             offset = distanceOfClosestPuck;
         } else if (shot == Powershot.CenterShot) {
             offset = distanceOfClosestPuck + puckSpacing;
-        } else if (shot == Powershot.RightShot) {
+        } else if (shot == Powershot.RightShot){
             offset = distanceOfClosestPuck + puckSpacing * 2;
         }
 
-        if (color == Target.Blue) {
+        // Gives the offset a direction
+        if (color == Target.RED) {
             offset *= -1;
         }
-        return Math.toDegrees(Math.toRadians(calculateYaw(color) - Math.asin(offset / getDistanceToGoal(color))));
+
+        double distanceFromWallToGoal = Math.tan(Math.toRadians(angle)) * getDistanceToGoalWall(color);
+
+        // If robot is inbetween Powershot and Highgoal
+        if (Math.abs(offset) > Math.abs(distanceFromWallToGoal)) {
+            return Math.toRadians(Math.atan((offset - distanceFromWallToGoal) / getDistanceToGoalWall(color)));
+        }
+
+        // if the angle to the powershot is embedded in the angle to the color goal
+        boolean inclusiveAngle = angle * offset < 0;
+        // triangle made from distangeToGoalWall and angle
+        double hypotenuse = getDistanceToGoalWall(color) / Math.cos(Math.toRadians(angle));
+        if (inclusiveAngle) {
+            return angle - Math.toDegrees(Math.asin(offset / hypotenuse));
+        } else {
+            double alpha = Math.toDegrees(Math.atan((Math.abs(offset) + Math.abs(distanceFromWallToGoal))/getDistanceToGoalWall(color))) - angle;
+            return Math.signum(angle) * alpha;
+        }
+
+
+
+        // If both the offset and alpha are the same sign, the angle to the powershot is alpha + yaw. else just alpha
+
+
     }
 
     public double getPowerShotDistance(Target color, Powershot shot) {
