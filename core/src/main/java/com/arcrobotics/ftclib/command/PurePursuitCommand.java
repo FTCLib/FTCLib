@@ -47,6 +47,11 @@ public class PurePursuitCommand extends CommandBase {
         double[] motorSpeeds = m_path.loop(robotPose.getTranslation().getX(), robotPose.getTranslation().getY(), robotPose.getHeading());
         m_drive.driveRobotCentric(motorSpeeds[0], motorSpeeds[1], motorSpeeds[2]);
     }
+    
+    @Override
+    public void end(boolean interrupted) {
+        m_drive.stop();
+    }
 
     @Override
     public boolean isFinished() {
