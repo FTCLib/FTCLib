@@ -19,7 +19,8 @@ public class PurePursuitSample extends CommandOpMode {
 
     // define our constants
     static final double TRACKWIDTH = 13.7;
-    static final double TICKS_TO_INCHES = 15.3;
+    static final double WHEEL_DIAMETER = 4.0;    // inches
+    static double TICKS_TO_INCHES;
     static final double CENTER_WHEEL_OFFSET = 2.4;
 
     private HolonomicOdometry m_robotOdometry;
@@ -42,6 +43,9 @@ public class PurePursuitSample extends CommandOpMode {
         leftEncoder = new MotorEx(hardwareMap, "leftEncoder");
         rightEncoder = new MotorEx(hardwareMap, "rightEncoder");
         centerEncoder = new MotorEx(hardwareMap, "centerEncoder");
+
+        // calculate multiplier
+        TICKS_TO_INCHES = leftEncoder.encoder.getRevolutions() * WHEEL_DIAMETER * Math.PI;
 
         // create our odometry object and subsystem
         m_robotOdometry = new HolonomicOdometry(
