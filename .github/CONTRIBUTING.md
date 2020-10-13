@@ -6,7 +6,7 @@ Welcome to the FTCLib project! We hope we have something useful for you!
 - [Jackson](https://github.com/jiceberg) from ARC Robotics
 - [Pranav](https://github.com/pranavavva) from TecHounds
 - [Peter](https://github.com/codeNinjaDev) from E-Lemon-ators
-- [Ryan](https://github.com/Lunerwalker2) from CircuitRunners Green
+- [Ryan](https://github.com/Lunerwalker2) from CircuitRunners Surge
 - [Jiaming](https://github.com/Jaiming724) from IguTech
 - [Jaran](https://github.com/JarnaChao09) from The "NUTS!"
 - [Purav](https://github.com/puravdatta-sudo) from Electro
