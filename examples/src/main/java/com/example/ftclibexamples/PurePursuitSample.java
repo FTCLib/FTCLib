@@ -66,6 +66,8 @@ public class PurePursuitSample extends CommandOpMode {
                         0.5, 30, 0.8, 1
                 )
         );
+
+        // schedule the command
         schedule(ppCommand);
     }
 
