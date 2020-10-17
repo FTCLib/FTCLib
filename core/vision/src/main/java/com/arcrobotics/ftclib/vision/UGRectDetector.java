@@ -9,19 +9,19 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvInternalCamera;
 
 
-public class UltimateGoalDetector {
+public class UGRectDetector {
 
     OpenCvCamera camera;
     private boolean isUsingWebcam;
     private String webcamName;
     HardwareMap hardwareMap;
-    UltimateGoalPipeline ftclibPipeline;
+    UGRectRingPipeline ftclibPipeline;
 
-    public UltimateGoalDetector(HardwareMap hMap) {
+    public UGRectDetector(HardwareMap hMap) {
         hardwareMap = hMap;
     }
 
-    public UltimateGoalDetector(HardwareMap hMap, String webcamName) {
+    public UGRectDetector(HardwareMap hMap, String webcamName) {
         hardwareMap = hMap;
         isUsingWebcam = true;
         this.webcamName = webcamName;
@@ -36,7 +36,7 @@ public class UltimateGoalDetector {
             camera = OpenCvCameraFactory.getInstance().createInternalCamera(OpenCvInternalCamera.CameraDirection.BACK, cameraMonitorViewId);
         }
 
-        camera.setPipeline(ftclibPipeline = new UltimateGoalPipeline());
+        camera.setPipeline(ftclibPipeline = new UGRectRingPipeline());
         camera.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener() {
             @Override
             public void onOpened() {

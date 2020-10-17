@@ -1,20 +1,20 @@
 package com.example.ftclibexamples;
 
 import com.arcrobotics.ftclib.command.CommandOpMode;
-import com.arcrobotics.ftclib.vision.UltimateGoalDetector;
+import com.arcrobotics.ftclib.vision.UGRectDetector;
 
-public class UltimateGoalVisionSample extends CommandOpMode {
-    UltimateGoalDetector ultimateGoalDetector;
+public class UGRectRingVisionSample extends CommandOpMode {
+    UGRectDetector UGRectDetector;
     @Override
     public void initialize() {
-        ultimateGoalDetector = new UltimateGoalDetector(hardwareMap);
-        ultimateGoalDetector.init();
+        UGRectDetector = new UGRectDetector(hardwareMap);
+        UGRectDetector.init();
     }
 
     @Override
     public void run() {
         // Assuming threaded. It hopefully found the stack at the end of init.
-        UltimateGoalDetector.Stack stack = ultimateGoalDetector.getStack();
+        UGRectDetector.Stack stack = UGRectDetector.getStack();
 
         switch (stack) {
             case ZERO:
