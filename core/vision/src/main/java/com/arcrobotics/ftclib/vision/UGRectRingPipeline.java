@@ -8,7 +8,7 @@ import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
 import org.openftc.easyopencv.OpenCvPipeline;
 
-public class UltimateGoalPipeline extends OpenCvPipeline {
+public class UGRectRingPipeline extends OpenCvPipeline {
 
     private Mat matYCrCb = new Mat();
     private Mat matCbBottom = new Mat();
