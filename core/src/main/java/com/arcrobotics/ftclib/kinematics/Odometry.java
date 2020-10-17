@@ -47,7 +47,7 @@ public abstract class Odometry {
      * @param byAngle   the angle to be rotated by, preferably in radians
      */
     public void rotatePose(double byAngle) {
-        robotPose.rotate(byAngle);
+        robotPose = robotPose.rotate(byAngle);
     }
 
 }
