@@ -3,9 +3,8 @@ package com.example.ftclibexamples;
 import com.arcrobotics.ftclib.geometry.Pose2d;
 import com.arcrobotics.ftclib.geometry.Rotation2d;
 import com.arcrobotics.ftclib.geometry.Translation2d;
-import com.arcrobotics.ftclib.hardware.JSTEncoder;
-import com.arcrobotics.ftclib.hardware.RevIMU;
 import com.arcrobotics.ftclib.hardware.motors.Motor;
+import com.arcrobotics.ftclib.hardware.motors.MotorEx;
 import com.arcrobotics.ftclib.kinematics.HolonomicOdometry;
 import com.arcrobotics.ftclib.util.InterpLUT;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
@@ -21,7 +20,7 @@ public class InterpLUTSample extends LinearOpMode
     InterpLUT lut;
 
     private HolonomicOdometry odometry;
-    private JSTEncoder leftEncoder, rightEncoder, perpEncoder;
+    private MotorEx leftEncoder, rightEncoder, perpEncoder;
     private Motor shooter = new Motor(hardwareMap, "shooter");
 
     @Override
@@ -36,14 +35,22 @@ public class InterpLUTSample extends LinearOpMode
         //generating final equation
         lut.createLUT();
 
-        leftEncoder = new JSTEncoder(hardwareMap, "left");
-        rightEncoder = new JSTEncoder(hardwareMap, "right");
-        perpEncoder = new JSTEncoder(hardwareMap, "perp");
+        leftEncoder = new MotorEx(hardwareMap, "left");
+        rightEncoder = new MotorEx(hardwareMap, "right");
+        perpEncoder = new MotorEx(hardwareMap, "perp");
 
         // REVcoders
-        leftEncoder.setDistancePerPulse(2 / (double)8192);
-        rightEncoder.setDistancePerPulse(2 / (double)8192);
-        perpEncoder.setDistancePerPulse(2 / (double)8192);
+        leftEncoder.setDistancePerPulse(2 / (double) 8092);
+        rightEncoder.setDistancePerPulse(2 / (double) 8092);
+        perpEncoder.setDistancePerPulse(2 / (double) 8092);
+
+        odometry = new HolonomicOdometry(
+                leftEncoder::getDistance,
+                rightEncoder::getDistance,
+                perpEncoder::getDistance,
+                14,
+                2.1
+        );
 
         odometry = new HolonomicOdometry(
                 leftEncoder::getDistance,
