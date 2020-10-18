@@ -9,6 +9,7 @@ import com.arcrobotics.ftclib.hardware.HardwareDevice;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 /**
@@ -63,7 +64,7 @@ public class Motor implements HardwareDevice {
         private Supplier<Integer> m_position;
         private int resetVal, lastPosition;
         private Direction direction;
-        protected double lastTimeStamp, veloEstimate;
+        private double lastTimeStamp, veloEstimate, dpp;
 
         /**
          * The encoder object for the motor.
@@ -73,6 +74,7 @@ public class Motor implements HardwareDevice {
          */
         public Encoder(Supplier<Integer> position) {
             m_position = position;
+            dpp = 1;
             resetVal = 0;
             lastPosition = 0;
             veloEstimate = 0;
@@ -81,7 +83,7 @@ public class Motor implements HardwareDevice {
         }
 
         /**
-         * @return  the current position of the internal encoder
+         * @return  the current position of the encoder
          */
         public int getPosition() {
             int currentPosition = m_position.get();
@@ -96,10 +98,27 @@ public class Motor implements HardwareDevice {
         }
 
         /**
+         * @return  the distance traveled by the encoder
+         */
+        public double getDistance() {
+            return dpp * getPosition();
+        }
+
+        /**
          * Resets the encoder without having to stop the motor.
          */
         public void reset() {
             resetVal = getPosition();
+        }
+
+        /**
+         * Sets the distance per pulse of the encoder.
+         *
+         * @param distancePerPulse the desired distance per pulse (in units per tick)
+         */
+        public Encoder setDistancePerPulse(double distancePerPulse) {
+            dpp = distancePerPulse;
+            return this;
         }
 
         /**
@@ -112,7 +131,7 @@ public class Motor implements HardwareDevice {
         }
 
         /**
-         * @return  the number of revolutions turned by the motor
+         * @return  the number of revolutions turned by the encoder
          */
         public double getRevolutions() {
             return getPosition() / getCPR();
@@ -144,6 +163,22 @@ public class Motor implements HardwareDevice {
      */
     public enum RunMode {
         VelocityControl, PositionControl, RawPower
+    }
+
+    public enum ZeroPowerBehavior {
+        UNKNOWN(DcMotor.ZeroPowerBehavior.UNKNOWN),
+        BRAKE(DcMotor.ZeroPowerBehavior.BRAKE),
+        FLOAT(DcMotor.ZeroPowerBehavior.UNKNOWN);
+
+        private DcMotor.ZeroPowerBehavior m_behavior;
+
+        ZeroPowerBehavior(DcMotor.ZeroPowerBehavior behavior) {
+            m_behavior = behavior;
+        }
+
+        public DcMotor.ZeroPowerBehavior getBehavior() {
+            return m_behavior;
+        }
     }
 
     public DcMotor motor;
@@ -225,6 +260,21 @@ public class Motor implements HardwareDevice {
     }
 
     /**
+     * Sets the distance per pulse of the encoder in units per tick.
+     * @param distancePerPulse  the desired distance per pulse
+     */
+    public void setDistancePerPulse(double distancePerPulse) {
+        encoder.setDistancePerPulse(distancePerPulse);
+    }
+
+    /**
+     * @return  the distance traveled by the encoder
+     */
+    public double getDistance() {
+        return encoder.getDistance();
+    }
+
+    /**
      * @return if the motor is at the target position
      */
     public boolean atTargetPosition() {
@@ -264,8 +314,8 @@ public class Motor implements HardwareDevice {
      *
      * @param behavior the behavior desired
      */
-    public void setZeroPowerBehavior(DcMotor.ZeroPowerBehavior behavior) {
-        motor.setZeroPowerBehavior(behavior);
+    public void setZeroPowerBehavior(ZeroPowerBehavior behavior) {
+        motor.setZeroPowerBehavior(behavior.getBehavior());
     }
 
     /**

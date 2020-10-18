@@ -34,6 +34,7 @@ public class DeadWheelsSample extends LinearOpMode {
 
     public static final double WHEEL_DIAMETER = 2.0;
     public static final double TICKS_PER_REV = 8192;
+    public static final double DISTANCE_PER_PULSE = Math.PI * WHEEL_DIAMETER / TICKS_PER_REV;
 
     private MotorEx frontLeft, frontRight, backLeft, backRight;
     private MecanumDrive driveTrain;
@@ -55,14 +56,16 @@ public class DeadWheelsSample extends LinearOpMode {
         liftLeft = new Motor(hardwareMap, "lift_left");
         liftRight = new Motor(hardwareMap, "lift_right");
 
-        leftOdometer = frontLeft.encoder;
-        rightOdometer = frontRight.encoder;
-        centerOdometer = backLeft.encoder;
+        // Here we set the distance per pulse of the odometers.
+        // This is to keep the units consistent for the odometry.
+        leftOdometer = frontLeft.encoder.setDistancePerPulse(DISTANCE_PER_PULSE);
+        rightOdometer = frontRight.encoder.setDistancePerPulse(DISTANCE_PER_PULSE);
+        centerOdometer = backLeft.encoder.setDistancePerPulse(DISTANCE_PER_PULSE);
 
         odometry = new HolonomicOdometry(
-                () -> leftOdometer.getPosition() / TICKS_PER_REV * WHEEL_DIAMETER * Math.PI,
-                () -> rightOdometer.getPosition() / TICKS_PER_REV * WHEEL_DIAMETER * Math.PI,
-                () -> centerOdometer.getPosition() / TICKS_PER_REV * WHEEL_DIAMETER * Math.PI,
+                leftOdometer::getDistance,
+                rightOdometer::getDistance,
+                centerOdometer::getDistance,
                 TRACKWIDTH, CENTER_WHEEL_OFFSET
         );
 
