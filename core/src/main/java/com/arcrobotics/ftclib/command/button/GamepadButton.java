@@ -1,5 +1,7 @@
 package com.arcrobotics.ftclib.command.button;
 
+import androidx.annotation.NonNull;
+
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 
@@ -11,17 +13,17 @@ import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 public class GamepadButton extends Button {
 
     private final GamepadEx m_gamepad;
-    private final GamepadKeys.Button m_button;
+    private final GamepadKeys.Button[] m_buttons;
 
     /**
      * Creates a gamepad button for triggering commands.
      *
      * @param gamepad   the gamepad with the buttons
-     * @param button    the specified button
+     * @param buttons   the specified buttons
      */
-    public GamepadButton(GamepadEx gamepad, GamepadKeys.Button button) {
+    public GamepadButton(GamepadEx gamepad, @NonNull GamepadKeys.Button... buttons) {
         m_gamepad = gamepad;
-        m_button = button;
+        m_buttons = buttons;
     }
 
     /**
@@ -31,7 +33,10 @@ public class GamepadButton extends Button {
      */
     @Override
     public boolean get() {
-        return m_gamepad.getButton(m_button);
+        boolean res = true;
+        for (GamepadKeys.Button button : m_buttons)
+            res = res && m_gamepad.getButton(button);
+        return res;
     }
 
 }
