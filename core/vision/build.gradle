@@ -1,9 +1,13 @@
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 
 apply plugin: 'maven'
 
 dependencies {
     api 'org.openftc:easyopencv:1.4.1'
+    implementation "androidx.core:core-ktx:+"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 }
 
 def groupId = 'com.arcrobotics.ftclib'
@@ -76,3 +80,6 @@ artifacts {
 
 
 apply from: '../dependencies.gradle'
+repositories {
+    mavenCentral()
+}
