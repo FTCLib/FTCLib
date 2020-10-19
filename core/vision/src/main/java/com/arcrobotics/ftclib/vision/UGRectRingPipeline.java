@@ -1,6 +1,5 @@
 package com.arcrobotics.ftclib.vision;
 
-
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.Rect;
@@ -83,8 +82,9 @@ public class UGRectRingPipeline extends OpenCvPipeline {
 
     /**
      * Draw the rectangle onto the desired mat
-     * @param mat The mat that the rectangle should be drawn on
-     * @param rect The rectangle
+     *
+     * @param mat   The mat that the rectangle should be drawn on
+     * @param rect  The rectangle
      * @param color The color the rectangle will be
      */
     private void drawRectOnToMat(Mat mat, Rect rect, Scalar color) {
@@ -103,7 +103,7 @@ public class UGRectRingPipeline extends OpenCvPipeline {
         this.threshold = threshold;
     }
 
-    public int getThreshold(){
+    public int getThreshold() {
         return threshold;
     }
 
