@@ -17,6 +17,7 @@ public class UGRectDetector {
     private HardwareMap hardwareMap;
     private UGRectRingPipeline ftclibPipeline;
 
+    //The constructor is overloaded to allow the use of webcam instead of the phone camera
     public UGRectDetector(HardwareMap hMap) {
         hardwareMap = hMap;
     }
@@ -28,6 +29,7 @@ public class UGRectDetector {
     }
 
     public void init() {
+        //This will instantiate an OpenCvCamera object for the camera we'll be using
         if (isUsingWebcam) {
             int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
             camera = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, webcamName), cameraMonitorViewId);
@@ -36,6 +38,7 @@ public class UGRectDetector {
             camera = OpenCvCameraFactory.getInstance().createInternalCamera(OpenCvInternalCamera.CameraDirection.BACK, cameraMonitorViewId);
         }
 
+       //Set the pipeline the camera should use and start streaming
         camera.setPipeline(ftclibPipeline = new UGRectRingPipeline());
         camera.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener() {
             @Override
@@ -59,6 +62,12 @@ public class UGRectDetector {
         ftclibPipeline.setThreshold(threshold);
     }
 
+    public double getTopAverage(){
+        return ftclibPipeline.getTopAverage();
+    }
+    public double getBottomAverage(){
+        return ftclibPipeline.getBottomAverage();
+    }
     public enum Stack {
         ZERO,
         ONE,
