@@ -1,13 +1,11 @@
 package com.arcrobotics.ftclib.vision;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
-
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvInternalCamera;
-
 
 public class UGRectDetector {
 
@@ -38,7 +36,7 @@ public class UGRectDetector {
             camera = OpenCvCameraFactory.getInstance().createInternalCamera(OpenCvInternalCamera.CameraDirection.BACK, cameraMonitorViewId);
         }
 
-       //Set the pipeline the camera should use and start streaming
+        //Set the pipeline the camera should use and start streaming
         camera.setPipeline(ftclibPipeline = new UGRectRingPipeline());
         camera.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener() {
             @Override
@@ -62,12 +60,14 @@ public class UGRectDetector {
         ftclibPipeline.setThreshold(threshold);
     }
 
-    public double getTopAverage(){
+    public double getTopAverage() {
         return ftclibPipeline.getTopAverage();
     }
-    public double getBottomAverage(){
+
+    public double getBottomAverage() {
         return ftclibPipeline.getBottomAverage();
     }
+
     public enum Stack {
         ZERO,
         ONE,

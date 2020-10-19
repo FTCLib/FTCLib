@@ -5,6 +5,7 @@ import com.arcrobotics.ftclib.vision.UGRectDetector;
 
 public class UGRectRingVisionSample extends CommandOpMode {
     UGRectDetector UGRectDetector;
+
     @Override
     public void initialize() {
         UGRectDetector = new UGRectDetector(hardwareMap);
@@ -13,7 +14,6 @@ public class UGRectRingVisionSample extends CommandOpMode {
 
     @Override
     public void run() {
-        // Assuming threaded. It hopefully found the stack at the end of init.
         UGRectDetector.Stack stack = UGRectDetector.getStack();
 
         switch (stack) {
