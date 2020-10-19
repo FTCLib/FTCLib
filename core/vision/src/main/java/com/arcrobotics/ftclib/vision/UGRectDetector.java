@@ -11,11 +11,11 @@ import org.openftc.easyopencv.OpenCvInternalCamera;
 
 public class UGRectDetector {
 
-    OpenCvCamera camera;
+    private OpenCvCamera camera;
     private boolean isUsingWebcam;
     private String webcamName;
-    HardwareMap hardwareMap;
-    UGRectRingPipeline ftclibPipeline;
+    private HardwareMap hardwareMap;
+    private UGRectRingPipeline ftclibPipeline;
 
     public UGRectDetector(HardwareMap hMap) {
         hardwareMap = hMap;
@@ -55,7 +55,11 @@ public class UGRectDetector {
         }
     }
 
-   public enum Stack {
+    public void setThreshold(int threshold) {
+        ftclibPipeline.setThreshold(threshold);
+    }
+
+    public enum Stack {
         ZERO,
         ONE,
         FOUR,
