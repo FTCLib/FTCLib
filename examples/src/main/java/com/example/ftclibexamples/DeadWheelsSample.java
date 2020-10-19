@@ -33,6 +33,7 @@ public class DeadWheelsSample extends LinearOpMode {
     public static final double CENTER_WHEEL_OFFSET = -2.1;
 
     public static final double WHEEL_DIAMETER = 2.0;
+    // if needed, one can add a gearing term here
     public static final double TICKS_PER_REV = 8192;
     public static final double DISTANCE_PER_PULSE = Math.PI * WHEEL_DIAMETER / TICKS_PER_REV;
 

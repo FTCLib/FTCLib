@@ -40,18 +40,13 @@ public class InterpLUTSample extends LinearOpMode
         perpEncoder = new MotorEx(hardwareMap, "perp");
 
         // REVcoders
-        leftEncoder.setDistancePerPulse(2 / (double) 8092);
-        rightEncoder.setDistancePerPulse(2 / (double) 8092);
-        perpEncoder.setDistancePerPulse(2 / (double) 8092);
+        // the values we are setting here is the circumference of the
+        // 2 inch odometer wheels in inches divided by 8192 (the CPR)
+        leftEncoder.setDistancePerPulse(2 * Math.PI / (double) 8192);
+        rightEncoder.setDistancePerPulse(2 * Math.PI / (double) 8192);
+        perpEncoder.setDistancePerPulse(2 * Math.PI / (double) 8192);
 
-        odometry = new HolonomicOdometry(
-                leftEncoder::getDistance,
-                rightEncoder::getDistance,
-                perpEncoder::getDistance,
-                14,
-                2.1
-        );
-
+        // The last two values are trackwidth and center_wheel_offset
         odometry = new HolonomicOdometry(
                 leftEncoder::getDistance,
                 rightEncoder::getDistance,

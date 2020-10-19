@@ -46,7 +46,7 @@ Add this to your build.common.gradle:
 Now, in your TeamCode buid.gradle, add these lines:
 ```
 dependencies {
-    implementation 'com.arcrobotics:ftclib:1.1.0' // Replace 1.1.0 with the latest release
+    implementation 'com.arcrobotics:ftclib:1.1.2' // Replace 1.1.2 with the latest release
 }
 ```
 To ensure the project builds correctly, please follow steps below: 
