@@ -21,9 +21,9 @@ public class InterpLUT {
 
     public InterpLUT() {}
 
-    public void add(double input, double out) {
+    public void add(double input, double output) {
         mX.add(input);
-        mY.add(out);
+        mY.add(output);
     }
 
     /**
