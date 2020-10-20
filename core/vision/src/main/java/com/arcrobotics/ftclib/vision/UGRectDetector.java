@@ -1,6 +1,7 @@
 package com.arcrobotics.ftclib.vision;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
+
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
@@ -44,6 +45,21 @@ public class UGRectDetector {
                 camera.startStreaming(320, 240, OpenCvCameraRotation.UPRIGHT);
             }
         });
+    }
+
+    public void setTopRectangle(double topRectHeightPercentage, double topRectWidthPercentage) {
+        ftclibPipeline.setTopRectHeightPercentage(topRectHeightPercentage);
+        ftclibPipeline.setTopRectWidthPercentage(topRectWidthPercentage);
+    }
+
+    public void setBottomRectangle(double bottomRectHeightPercentage, double bottomRectWidthPercentage) {
+        ftclibPipeline.setBottomRectHeightPercentage(bottomRectHeightPercentage);
+        ftclibPipeline.setBottomRectWidthPercentage(bottomRectWidthPercentage);
+    }
+
+    public void setRectangleSize(int rectangleWidth, int rectangleHeight){
+        ftclibPipeline.setRectangleHeight(rectangleHeight);
+        ftclibPipeline.setRectangleWidth(rectangleWidth);
     }
 
     public Stack getStack() {

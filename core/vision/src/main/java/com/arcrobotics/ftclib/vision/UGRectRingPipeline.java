@@ -24,14 +24,14 @@ public class UGRectRingPipeline extends OpenCvPipeline {
     private int threshold = 15;
 
     //The position related to the screen
-    public static double topRectWidthPercentage = 0.25;
-    public static double topRectHeightPercentage = 0.25;
-    public static double bottomRectWidthPercentage = 0.25;
-    public static double bottomRectHeightPercentage = 0.25;
+    private double topRectWidthPercentage = 0.25;
+    private double topRectHeightPercentage = 0.25;
+    private double bottomRectWidthPercentage = 0.25;
+    private double bottomRectHeightPercentage = 0.35;
 
     //The width and height of the rectangles in terms of pixels
-    public static int rectangleWidth = 10;
-    public static int rectangleHeight = 10;
+    private int rectangleWidth = 10;
+    private int rectangleHeight = 10;
 
     @Override
     public Mat processFrame(Mat input) {
@@ -107,4 +107,27 @@ public class UGRectRingPipeline extends OpenCvPipeline {
         return threshold;
     }
 
+    public void setTopRectWidthPercentage(double topRectWidthPercentage) {
+        this.topRectWidthPercentage = topRectWidthPercentage;
+    }
+
+    public void setTopRectHeightPercentage(double topRectHeightPercentage) {
+        this.topRectHeightPercentage = topRectHeightPercentage;
+    }
+
+    public void setBottomRectWidthPercentage(double bottomRectWidthPercentage) {
+        this.bottomRectWidthPercentage = bottomRectWidthPercentage;
+    }
+
+    public void setBottomRectHeightPercentage(double bottomRectHeightPercentage) {
+        this.bottomRectHeightPercentage = bottomRectHeightPercentage;
+    }
+
+    public void setRectangleWidth(int rectangleWidth) {
+        this.rectangleWidth = rectangleWidth;
+    }
+
+    public void setRectangleHeight(int rectangleHeight) {
+        this.rectangleHeight = rectangleHeight;
+    }
 }
