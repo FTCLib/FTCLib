@@ -204,6 +204,8 @@ public class Motor implements HardwareDevice {
 
     protected SimpleMotorFeedforward feedforward;
 
+    private boolean targetIsSet = false;
+
     public Motor() {}
 
     /**
@@ -355,6 +357,10 @@ public class Motor implements HardwareDevice {
         this.runmode = runmode;
         veloController.reset();
         positionController.reset();
+        if (runmode == RunMode.PositionControl && !targetIsSet) {
+            setTargetPosition(getCurrentPosition());
+            targetIsSet = false;
+        }
     }
 
     protected double getVelocity() {
@@ -378,6 +384,7 @@ public class Motor implements HardwareDevice {
      * @param target
      */
     public void setTargetPosition(int target) {
+        targetIsSet = true;
         positionController.setSetPoint(target);
     }
 
