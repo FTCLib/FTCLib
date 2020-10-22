@@ -244,6 +244,25 @@ public class Motor implements HardwareDevice {
     }
 
     /**
+     * Constructs an instance motor for the wrapper
+     *
+     * @param hMap      the hardware map from the OpMode
+     * @param id        the device id from the RC config
+     * @param cpr       the counts per revolution of the motor
+     * @param rpm       the revolutions per minute of the motor
+     */
+    public Motor(@NonNull HardwareMap hMap, String id, double cpr, double rpm) {
+        motor = hMap.get(DcMotor.class, id);
+        runmode = RunMode.RawPower;
+        type = GoBILDA.NONE;
+        ACHIEVABLE_MAX_TICKS_PER_SECOND = cpr * rpm / 60;
+        veloController = new PIDController(1,0,0);
+        positionController = new PController(1);
+        feedforward = new SimpleMotorFeedforward(0, 1, 0);
+        encoder = new Encoder(motor::getCurrentPosition);
+    }
+
+    /**
      * Common method for setting the speed of a motor.
      *
      * @param output The percentage of power to set. Value should be between -1.0 and 1.0.
