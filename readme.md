@@ -18,7 +18,7 @@ Please read the documentation and the rest of the README before you get started 
 
 FTCLib documentation - <https://ftclib.gitbook.io/ftclib>
 <br />
-JavaDocs - <https://javadoc.io/doc/com.arcrobotics/ftclib/1.0.1/index.html>
+JavaDocs - <https://javadoc.io/doc/com.arcrobotics/ftclib/1.1.1/index.html>
 
 
 ## Welcome to FTCLib!
