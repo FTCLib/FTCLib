@@ -40,12 +40,12 @@ JavaDocs - <https://javadoc.io/doc/com.arcrobotics/ftclib/1.1.1/index.html>
 
     ```groovy
     dependencies {
-        implementation 'com.arcrobotics:ftclib:1.1.0'
+        implementation 'com.arcrobotics:ftclib:1.1.2'
     }
     ```
 6. Because FTCLib makes use of advanced features, you need to increase the minSdkVersion to 24. Unfortunately, this means that ZTE Speed Phones are not supported in this release.
 
-In build.common.gradle, change the minSdkVersion from 19 to 24:
+In build.common.gradle, change the minSdkVersion from 23 to 24:
 ```groovy
 
     defaultConfig {
