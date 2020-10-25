@@ -45,7 +45,7 @@ public class PurePursuitSample extends CommandOpMode {
         centerEncoder = new MotorEx(hardwareMap, "centerEncoder");
 
         // calculate multiplier
-        TICKS_TO_INCHES = leftEncoder.encoder.getRevolutions() * WHEEL_DIAMETER * Math.PI;
+        TICKS_TO_INCHES = WHEEL_DIAMETER * Math.PI / leftEncoder.getCPR();
 
         // create our odometry object and subsystem
         m_robotOdometry = new HolonomicOdometry(
