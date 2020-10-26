@@ -43,6 +43,11 @@ import org.openftc.easyopencv.OpenCvPipeline
  * since zero is a valid option we must account for it. This check also makes sure that we don't
  * mistake other smaller objects on the field as the ring stack, even if they are rings.
  *
+ * We also implemented a horizon check. Anything above the horizon is disregarded and not looked at
+ * even if it has the greatest width from all the other contours. This is to ensure that the
+ * algorithm down not detect the red goal as YCrCb color space is very unreliable when detecting the
+ * difference between red and orange.
+ *
  * After finding the widest contour, which is to be assumed the stack of rings, we perform an aspect
  * ratio of the height over the width of the largest bounding rectangle.
  *
@@ -53,7 +58,6 @@ import org.openftc.easyopencv.OpenCvPipeline
  * Didn't you just say that you used a width check on the contour though? Isn't that also pixels?
  * Yes we did, however, unlike the height of the stack, the width of the stack is consistent. It is
  * always one ring wide, this way we are able to algorithmically generate a minimum bounding width.
- * TODO minimum width check algorithm needs to implemented / tested
  *
  * example of blurring in order to smooth images: https://docs.opencv.org/3.4/dc/dd3/tutorial_gausian_median_blur_bilateral_filter.html
  * example of contours:                           https://docs.opencv.org/3.4/df/d0d/tutorial_find_contours.html
@@ -83,19 +87,23 @@ class UGContourRingPipeline(
     }
 
     /** companion object to store all static variables needed **/
-    companion object {
+    companion object Config {
         /** values used for inRange calculation
          * set to var in-case user wants to use their own tuned values 
          * stored in YCrCb format **/
         var lowerOrange = Scalar(0.0, 141.0, 0.0)
-        var upperOrange = Scalar(255.0, 230.0, 150.0)
+        var upperOrange = Scalar(255.0, 230.0, 95.0)
         
         /** width of the camera in use, defaulted to 320 as that is most common in examples **/
         var CAMERA_WIDTH = 320
 
+        /** Horizon value in use, anything above this value (less than the value) since
+         * (0, 0) is the top left of the camera frame **/
+        var HORIZON: Int = ((100.0 / 320.0) * CAMERA_WIDTH).toInt()
+
         /** algorithmically calculated minimum width for width check based on camera width **/
         val MIN_WIDTH
-            get() = (50.0 / 320.0) * CAMERA_WIDTH // TODO implement minimum width check algorithm
+            get() = (50.0 / 320.0) * CAMERA_WIDTH
 
         /** if the calculated aspect ratio is greater then this, height is 4, otherwise its 1 **/
         const val BOUND_RATIO = 0.7
@@ -146,9 +154,10 @@ class UGContourRingPipeline(
                 val rect: Rect = Imgproc.boundingRect(copy)
 
                 val w = rect.width
-                if (w > maxWidth) {
-                    maxWidth = w;
-                    maxRect = rect;
+                // checking if the rectangle is below the horizon
+                if (w > maxWidth && rect.y + rect.height > HORIZON) {
+                    maxWidth = w
+                    maxRect = rect
                 }
                 c.release() // releasing the buffer of the contour, since after use, it is no longer needed
                 copy.release() // releasing the buffer of the copy of the contour, since after use, it is no longer needed
@@ -156,6 +165,23 @@ class UGContourRingPipeline(
 
             /**drawing widest bounding rectangle to ret in blue**/
             Imgproc.rectangle(ret, maxRect, Scalar(0.0, 0.0, 255.0), 2)
+
+            /** drawing a red line to show the horizon (any above the horizon is not checked to be a ring stack **/
+            Imgproc.line(
+                    ret,
+                    Point(
+                            .0,
+                            HORIZON.toDouble()
+                    ),
+                    Point(
+                            CAMERA_WIDTH.toDouble(),
+                            HORIZON.toDouble()
+                    ),
+                    Scalar(
+                            255.0,
+                            .0,
+                            255.0)
+            )
 
             if (debug) telemetry?.addData("Vision: maxW", maxWidth)
 

@@ -20,11 +20,14 @@ class UGContourRingDetector(
     private lateinit var ftcLibPipeline: UGContourRingPipeline
 
     constructor(hMap: HardwareMap, webcamName: String): this(hMap) {
-        isUsingWebcam = true
         this.webcamName = webcamName
+        this.isUsingWebcam = true
     }
 
-    constructor(hMap: HardwareMap, webcamName: String, telemetry: Telemetry, debug: Boolean): this(hMap, telemetry)
+    constructor(hMap: HardwareMap, webcamName: String, telemetry: Telemetry, debug: Boolean): this(hMap, telemetry, debug) {
+        this.webcamName = webcamName
+        this.isUsingWebcam = true
+    }
 
     val height: UGContourRingPipeline.Height
         get() {
