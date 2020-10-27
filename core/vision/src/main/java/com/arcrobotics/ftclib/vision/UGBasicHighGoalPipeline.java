@@ -17,7 +17,7 @@ import java.util.Collections;
 import java.util.Comparator;
 
 
-public class BasicHighGoalPipeline extends OpenCvPipeline {
+public class UGBasicHighGoalPipeline extends OpenCvPipeline {
 
 
     public int minThreshold, maxThreshold;

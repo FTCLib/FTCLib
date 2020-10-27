@@ -12,7 +12,7 @@ import java.util.Collections;
 import java.util.Comparator;
 
 
-public class AngleHighGoalPipeline extends BasicHighGoalPipeline {
+public class UGAngleHighGoalPipeline extends BasicHighGoalPipeline {
 
     class Fraction {
         private int numerator, denominator;
