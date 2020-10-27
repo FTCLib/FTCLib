@@ -3,11 +3,8 @@
 *Logo produced by Xing from FTC Team 15303*
 
 ![Android CI | dev](https://github.com/FTCLib/FTCLib/workflows/Android%20CI/badge.svg?branch=dev)
-[![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/FTCLib/FTCLib)
 
 Origin: https://github.com/FTCLib/FTCLib
-
-Upstream: https://github.com/OpenFTC/OpenRC-Turbo
 
 Project led by Jackson Isenberg and the Alpharetta Robotics Club
 
@@ -18,49 +15,8 @@ FTCLib is a library designed to be the only library you'll need for FTC programm
 Please read the documentation and the rest of the README before you get started with the library.
 
 FTCLib documentation - <https://ftclib.gitbook.io/ftclib>
-
-
-## Welcome to FTCLib!
-
-Thank you for using the FTCLib library for your code! All of the people who worked on it have put a lot of effort into making FTCLib an amazing library. We thank you for putting our effort to work with your own projects. We hope you have great luck and success with your programming.
-
-The mission of FTCLib is briefly summarized in the following quote made by Jackson from ARC Robotics, who started the library.
-
-
-> Our goal is to make programming easier and more efficient through effective classes and detailed examples of implementation. - Jackson ARC Robotics
-
-## Why Use FTCLib?
-
-FTCLib is a non-profit, open source, community-driven library created solely with the intent of helping rookie teams learn programming easier and maximizing efficiency for veteran teams. By putting everything into one library, with enough documentation to build a rigorous learning experience, all teams can benefit from using FTCLib. It's fast, easy, efficient, and powerful. The idea is that this truly is the last library you will ever need.
-
-FTCLib still has the ability to be used along with other libraries without conflict. If you still want to use other libraries alongside ours, go ahead. FTCLib's purpose is solely to improve everyone's programming experience in FTC.
-
-## How to use developer release
-Add this to your build.common.gradle:
-```groovy
-    repositories {
-        jcenter()
-    }
-```  
-Now, in your TeamCode buid.gradle, add these lines:
-```
-dependencies {
-    implementation 'com.arcrobotics:ftclib:1.0.0' // Replace 1.0.0 with the latest release
-}
-```
-To ensure the project builds correctly, please follow steps below: 
-
-## Attention Users!
-This library uses Java 8! If you do not already have Java 8 on your FTC Project, please do so! If you do not know how to, read further. __Doing this__ *will* __require all other devices to delete and then reclone the project following the change!__ You get weird Android Studio errors other wise. To change, go to the `build.common.gradle` and find the lines that say
-
-```groovy
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_7
-        targetCompatibility JavaVersion.VERSION_1_7
-    }
-```
-
-Change the `7` to an `8` and then perform a Gradle Sync. You now have Java 8 (and all the things that come with it)!
+<br />
+JavaDocs - <https://javadoc.io/doc/com.arcrobotics/ftclib/1.1.1/index.html>
 
 ## Installation
 
@@ -84,18 +40,19 @@ Change the `7` to an `8` and then perform a Gradle Sync. You now have Java 8 (an
 
     ```groovy
     dependencies {
-        implementation 'com.arcrobotics:ftclib:1.0.0'
+        implementation 'com.arcrobotics:ftclib:1.1.2'
     }
     ```
 6. Because FTCLib makes use of advanced features, you need to increase the minSdkVersion to 24. Unfortunately, this means that ZTE Speed Phones are not supported in this release.
 
-In build.common.gradle, change the minSdkVersion from 19 to 24:
+In build.common.gradle, change the minSdkVersion from 23 to 24:
 ```groovy
 
     defaultConfig {
         applicationId 'com.qualcomm.ftcrobotcontroller'
         minSdkVersion 24
-        targetSdkVersion 26
+        targetSdkVersion 28
+    }
 ```
     
 7. Perform a gradle sync to implement your changes.
@@ -112,18 +69,30 @@ add `multiDexEnabled true` to the below location inside the `build.common.gradle
     defaultConfig {
         applicationId 'com.qualcomm.ftcrobotcontroller'
         minSdkVersion 24
-        targetSdkVersion 26
+        targetSdkVersion 28
 
 
         multiDexEnabled true
+    }
 ```
 
-## Legality for competition use
+## Welcome to FTCLib!
 
-FTCLib is currently in full version 1.0.0. Our library is cloned from [OpenRC-Turbo](https://github.com/OpenFTC/OpenRC-Turbo). Please take a look at the upstream for information regarding legal use, variants, and stock.
+Thank you for using the FTCLib library for your code! All of the people who worked on it have put a lot of effort into making FTCLib an amazing library. We thank you for putting our effort to work with your own projects. We hope you have great luck and success with your programming.
+
+The mission of FTCLib is briefly summarized in the following quote made by Jackson from ARC Robotics, who started the library.
+
+
+> Our goal is to make programming easier and more efficient through effective classes and detailed examples of implementation.
+
+## Why Use FTCLib?
+
+FTCLib is a non-profit, open source, community-driven library created solely with the intent of helping rookie teams learn programming easier and maximizing efficiency for veteran teams. By putting everything into one library, with enough documentation to build a rigorous learning experience, all teams can benefit from using FTCLib. It's fast, easy, efficient, and powerful. The idea is that this truly is the last library you will ever need.
+
+FTCLib still has the ability to be used along with other libraries without conflict. If you still want to use other libraries alongside ours, go ahead. FTCLib's purpose is solely to improve everyone's programming experience in FTC.
 
 ## Contributing
 
-Since this is a community-driven, open source library, we are constantly looking for more content. If you feel there is something missing from our library, feel free to contribute! If you want to contribute to the project, be sure to read the [CONTRIBUTING.md](https://github.com/FTCLib/FTCLib/blob/dev/CONTRIBUTING.md).
+Since this is a community-driven, open source library, we are constantly looking for more content. If you feel there is something missing from our library, feel free to contribute! If you want to contribute to the project, be sure to read the [CONTRIBUTING.md](.github/CONTRIBUTING.md).
 
 Please make sure to contact us if you have any other questions.

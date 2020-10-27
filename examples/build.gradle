@@ -1,0 +1,44 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 28
+    buildToolsVersion "29.0.2"
+
+    defaultConfig {
+        minSdkVersion 24
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.1.2"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation project(path: ':core')
+
+    compileOnly 'org.firstinspires.ftc:Inspection:6.0.1'
+    compileOnly 'org.firstinspires.ftc:Blocks:6.0.1'
+    compileOnly 'org.firstinspires.ftc:RobotCore:6.0.1'
+    compileOnly 'org.firstinspires.ftc:RobotServer:6.0.1'
+    compileOnly 'org.firstinspires.ftc:OnBotJava:6.0.1'
+    compileOnly 'org.firstinspires.ftc:Hardware:6.0.1'
+    compileOnly 'org.firstinspires.ftc:FtcCommon:6.0.1'
+    compileOnly 'androidx.appcompat:appcompat:1.2.0'
+    implementation project(path: ':core:vision')
+
+}

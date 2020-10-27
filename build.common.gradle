@@ -21,7 +21,8 @@ apply plugin: 'com.android.application'
 
 android {
 
-    compileSdkVersion 26
+
+    compileSdkVersion 28
 
     signingConfigs {
         debug {
@@ -39,8 +40,9 @@ android {
     defaultConfig {
         applicationId 'com.qualcomm.ftcrobotcontroller'
         minSdkVersion 24
-        targetSdkVersion 26
+        targetSdkVersion 28
         multiDexEnabled true
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         /**
          * We keep the versionCode and versionName of robot controller applications in sync with
@@ -50,9 +52,6 @@ android {
          *
          * We accomplish this with the help of a funky little Groovy script that maintains that
          * correspondence automatically.
-         *
-         * @see <a href="http://developer.android.com/tools/building/configuring-gradle.html">Configure Your Build</a>
-         * @see <a href="http://developer.android.com/tools/publishing/versioning.html">Versioning Your App</a>
          */
         def manifestFile = project(':FtcRobotController').file('src/main/AndroidManifest.xml');
         def manifestText = manifestFile.getText()
@@ -102,12 +101,15 @@ android {
     }
 }
 
-apply from: '../moduleFlavors.gradle'
+
 
 repositories {
     mavenLocal()
+    maven { url = "https://dl.bintray.com/first-tech-challenge/ftcsdk/" }
+
     flatDir {
         dirs rootProject.file('libs')
     }
 }
+
 //apply from: 'build.release.gradle'
