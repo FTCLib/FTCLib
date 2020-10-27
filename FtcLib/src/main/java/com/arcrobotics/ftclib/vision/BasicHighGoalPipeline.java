@@ -19,6 +19,8 @@ import java.util.Comparator;
 
 public class BasicHighGoalPipeline extends OpenCvPipeline {
 
+
+    public int minThreshold, maxThreshold;
     private Mat blueThreshold;
     private Mat redThreshold;
 
@@ -51,6 +53,9 @@ public class BasicHighGoalPipeline extends OpenCvPipeline {
 
         blueRect = new Rect();
         redRect = new Rect();
+
+        minThreshold = 155;
+        maxThreshold = 255;
     }
 
     @Override
@@ -63,9 +68,9 @@ public class BasicHighGoalPipeline extends OpenCvPipeline {
         Core.extractChannel(matYCrCb, blueChannel, 2);
 
         // Blue threshold
-        Imgproc.threshold(blueChannel, blueThreshold, 155, 255, Imgproc.THRESH_BINARY);
+        Imgproc.threshold(blueChannel, blueThreshold, minThreshold, maxThreshold, Imgproc.THRESH_BINARY);
         // Red threshold
-        Imgproc.threshold(redChannel, redThreshold, 155, 255, Imgproc.THRESH_BINARY);
+        Imgproc.threshold(redChannel, redThreshold, minThreshold, maxThreshold, Imgproc.THRESH_BINARY);
 
         Imgproc.findContours(blueThreshold, blueContours, new Mat(), Imgproc.RETR_TREE, Imgproc.CHAIN_APPROX_SIMPLE);
         Imgproc.findContours(redThreshold, redContours, new Mat(), Imgproc.RETR_TREE, Imgproc.CHAIN_APPROX_SIMPLE);
