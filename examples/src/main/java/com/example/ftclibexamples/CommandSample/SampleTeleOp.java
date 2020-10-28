@@ -38,11 +38,11 @@ public class SampleTeleOp extends CommandOpMode {
         m_releaseCommand = new ReleaseStone(m_gripper);
 
         m_grabButton = (new GamepadButton(m_driverOp, GamepadKeys.Button.A))
-                .whenPressed(m_driveCommand);
+                .whenPressed(m_grabCommand);
         m_releaseButton = (new GamepadButton(m_driverOp, GamepadKeys.Button.B))
                 .whenPressed(m_releaseCommand);
 
-        m_drive.setDefaultCommand(m_driveCommand);
+        schedule(m_driveCommand);
         register(m_drive, m_gripper);
     }
 

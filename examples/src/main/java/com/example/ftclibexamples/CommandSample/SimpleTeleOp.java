@@ -31,14 +31,14 @@ public class SimpleTeleOp extends CommandOpMode {
 
     @Override
     public void initialize() {
-        register(drive, gripper);
         // using InstantCommand here is not the greatest idea because the servos move in nonzero time
         // alternatives are adding WaitUntilCommands or making these commands.
         // As a result of this uncertainty, we add the gripper subsystem to ensure requirements are met.
         grabButton.whenPressed(new InstantCommand(gripper::grab, gripper));
         releaseButton.whenPressed(new InstantCommand(gripper::release, gripper));
 
-        drive.setDefaultCommand(driveCommand);
+        schedule(driveCommand);
+        register(drive, gripper);
     }
 
 }
