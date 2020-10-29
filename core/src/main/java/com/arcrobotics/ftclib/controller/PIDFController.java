@@ -110,6 +110,8 @@ public class PIDFController {
      */
     public void setSetPoint(double sp) {
         setPoint = sp;
+        errorVal_p = setPoint - measuredValue;
+        errorVal_v = (errorVal_p - prevErrorVal) / period;
     }
 
     /**

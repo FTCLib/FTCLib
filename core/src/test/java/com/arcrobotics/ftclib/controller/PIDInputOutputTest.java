@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class PIDInputOutputTest {
     private PIDController m_controller;
@@ -16,6 +17,10 @@ public class PIDInputOutputTest {
     @Test
     void proportionalGainOutputTest() {
         m_controller.setP(4);
+
+        m_controller.setSetPoint(1000);
+        m_controller.setTolerance(1);
+        assertFalse(m_controller.atSetPoint());
 
         assertEquals(-0.1, m_controller.calculate(0.025, 0), 1e-5);
     }
@@ -37,6 +42,10 @@ public class PIDInputOutputTest {
     @Test
     void derivativeGainOutputTest() {
         m_controller.setD(4);
+
+        m_controller.setSetPoint(1000);
+        m_controller.setTolerance(Double.MAX_VALUE, 1);
+        assertFalse(m_controller.atSetPoint());
 
         assertEquals(0, m_controller.calculate(0,0));
 
