@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class PIDInputOutputTest {
     private PIDController m_controller;
@@ -50,5 +51,28 @@ public class PIDInputOutputTest {
         assertEquals(0, m_controller.calculate(0,0));
 
         assertEquals(m_controller.calculate(0.025, 0), -0.1 / m_controller.getPeriod(), 0.05);
+    }
+
+    @Test
+    void errorTolerancePeriodTest() {
+        m_controller.setP(0.5);
+        assertEquals(0, m_controller.getPeriod());
+        assertEquals(0, m_controller.getVelocityError());
+        assertEquals(Double.POSITIVE_INFINITY, m_controller.getTolerance()[1]);
+        m_controller.setSetPoint(100);
+        assertEquals(100, m_controller.getPositionError());
+        assertEquals(0, m_controller.getPeriod());
+        assertEquals(Double.POSITIVE_INFINITY, m_controller.getVelocityError());
+        assertFalse(m_controller.atSetPoint());
+        m_controller.setTolerance(Double.POSITIVE_INFINITY);
+        assertFalse(m_controller.atSetPoint());
+        m_controller.setTolerance(5);
+        double value = 0;
+        do {
+            value = value + m_controller.calculate(value);
+        } while (!m_controller.atSetPoint());
+        assertTrue(m_controller.atSetPoint());
+        m_controller.setSetPoint(0);
+        assertFalse(m_controller.atSetPoint());
     }
 }
