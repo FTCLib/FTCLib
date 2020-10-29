@@ -37,7 +37,7 @@ public class CRServo extends Motor {
     public CRServo(HardwareMap hMap, String id, double kP) {
         crServo = hMap.get(com.qualcomm.robotcore.hardware.CRServo.class, id);
 
-        pController = new PController(0.3);
+        pController = new PController(kP);
     }
 
     @Override

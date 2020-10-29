@@ -11,9 +11,6 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
  */
 public abstract class CommandOpMode extends LinearOpMode {
 
-    protected GamepadEx driverOp = new GamepadEx(gamepad1);
-    protected GamepadEx toolOp = new GamepadEx(gamepad2);
-
     /**
      * Cancels all previous commands
      */
@@ -45,6 +42,8 @@ public abstract class CommandOpMode extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         initialize();
+
+        waitForStart();
 
         // run the scheduler
         while (!isStopRequested() && opModeIsActive()) {

@@ -9,7 +9,6 @@ import com.arcrobotics.ftclib.hardware.HardwareDevice;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import java.util.function.Function;
 import java.util.function.Supplier;
 
 /**
@@ -23,7 +22,7 @@ public class Motor implements HardwareDevice {
     public enum GoBILDA {
         RPM_30(5264, 30), RPM_43(3892, 43), RPM_60(2786, 60), RPM_84(1993.6, 84),
         RPM_117(1425.2, 117), RPM_223(753.2, 223), RPM_312(537.6, 312), RPM_435(383.6, 435),
-        RPM_1150(145.6, 1150), RPM_1620(103.6, 1620), NONE(0, 0);
+        RPM_1150(145.6, 1150), RPM_1620(103.6, 1620), BARE(28,6000), NONE(0, 0);
 
         private double cpr, rpm;
 
@@ -204,6 +203,8 @@ public class Motor implements HardwareDevice {
 
     protected SimpleMotorFeedforward feedforward;
 
+    private boolean targetIsSet = false;
+
     public Motor() {}
 
     /**
@@ -235,6 +236,25 @@ public class Motor implements HardwareDevice {
         runmode = RunMode.RawPower;
         type = gobildaType;
         ACHIEVABLE_MAX_TICKS_PER_SECOND = gobildaType.getAchievableMaxTicksPerSecond();
+        veloController = new PIDController(1,0,0);
+        positionController = new PController(1);
+        feedforward = new SimpleMotorFeedforward(0, 1, 0);
+        encoder = new Encoder(motor::getCurrentPosition);
+    }
+
+    /**
+     * Constructs an instance motor for the wrapper
+     *
+     * @param hMap      the hardware map from the OpMode
+     * @param id        the device id from the RC config
+     * @param cpr       the counts per revolution of the motor
+     * @param rpm       the revolutions per minute of the motor
+     */
+    public Motor(@NonNull HardwareMap hMap, String id, double cpr, double rpm) {
+        motor = hMap.get(DcMotor.class, id);
+        runmode = RunMode.RawPower;
+        type = GoBILDA.NONE;
+        ACHIEVABLE_MAX_TICKS_PER_SECOND = cpr * rpm / 60;
         veloController = new PIDController(1,0,0);
         positionController = new PController(1);
         feedforward = new SimpleMotorFeedforward(0, 1, 0);
@@ -355,6 +375,10 @@ public class Motor implements HardwareDevice {
         this.runmode = runmode;
         veloController.reset();
         positionController.reset();
+        if (runmode == RunMode.PositionControl && !targetIsSet) {
+            setTargetPosition(getCurrentPosition());
+            targetIsSet = false;
+        }
     }
 
     protected double getVelocity() {
@@ -378,6 +402,7 @@ public class Motor implements HardwareDevice {
      * @param target
      */
     public void setTargetPosition(int target) {
+        targetIsSet = true;
         positionController.setSetPoint(target);
     }
 
