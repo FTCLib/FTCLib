@@ -66,7 +66,8 @@ public class SelectCommand extends CommandBase {
     public void initialize() {
         if (m_selector != null) {
             if (!m_commands.keySet().contains(m_selector.get())) {
-                m_selectedCommand = new PrintCommand(
+                m_selectedCommand = new LogCatCommand(
+                        "SelectCommand failure",
                         "SelectCommand selector value does not correspond to" + " any command!");
                 return;
             }
