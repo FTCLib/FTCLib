@@ -14,6 +14,7 @@ public class Pose2dTest {
         Pose2d expected = new Pose2d(new Translation2d(1,1),new Rotation2d(90));
         assertEquals(output,expected);
     }
+
     @Test
     void testTransformBy() {
         Pose2d initial = new Pose2d(new Translation2d(1.0, 2.0), Rotation2d.fromDegrees(45.0));

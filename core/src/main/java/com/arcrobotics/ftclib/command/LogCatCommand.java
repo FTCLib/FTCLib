@@ -7,21 +7,33 @@
 
 package com.arcrobotics.ftclib.command;
 
+import android.util.Log;
+
 /**
- * A command that prints a string when initialized.
+ * A command that logs a message when initialized.
  */
-public class PrintCommand extends InstantCommand {
-    /**
-     * Creates a new a PrintCommand.
-     *
-     * @param message the message to print
-     */
-    public PrintCommand(String message) {
-        super(() -> System.out.println(message));
+public class LogCatCommand extends InstantCommand {
+
+    public LogCatCommand(String tag, String message, int priority) {
+        super(() -> Log.println(priority, tag, message));
+    }
+
+    public LogCatCommand(String tag, String message) {
+        this(tag, message, Log.DEBUG);
+    }
+
+    public LogCatCommand(String message) {
+        this("LogCatCommand", message);
+    }
+
+
+    public LogCatCommand(String message, int priority) {
+        this("LogCatCommand", message, priority);
     }
 
     @Override
     public boolean runsWhenDisabled() {
         return true;
     }
+
 }
