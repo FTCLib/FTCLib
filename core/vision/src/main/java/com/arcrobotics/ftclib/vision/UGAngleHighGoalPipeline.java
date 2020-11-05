@@ -6,28 +6,23 @@ public class UGAngleHighGoalPipeline extends UGBasicHighGoalPipeline {
 
     class Fraction {
         private int numerator, denominator;
-
         Fraction(long a, long b) {
             numerator = (int) (a / gcd(a, b));
             denominator = (int) (b / gcd(a, b));
         }
-
         /**
          * @return the greatest common denominator
          */
         private long gcd(long a, long b) {
             return b == 0 ? a : gcd(b, a % b);
         }
-
         public int getNumerator() {
             return numerator;
         }
-
         public int getDenominator() {
             return denominator;
         }
     }
-
 
     private boolean isFirstFrame;
 
@@ -54,16 +49,15 @@ public class UGAngleHighGoalPipeline extends UGBasicHighGoalPipeline {
         this.fov = fov;
         this.cameraPitchOffset = cameraPitchOffset;
         this.cameraYawOffset = cameraYawOffset;
+        this.isFirstFrame = true;
     }
 
     public UGAngleHighGoalPipeline(double fov) {
         this(fov, 0, 0);
     }
 
-
     @Override
     public Mat processFrame(Mat input) {
-
         if (isFirstFrame) {
             imageWidth = input.width();
             imageHeight = input.height();
@@ -83,9 +77,8 @@ public class UGAngleHighGoalPipeline extends UGBasicHighGoalPipeline {
             horizontalFocalLength = this.imageWidth / (2 * Math.tan(horizontalView / 2));
             verticalFocalLength = this.imageHeight / (2 * Math.tan(verticalView / 2));
         }
-
+        isFirstFrame = false;
         return super.processFrame(input);
-
     }
 
     public double calculateYaw(Target color) {
