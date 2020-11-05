@@ -76,8 +76,9 @@ public class UGAngleHighGoalPipeline extends UGBasicHighGoalPipeline {
             double verticalView = Math.atan(Math.tan(diagonalView / 2) * (verticalRatio / diagonalAspect)) * 2;
             horizontalFocalLength = this.imageWidth / (2 * Math.tan(horizontalView / 2));
             verticalFocalLength = this.imageHeight / (2 * Math.tan(verticalView / 2));
+            isFirstFrame = false;
         }
-        isFirstFrame = false;
+
         return super.processFrame(input);
     }
 
@@ -90,6 +91,8 @@ public class UGAngleHighGoalPipeline extends UGBasicHighGoalPipeline {
     }
 
     public double calculateYaw(Target color, double offsetCenterX) {
+
+
         double targetCenterX = 0;
         if (color == Target.RED) {
             targetCenterX = getCenterofRect(getRedRect()).x;

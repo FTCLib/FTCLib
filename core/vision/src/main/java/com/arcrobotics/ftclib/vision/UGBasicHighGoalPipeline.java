@@ -32,8 +32,6 @@ public class UGBasicHighGoalPipeline extends OpenCvPipeline {
     private MatOfPoint biggestRedContour;
     private Rect blueRect, redRect;
 
-    private boolean isBlueVisible, isRedVisible;
-
     public UGBasicHighGoalPipeline() {
 
         matYCrCb = new Mat();
@@ -77,15 +75,22 @@ public class UGBasicHighGoalPipeline extends OpenCvPipeline {
             biggestBlueContour = Collections.max(blueContours, new Comparator<MatOfPoint>() {
                 @Override
                 public int compare(MatOfPoint t0, MatOfPoint t1) {
-                    return Double.compare(Imgproc.contourArea(t0), Imgproc.contourArea(t1)) ;
+                    return Double.compare(Imgproc.contourArea(t0), Imgproc.contourArea(t1));
                 }
             });
 
+
             blueRect = Imgproc.boundingRect(biggestBlueContour);
+            double aspectRatio = (double) blueRect.width / blueRect.height;
 
-            Imgproc.rectangle(input, blueRect, new Scalar(0, 0, 255));
+            if (aspectRatio > 1.0) {
+                Imgproc.rectangle(input, blueRect, new Scalar(0, 0, 255));
+            } else {
+                blueRect = null;
+            }
+        } else {
+            blueRect = null;
         }
-
         if (redContours.size() != 0) {
             biggestRedContour = Collections.max(redContours, new Comparator<MatOfPoint>() {
                 @Override
@@ -95,8 +100,16 @@ public class UGBasicHighGoalPipeline extends OpenCvPipeline {
             });
 
             redRect = Imgproc.boundingRect(biggestRedContour);
-            Imgproc.rectangle(input, redRect, new Scalar(255, 0, 0));
+            double aspectRatio = (double) redRect.width / redRect.height;
 
+            if (aspectRatio > 1.0) {
+                Imgproc.rectangle(input, redRect, new Scalar(0, 0, 255));
+            } else {
+                redRect = null;
+            }
+
+        } else {
+            redRect = null;
         }
 
         return input;
@@ -110,7 +123,18 @@ public class UGBasicHighGoalPipeline extends OpenCvPipeline {
         return blueRect;
     }
 
-    public static Point getCenterofRect(Rect rect) {
+    public boolean isRedVisible() {
+        return (redRect != null);
+    }
+
+    public boolean isBlueVisible() {
+        return (blueRect != null);
+    }
+
+    public static Point getCenterofRect(Rect rect) throws RuntimeException {
+        if (rect == null) {
+            throw new RuntimeException("Target not visible");
+        }
         return new Point(rect.x + rect.width / 2, rect.y + rect.height / 2);
     }
 }
