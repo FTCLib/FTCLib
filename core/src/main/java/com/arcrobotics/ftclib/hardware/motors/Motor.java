@@ -169,7 +169,7 @@ public class Motor implements HardwareDevice {
         BRAKE(DcMotor.ZeroPowerBehavior.BRAKE),
         FLOAT(DcMotor.ZeroPowerBehavior.UNKNOWN);
 
-        private DcMotor.ZeroPowerBehavior m_behavior;
+        private final DcMotor.ZeroPowerBehavior m_behavior;
 
         ZeroPowerBehavior(DcMotor.ZeroPowerBehavior behavior) {
             m_behavior = behavior;
@@ -198,10 +198,12 @@ public class Motor implements HardwareDevice {
      */
     protected GoBILDA type;
 
-    protected PIDController veloController;
-    protected PController positionController;
+    protected PIDController veloController = new PIDController(1,0,0);;
+    protected PController positionController = new PController(1);
 
-    protected SimpleMotorFeedforward feedforward;
+    protected SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(0, 1, 0);
+
+    private boolean targetIsSet = false;
 
     private boolean targetIsSet = false;
 
@@ -218,9 +220,6 @@ public class Motor implements HardwareDevice {
         runmode = RunMode.RawPower;
         type = GoBILDA.NONE;
         ACHIEVABLE_MAX_TICKS_PER_SECOND = motor.getMotorType().getAchieveableMaxTicksPerSecond();
-        veloController = new PIDController(1,0,0);
-        positionController = new PController(1);
-        feedforward = new SimpleMotorFeedforward(0, 1, 0);
         encoder = new Encoder(motor::getCurrentPosition);
     }
 
@@ -236,9 +235,22 @@ public class Motor implements HardwareDevice {
         runmode = RunMode.RawPower;
         type = gobildaType;
         ACHIEVABLE_MAX_TICKS_PER_SECOND = gobildaType.getAchievableMaxTicksPerSecond();
-        veloController = new PIDController(1,0,0);
-        positionController = new PController(1);
-        feedforward = new SimpleMotorFeedforward(0, 1, 0);
+        encoder = new Encoder(motor::getCurrentPosition);
+    }
+
+    /**
+     * Constructs an instance motor for the wrapper
+     *
+     * @param hMap      the hardware map from the OpMode
+     * @param id        the device id from the RC config
+     * @param cpr       the counts per revolution of the motor
+     * @param rpm       the revolutions per minute of the motor
+     */
+    public Motor(@NonNull HardwareMap hMap, String id, double cpr, double rpm) {
+        motor = hMap.get(DcMotor.class, id);
+        runmode = RunMode.RawPower;
+        type = GoBILDA.NONE;
+        ACHIEVABLE_MAX_TICKS_PER_SECOND = cpr * rpm / 60;
         encoder = new Encoder(motor::getCurrentPosition);
     }
 
@@ -282,9 +294,10 @@ public class Motor implements HardwareDevice {
     /**
      * Sets the distance per pulse of the encoder in units per tick.
      * @param distancePerPulse  the desired distance per pulse
+     * @return an encoder an object with the specified distance per pulse
      */
-    public void setDistancePerPulse(double distancePerPulse) {
-        encoder.setDistancePerPulse(distancePerPulse);
+    public Encoder setDistancePerPulse(double distancePerPulse) {
+        return encoder.setDistancePerPulse(distancePerPulse);
     }
 
     /**
