@@ -43,14 +43,8 @@ public class MotorEx extends Motor {
      * @param gobildaType the type of gobilda 5202 series motor being used
      */
     public MotorEx(@NonNull HardwareMap hMap, String id, @NonNull GoBILDA gobildaType) {
-        motorEx = hMap.get(DcMotorEx.class, id);
-        runmode = RunMode.RawPower;
-        type = gobildaType;
-        ACHIEVABLE_MAX_TICKS_PER_SECOND = gobildaType.getAchievableMaxTicksPerSecond();
-        veloController = new PIDController(1,0,0);
-        positionController = new PController(1);
-        feedforward = new SimpleMotorFeedforward(0, 1, 0);
-        encoder = new Encoder(motorEx::getCurrentPosition);
+        super(hMap, id, gobildaType);
+        motorEx = (DcMotorEx)hMap.get(DcMotor.class, id);
     }
 
     /**
@@ -62,14 +56,8 @@ public class MotorEx extends Motor {
      * @param rpm       the revolutions per minute of the motor
      */
     public MotorEx(@NonNull HardwareMap hMap, String id, double cpr, double rpm) {
-        motor = hMap.get(DcMotorEx.class, id);
-        runmode = RunMode.RawPower;
-        type = GoBILDA.NONE;
-        ACHIEVABLE_MAX_TICKS_PER_SECOND = cpr * rpm / 60;
-        veloController = new PIDController(1,0,0);
-        positionController = new PController(1);
-        feedforward = new SimpleMotorFeedforward(0, 1, 0);
-        encoder = new Encoder(motor::getCurrentPosition);
+        super(hMap, id, cpr, rpm);
+        motorEx = (DcMotorEx)hMap.get(DcMotor.class, id);
     }
 
     @Override
