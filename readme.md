@@ -40,7 +40,7 @@ JavaDocs - <https://javadoc.io/doc/com.arcrobotics/ftclib/1.1.1/index.html>
 
     ```groovy
     dependencies {
-        implementation 'com.arcrobotics:ftclib:1.1.3'
+        implementation 'com.arcrobotics:ftclib:1.1.4'
         // the following is optional if you want vision
         implementation 'com.arcrobotics.ftclib:vision:1.1.0'
     }
