@@ -2,6 +2,9 @@ package com.example.ftclibexamples;
 
 import com.arcrobotics.ftclib.command.CommandScheduler;
 import com.arcrobotics.ftclib.command.InstantCommand;
+import com.arcrobotics.ftclib.command.LogCatCommand;
+import com.arcrobotics.ftclib.command.button.Button;
+import com.arcrobotics.ftclib.command.button.GamepadButton;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.arcrobotics.ftclib.hardware.SimpleServo;
@@ -9,6 +12,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import java.time.Instant;
 import java.util.function.BooleanSupplier;
 
 @TeleOp(name="Simple Gamepad Example")
@@ -52,6 +56,15 @@ public class GamepadSample extends LinearOpMode {
         while (opModeIsActive()) {
             CommandScheduler.getInstance().run();
         }
+
+        // binding a simple command
+        toolOp.getGamepadButton(GamepadKeys.Button.X)
+                .whenPressed(new LogCatCommand("Hello, world!"));
+
+        toolOp.getGamepadButton(GamepadKeys.Button.Y)
+                .whenPressed(new InstantCommand(() -> {
+                    // your implementation of run() here
+                }));
 
     }
 
