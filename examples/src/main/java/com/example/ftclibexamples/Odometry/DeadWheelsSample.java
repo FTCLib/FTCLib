@@ -1,4 +1,4 @@
-package com.example.ftclibexamples;
+package com.example.ftclibexamples.Odometry;
 
 import com.arcrobotics.ftclib.drivebase.MecanumDrive;
 import com.arcrobotics.ftclib.hardware.motors.Motor;
@@ -62,6 +62,10 @@ public class DeadWheelsSample extends LinearOpMode {
         leftOdometer = frontLeft.encoder.setDistancePerPulse(DISTANCE_PER_PULSE);
         rightOdometer = frontRight.encoder.setDistancePerPulse(DISTANCE_PER_PULSE);
         centerOdometer = backLeft.encoder.setDistancePerPulse(DISTANCE_PER_PULSE);
+
+        // We reverse this because of the direction it is moving
+        // similarly to how we reverse the right side of the mecanum drive
+        rightOdometer.setDirection(Motor.Direction.REVERSE);
 
         odometry = new HolonomicOdometry(
                 leftOdometer::getDistance,

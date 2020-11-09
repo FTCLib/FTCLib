@@ -1,14 +1,10 @@
-package com.example.ftclibexamples.SharedOdometry;
+package com.example.ftclibexamples.Odometry.SharedOdometry;
 
 import com.arcrobotics.ftclib.hardware.motors.MotorEx;
 import com.arcrobotics.ftclib.kinematics.HolonomicOdometry;
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-@Autonomous
-@Disabled
-public class AutoStaticRobotPose extends LinearOpMode {
+public class TeleStaticRobotPose extends LinearOpMode {
 
     private MotorEx leftEncoder, rightEncoder, perpEncoder;
     private HolonomicOdometry odometry;
@@ -38,12 +34,18 @@ public class AutoStaticRobotPose extends LinearOpMode {
                 CENTER_WHEEL_OFFSET
         );
 
+        // read the current position from the position tracker
+        odometry.updatePose(PositionTracker.robotPose);
+
+        telemetry.addData("Robot Position at Init: ", PositionTracker.robotPose);
+        telemetry.update();
+
         waitForStart();
 
-        while (!isStopRequested()) {
-            // run autonomous
+        while (opModeIsActive() && !isStopRequested()) {
+            // teleop things
 
-            // update positions
+            // update position
             odometry.updatePose();
             PositionTracker.robotPose = odometry.getPose();
         }

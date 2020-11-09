@@ -1,6 +1,5 @@
 package com.arcrobotics.ftclib.command;
 
-import com.arcrobotics.ftclib.drivebase.MecanumDrive;
 import com.arcrobotics.ftclib.geometry.Pose2d;
 import com.arcrobotics.ftclib.purepursuit.Path;
 import com.arcrobotics.ftclib.purepursuit.Waypoint;
@@ -11,14 +10,15 @@ import com.arcrobotics.ftclib.purepursuit.Waypoint;
  */
 public class PurePursuitCommand extends CommandBase {
 
-    private MecanumDrive m_drive;
+    private MecanumSubsystem m_drive;
     private OdometrySubsystem m_odometry;
     private Path m_path;
 
-    public PurePursuitCommand(MecanumDrive drive, OdometrySubsystem odometry, Waypoint... waypoints) {
+    public PurePursuitCommand(MecanumSubsystem drive, OdometrySubsystem odometry, Waypoint... waypoints) {
         m_path = new Path(waypoints);
         m_drive = drive;
         m_odometry = odometry;
+        addRequirements(odometry, drive);
     }
 
     @Override
@@ -44,8 +44,8 @@ public class PurePursuitCommand extends CommandBase {
     @Override
     public void execute() {
         Pose2d robotPose = m_odometry.getPose();
-        double[] motorSpeeds = m_path.loop(robotPose.getTranslation().getX(), robotPose.getTranslation().getY(), robotPose.getHeading());
-        m_drive.driveRobotCentric(motorSpeeds[0], motorSpeeds[1], motorSpeeds[2]);
+        double[] motorSpeeds = m_path.loop(robotPose.getX(), robotPose.getY(), robotPose.getHeading());
+        m_drive.drive(motorSpeeds[0], motorSpeeds[1], motorSpeeds[2]);
     }
     
     @Override

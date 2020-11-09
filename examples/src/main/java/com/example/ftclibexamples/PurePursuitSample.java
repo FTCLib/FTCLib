@@ -1,6 +1,7 @@
 package com.example.ftclibexamples;
 
 import com.arcrobotics.ftclib.command.CommandOpMode;
+import com.arcrobotics.ftclib.command.MecanumSubsystem;
 import com.arcrobotics.ftclib.command.OdometrySubsystem;
 import com.arcrobotics.ftclib.command.PurePursuitCommand;
 import com.arcrobotics.ftclib.drivebase.MecanumDrive;
@@ -27,6 +28,7 @@ public class PurePursuitSample extends CommandOpMode {
     private OdometrySubsystem m_odometry;
     private PurePursuitCommand ppCommand;
     private MecanumDrive m_robotDrive;
+    private MecanumSubsystem m_drive;
     private Motor fL, fR, bL, bR;
     private MotorEx leftEncoder, rightEncoder, centerEncoder;
 
@@ -39,6 +41,7 @@ public class PurePursuitSample extends CommandOpMode {
 
         // create our drive object
         m_robotDrive = new MecanumDrive(fL, fR, bL, bR);
+        m_drive = new MecanumSubsystem(m_robotDrive);
 
         leftEncoder = new MotorEx(hardwareMap, "leftEncoder");
         rightEncoder = new MotorEx(hardwareMap, "rightEncoder");
@@ -58,7 +61,7 @@ public class PurePursuitSample extends CommandOpMode {
 
         // create our pure pursuit command
         ppCommand = new PurePursuitCommand(
-                m_robotDrive, m_odometry,
+                m_drive, m_odometry,
                 new StartWaypoint(0,0),
                 new GeneralWaypoint(200,0,0.8,0.8,30),
                 new EndWaypoint(
