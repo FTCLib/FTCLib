@@ -27,19 +27,26 @@ public class EncoderTest {
         assertEquals(1, encoder.getPosition());
         assertEquals(20, encoder.getDistance());
         assertEquals(3, motor.getCurrentPosition());
+        motor.resetEncoder();
+        assertEquals(1, encoder.getPosition());
+        assertEquals(2, encoder.getPosition());
+        assertEquals(3, encoder.getPosition());
+        motor.resetEncoder();
+        assertEquals(1, encoder.getPosition());
     }
 
     private class MockMotor {
         private int position;
         private MockEncoder encoder;
         private class MockEncoder {
+            private int offset;
             private Supplier<Integer> m_supplier;
             private double dpp;
             public MockEncoder(Supplier<Integer> supplier) {
                 m_supplier = supplier;
             }
             public int getPosition() {
-                return m_supplier.get();
+                return m_supplier.get() - offset;
             }
             public MockEncoder setDistancePerPulse(double distancePerPulse) {
                 dpp = distancePerPulse;
@@ -48,10 +55,12 @@ public class EncoderTest {
             public double getDistance() {
                 return dpp * getPosition();
             }
+            public void reset() { offset += getPosition(); }
         }
         public MockMotor() {
             encoder = new MockEncoder(this::getCurrentPosition);
         }
+        public void resetEncoder() { encoder.reset(); }
         public int getCurrentPosition() {
             return position++;
         }

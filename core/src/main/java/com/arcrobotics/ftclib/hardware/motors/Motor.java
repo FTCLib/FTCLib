@@ -107,7 +107,7 @@ public class Motor implements HardwareDevice {
          * Resets the encoder without having to stop the motor.
          */
         public void reset() {
-            resetVal = getPosition();
+            resetVal += getPosition();
         }
 
         /**
@@ -205,8 +205,6 @@ public class Motor implements HardwareDevice {
 
     private boolean targetIsSet = false;
 
-    private boolean targetIsSet = false;
-
     public Motor() {}
 
     /**
@@ -235,22 +233,6 @@ public class Motor implements HardwareDevice {
         runmode = RunMode.RawPower;
         type = gobildaType;
         ACHIEVABLE_MAX_TICKS_PER_SECOND = gobildaType.getAchievableMaxTicksPerSecond();
-        encoder = new Encoder(motor::getCurrentPosition);
-    }
-
-    /**
-     * Constructs an instance motor for the wrapper
-     *
-     * @param hMap      the hardware map from the OpMode
-     * @param id        the device id from the RC config
-     * @param cpr       the counts per revolution of the motor
-     * @param rpm       the revolutions per minute of the motor
-     */
-    public Motor(@NonNull HardwareMap hMap, String id, double cpr, double rpm) {
-        motor = hMap.get(DcMotor.class, id);
-        runmode = RunMode.RawPower;
-        type = GoBILDA.NONE;
-        ACHIEVABLE_MAX_TICKS_PER_SECOND = cpr * rpm / 60;
         encoder = new Encoder(motor::getCurrentPosition);
     }
 

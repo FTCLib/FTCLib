@@ -1,4 +1,4 @@
-    package com.arcrobotics.ftclib.drivebase;
+package com.arcrobotics.ftclib.drivebase;
 
 import com.arcrobotics.ftclib.geometry.Vector2d;
 
@@ -83,14 +83,42 @@ public class MecanumDriveTest {
     }
 
     @Test
-    public void testFieldCentric() {
+    public void testTurning() {
+        double[] speeds = new double[]{-1, 1, -1, 1};
+        assertArrayEquals(speeds, driveFieldCentric(0,0,-1,0), 0.05);
+        assertArrayEquals(speeds, driveFieldCentric(0,0,-1,-90), 0.05);
+        assertArrayEquals(speeds, driveFieldCentric(0,0,-1,90), 0.05);
+
+        speeds = new double[]{1, -1, 1, -1};
+        assertArrayEquals(speeds, driveFieldCentric(0,0,1,0), 0.05);
+        assertArrayEquals(speeds, driveFieldCentric(0,0,1,-90), 0.05);
+        assertArrayEquals(speeds, driveFieldCentric(0,0,1,90), 0.05);
+    }
+
+    @Test
+    public void testForwards() {
         double[] speeds = {1, 1, 1, 1};
         assertArrayEquals(speeds, driveFieldCentric(0,1,0,0), 0.05);
-        speeds = new double[]{-1, 1, -1, 1};
-        assertArrayEquals(speeds, driveFieldCentric(0,0,-1,0), 0.05);
-        speeds = new double[]{-1, 1, 1, -1};
+        assertArrayEquals(speeds, driveFieldCentric(1,0,0,-90), 0.05);
+        assertArrayEquals(speeds, driveFieldCentric(-1,0,0,90), 0.05);
+
+        speeds = new double[]{-1, -1, -1, -1};
+        assertArrayEquals(speeds, driveFieldCentric(0,-1,0,0), 0.05);
+        assertArrayEquals(speeds, driveFieldCentric(-1,0,0,-90), 0.05);
+        assertArrayEquals(speeds, driveFieldCentric(1,0,0,90), 0.05);
+    }
+
+    @Test
+    public void testStrafing() {
+        double[] speeds = new double[]{-1, 1, 1, -1};
         assertArrayEquals(speeds, driveFieldCentric(-1,0,0,0), 0.05);
         assertArrayEquals(speeds, driveFieldCentric(0,1,0,-90), 0.05);
+        assertArrayEquals(speeds, driveFieldCentric(0,-1,0,90), 0.05);
+
+        speeds = new double[]{1, -1, -1, 1};
+        assertArrayEquals(speeds, driveFieldCentric(1,0,0,0), 0.05);
+        assertArrayEquals(speeds, driveFieldCentric(0,-1,0,-90), 0.05);
+        assertArrayEquals(speeds, driveFieldCentric(0,1,0,90), 0.05);
     }
 
 }
