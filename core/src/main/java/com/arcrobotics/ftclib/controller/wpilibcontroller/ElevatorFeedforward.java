@@ -8,8 +8,8 @@
 package com.arcrobotics.ftclib.controller.wpilibcontroller;
 
 /**
- * A helper class that computes feedforward outputs for a simple elevator (modeled as a motor
- * acting against the force of gravity).
+ * A helper class that computes feedforward outputs for a simple elevator (modeled as a motor acting
+ * against the force of gravity).
  */
 @SuppressWarnings("MemberName")
 public class ElevatorFeedforward {
@@ -19,8 +19,8 @@ public class ElevatorFeedforward {
   public final double ka;
 
   /**
-   * Creates a new ElevatorFeedforward with the specified gains.  Units of the gain values
-   * will dictate units of the computed feedforward.
+   * Creates a new ElevatorFeedforward with the specified gains. Units of the gain values will
+   * dictate units of the computed feedforward.
    *
    * @param ks The static gain.
    * @param kg The gravity gain.
@@ -35,8 +35,8 @@ public class ElevatorFeedforward {
   }
 
   /**
-   * Creates a new ElevatorFeedforward with the specified gains.  Acceleration gain is
-   * defaulted to zero.  Units of the gain values will dictate units of the computed feedforward.
+   * Creates a new ElevatorFeedforward with the specified gains. Acceleration gain is defaulted to
+   * zero. Units of the gain values will dictate units of the computed feedforward.
    *
    * @param ks The static gain.
    * @param kg The gravity gain.
@@ -49,7 +49,7 @@ public class ElevatorFeedforward {
   /**
    * Calculates the feedforward from the gains and setpoints.
    *
-   * @param velocity     The velocity setpoint.
+   * @param velocity The velocity setpoint.
    * @param acceleration The acceleration setpoint.
    * @return The computed feedforward.
    */
@@ -58,8 +58,8 @@ public class ElevatorFeedforward {
   }
 
   /**
-   * Calculates the feedforward from the gains and velocity setpoint (acceleration is assumed to
-   * be zero).
+   * Calculates the feedforward from the gains and velocity setpoint (acceleration is assumed to be
+   * zero).
    *
    * @param velocity The velocity setpoint.
    * @return The computed feedforward.
@@ -72,11 +72,10 @@ public class ElevatorFeedforward {
   // formulas for the methods below:
 
   /**
-   * Calculates the maximum achievable velocity given a maximum voltage supply
-   * and an acceleration.  Useful for ensuring that velocity and
-   * acceleration constraints for a trapezoidal profile are simultaneously
-   * achievable - enter the acceleration constraint, and this will give you
-   * a simultaneously-achievable velocity constraint.
+   * Calculates the maximum achievable velocity given a maximum voltage supply and an acceleration.
+   * Useful for ensuring that velocity and acceleration constraints for a trapezoidal profile are
+   * simultaneously achievable - enter the acceleration constraint, and this will give you a
+   * simultaneously-achievable velocity constraint.
    *
    * @param maxVoltage The maximum voltage that can be supplied to the elevator.
    * @param acceleration The acceleration of the elevator.
@@ -88,11 +87,10 @@ public class ElevatorFeedforward {
   }
 
   /**
-   * Calculates the minimum achievable velocity given a maximum voltage supply
-   * and an acceleration.  Useful for ensuring that velocity and
-   * acceleration constraints for a trapezoidal profile are simultaneously
-   * achievable - enter the acceleration constraint, and this will give you
-   * a simultaneously-achievable velocity constraint.
+   * Calculates the minimum achievable velocity given a maximum voltage supply and an acceleration.
+   * Useful for ensuring that velocity and acceleration constraints for a trapezoidal profile are
+   * simultaneously achievable - enter the acceleration constraint, and this will give you a
+   * simultaneously-achievable velocity constraint.
    *
    * @param maxVoltage The maximum voltage that can be supplied to the elevator.
    * @param acceleration The acceleration of the elevator.
@@ -104,11 +102,10 @@ public class ElevatorFeedforward {
   }
 
   /**
-   * Calculates the maximum achievable acceleration given a maximum voltage
-   * supply and a velocity. Useful for ensuring that velocity and
-   * acceleration constraints for a trapezoidal profile are simultaneously
-   * achievable - enter the velocity constraint, and this will give you
-   * a simultaneously-achievable acceleration constraint.
+   * Calculates the maximum achievable acceleration given a maximum voltage supply and a velocity.
+   * Useful for ensuring that velocity and acceleration constraints for a trapezoidal profile are
+   * simultaneously achievable - enter the velocity constraint, and this will give you a
+   * simultaneously-achievable acceleration constraint.
    *
    * @param maxVoltage The maximum voltage that can be supplied to the elevator.
    * @param velocity The velocity of the elevator.
@@ -119,11 +116,10 @@ public class ElevatorFeedforward {
   }
 
   /**
-   * Calculates the minimum achievable acceleration given a maximum voltage
-   * supply and a velocity. Useful for ensuring that velocity and
-   * acceleration constraints for a trapezoidal profile are simultaneously
-   * achievable - enter the velocity constraint, and this will give you
-   * a simultaneously-achievable acceleration constraint.
+   * Calculates the minimum achievable acceleration given a maximum voltage supply and a velocity.
+   * Useful for ensuring that velocity and acceleration constraints for a trapezoidal profile are
+   * simultaneously achievable - enter the velocity constraint, and this will give you a
+   * simultaneously-achievable acceleration constraint.
    *
    * @param maxVoltage The maximum voltage that can be supplied to the elevator.
    * @param velocity The velocity of the elevator.
