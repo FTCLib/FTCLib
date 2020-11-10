@@ -1,9 +1,7 @@
 name: Format
 
 on:
-  push:
-    branches:
-      - master
+  [push, pull_request]
 
 jobs:
 
