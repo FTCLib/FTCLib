@@ -1,10 +1,6 @@
 package com.arcrobotics.ftclib.gamepad;
 
-import com.arcrobotics.ftclib.command.button.GamepadButton;
 import com.qualcomm.robotcore.hardware.Gamepad;
-import com.arcrobotics.ftclib.gamepad.GamepadKeys.Button;
-
-import java.util.HashMap;
 
 /** An extended gamepad for more advanced toggles, key events, and other control processors. */
 public class GamepadEx {

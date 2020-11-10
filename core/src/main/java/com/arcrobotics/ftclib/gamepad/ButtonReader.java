@@ -1,7 +1,5 @@
 package com.arcrobotics.ftclib.gamepad;
 
-import android.os.Build;
-import androidx.annotation.RequiresApi;
 import java.util.function.BooleanSupplier;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
