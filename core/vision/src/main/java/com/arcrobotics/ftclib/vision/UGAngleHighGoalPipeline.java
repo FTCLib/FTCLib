@@ -1,6 +1,7 @@
 package com.arcrobotics.ftclib.vision;
 
 import org.opencv.core.Mat;
+import org.opencv.core.Rect;
 
 public class UGAngleHighGoalPipeline extends UGBasicHighGoalPipeline {
 
@@ -81,35 +82,69 @@ public class UGAngleHighGoalPipeline extends UGBasicHighGoalPipeline {
 
         return super.processFrame(input);
     }
-
-    public double calculateYaw(Target color) {
-        return calculateYaw(color, centerX) + cameraYawOffset;
+    /**
+     * @param color Alliance Color
+     * @param defaultAngle Angle to display if no target found
+    */
+    public double calculateYaw(Target color, double defaultAngle) {
+        return calculateYaw(color, centerX, defaultAngle) + cameraYawOffset;
     }
 
-    public double calculatePitch(Target color) {
-        return calculatePitch(color, centerY) + cameraPitchOffset;
+    /**
+     * @param color Alliance Color
+     * @param defaultAngle Angle to display if no target found
+     */
+    public double calculatePitch(Target color, double defaultAngle) {
+        return calculatePitch(color, centerY, defaultAngle) + cameraPitchOffset;
     }
 
-    public double calculateYaw(Target color, double offsetCenterX) {
+    /**
+     *
+     * @param color Allaince color
+     * @param offsetCenterX centerX
+     * @param defaultAngle Angle to return if no target found
+     * @return
+     */
+    public double calculateYaw(Target color, double offsetCenterX, double defaultAngle) {
 
 
         double targetCenterX = 0;
+        Rect currentRect;
         if (color == Target.RED) {
-            targetCenterX = getCenterofRect(getRedRect()).x;
-        } else if (color == Target.Blue) {
-            targetCenterX = getCenterofRect(getBlueRect()).x;
+            currentRect = getRedRect();
+        } else {
+            currentRect = getBlueRect();
+        }
+        if(getCenterofRect(currentRect).isPresent()) {
+            targetCenterX = getCenterofRect(currentRect).get().x;
+        } else {
+            return defaultAngle;
         }
 
         return Math.toDegrees(
                 Math.atan((offsetCenterX - targetCenterX) / horizontalFocalLength));
     }
 
-    public double calculatePitch(Target color, double offsetCenterY) {
+    /**
+     *
+     * @param color Allaince color
+     * @param offsetCenterY centerY
+     * @param defaultAngle Angle to return if no target found
+     * @return
+     */
+    public double calculatePitch(Target color, double offsetCenterY, double defaultAngle) {
         double targetCenterY = 0;
+
+        Rect currentRect;
         if (color == Target.RED) {
-            targetCenterY = getCenterofRect(getRedRect()).y;
-        } else if (color == Target.Blue) {
-            targetCenterY = getCenterofRect(getBlueRect()).y;
+            currentRect = getRedRect();
+        } else {
+            currentRect = getBlueRect();
+        }
+        if(getCenterofRect(currentRect).isPresent()) {
+            targetCenterY = getCenterofRect(currentRect).get().y;
+        } else {
+            return defaultAngle;
         }
 
         return -Math.toDegrees(

@@ -13,6 +13,9 @@ import org.openftc.easyopencv.OpenCvPipeline;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Optional;
+
+import static java.util.Optional.of;
 
 
 public class UGBasicHighGoalPipeline extends OpenCvPipeline {
@@ -131,10 +134,10 @@ public class UGBasicHighGoalPipeline extends OpenCvPipeline {
         return (blueRect != null);
     }
 
-    public static Point getCenterofRect(Rect rect) throws RuntimeException {
+    public static Optional<Point> getCenterofRect(Rect rect) {
         if (rect == null) {
-            throw new RuntimeException("Target not visible");
+            return Optional.empty();
         }
-        return new Point(rect.x + rect.width / 2, rect.y + rect.height / 2);
+        return Optional.of(new Point(rect.x + rect.width / 2, rect.y + rect.height / 2));
     }
 }
