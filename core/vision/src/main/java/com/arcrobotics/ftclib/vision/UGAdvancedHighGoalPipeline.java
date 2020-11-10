@@ -12,22 +12,25 @@ public class UGAdvancedHighGoalPipeline extends UGAngleHighGoalPipeline {
     private double distanceOfClosestPuck = 16.5;
     private double puckSpacing = 7.5;
 
+    private double defaultAngle;
+
     enum Powershot {
         LeftShot, CenterShot, RightShot
     }
 
 
-    public UGAdvancedHighGoalPipeline(double fov, double cameraHeight) {
-        this(fov, cameraHeight, 40.625, 0, 0);  // inches
+    public UGAdvancedHighGoalPipeline(double fov, double cameraHeight, double defaultAngle) {
+        this(fov, cameraHeight, 40.625, 0, 0, defaultAngle);  // inches
 
     }
 
-    public UGAdvancedHighGoalPipeline(double fov, double cameraHeight, double centerOfLogoHeight, double cameraPitchOffset, double cameraYawOffset) {
+    public UGAdvancedHighGoalPipeline(double fov, double cameraHeight, double centerOfLogoHeight, double cameraPitchOffset, double cameraYawOffset, double defaultAngle) {
         super(fov);
         this.cameraHeight = cameraHeight;
         this.centerOfLogoHeight = centerOfLogoHeight;
         this.cameraPitchOffset = cameraPitchOffset;
         this.cameraYawOffset = cameraYawOffset;
+        this.defaultAngle = defaultAngle;
     }
 
     public void setCameraHeight(double cameraHeight) {
@@ -36,16 +39,16 @@ public class UGAdvancedHighGoalPipeline extends UGAngleHighGoalPipeline {
 
     public double getDistanceToGoal(Target color) {
 
-        return getDistanceToGoalWall(color) / Math.cos(Math.toRadians(calculateYaw(color)));
+        return getDistanceToGoalWall(color) / Math.cos(Math.toRadians(calculateYaw(color, defaultAngle)));
     }
 
     public double getDistanceToGoalWall(Target color) {
-        return (centerOfLogoHeight - cameraHeight) / Math.tan(Math.toRadians(calculatePitch(color)));
+        return (centerOfLogoHeight - cameraHeight) / Math.tan(Math.toRadians(calculatePitch(color, defaultAngle)));
     }
 
     public double getPowershotAngle(Target color, Powershot shot) {
         double offset = 0;
-        double angle = calculateYaw(color);
+        double angle = calculateYaw(color, defaultAngle);
         if (shot == Powershot.LeftShot) {
             offset = distanceOfClosestPuck;
         } else if (shot == Powershot.CenterShot) {
