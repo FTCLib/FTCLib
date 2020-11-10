@@ -8,27 +8,22 @@
 package com.arcrobotics.ftclib.command;
 
 /**
- * Class that holds scheduling state for a command.  Used internally by the
- * {@link CommandScheduler}.
+ * Class that holds scheduling state for a command. Used internally by the {@link CommandScheduler}.
  *
- * <p>
- *     <i>Has been <u>grossly</u> oversimplified compared to that of WPILib</i>
- * </p>
+ * <p><i>Has been <u>grossly</u> oversimplified compared to that of WPILib</i>
  *
  * @author Jackson
  */
 class CommandState {
 
-    // Whether or not it is interruptible.
-    private final boolean m_interruptible;
+  // Whether or not it is interruptible.
+  private final boolean m_interruptible;
 
+  CommandState(boolean interruptible) {
+    m_interruptible = interruptible;
+  }
 
-    CommandState(boolean interruptible) {
-        m_interruptible = interruptible;
-    }
-
-    boolean isInterruptible() {
-        return m_interruptible;
-    }
-
+  boolean isInterruptible() {
+    return m_interruptible;
+  }
 }

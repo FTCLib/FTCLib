@@ -8,8 +8,8 @@
 package com.arcrobotics.ftclib.controller.wpilibcontroller;
 
 /**
- * A helper class that computes feedforward outputs for a simple arm (modeled as a motor
- * acting against the force of gravity on a beam suspended at an angle).
+ * A helper class that computes feedforward outputs for a simple arm (modeled as a motor acting
+ * against the force of gravity on a beam suspended at an angle).
  */
 @SuppressWarnings("MemberName")
 public class ArmFeedforward {
@@ -19,13 +19,13 @@ public class ArmFeedforward {
   public final double ka;
 
   /**
-   * Creates a new ArmFeedforward with the specified gains.  Units of the gain values
-   * will dictate units of the computed feedforward.
+   * Creates a new ArmFeedforward with the specified gains. Units of the gain values will dictate
+   * units of the computed feedforward.
    *
-   * @param ks   The static gain.
+   * @param ks The static gain.
    * @param kcos The gravity gain.
-   * @param kv   The velocity gain.
-   * @param ka   The acceleration gain.
+   * @param kv The velocity gain.
+   * @param ka The acceleration gain.
    */
   public ArmFeedforward(double ks, double kcos, double kv, double ka) {
     this.ks = ks;
@@ -35,12 +35,12 @@ public class ArmFeedforward {
   }
 
   /**
-   * Creates a new ArmFeedforward with the specified gains.  Acceleration gain is
-   * defaulted to zero.  Units of the gain values will dictate units of the computed feedforward.
+   * Creates a new ArmFeedforward with the specified gains. Acceleration gain is defaulted to zero.
+   * Units of the gain values will dictate units of the computed feedforward.
    *
-   * @param ks   The static gain.
+   * @param ks The static gain.
    * @param kcos The gravity gain.
-   * @param kv   The velocity gain.
+   * @param kv The velocity gain.
    */
   public ArmFeedforward(double ks, double kcos, double kv) {
     this(ks, kcos, kv, 0);
@@ -49,20 +49,21 @@ public class ArmFeedforward {
   /**
    * Calculates the feedforward from the gains and setpoints.
    *
-   * @param velocityRadPerSec     The velocity setpoint.
+   * @param velocityRadPerSec The velocity setpoint.
    * @param accelRadPerSecSquared The acceleration setpoint.
    * @return The computed feedforward.
    */
-  public double calculate(double positionRadians, double velocityRadPerSec,
-                          double accelRadPerSecSquared) {
-    return ks * Math.signum(velocityRadPerSec) + kcos * Math.cos(positionRadians)
+  public double calculate(
+      double positionRadians, double velocityRadPerSec, double accelRadPerSecSquared) {
+    return ks * Math.signum(velocityRadPerSec)
+        + kcos * Math.cos(positionRadians)
         + kv * velocityRadPerSec
         + ka * accelRadPerSecSquared;
   }
 
   /**
-   * Calculates the feedforward from the gains and velocity setpoint (acceleration is assumed to
-   * be zero).
+   * Calculates the feedforward from the gains and velocity setpoint (acceleration is assumed to be
+   * zero).
    *
    * @param velocity The velocity setpoint.
    * @return The computed feedforward.
@@ -75,11 +76,10 @@ public class ArmFeedforward {
   // formulas for the methods below:
 
   /**
-   * Calculates the maximum achievable velocity given a maximum voltage supply,
-   * a position, and an acceleration.  Useful for ensuring that velocity and
-   * acceleration constraints for a trapezoidal profile are simultaneously
-   * achievable - enter the acceleration constraint, and this will give you
-   * a simultaneously-achievable velocity constraint.
+   * Calculates the maximum achievable velocity given a maximum voltage supply, a position, and an
+   * acceleration. Useful for ensuring that velocity and acceleration constraints for a trapezoidal
+   * profile are simultaneously achievable - enter the acceleration constraint, and this will give
+   * you a simultaneously-achievable velocity constraint.
    *
    * @param maxVoltage The maximum voltage that can be supplied to the arm.
    * @param angle The angle of the arm.
@@ -92,11 +92,10 @@ public class ArmFeedforward {
   }
 
   /**
-   * Calculates the minimum achievable velocity given a maximum voltage supply,
-   * a position, and an acceleration.  Useful for ensuring that velocity and
-   * acceleration constraints for a trapezoidal profile are simultaneously
-   * achievable - enter the acceleration constraint, and this will give you
-   * a simultaneously-achievable velocity constraint.
+   * Calculates the minimum achievable velocity given a maximum voltage supply, a position, and an
+   * acceleration. Useful for ensuring that velocity and acceleration constraints for a trapezoidal
+   * profile are simultaneously achievable - enter the acceleration constraint, and this will give
+   * you a simultaneously-achievable velocity constraint.
    *
    * @param maxVoltage The maximum voltage that can be supplied to the arm.
    * @param angle The angle of the arm.
@@ -109,11 +108,10 @@ public class ArmFeedforward {
   }
 
   /**
-   * Calculates the maximum achievable acceleration given a maximum voltage
-   * supply, a position, and a velocity. Useful for ensuring that velocity and
-   * acceleration constraints for a trapezoidal profile are simultaneously
-   * achievable - enter the velocity constraint, and this will give you
-   * a simultaneously-achievable acceleration constraint.
+   * Calculates the maximum achievable acceleration given a maximum voltage supply, a position, and
+   * a velocity. Useful for ensuring that velocity and acceleration constraints for a trapezoidal
+   * profile are simultaneously achievable - enter the velocity constraint, and this will give you a
+   * simultaneously-achievable acceleration constraint.
    *
    * @param maxVoltage The maximum voltage that can be supplied to the arm.
    * @param angle The angle of the arm.
@@ -125,11 +123,10 @@ public class ArmFeedforward {
   }
 
   /**
-   * Calculates the minimum achievable acceleration given a maximum voltage
-   * supply, a position, and a velocity. Useful for ensuring that velocity and
-   * acceleration constraints for a trapezoidal profile are simultaneously
-   * achievable - enter the velocity constraint, and this will give you
-   * a simultaneously-achievable acceleration constraint.
+   * Calculates the minimum achievable acceleration given a maximum voltage supply, a position, and
+   * a velocity. Useful for ensuring that velocity and acceleration constraints for a trapezoidal
+   * profile are simultaneously achievable - enter the velocity constraint, and this will give you a
+   * simultaneously-achievable acceleration constraint.
    *
    * @param maxVoltage The maximum voltage that can be supplied to the arm.
    * @param angle The angle of the arm.

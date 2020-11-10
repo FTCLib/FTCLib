@@ -8,7 +8,6 @@
 package com.arcrobotics.ftclib.command;
 
 import com.arcrobotics.ftclib.util.Timing.Timer;
-
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -19,36 +18,35 @@ import java.util.concurrent.TimeUnit;
  */
 public class WaitCommand extends CommandBase {
 
-    protected Timer m_timer;
+  protected Timer m_timer;
 
-    /**
-     * Creates a new WaitCommand. This command will do nothing, and end after the specified duration.
-     *
-     * @param millis the time to wait, in milliseconds
-     */
-    public WaitCommand(long millis) {
-        m_timer = new Timer(millis, TimeUnit.MILLISECONDS);
-        setName(m_name + ": " + millis + " milliseconds");
-    }
+  /**
+   * Creates a new WaitCommand. This command will do nothing, and end after the specified duration.
+   *
+   * @param millis the time to wait, in milliseconds
+   */
+  public WaitCommand(long millis) {
+    m_timer = new Timer(millis, TimeUnit.MILLISECONDS);
+    setName(m_name + ": " + millis + " milliseconds");
+  }
 
-    @Override
-    public void initialize() {
-        m_timer.start();
-    }
+  @Override
+  public void initialize() {
+    m_timer.start();
+  }
 
-    @Override
-    public void end(boolean interrupted) {
-        m_timer.pause();
-    }
+  @Override
+  public void end(boolean interrupted) {
+    m_timer.pause();
+  }
 
-    @Override
-    public boolean isFinished() {
-        return m_timer.done();
-    }
+  @Override
+  public boolean isFinished() {
+    return m_timer.done();
+  }
 
-    @Override
-    public boolean runsWhenDisabled() {
-        return true;
-    }
-
+  @Override
+  public boolean runsWhenDisabled() {
+    return true;
+  }
 }
