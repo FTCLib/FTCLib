@@ -1,7 +1,5 @@
 package com.arcrobotics.ftclib.gamepad;
 
-import org.firstinspires.ftc.robotcore.external.Telemetry;
-
 public class TriggerReader implements KeyReader {
   private GamepadEx gamepad;
   private GamepadKeys.Trigger trigger;

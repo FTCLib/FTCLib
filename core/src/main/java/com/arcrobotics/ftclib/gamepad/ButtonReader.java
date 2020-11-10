@@ -9,7 +9,6 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
  * Class that reads the value of button states. In order to get any values that depend on the
  * previous state, you must call "readValue();" in a loop.
  */
-@RequiresApi(api = Build.VERSION_CODES.N)
 public class ButtonReader implements KeyReader {
 
   /** Last state of the button * */
