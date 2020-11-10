@@ -19,38 +19,37 @@ import java.util.Set;
 @SuppressWarnings("PMD.AbstractClassWithoutAbstractMethod")
 public abstract class CommandBase implements Command {
 
-    protected String m_name = this.getClass().getSimpleName();
-    protected String m_subsystem = "Ungrouped";
-    protected Set<Subsystem> m_requirements = new HashSet<>();
+  protected String m_name = this.getClass().getSimpleName();
+  protected String m_subsystem = "Ungrouped";
+  protected Set<Subsystem> m_requirements = new HashSet<>();
 
-    /**
-     * Adds the specified requirements to the command.
-     *
-     * @param requirements the requirements to add
-     */
-    public final void addRequirements(Subsystem... requirements) {
-        m_requirements.addAll(Arrays.asList(requirements));
-    }
+  /**
+   * Adds the specified requirements to the command.
+   *
+   * @param requirements the requirements to add
+   */
+  public final void addRequirements(Subsystem... requirements) {
+    m_requirements.addAll(Arrays.asList(requirements));
+  }
 
-    @Override
-    public Set<Subsystem> getRequirements() {
-        return m_requirements;
-    }
+  @Override
+  public Set<Subsystem> getRequirements() {
+    return m_requirements;
+  }
 
-    public String getName() {
-        return this.getClass().getSimpleName();
-    }
+  public String getName() {
+    return this.getClass().getSimpleName();
+  }
 
-    public void setName(String name) {
-        m_name = name;
-    }
+  public void setName(String name) {
+    m_name = name;
+  }
 
-    public String getSubsystem() {
-        return m_subsystem;
-    }
+  public String getSubsystem() {
+    return m_subsystem;
+  }
 
-    public void setSubsystem(String subsystem) {
-        m_subsystem = subsystem;
-    }
-
+  public void setSubsystem(String subsystem) {
+    m_subsystem = subsystem;
+  }
 }

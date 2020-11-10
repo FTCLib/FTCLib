@@ -7,9 +7,7 @@
 
 package com.arcrobotics.ftclib.controller.wpilibcontroller;
 
-/**
- * A helper class that computes feedforward outputs for a simple permanent-magnet DC motor.
- */
+/** A helper class that computes feedforward outputs for a simple permanent-magnet DC motor. */
 @SuppressWarnings("MemberName")
 public class SimpleMotorFeedforward {
   public final double ks;
@@ -17,8 +15,8 @@ public class SimpleMotorFeedforward {
   public final double ka;
 
   /**
-   * Creates a new SimpleMotorFeedforward with the specified gains.  Units of the gain values
-   * will dictate units of the computed feedforward.
+   * Creates a new SimpleMotorFeedforward with the specified gains. Units of the gain values will
+   * dictate units of the computed feedforward.
    *
    * @param ks The static gain.
    * @param kv The velocity gain.
@@ -31,8 +29,8 @@ public class SimpleMotorFeedforward {
   }
 
   /**
-   * Creates a new SimpleMotorFeedforward with the specified gains.  Acceleration gain is
-   * defaulted to zero.  Units of the gain values will dictate units of the computed feedforward.
+   * Creates a new SimpleMotorFeedforward with the specified gains. Acceleration gain is defaulted
+   * to zero. Units of the gain values will dictate units of the computed feedforward.
    *
    * @param ks The static gain.
    * @param kv The velocity gain.
@@ -44,7 +42,7 @@ public class SimpleMotorFeedforward {
   /**
    * Calculates the feedforward from the gains and setpoints.
    *
-   * @param velocity     The velocity setpoint.
+   * @param velocity The velocity setpoint.
    * @param acceleration The acceleration setpoint.
    * @return The computed feedforward.
    */
@@ -56,8 +54,8 @@ public class SimpleMotorFeedforward {
   // formulas for the methods below:
 
   /**
-   * Calculates the feedforward from the gains and velocity setpoint (acceleration is assumed to
-   * be zero).
+   * Calculates the feedforward from the gains and velocity setpoint (acceleration is assumed to be
+   * zero).
    *
    * @param velocity The velocity setpoint.
    * @return The computed feedforward.
@@ -67,11 +65,10 @@ public class SimpleMotorFeedforward {
   }
 
   /**
-   * Calculates the maximum achievable velocity given a maximum voltage supply
-   * and an acceleration.  Useful for ensuring that velocity and
-   * acceleration constraints for a trapezoidal profile are simultaneously
-   * achievable - enter the acceleration constraint, and this will give you
-   * a simultaneously-achievable velocity constraint.
+   * Calculates the maximum achievable velocity given a maximum voltage supply and an acceleration.
+   * Useful for ensuring that velocity and acceleration constraints for a trapezoidal profile are
+   * simultaneously achievable - enter the acceleration constraint, and this will give you a
+   * simultaneously-achievable velocity constraint.
    *
    * @param maxVoltage The maximum voltage that can be supplied to the motor.
    * @param acceleration The acceleration of the motor.
@@ -83,11 +80,10 @@ public class SimpleMotorFeedforward {
   }
 
   /**
-   * Calculates the minimum achievable velocity given a maximum voltage supply
-   * and an acceleration.  Useful for ensuring that velocity and
-   * acceleration constraints for a trapezoidal profile are simultaneously
-   * achievable - enter the acceleration constraint, and this will give you
-   * a simultaneously-achievable velocity constraint.
+   * Calculates the minimum achievable velocity given a maximum voltage supply and an acceleration.
+   * Useful for ensuring that velocity and acceleration constraints for a trapezoidal profile are
+   * simultaneously achievable - enter the acceleration constraint, and this will give you a
+   * simultaneously-achievable velocity constraint.
    *
    * @param maxVoltage The maximum voltage that can be supplied to the motor.
    * @param acceleration The acceleration of the motor.
@@ -99,11 +95,10 @@ public class SimpleMotorFeedforward {
   }
 
   /**
-   * Calculates the maximum achievable acceleration given a maximum voltage
-   * supply and a velocity. Useful for ensuring that velocity and
-   * acceleration constraints for a trapezoidal profile are simultaneously
-   * achievable - enter the velocity constraint, and this will give you
-   * a simultaneously-achievable acceleration constraint.
+   * Calculates the maximum achievable acceleration given a maximum voltage supply and a velocity.
+   * Useful for ensuring that velocity and acceleration constraints for a trapezoidal profile are
+   * simultaneously achievable - enter the velocity constraint, and this will give you a
+   * simultaneously-achievable acceleration constraint.
    *
    * @param maxVoltage The maximum voltage that can be supplied to the motor.
    * @param velocity The velocity of the motor.
@@ -114,11 +109,10 @@ public class SimpleMotorFeedforward {
   }
 
   /**
-   * Calculates the maximum achievable acceleration given a maximum voltage
-   * supply and a velocity. Useful for ensuring that velocity and
-   * acceleration constraints for a trapezoidal profile are simultaneously
-   * achievable - enter the velocity constraint, and this will give you
-   * a simultaneously-achievable acceleration constraint.
+   * Calculates the maximum achievable acceleration given a maximum voltage supply and a velocity.
+   * Useful for ensuring that velocity and acceleration constraints for a trapezoidal profile are
+   * simultaneously achievable - enter the velocity constraint, and this will give you a
+   * simultaneously-achievable acceleration constraint.
    *
    * @param maxVoltage The maximum voltage that can be supplied to the motor.
    * @param velocity The velocity of the motor.

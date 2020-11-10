@@ -2,8 +2,7 @@ package com.arcrobotics.ftclib.hardware;
 
 public interface HardwareDevice {
 
-    void disable();
+  void disable();
 
-    String getDeviceType();
-
+  String getDeviceType();
 }

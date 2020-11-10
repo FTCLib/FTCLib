@@ -10,10 +10,7 @@ package com.arcrobotics.ftclib.controller.wpilibcontroller;
 import com.arcrobotics.ftclib.controller.PIDController;
 import com.arcrobotics.ftclib.trajectory.TrapezoidProfile;
 
-/**
- * Implements a PID control loop whose setpoint is constrained by a trapezoid
- * profile.
- */
+/** Implements a PID control loop whose setpoint is constrained by a trapezoid profile. */
 @SuppressWarnings("PMD.TooManyMethods")
 public class ProfiledPIDController {
   private PIDController m_controller;
@@ -22,17 +19,16 @@ public class ProfiledPIDController {
   private TrapezoidProfile.Constraints m_constraints;
 
   /**
-   * Allocates a ProfiledPIDController with the given constants for Kp, Ki, and
-   * Kd.
+   * Allocates a ProfiledPIDController with the given constants for Kp, Ki, and Kd.
    *
-   * @param Kp          The proportional coefficient.
-   * @param Ki          The integral coefficient.
-   * @param Kd          The derivative coefficient.
+   * @param Kp The proportional coefficient.
+   * @param Ki The integral coefficient.
+   * @param Kd The derivative coefficient.
    * @param constraints Velocity and acceleration constraints for goal.
    */
   @SuppressWarnings("ParameterName")
-  public ProfiledPIDController(double Kp, double Ki, double Kd,
-                        TrapezoidProfile.Constraints constraints) {
+  public ProfiledPIDController(
+      double Kp, double Ki, double Kd, TrapezoidProfile.Constraints constraints) {
     m_controller = new PIDController(Kp, Ki, Kd);
     m_constraints = constraints;
   }
@@ -135,9 +131,7 @@ public class ProfiledPIDController {
     m_goal = new TrapezoidProfile.State(goal, 0);
   }
 
-  /**
-   * Gets the goal for the ProfiledPIDController.
-   */
+  /** Gets the goal for the ProfiledPIDController. */
   public TrapezoidProfile.State getGoal() {
     return m_goal;
   }
@@ -206,9 +200,7 @@ public class ProfiledPIDController {
     return m_controller.getPositionError();
   }
 
-  /**
-   * Returns the change in error per second.
-   */
+  /** Returns the change in error per second. */
   public double getVelocityError() {
     return m_controller.getVelocityError();
   }
@@ -250,18 +242,16 @@ public class ProfiledPIDController {
    * Returns the next output of the PID controller.
    *
    * @param measurement The current measurement of the process variable.
-   * @param goal        The new goal of the controller.
+   * @param goal The new goal of the controller.
    * @param constraints Velocity and acceleration constraints for goal.
    */
-  public double calculate(double measurement, TrapezoidProfile.State goal,
-                   TrapezoidProfile.Constraints constraints) {
+  public double calculate(
+      double measurement, TrapezoidProfile.State goal, TrapezoidProfile.Constraints constraints) {
     setConstraints(constraints);
     return calculate(measurement, goal);
   }
 
-  /**
-   * Reset the previous error, the integral term, and disable the controller.
-   */
+  /** Reset the previous error, the integral term, and disable the controller. */
   public void reset() {
     m_controller.reset();
   }
@@ -289,11 +279,10 @@ public class ProfiledPIDController {
   /**
    * Reset the previous error and the integral term.
    *
-   * @param measuredPosition The current measured position of the system. The velocity is
-   *     assumed to be zero.
+   * @param measuredPosition The current measured position of the system. The velocity is assumed to
+   *     be zero.
    */
   public void reset(double measuredPosition) {
     reset(measuredPosition, 0.0);
   }
-
 }
