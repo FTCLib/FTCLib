@@ -7,7 +7,6 @@ package com.arcrobotics.ftclib.geometry;
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-
 /** A rotation in a 2d coordinate frame represented a point on the unit circle (cosine and sine). */
 public class Rotation2d {
   private final double m_value;

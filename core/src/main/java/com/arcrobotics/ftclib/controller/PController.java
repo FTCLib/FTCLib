@@ -1,6 +1,5 @@
 package com.arcrobotics.ftclib.controller;
 
-
 public class PController extends PDController {
 
   /**
