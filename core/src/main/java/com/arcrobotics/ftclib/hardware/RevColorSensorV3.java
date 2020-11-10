@@ -1,6 +1,5 @@
 package com.arcrobotics.ftclib.hardware;
 
-
 /**
  * This class is a class for the Rev Color Sensor V3, a sensor that includes both a RGB color sensor
  * and an IR Proximity sensor.

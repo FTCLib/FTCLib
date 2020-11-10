@@ -8,9 +8,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 public class RevIMU extends GyroEx {
 
   private BNO055IMU revIMU;
-  /***
-   * Heading relative to starting position
-   */
+  /** * Heading relative to starting position */
   double globalHeading;
   /** Heading relative to last offset */
   double relativeHeading;
