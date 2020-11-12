@@ -9,10 +9,16 @@ package com.arcrobotics.ftclib.spline;
 
 import com.arcrobotics.ftclib.geometry.Pose2d;
 import com.arcrobotics.ftclib.geometry.Rotation2d;
-import java.util.Arrays;
+
 import org.ejml.simple.SimpleMatrix;
 
-/** Represents a two-dimensional parametric spline that interpolates between two points. */
+import java.util.Arrays;
+
+
+/**
+ * Represents a two-dimensional parametric spline that interpolates between two
+ * points.
+ */
 public abstract class Spline {
   private final int m_degree;
 
@@ -77,16 +83,20 @@ public abstract class Spline {
     }
 
     // Find the curvature.
-    final double curvature = (dx * ddy - ddx * dy) / ((dx * dx + dy * dy) * Math.hypot(dx, dy));
+    final double curvature =
+        (dx * ddy - ddx * dy) / ((dx * dx + dy * dy) * Math.hypot(dx, dy));
 
-    return new PoseWithCurvature(new Pose2d(x, y, new Rotation2d(dx, dy)), curvature);
+    return new PoseWithCurvature(
+        new Pose2d(x, y, new Rotation2d(dx, dy)),
+        curvature
+    );
   }
 
   /**
    * Represents a control vector for a spline.
    *
-   * <p>Each element in each array represents the value of the derivative at the index. For example,
-   * the value of x[2] is the second derivative in the x dimension.
+   * <p>Each element in each array represents the value of the derivative at the index. For
+   * example, the value of x[2] is the second derivative in the x dimension.
    */
   @SuppressWarnings("MemberName")
   public static class ControlVector {
@@ -95,7 +105,6 @@ public abstract class Spline {
 
     /**
      * Instantiates a control vector.
-     *
      * @param x The x dimension of the control vector.
      * @param y The y dimension of the control vector.
      */

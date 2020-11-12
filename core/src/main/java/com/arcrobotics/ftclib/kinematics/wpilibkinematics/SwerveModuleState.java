@@ -9,18 +9,27 @@ package com.arcrobotics.ftclib.kinematics.wpilibkinematics;
 
 import com.arcrobotics.ftclib.geometry.Rotation2d;
 
-/** Represents the state of one swerve module. */
+/**
+ * Represents the state of one swerve module.
+ */
 @SuppressWarnings("MemberName")
 public class SwerveModuleState implements Comparable<SwerveModuleState> {
 
-  /** Speed of the wheel of the module. */
+  /**
+   * Speed of the wheel of the module.
+   */
   public double speedMetersPerSecond;
 
-  /** Angle of the module. */
+  /**
+   * Angle of the module.
+   */
   public Rotation2d angle = Rotation2d.fromDegrees(0);
 
-  /** Constructs a SwerveModuleState with zeros for speed and angle. */
-  public SwerveModuleState() {}
+  /**
+   * Constructs a SwerveModuleState with zeros for speed and angle.
+   */
+  public SwerveModuleState() {
+  }
 
   /**
    * Constructs a SwerveModuleState.
@@ -48,7 +57,7 @@ public class SwerveModuleState implements Comparable<SwerveModuleState> {
 
   @Override
   public String toString() {
-    return String.format(
-        "SwerveModuleState(Speed: %.2f m/s, Angle: %s)", speedMetersPerSecond, angle);
+    return String.format("SwerveModuleState(Speed: %.2f m/s, Angle: %s)", speedMetersPerSecond,
+        angle);
   }
 }

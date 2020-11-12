@@ -9,16 +9,20 @@ package com.arcrobotics.ftclib.trajectory;
 
 import android.os.Build;
 import androidx.annotation.RequiresApi;
+
 import com.arcrobotics.ftclib.geometry.Pose2d;
 import com.arcrobotics.ftclib.geometry.Transform2d;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+
 /**
- * Represents a time-parameterized trajectory. The trajectory contains of various States that
- * represent the pose, curvature, time elapsed, velocity, and acceleration at that point.
+ * Represents a time-parameterized trajectory. The trajectory contains of
+ * various States that represent the pose, curvature, time elapsed, velocity,
+ * and acceleration at that point.
  */
 public class Trajectory {
   private final double m_totalTimeSeconds;
@@ -38,8 +42,8 @@ public class Trajectory {
    * Linearly interpolates between two values.
    *
    * @param startValue The start value.
-   * @param endValue The end value.
-   * @param t The fraction for interpolation.
+   * @param endValue   The end value.
+   * @param t          The fraction for interpolation.
    * @return The interpolated value.
    */
   @SuppressWarnings("ParameterName")
@@ -51,8 +55,8 @@ public class Trajectory {
    * Linearly interpolates between two poses.
    *
    * @param startValue The start pose.
-   * @param endValue The end pose.
-   * @param t The fraction for interpolation.
+   * @param endValue   The end pose.
+   * @param t          The fraction for interpolation.
    * @return The interpolated pose.
    */
   @SuppressWarnings("ParameterName")
@@ -137,15 +141,14 @@ public class Trajectory {
       return sample;
     }
     // Interpolate between the two states for the state that we want.
-    return prevSample.interpolate(
-        sample,
+    return prevSample.interpolate(sample,
         (timeSeconds - prevSample.timeSeconds) / (sample.timeSeconds - prevSample.timeSeconds));
   }
 
   /**
-   * Transforms all poses in the trajectory by the given transform. This is useful for converting a
-   * robot-relative trajectory into a field-relative trajectory. This works with respect to the
-   * first pose in the trajectory.
+   * Transforms all poses in the trajectory by the given transform. This is
+   * useful for converting a robot-relative trajectory into a field-relative
+   * trajectory. This works with respect to the first pose in the trajectory.
    *
    * @param transform The transform to transform the trajectory by.
    * @return The transformed trajectory.
@@ -159,55 +162,45 @@ public class Trajectory {
     Pose2d newFirstPose = firstPose.plus(transform);
     List<State> newStates = new ArrayList<>();
 
-    newStates.add(
-        new State(
-            firstState.timeSeconds,
-            firstState.velocityMetersPerSecond,
-            firstState.accelerationMetersPerSecondSq,
-            newFirstPose,
-            firstState.curvatureRadPerMeter));
+    newStates.add(new State(
+        firstState.timeSeconds, firstState.velocityMetersPerSecond,
+        firstState.accelerationMetersPerSecondSq, newFirstPose, firstState.curvatureRadPerMeter
+    ));
 
     for (int i = 1; i < m_states.size(); i++) {
       State state = m_states.get(i);
       // We are transforming relative to the coordinate frame of the new initial pose.
-      newStates.add(
-          new State(
-              state.timeSeconds,
-              state.velocityMetersPerSecond,
-              state.accelerationMetersPerSecondSq,
-              newFirstPose.plus(state.poseMeters.minus(firstPose)),
-              state.curvatureRadPerMeter));
+      newStates.add(new State(
+          state.timeSeconds, state.velocityMetersPerSecond,
+          state.accelerationMetersPerSecondSq, newFirstPose.plus(state.poseMeters.minus(firstPose)),
+          state.curvatureRadPerMeter
+      ));
     }
 
     return new Trajectory(newStates);
   }
 
   /**
-   * Transforms all poses in the trajectory so that they are relative to the given pose. This is
-   * useful for converting a field-relative trajectory into a robot-relative trajectory.
+   * Transforms all poses in the trajectory so that they are relative to the
+   * given pose. This is useful for converting a field-relative trajectory
+   * into a robot-relative trajectory.
    *
-   * @param pose The pose that is the origin of the coordinate frame that the current trajectory
-   *     will be transformed into.
+   * @param pose The pose that is the origin of the coordinate frame that
+   *             the current trajectory will be transformed into.
    * @return The transformed trajectory.
    */
   @RequiresApi(api = Build.VERSION_CODES.N)
   public Trajectory relativeTo(Pose2d pose) {
-    return new Trajectory(
-        m_states.stream()
-            .map(
-                state ->
-                    new State(
-                        state.timeSeconds,
-                        state.velocityMetersPerSecond,
-                        state.accelerationMetersPerSecondSq,
-                        state.poseMeters.relativeTo(pose),
-                        state.curvatureRadPerMeter))
-            .collect(Collectors.toList()));
+    return new Trajectory(m_states.stream().map(state -> new State(state.timeSeconds,
+        state.velocityMetersPerSecond, state.accelerationMetersPerSecondSq,
+        state.poseMeters.relativeTo(pose), state.curvatureRadPerMeter))
+        .collect(Collectors.toList()));
   }
 
   /**
-   * Represents a time-parameterized trajectory. The trajectory contains of various States that
-   * represent the pose, curvature, time elapsed, velocity, and acceleration at that point.
+   * Represents a time-parameterized trajectory. The trajectory contains of
+   * various States that represent the pose, curvature, time elapsed, velocity,
+   * and acceleration at that point.
    */
   @SuppressWarnings("MemberName")
   public static class State {
@@ -233,18 +226,15 @@ public class Trajectory {
     /**
      * Constructs a State with the specified parameters.
      *
-     * @param timeSeconds The time elapsed since the beginning of the trajectory.
-     * @param velocityMetersPerSecond The speed at that point of the trajectory.
+     * @param timeSeconds                   The time elapsed since the beginning of the trajectory.
+     * @param velocityMetersPerSecond       The speed at that point of the trajectory.
      * @param accelerationMetersPerSecondSq The acceleration at that point of the trajectory.
-     * @param poseMeters The pose at that point of the trajectory.
-     * @param curvatureRadPerMeter The curvature at that point of the trajectory.
+     * @param poseMeters                    The pose at that point of the trajectory.
+     * @param curvatureRadPerMeter          The curvature at that point of the trajectory.
      */
-    public State(
-        double timeSeconds,
-        double velocityMetersPerSecond,
-        double accelerationMetersPerSecondSq,
-        Pose2d poseMeters,
-        double curvatureRadPerMeter) {
+    public State(double timeSeconds, double velocityMetersPerSecond,
+                 double accelerationMetersPerSecondSq, Pose2d poseMeters,
+                 double curvatureRadPerMeter) {
       this.timeSeconds = timeSeconds;
       this.velocityMetersPerSecond = velocityMetersPerSecond;
       this.accelerationMetersPerSecondSq = accelerationMetersPerSecondSq;
@@ -256,7 +246,7 @@ public class Trajectory {
      * Interpolates between two States.
      *
      * @param endValue The end value for the interpolation.
-     * @param i The interpolant (fraction).
+     * @param i        The interpolant (fraction).
      * @return The interpolated state.
      */
     @SuppressWarnings("ParameterName")
@@ -273,9 +263,8 @@ public class Trajectory {
       }
 
       // Check whether the robot is reversing at this stage.
-      final boolean reversing =
-          velocityMetersPerSecond < 0
-              || Math.abs(velocityMetersPerSecond) < 1E-9 && accelerationMetersPerSecondSq < 0;
+      final boolean reversing = velocityMetersPerSecond < 0
+          || Math.abs(velocityMetersPerSecond) < 1E-9 && accelerationMetersPerSecondSq < 0;
 
       // Calculate the new velocity
       // v_f = v_0 + at
@@ -283,35 +272,29 @@ public class Trajectory {
 
       // Calculate the change in position.
       // delta_s = v_0 t + 0.5 at^2
-      final double newS =
-          (velocityMetersPerSecond * deltaT
-                  + 0.5 * accelerationMetersPerSecondSq * Math.pow(deltaT, 2))
-              * (reversing ? -1.0 : 1.0);
+      final double newS = (velocityMetersPerSecond * deltaT
+          + 0.5 * accelerationMetersPerSecondSq * Math.pow(deltaT, 2)) * (reversing ? -1.0 : 1.0);
 
       // Return the new state. To find the new position for the new state, we need
       // to interpolate between the two endpoint poses. The fraction for
       // interpolation is the change in position (delta s) divided by the total
       // distance between the two endpoints.
-      final double interpolationFrac =
-          newS / endValue.poseMeters.getTranslation().getDistance(poseMeters.getTranslation());
+      final double interpolationFrac = newS
+          / endValue.poseMeters.getTranslation().getDistance(poseMeters.getTranslation());
 
       return new State(
-          newT,
-          newV,
-          accelerationMetersPerSecondSq,
+          newT, newV, accelerationMetersPerSecondSq,
           lerp(poseMeters, endValue.poseMeters, interpolationFrac),
-          lerp(curvatureRadPerMeter, endValue.curvatureRadPerMeter, interpolationFrac));
+          lerp(curvatureRadPerMeter, endValue.curvatureRadPerMeter, interpolationFrac)
+      );
     }
 
     @Override
     public String toString() {
       return String.format(
-          "State(Sec: %.2f, Vel m/s: %.2f, Accel m/s/s: %.2f, Pose: %s, Curvature: %.2f)",
-          timeSeconds,
-          velocityMetersPerSecond,
-          accelerationMetersPerSecondSq,
-          poseMeters,
-          curvatureRadPerMeter);
+        "State(Sec: %.2f, Vel m/s: %.2f, Accel m/s/s: %.2f, Pose: %s, Curvature: %.2f)",
+        timeSeconds, velocityMetersPerSecond, accelerationMetersPerSecondSq,
+        poseMeters, curvatureRadPerMeter);
     }
 
     @Override
@@ -324,20 +307,17 @@ public class Trajectory {
       }
       State state = (State) obj;
       return Double.compare(state.timeSeconds, timeSeconds) == 0
-          && Double.compare(state.velocityMetersPerSecond, velocityMetersPerSecond) == 0
-          && Double.compare(state.accelerationMetersPerSecondSq, accelerationMetersPerSecondSq) == 0
-          && Double.compare(state.curvatureRadPerMeter, curvatureRadPerMeter) == 0
-          && Objects.equals(poseMeters, state.poseMeters);
+              && Double.compare(state.velocityMetersPerSecond, velocityMetersPerSecond) == 0
+              && Double.compare(state.accelerationMetersPerSecondSq,
+                accelerationMetersPerSecondSq) == 0
+              && Double.compare(state.curvatureRadPerMeter, curvatureRadPerMeter) == 0
+              && Objects.equals(poseMeters, state.poseMeters);
     }
 
     @Override
     public int hashCode() {
-      return Objects.hash(
-          timeSeconds,
-          velocityMetersPerSecond,
-          accelerationMetersPerSecondSq,
-          poseMeters,
-          curvatureRadPerMeter);
+      return Objects.hash(timeSeconds, velocityMetersPerSecond,
+              accelerationMetersPerSecondSq, poseMeters, curvatureRadPerMeter);
     }
   }
 
