@@ -1,5 +1,7 @@
 package com.arcrobotics.ftclib.hardware;
 
+<<<<<<< HEAD
+=======
 
 import android.graphics.Color;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
@@ -7,6 +9,10 @@ import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 
 
+<<<<<<< HEAD
+>>>>>>> parent of ffe4cb2... Google Java Format
+=======
+>>>>>>> parent of ffe4cb2... Google Java Format
 /**
  * This class is a class for the Rev Color Sensor V3, a sensor that includes
  * both a RGB color sensor and an IR Proximity sensor.

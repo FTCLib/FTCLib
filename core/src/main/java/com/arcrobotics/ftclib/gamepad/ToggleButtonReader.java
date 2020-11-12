@@ -1,9 +1,23 @@
 package com.arcrobotics.ftclib.gamepad;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> parent of ffe4cb2... Google Java Format
+
+import android.os.Build;
+import androidx.annotation.RequiresApi;
+
+<<<<<<< HEAD
+>>>>>>> parent of ffe4cb2... Google Java Format
+=======
+>>>>>>> parent of ffe4cb2... Google Java Format
 import java.util.function.BooleanSupplier;
 
 /**
  * Class gets the current state of a toggle button
+ * You must call "readValue();" in a loop to get accurate values.
  */
 public class ToggleButtonReader extends ButtonReader {
 

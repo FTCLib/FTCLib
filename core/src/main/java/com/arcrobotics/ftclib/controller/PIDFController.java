@@ -1,7 +1,13 @@
 package com.arcrobotics.ftclib.controller;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> parent of ffe4cb2... Google Java Format
 import com.arcrobotics.ftclib.hardware.motors.Motor;
 
+>>>>>>> parent of ffe4cb2... Google Java Format
 /**
  * This is a PID controller (https://en.wikipedia.org/wiki/PID_controller)
  * for your robot. Internally, it performs all the calculations for you.
@@ -110,8 +116,6 @@ public class PIDFController {
      */
     public void setSetPoint(double sp) {
         setPoint = sp;
-        errorVal_p = setPoint - measuredValue;
-        errorVal_v = (errorVal_p - prevErrorVal) / period;
     }
 
     /**

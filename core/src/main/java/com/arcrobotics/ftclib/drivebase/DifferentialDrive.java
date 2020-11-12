@@ -160,7 +160,7 @@ public class DifferentialDrive extends RobotDrive {
         normalize(wheelSpeeds);
 
         motors[MotorType.kLeft.value].set(wheelSpeeds[0] * maxOutput);
-        motors[MotorType.kRight.value].set(wheelSpeeds[1] * rightSideMultiplier * maxOutput);
+        motors[MotorType.kRight.value].set(wheelSpeeds[1] * -maxOutput);
     }
 
     /**

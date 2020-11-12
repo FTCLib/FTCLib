@@ -1,7 +1,13 @@
 package com.arcrobotics.ftclib.controller;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> parent of ffe4cb2... Google Java Format
 import com.arcrobotics.ftclib.hardware.motors.Motor;
 
+>>>>>>> parent of ffe4cb2... Google Java Format
 public class PController extends PDController {
 
     /**

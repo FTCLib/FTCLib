@@ -7,6 +7,12 @@ package com.arcrobotics.ftclib.geometry;
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+/** A rotation in a 2d coordinate frame represented a point on the unit circle (cosine and sine). */
+=======
+=======
+>>>>>>> parent of ffe4cb2... Google Java Format
 
 import java.io.IOException;
 import java.util.Objects;
@@ -17,6 +23,10 @@ import java.util.Objects;
  * (cosine and sine).
  */
 
+<<<<<<< HEAD
+>>>>>>> parent of ffe4cb2... Google Java Format
+=======
+>>>>>>> parent of ffe4cb2... Google Java Format
 public class Rotation2d {
     private final double m_value;
     private final double m_cos;
