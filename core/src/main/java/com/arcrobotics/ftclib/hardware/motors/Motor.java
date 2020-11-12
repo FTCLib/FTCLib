@@ -189,7 +189,8 @@ public class Motor implements HardwareDevice {
   /** The motor type */
   protected GoBILDA type;
 
-  protected PIDController veloController = new PIDController(1, 0, 0);;
+  protected PIDController veloController = new PIDController(1, 0, 0);
+  ;
   protected PController positionController = new PController(1);
 
   protected SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(0, 1, 0);

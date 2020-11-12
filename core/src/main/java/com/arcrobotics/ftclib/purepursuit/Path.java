@@ -880,7 +880,8 @@ public class Path extends ArrayList<Waypoint> {
     for (int i = 1; i < size() - 1; i++)
       if (get(i).getType() == WaypointType.END || get(i).getType() == WaypointType.START)
         throw new IllegalStateException(
-            "A path must not have end and start waypoints anywhere other than the first and last spot.");
+            "A path must not have end and start waypoints anywhere other than the first and last"
+                + " spot.");
   }
 
   /** Calls the loop() method on all TriggeredActions in this path. */
