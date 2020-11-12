@@ -6,6 +6,9 @@ import java.util.function.BooleanSupplier;
 import android.os.Build;
 import androidx.annotation.RequiresApi;
 
+<<<<<<< HEAD
+>>>>>>> parent of ffe4cb2... Google Java Format
+=======
 >>>>>>> parent of ffe4cb2... Google Java Format
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 

@@ -1,11 +1,17 @@
 package com.arcrobotics.ftclib.gamepad;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> parent of ffe4cb2... Google Java Format
 
 import android.os.Build;
 import androidx.annotation.RequiresApi;
 
+<<<<<<< HEAD
+>>>>>>> parent of ffe4cb2... Google Java Format
+=======
 >>>>>>> parent of ffe4cb2... Google Java Format
 import java.util.function.BooleanSupplier;
 

@@ -9,6 +9,9 @@ import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 
 
+<<<<<<< HEAD
+>>>>>>> parent of ffe4cb2... Google Java Format
+=======
 >>>>>>> parent of ffe4cb2... Google Java Format
 /**
  * This class is a class for the Rev Color Sensor V3, a sensor that includes
