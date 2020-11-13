@@ -14,6 +14,14 @@ class UGContourRingDetector(
         private val telemetry: Telemetry? = null,
         private var debug: Boolean = false,
 ) {
+    
+    companion object PipelineConfiguration {
+        var CAMERA_WIDTH = 320
+        var CAMERA_HEIGHT = 240
+
+        var HORIZON = 100
+    }
+
     lateinit var camera: OpenCvCamera
     private var isUsingWebcam = false
     private lateinit var webcamName: String
@@ -30,9 +38,7 @@ class UGContourRingDetector(
     }
 
     val height: UGContourRingPipeline.Height
-        get() {
-            return UGContourRingPipeline.Height.ZERO
-        }
+        get() = ftcLibPipeline.height
 
     fun init() {
         val cameraMonitorViewId = hardwareMap
@@ -66,6 +72,8 @@ class UGContourRingDetector(
                         telemetry = telemetry,
                         debug = debug,
                 ).apply {
+                    UGContourRingPipeline.CAMERA_WIDTH = CAMERA_WIDTH
+                    UGContourRingPipeline.HORIZON = HORIZON
                     ftcLibPipeline = this
                 }
         )
