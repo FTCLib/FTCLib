@@ -37,6 +37,7 @@ class UGContourRingDetector(
         this.isUsingWebcam = true
     }
 
+    // returns the height detected by the pipeline
     val height: UGContourRingPipeline.Height
         get() = ftcLibPipeline.height
 
