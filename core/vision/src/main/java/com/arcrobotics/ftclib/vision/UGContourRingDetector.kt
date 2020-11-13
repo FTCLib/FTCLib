@@ -11,6 +11,7 @@ import org.openftc.easyopencv.OpenCvInternalCamera
 
 class UGContourRingDetector(
         private var hardwareMap: HardwareMap,
+        private var cameraDirection: OpenCvInternalCamera.CameraDirection = OpenCvInternalCamera.CameraDirection.BACK,
         private val telemetry: Telemetry? = null,
         private var debug: Boolean = false,
 ) {
@@ -27,12 +28,12 @@ class UGContourRingDetector(
     private lateinit var webcamName: String
     private lateinit var ftcLibPipeline: UGContourRingPipeline
 
-    constructor(hMap: HardwareMap, webcamName: String): this(hMap) {
+    constructor(hMap: HardwareMap, webcamName: String): this(hardwareMap = hMap) {
         this.webcamName = webcamName
         this.isUsingWebcam = true
     }
 
-    constructor(hMap: HardwareMap, webcamName: String, telemetry: Telemetry, debug: Boolean): this(hMap, telemetry, debug) {
+    constructor(hMap: HardwareMap, webcamName: String, telemetry: Telemetry, debug: Boolean): this(hardwareMap = hMap, telemetry = telemetry, debug = debug) {
         this.webcamName = webcamName
         this.isUsingWebcam = true
     }
@@ -64,7 +65,7 @@ class UGContourRingDetector(
             OpenCvCameraFactory
                     .getInstance()
                     .createInternalCamera(
-                            OpenCvInternalCamera.CameraDirection.BACK, cameraMonitorViewId,
+                            cameraDirection, cameraMonitorViewId,
                     )
         }
 
