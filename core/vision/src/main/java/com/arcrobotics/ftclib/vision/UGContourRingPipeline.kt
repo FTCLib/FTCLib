@@ -81,7 +81,7 @@ class UGContourRingPipeline(
     private var mat: Mat
     private var ret: Mat
 
-    /** enum class for Height of the stone **/
+    /** enum class for Height of the Ring Stack **/
     enum class Height {
         ZERO, ONE, FOUR
     }

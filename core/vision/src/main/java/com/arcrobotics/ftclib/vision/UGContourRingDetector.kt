@@ -17,7 +17,7 @@ import org.openftc.easyopencv.OpenCvInternalCamera
  *
  * @param hardwareMap variable being passed into the detector to access hardwareMap, no default value
  * @param cameraDirection direction of the camera if using phone camera (FRONT, BACK), default value
- * to BACk
+ * to BACK
  * @param telemetry If wanted, provide a telemetry object to the constructor to get stacktrace if an
  * error occurs (mainly for debug purposes), default value of null
  * @param debug If true, all intermediate calculation results (except showing mat operations) will
