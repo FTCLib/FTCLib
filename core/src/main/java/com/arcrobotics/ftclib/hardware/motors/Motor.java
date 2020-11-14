@@ -249,9 +249,6 @@ public class Motor implements HardwareDevice {
         runmode = RunMode.RawPower;
         type = GoBILDA.NONE;
         ACHIEVABLE_MAX_TICKS_PER_SECOND = cpr * rpm / 60;
-        veloController = new PIDController(1,0,0);
-        positionController = new PController(1);
-        feedforward = new SimpleMotorFeedforward(0, 1, 0);
         encoder = new Encoder(motor::getCurrentPosition);
     }
 
