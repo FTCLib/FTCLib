@@ -164,43 +164,7 @@ public class VisionTest {
             Assert.assertEquals(ringsTest.heightEnum.toString(),stackHeight.toString());
         }
     }
-
-
-
-//    @Test
-    public void createFolders() {
-        Integer imageNumber = 0;
-        File directory = new File(IMAGE_WRITE_PATH);
-        if(!directory.exists()) {
-            directory.mkdir();
-        }
-
-        File writeLocation = new File(directory.getPath() + "/" + "img_" + imageNumber.toString() + ".jpg");
-        while(writeLocation.exists()) {
-            ++imageNumber;
-            writeLocation = new File(directory.getPath() + "/" + "img_" + imageNumber.toString() + ".jpg");
-
-        }
-        System.out.println(directory.getPath());
-        System.out.println(writeLocation.getPath());
-        saveMatAsRGB(writeLocation.getPath(), inputMat);
-
-    }
-
-//    @Test
-    public void swapColorChannels() {
-        String INPUT = "./TestData/colorSwap/input";
-        String OUTPUT = "./TestData/colorSwap/output";
-        File dir = new File(INPUT);
-        File[] directoryListing = dir.listFiles();
-        if (directoryListing != null) {
-            for(File child: directoryListing) {
-                Mat imageMat = Imgcodecs.imread(child.getPath());
-                saveMatAsRGB(OUTPUT + "/" + child.getName(), imageMat);
-            }
-        }
-    }
-
+    
 
 }
 
