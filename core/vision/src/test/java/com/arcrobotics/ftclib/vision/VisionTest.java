@@ -1,5 +1,6 @@
 package com.arcrobotics.ftclib.vision;
 
+import static com.arcrobotics.ftclib.vision.UGRectDetector.getStack;
 import static com.google.common.truth.Truth.assertThat;
 
 import org.junit.Assert;
@@ -133,49 +134,38 @@ public class VisionTest {
             detectedHeight =  ugContourRingPipeline.getHeight();
             saveMatAsRGB(IMAGE_WRITE_PATH + TEST_TYPE + "_" + detectedHeight.toString() + "_" +
                 ringsTest.imageName,outputMat);
-            System.out.println( detectedHeight.toString());
+//            System.out.println( detectedHeight.toString());
             Assert.assertEquals(ringsTest.heightEnum,detectedHeight);
         }
     }
 
-//    @Test
-//    public void testRedPipeline() {
-//        AveragingPipeline testPipeline = SkystoneDetector.getAveragingPipelineForRed();
-//        Mat outputMat = testPipeline.processFrame(inputRed);
-//        saveMatAsRGB(IMAGE_WRITE_PATH + "pipeline_red.jpg",outputMat);
-//        testPipeline.getStatus();
-//        System.out.println(SkystoneDetector.getSkystoneRelativeLocation(testPipeline, AllianceColor.RED));
-//    }
+    @Test
+    public void testUGRectRingPipeline() {
+        String TEST_TYPE = "RectRing";
+        Mat testMat, outputMat;
+        UGRectDetector.Stack stackHeight;
+        UGRectRingPipeline ugRectRingPipeline = new UGRectRingPipeline();
+        // Position Detection Rectangles for Pipeline
+        ugRectRingPipeline.setRectangleHeight(10);
+        ugRectRingPipeline.setRectangleWidth(50);
+        ugRectRingPipeline.setThreshold(50);
+        ugRectRingPipeline.setTopRectHeightPercentage(0.5);
+        ugRectRingPipeline.setTopRectWidthPercentage(0.5);
+        ugRectRingPipeline.setBottomRectHeightPercentage(0.58);
+        ugRectRingPipeline.setBottomRectWidthPercentage(0.5);
 
-//    @Test
-//    public void testCustomPipeline() {
-//        ArrayList<AveragingPipeline.NormalizedRectangle> scanRegions = new ArrayList<>();
-//        double yPosition = 0.55;
-//        double[] normalizedSize = {0.08, 0.10};
-//        scanRegions.add(new NormalizedRectangle(0.07,yPosition,normalizedSize[0],normalizedSize[1]));
-//        scanRegions.add(new NormalizedRectangle(0.18,yPosition,normalizedSize[0],normalizedSize[1]));
-//        scanRegions.add(new NormalizedRectangle(0.3,yPosition-0.1,normalizedSize[0],normalizedSize[1]));
-//        scanRegions.add(new NormalizedRectangle(0.35,yPosition+0.1,normalizedSize[0],normalizedSize[1]));
-//        scanRegions.add(new NormalizedRectangle(0.5,yPosition,normalizedSize[0],normalizedSize[1]));
-//        scanRegions.add(new NormalizedRectangle(0.75,yPosition,normalizedSize[0],normalizedSize[1]));
-//        AveragingPipeline testPipeline = new AveragingPipeline(scanRegions);
-//        Mat outputMat = testPipeline.processFrame(input);
-//        saveMatAsRGB(IMAGE_WRITE_PATH + "pipeline_custom.jpg",outputMat);
-//        testPipeline.getStatus();
-//
-//        System.out.println(testPipeline.getSkystoneRelativeLocation());
-//        testPipeline.saveInputImage(IMAGE_WRITE_PATH + "anotherFolder/");
-//    }
+        for (TestCaseRings ringsTest: this.testCaseRings) {
+            testMat = ringsTest.getMat();
+            outputMat = ugRectRingPipeline.processFrame(testMat);
+            stackHeight = UGRectDetector.getStack(ugRectRingPipeline);
+            saveMatAsRGB(IMAGE_WRITE_PATH + TEST_TYPE + "_" + //stackHeight.toString() + "_" +
+                    ringsTest.imageName,outputMat);
+//            System.out.println( detectedHeight.toString());
+            Assert.assertEquals(ringsTest.heightEnum.toString(),stackHeight.toString());
+        }
+    }
 
-//    @Test
-//    public void testPositionCalculation() {
-//        double[] fovXY_degrees = {78,78};
-//        double[] relativePositionXY_inches = {36,11};
-//        double normalizedPositionX = SkystoneDetector.getNormalizedPositionX(fovXY_degrees,relativePositionXY_inches);
-//        System.out.print("FOV: " + fovXY_degrees[0] + " , ");
-//        System.out.print("RelativePositionXY: " + relativePositionXY_inches[0] + " , " + relativePositionXY_inches[1] +" , ");
-//        System.out.println("NormalizedPositionX: " + normalizedPositionX);
-//    }
+
 
 //    @Test
     public void createFolders() {
