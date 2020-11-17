@@ -52,10 +52,10 @@ public class DriveSubsystem implements Subsystem {
     }
 
     public boolean atTargetPos() {
-        return  frontLeftMotor.atTargetPosition() &&
-                backLeftMotor.atTargetPosition() &&
-                frontRightMotor.atTargetPosition() &&
-                backRightMotor.atTargetPosition();
+        return  frontLeftMotor.atTarget() &&
+                backLeftMotor.atTarget() &&
+                frontRightMotor.atTarget() &&
+                backRightMotor.atTarget();
     }
 
     public void driveToPosition(int target) {

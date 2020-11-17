@@ -107,7 +107,7 @@ public class Motor implements HardwareDevice {
          * Resets the encoder without having to stop the motor.
          */
         public void reset() {
-            resetVal = getPosition();
+            resetVal += getPosition();
         }
 
         /**
@@ -204,7 +204,8 @@ public class Motor implements HardwareDevice {
     protected SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(0, 1, 0);
 
     private boolean targetIsSet = false;
-    
+    private boolean targetIsDistance = false;
+
     public Motor() {}
 
     /**
@@ -263,7 +264,7 @@ public class Motor implements HardwareDevice {
             double velocity = veloController.calculate(getVelocity(), speed) + feedforward.calculate(speed);
             motor.setPower(velocity / ACHIEVABLE_MAX_TICKS_PER_SECOND);
         } else if (runmode == RunMode.PositionControl) {
-            double error = positionController.calculate(encoder.getPosition());
+            double error = positionController.calculate(targetIsDistance ? encoder.getDistance() : encoder.getPosition());
             motor.setPower(output * error);
         } else {
             motor.setPower(output);
@@ -287,9 +288,9 @@ public class Motor implements HardwareDevice {
     }
 
     /**
-     * @return if the motor is at the target position
+     * @return if the motor is at the target position or distance
      */
-    public boolean atTargetPosition() {
+    public boolean atTarget() {
         return positionController.atSetPoint();
     }
 
@@ -391,13 +392,31 @@ public class Motor implements HardwareDevice {
      * Once {@link #set(double)} is called, the motor will attempt to move in the direction
      * of said target.
      *
-     * @param target
+     * @param target the target position in ticks
      */
     public void setTargetPosition(int target) {
+        setTargetDistance((double)target / (encoder.dpp));
+        targetIsDistance = false;
+    }
+
+    /**
+     * Sets the target distance for the motor to the desired target.
+     * Once {@link #set(double)} is called, the motor will attempt to move in the direction
+     * of said target.
+     *
+     * @param target the target position in units of distance
+     */
+    public void setTargetDistance(double target) {
         targetIsSet = true;
+        targetIsDistance = true;
         positionController.setSetPoint(target);
     }
 
+    /**
+     * Sets the target tolerance
+     *
+     * @param tolerance the specified tolerance
+     */
     public void setPositionTolerance(double tolerance) {
         positionController.setTolerance(tolerance);
     }
