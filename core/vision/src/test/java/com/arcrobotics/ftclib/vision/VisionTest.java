@@ -2,22 +2,24 @@ package com.arcrobotics.ftclib.vision;
 
 import static com.google.common.truth.Truth.assertThat;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfPoint;
 import org.opencv.core.Point;
-import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
-import org.opencv.core.Size;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
-import org.openftc.easyopencv.OpenCvPipeline;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.arcrobotics.ftclib.vision.VisionTestHelper.*;
+import static com.arcrobotics.ftclib.vision.TestCase.*;
+import com.arcrobotics.ftclib.vision.UGContourRingPipeline.Height;
 
 public class VisionTest {
 
@@ -41,44 +43,49 @@ public class VisionTest {
         }
     }
 
-    String IMAGE_READ_PATH = "./TestData/openCV_input/skystone/";
-    String IMAGE_WRITE_PATH = "./TestData/openCV_output/skystone/";
+
+    String IMAGE_READ_PATH = "./TestData/openCV_input/ug1/";
+    String IMAGE_WRITE_PATH = "./TestData/openCV_output/ug1/";
 
 
-    Mat input = new Mat();
-    Mat inputBlue = new Mat();
-    Mat inputRed = new Mat();
+    Mat inputMat = new Mat();
+    ArrayList<TestCaseRings> testCaseRings = new ArrayList<TestCaseRings>();
+
 
     @Before
     public void initialize() {
-        this.input = loadMatFromBGR(IMAGE_READ_PATH + "iphone7_27inches_by_2.5_up_inches_left.jpg" );
-//        this.inputBlue = loadMatFromBGR(IMAGE_READ_PATH + "blue_right_1.jpg" );
-//        this.inputRed = loadMatFromBGR(IMAGE_READ_PATH + "red_center_1.jpg" );
+//        this.inputMat = loadMatFromBGR(IMAGE_READ_PATH + "blue_ring_4.jpg" );
+        this.testCaseRings.add(new TestCaseRings(IMAGE_READ_PATH,"blue_ring_0.jpg", Height.ZERO));
+        this.testCaseRings.add(new TestCaseRings(IMAGE_READ_PATH,"blue_ring_1.jpg",Height.ONE));
+        this.testCaseRings.add(new TestCaseRings(IMAGE_READ_PATH,"blue_ring_4.jpg",Height.FOUR));
+        this.inputMat = this.testCaseRings.get(0).getMat();
     }
 
     @Test
     public void imageRead() {
-        System.out.println("Input Width: " + input.width() + "   Input Height: " + input.height());
-        assertThat(input.width()).isAtLeast(1);
-        assertThat(input.height()).isAtLeast(1);
+        System.out.println("Input Width: " + inputMat.width() + "   Input Height: " + inputMat.height());
+        assertThat(inputMat.width()).isAtLeast(1);
+        assertThat(inputMat.height()).isAtLeast(1);
     }
 
     @Test
     public void imageWrite() {
-        String writePath = IMAGE_WRITE_PATH + "writeTestImage.jpg";
-        saveMatAsRGB(writePath, input);
+        String TEST_TYPE = "WriteTest";
+        String writePath = IMAGE_WRITE_PATH + TEST_TYPE + "_" + "input.jpg";
+        saveMatAsRGB(writePath, inputMat);
         File outputFile = new File(writePath);
         assertThat(outputFile.exists()).isTrue();
     }
 
     @Test
     public void colorThresholding() {
+        String TEST_TYPE = "ColorThresholding";
         Mat yCbCrChan2Mat = new Mat();
         Mat thresholdMat = new Mat();
         Mat all = new Mat();
         List<MatOfPoint> contoursList = new ArrayList<>();
 
-        Imgproc.cvtColor(input, yCbCrChan2Mat, Imgproc.COLOR_RGB2YCrCb);//converts rgb to ycrcb
+        Imgproc.cvtColor(inputMat, yCbCrChan2Mat, Imgproc.COLOR_RGB2YCrCb);//converts rgb to ycrcb
         Core.extractChannel(yCbCrChan2Mat, yCbCrChan2Mat, 2);//takes cb difference and stores
 
         //b&w
@@ -92,38 +99,44 @@ public class VisionTest {
         Imgproc.rectangle(
                 all,
                 new Point(
-                        input.cols()*0.25,
-                        input.rows()*0.25),
+                        inputMat.cols()*0.25,
+                        inputMat.rows()*0.25),
                 new Point(
-                        input.cols()*0.75,
-                        input.rows()*0.75),
+                        inputMat.cols()*0.75,
+                        inputMat.rows()*0.75),
                 new Scalar(0, 255, 0), 3);
 
 
-        Imgcodecs.imwrite(IMAGE_WRITE_PATH + "yCbCr.jpg", yCbCrChan2Mat);
-        Imgcodecs.imwrite(IMAGE_WRITE_PATH + "threshold.jpg", thresholdMat);
-        Imgcodecs.imwrite(IMAGE_WRITE_PATH + "all.jpg", all);
+        Imgcodecs.imwrite(IMAGE_WRITE_PATH + TEST_TYPE + "_" + "yCbCr.jpg", yCbCrChan2Mat);
+        Imgcodecs.imwrite(IMAGE_WRITE_PATH + TEST_TYPE + "_" + "threshold.jpg", thresholdMat);
+        Imgcodecs.imwrite(IMAGE_WRITE_PATH + TEST_TYPE + "_" + "all.jpg", all);
     }
 
 
-//    @Test
-//    public void testDefaultPipeline() {
-//        AveragingPipeline testPipeline = new AveragingPipeline();
-//        Mat outputMat = testPipeline.processFrame(input);
-//        saveMatAsRGB(IMAGE_WRITE_PATH + "pipeline_default.jpg",outputMat);
-//        testPipeline.getStatus();
+    @Test
+    public void testExamplePipeline() {
+        String TEST_TYPE = "ExamplePipeline";
+        ExamplePipeLine examplePipeLine = new ExamplePipeLine();
+        Mat outputMat = examplePipeLine.processFrame(inputMat);
+        saveMatAsRGB(IMAGE_WRITE_PATH + TEST_TYPE + "_" + "pipeline_default.jpg",outputMat);
+    }
 
-//        testPipeline.saveInputImage(IMAGE_WRITE_PATH + "anotherFolder/");
-//    }
-
-//    @Test
-//    public void testBluePipeline() {
-//        AveragingPipeline testPipeline = SkystoneDetector.getAveragingPipelineForBlue();
-//        Mat outputMat = testPipeline.processFrame(inputBlue);
-//        saveMatAsRGB(IMAGE_WRITE_PATH + "pipeline_blue.jpg",outputMat);
-//        testPipeline.getStatus();
-//        System.out.println(SkystoneDetector.getSkystoneRelativeLocation(testPipeline, AllianceColor.BLUE));
-//    }
+    @Test
+    public void testUGContourRingPipeline() {
+        String TEST_TYPE = "ContourRing";
+        UGContourRingPipeline ugContourRingPipeline = new UGContourRingPipeline();
+        Mat testMat, outputMat;
+        UGContourRingPipeline.Height detectedHeight;
+        for (TestCaseRings ringsTest: this.testCaseRings) {
+            testMat = ringsTest.getMat();
+            outputMat = ugContourRingPipeline.processFrame(testMat);
+            detectedHeight =  ugContourRingPipeline.getHeight();
+            saveMatAsRGB(IMAGE_WRITE_PATH + TEST_TYPE + "_" + detectedHeight.toString() + "_" +
+                ringsTest.imageName,outputMat);
+            System.out.println( detectedHeight.toString());
+            Assert.assertEquals(ringsTest.heightEnum,detectedHeight);
+        }
+    }
 
 //    @Test
 //    public void testRedPipeline() {
@@ -180,7 +193,7 @@ public class VisionTest {
         }
         System.out.println(directory.getPath());
         System.out.println(writeLocation.getPath());
-        saveMatAsRGB(writeLocation.getPath(),input);
+        saveMatAsRGB(writeLocation.getPath(), inputMat);
 
     }
 
@@ -199,48 +212,6 @@ public class VisionTest {
     }
 
 
-    private Mat loadMatFromBGR(String filePath) {
-        Mat loadedMat = Imgcodecs.imread(filePath);
-        loadedMat = cropAndResize(loadedMat,640,480);
-        Imgproc.cvtColor(loadedMat, loadedMat, Imgproc.COLOR_RGB2BGR); //converts rgb to bgr
-        return loadedMat;
-    }
-
-
-    private void saveMatAsRGB(String filePath, Mat output) {
-        File file = new File(filePath);
-        File directory = new File(file.getParent());
-        if(!directory.exists()) {
-            directory.mkdir();
-        }
-        Imgproc.cvtColor(output, output, Imgproc.COLOR_BGR2RGB);
-        Imgcodecs.imwrite(file.getPath(), output);
-    }
-
-
-    private Mat cropAndResize(Mat input, int fx, int fy) {
-        // First, crop the original image so it scales to the final dimensions.
-        int requiredWidthFromInputHeight =  Math.round(input.height() * fx / fy);
-        Mat croppedInput;
-        if ( requiredWidthFromInputHeight == input.width() ) {
-            // No cropping needed
-            croppedInput = new Mat();
-            input.copyTo(croppedInput);
-        } else if ( requiredWidthFromInputHeight < input.width() ) {
-            // Trim the width
-            int trimEachSideBy = Math.round((input.width() - requiredWidthFromInputHeight)/2);
-            Rect cropRect = new Rect(trimEachSideBy,0,requiredWidthFromInputHeight,input.height());
-            croppedInput = new Mat(input,cropRect);
-        } else {
-            // Trim the height
-            int requiredHeightFromInputWidth = Math.round(input.width() * fy / fx);
-            int trimEachSideBy = Math.round((input.height() - requiredHeightFromInputWidth)/2);
-            Rect cropRect = new Rect(0,trimEachSideBy,input.width(),requiredHeightFromInputWidth);
-            croppedInput = new Mat(input,cropRect);
-        }
-
-        // Now that the proportions are the same, perform the scaling and return:
-        Imgproc.resize(croppedInput, croppedInput, new Size(fx,fy),0,0, Imgproc.INTER_AREA);
-        return croppedInput;
-    }
 }
+
+
