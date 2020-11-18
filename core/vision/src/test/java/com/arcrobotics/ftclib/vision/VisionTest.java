@@ -10,6 +10,7 @@ import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfPoint;
 import org.opencv.core.Point;
+import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
@@ -17,6 +18,7 @@ import org.opencv.imgproc.Imgproc;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static com.arcrobotics.ftclib.vision.VisionTestHelper.*;
 import static com.arcrobotics.ftclib.vision.TestCase.*;
@@ -164,7 +166,32 @@ public class VisionTest {
             Assert.assertEquals(ringsTest.heightEnum.toString(),stackHeight.toString());
         }
     }
-    
+
+    @Test
+    public void testUGBasicHighGoalPipeline() {
+        String TEST_TYPE = "BasicHighGoal";
+        Mat testMat, outputMat;
+        Optional<Point> bluePoint, redPoint;
+        Rect blueRect, redRect;
+        UGBasicHighGoalPipeline ugBasicHighGoalPipeline = new UGBasicHighGoalPipeline();
+
+        for (TestCaseRings ringsTest: this.testCaseRings) {
+            testMat = ringsTest.getMat();
+            outputMat = ugBasicHighGoalPipeline.processFrame(testMat);
+//            stackHeight = UGRectDetector.getStack(ugRectRingPipeline);
+            saveMatAsRGB(IMAGE_WRITE_PATH + TEST_TYPE + "_" + //stackHeight.toString() + "_" +
+                    ringsTest.imageName,outputMat);
+
+            blueRect = ugBasicHighGoalPipeline.getBlueRect();
+            redRect = ugBasicHighGoalPipeline.getRedRect();
+            bluePoint = UGBasicHighGoalPipeline.getCenterofRect(blueRect);
+            redPoint = UGBasicHighGoalPipeline.getCenterofRect(redRect);
+            System.out.println("BluePoint:  " + bluePoint.toString());
+            System.out.println("RedPoint:   " + redPoint.toString());
+//            Assert.assertEquals(ringsTest.heightEnum.toString(),stackHeight.toString());
+        }
+
+    }
 
 }
 
