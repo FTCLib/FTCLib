@@ -1,6 +1,7 @@
 package com.arcrobotics.ftclib.vision;
 
 import static com.arcrobotics.ftclib.vision.UGRectDetector.getStack;
+import static com.arcrobotics.ftclib.vision.UGAdvancedHighGoalPipeline.*;
 import static com.google.common.truth.Truth.assertThat;
 
 import org.junit.Assert;
@@ -191,6 +192,36 @@ public class VisionTest {
 //            Assert.assertEquals(ringsTest.heightEnum.toString(),stackHeight.toString());
         }
 
+    }
+
+    @Test public void testUGAdvancedHighGoalPipeline() {
+        String TEST_TYPE = "AdvancedHighGoal";
+        double range = 0;
+
+        Mat testMat, outputMat;
+        double fov = 78;
+        double cameraHeight = 4;
+        double centerOfLogoHeight = 48;
+        double cameraPitchOffset= 20;
+        double cameraYawOffset = 0;
+        double defaultAngle = 0;
+        UGAdvancedHighGoalPipeline ugAdvancedHighGoalPipeline =
+                new UGAdvancedHighGoalPipeline( fov, cameraHeight, centerOfLogoHeight,
+                        cameraPitchOffset, cameraYawOffset, defaultAngle);
+
+        for (TestCaseRings ringsTest: this.testCaseRings) {
+            testMat = ringsTest.getMat();
+            outputMat = ugAdvancedHighGoalPipeline.processFrame(testMat);
+            saveMatAsRGB(IMAGE_WRITE_PATH + TEST_TYPE + "_" + ringsTest.imageName,outputMat);
+
+            range = ugAdvancedHighGoalPipeline.getDistanceToGoal(Target.RED);
+            System.out.println("Range to Goal:  " + String.valueOf(range));
+            range = ugAdvancedHighGoalPipeline.getDistanceToGoalWall(Target.RED);
+            System.out.println("Range to Wall:  " + String.valueOf(range));
+
+//            System.out.println("RedPoint:   " + redPoint.toString());
+//            Assert.assertEquals(ringsTest.heightEnum.toString(),stackHeight.toString());
+        }
     }
 
 }
