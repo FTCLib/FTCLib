@@ -224,6 +224,32 @@ public class VisionTest {
         }
     }
 
+    @Test public void testUGAngleHighGoalPipeline() {
+        String TEST_TYPE = "AngleHighGoal";
+        Mat testMat, outputMat;
+        Optional<Point> bluePoint, redPoint;
+        Rect blueRect, redRect;
+        double fov = 78;
+        double cameraPitchOffset = 0;
+        double cameraYawOffset = 0;
+        UGAngleHighGoalPipeline ugAngleHighGoalPipeline =
+                new UGAngleHighGoalPipeline( fov,  cameraPitchOffset,  cameraYawOffset);
+
+        for (TestCaseRings ringsTest: this.testCaseRings) {
+            testMat = ringsTest.getMat();
+            outputMat = ugAngleHighGoalPipeline.processFrame(testMat);
+
+            saveMatAsRGB(IMAGE_WRITE_PATH + TEST_TYPE + "_" + ringsTest.imageName,outputMat);
+
+            blueRect = ugAngleHighGoalPipeline.getBlueRect();
+            redRect = ugAngleHighGoalPipeline.getRedRect();
+            bluePoint = UGBasicHighGoalPipeline.getCenterofRect(blueRect);
+            redPoint = UGBasicHighGoalPipeline.getCenterofRect(redRect);
+            //System.out.println("BluePoint:  " + bluePoint.toString());
+            //System.out.println("RedPoint:   " + redPoint.toString());
+        }
+    }
+
 }
 
 
