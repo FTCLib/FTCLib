@@ -1,6 +1,5 @@
 package com.example.ftclibexamples.OldCommandSample;
 
-import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.arcrobotics.ftclib.hardware.motors.MotorEx;
 import com.arcrobotics.ftclib.util.Direction;
 import com.arcrobotics.ftclib.util.Timing;
@@ -36,7 +35,7 @@ public class SimpleLinearLift {
         int multiplier = direction == Direction.UP ? 1 : -1;
 
         while (!timer.done()) {
-            m_liftMotor.set(multiplier * (activeTime - timer.currentTime()) / (double)activeTime);
+            m_liftMotor.set(multiplier * (activeTime - timer.elapsedTime()) / (double)activeTime);
         }
     }
 
