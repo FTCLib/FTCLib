@@ -58,12 +58,14 @@ public class Timing {
          * Pauses this timer. While the timer is paused, elapsedTime() and remainingTime() will not change.
          */
         public void pause() {
-            pauseTime = time.nanoseconds();
-            timerOn = false;
+            if (timerOn) {
+                pauseTime = time.nanoseconds();
+                timerOn = false;
+            }
         }
 
         /**
-         * Resumes this timer if it is paused.
+         * Resumes this timer if it is running and paused.
          */
         public void resume() {
             if (!timerOn) {
@@ -74,9 +76,11 @@ public class Timing {
         }
 
         /**
-         * Get the elapsed time since this time was started. If it was not started, return 0.
+         * Get the elapsed time since this time was started.
          *
          * @return The elapsed time, in the units specified in the constructor.
+         * If the timer was not started, return 0.
+         * If the timer is paused, return the time at which the timer was paused.
          */
         public long elapsedTime() {
             if (timerOn) return time.time(unit);
@@ -84,9 +88,11 @@ public class Timing {
         }
 
         /**
-         * Get the remaining time until this timer is done. If it was not started, returns the timer length.
+         * Get the remaining time until this timer is done.
          *
          * @return The remaining time, in the units specified in the constructor.
+         * If it was not started, returns the timer length.
+         * If it was paused, return the remaining time at the time the timer was paused.
          */
         public long remainingTime() {
             return timerLength - elapsedTime();
@@ -95,7 +101,7 @@ public class Timing {
         /**
          * Check if this timer has finished.
          *
-         * @return True if at least timerLength time has elapsed since the start of this timer. False otherwise.
+         * @return True if at least timerLength of unpaused time has elapsed since the start of this timer. False otherwise.
          */
         public boolean done() {
             return elapsedTime() >= timerLength;
