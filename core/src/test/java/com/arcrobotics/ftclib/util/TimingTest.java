@@ -12,6 +12,14 @@ public class TimingTest {
     private Timer timer;
     private final int seconds = 3;
 
+    /**
+     * Assert that the supplied runnable runs for between minMillis and minMillis+margin milliseconds.
+     *
+     * @param minMillis The minimum amount of time in which the runnable should run, in ms.
+     * @param margin    The difference between the minimum and maximum time in which the runnable should run.
+     *                  This is to account for inaccuracies in cpu time slices.
+     * @param runnable  The runnable to run. This should include the timing and waiting code.
+     */
     private void assertElapsedWithin(long minMillis, long margin, Runnable runnable) {
         Thread curr = Thread.currentThread();
         Thread interrupt = new Thread(() -> {
