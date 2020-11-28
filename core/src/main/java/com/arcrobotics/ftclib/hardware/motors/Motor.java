@@ -107,7 +107,7 @@ public class Motor implements HardwareDevice {
          * Resets the encoder without having to stop the motor.
          */
         public void reset() {
-            resetVal = getPosition();
+            resetVal += getPosition();
         }
 
         /**
@@ -204,6 +204,7 @@ public class Motor implements HardwareDevice {
     protected SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(0, 1, 0);
 
     private boolean targetIsSet = false;
+    private boolean targetIsDistance = false;
 
     public Motor() {}
 
@@ -277,6 +278,14 @@ public class Motor implements HardwareDevice {
      */
     public Encoder setDistancePerPulse(double distancePerPulse) {
         return encoder.setDistancePerPulse(distancePerPulse);
+    }
+
+    /**
+     * @return the estimated velocity in ticks / second based on encoder readings
+     *          and time elapsed
+     */
+    protected double getEstimatedVelocity() {
+        return encoder.veloEstimate;
     }
 
     /**

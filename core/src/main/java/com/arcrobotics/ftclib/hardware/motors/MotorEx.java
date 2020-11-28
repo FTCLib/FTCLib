@@ -83,6 +83,11 @@ public class MotorEx extends Motor {
     }
 
     @Override
+    public double getEstimatedVelocity() {
+        return super.getEstimatedVelocity();
+    }
+
+    @Override
     public double getVelocity() {
         return encoder.getCorrectedVelocity();
     }
