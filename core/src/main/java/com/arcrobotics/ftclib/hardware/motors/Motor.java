@@ -264,7 +264,7 @@ public class Motor implements HardwareDevice {
             double velocity = veloController.calculate(getVelocity(), speed) + feedforward.calculate(speed);
             motor.setPower(velocity / ACHIEVABLE_MAX_TICKS_PER_SECOND);
         } else if (runmode == RunMode.PositionControl) {
-            double error = positionController.calculate(encoder.getPosition());
+            double error = positionController.calculate(targetIsDistance ? encoder.getDistance() : encoder.getPosition());
             motor.setPower(output * error);
         } else {
             motor.setPower(output);
@@ -296,7 +296,7 @@ public class Motor implements HardwareDevice {
     }
 
     /**
-     * @return if the motor is at the target position
+     * @return if the motor is at the target position or distance
      */
     public boolean atTargetPosition() {
         return positionController.atSetPoint();
@@ -327,7 +327,7 @@ public class Motor implements HardwareDevice {
      * @return the feedforward coefficients
      */
     public double[] getFeedforwardCoefficients() {
-        return new double[]{feedforward.ks, feedforward.kv};
+        return new double[]{feedforward.ks, feedforward.kv, feedforward.ka};
     }
 
     /**
@@ -400,13 +400,31 @@ public class Motor implements HardwareDevice {
      * Once {@link #set(double)} is called, the motor will attempt to move in the direction
      * of said target.
      *
-     * @param target
+     * @param target    the target position in ticks
      */
     public void setTargetPosition(int target) {
+        setTargetDistance((double)target / (encoder.dpp));
+        targetIsDistance = false;
+    }
+
+    /**
+     * Sets the target distance for the motor to the desired target.
+     * Once {@link #set(double)} is called, the motor will attempt to move in the direction
+     * of said target.
+     *
+     * @param target the target position in units of distance
+     */
+    public void setTargetDistance(double target) {
         targetIsSet = true;
+        targetIsDistance = true;
         positionController.setSetPoint(target);
     }
 
+    /**
+     * Sets the target tolerance
+     *
+     * @param tolerance the specified tolerance
+     */
     public void setPositionTolerance(double tolerance) {
         positionController.setTolerance(tolerance);
     }
@@ -449,6 +467,17 @@ public class Motor implements HardwareDevice {
      */
     public void setFeedforwardCoefficients(double ks, double kv) {
         feedforward = new SimpleMotorFeedforward(ks, kv);
+    }
+
+    /**
+     * Set the feedforward coefficients for the motor.
+     *
+     * @param ks    the static gain
+     * @param kv    the velocity gain
+     * @param ka    the acceleration gain
+     */
+    public void setFeedforwardCoefficients(double ks, double kv, double ka) {
+        feedforward = new SimpleMotorFeedforward(ks, kv, ka);
     }
 
     /**
