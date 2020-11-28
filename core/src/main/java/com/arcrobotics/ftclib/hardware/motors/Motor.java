@@ -167,7 +167,7 @@ public class Motor implements HardwareDevice {
     public enum ZeroPowerBehavior {
         UNKNOWN(DcMotor.ZeroPowerBehavior.UNKNOWN),
         BRAKE(DcMotor.ZeroPowerBehavior.BRAKE),
-        FLOAT(DcMotor.ZeroPowerBehavior.UNKNOWN);
+        FLOAT(DcMotor.ZeroPowerBehavior.FLOAT);
 
         private final DcMotor.ZeroPowerBehavior m_behavior;
 
