@@ -74,12 +74,15 @@ public class MotorEx extends Motor {
         }
     }
 
+    /**
+     * @param velocity  the velocity in ticks per second
+     */
     public void setVelocity(double velocity) {
-        motorEx.setVelocity(velocity);
+        set(velocity / ACHIEVABLE_MAX_TICKS_PER_SECOND);
     }
 
     public void setVelocity(double velocity, AngleUnit angleUnit) {
-        motorEx.setVelocity(velocity, angleUnit);
+        setVelocity(velocity * (angleUnit == AngleUnit.DEGREES ? Math.PI / 180.0 * getCPR() : getCPR()));
     }
 
     @Override
