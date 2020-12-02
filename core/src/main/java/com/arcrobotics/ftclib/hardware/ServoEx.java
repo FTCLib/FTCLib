@@ -1,5 +1,7 @@
 package com.arcrobotics.ftclib.hardware;
 
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+
 /**
  * An extended servo interface.
  */
@@ -10,12 +12,12 @@ public interface ServoEx extends HardwareDevice {
      *
      * @param degrees The desired degrees of rotation
      */
-    void rotateDegrees(double degrees);
+    void rotateAngle(double angle);
 
     /**
      * Turns the servo position to a set angle.
      *
-     * @param angle The desired set position in degrees of the servo
+     * @param angle The desired set position of the servo
      */
     void turnToAngle(double angle);
 
@@ -30,6 +32,13 @@ public interface ServoEx extends HardwareDevice {
      * @param position The location of the servo, which ranges from 0 to 1
      */
     void setPosition(double position);
+
+    /**
+     * Sets the angle unit to be used in all of the methods of this servo.
+     *
+     * @param angleUnit The angle unit, either RADIANS or DEGREES
+     */
+    void setAngleUnit(AngleUnit angleUnit);
 
     /**
      * Sets the range of the servo.
