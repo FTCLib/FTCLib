@@ -8,15 +8,18 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 public interface ServoEx extends HardwareDevice {
 
     /**
-     * Rotates the servo a certain number of degrees.
+     * Rotates the servo a certain angle
+     * Given angle unit depends on the defined one
      *
-     * @param degrees The desired degrees of rotation
+     * @see ServoEx#setAngleUnit(AngleUnit)
+     * @param angle The desired angle of rotation
      */
     void rotateAngle(double angle);
 
     /**
      * Turns the servo position to a set angle.
      *
+     * @see ServoEx#setAngleUnit(AngleUnit)
      * @param angle The desired set position of the servo
      */
     void turnToAngle(double angle);
@@ -41,8 +44,10 @@ public interface ServoEx extends HardwareDevice {
     void setAngleUnit(AngleUnit angleUnit);
 
     /**
-     * Sets the range of the servo.
+     * Sets the range of the servo at specified angles.
+     * Given angle unit depends on the defined one
      *
+     * @see ServoEx#setAngleUnit(AngleUnit)
      * @param min The minimum value. Setting the servo position to 0 will bring it
      *            to this specified minimum.
      * @param max The maximum value. Setting the servo position to 1 will bring it
@@ -70,6 +75,7 @@ public interface ServoEx extends HardwareDevice {
     double getPosition();
 
     /**
+     * @see ServoEx#setAngleUnit(AngleUnit)
      * @return The angle the servo's current makes with the 0 position.
      */
     double getAngle();
