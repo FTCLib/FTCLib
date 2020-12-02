@@ -129,12 +129,14 @@ public class SimpleServo implements ServoEx {
 
     @Override
     public double getAngle() {
-        double angleRadians = getPosition() * getAngleRange() + minAngle;
-        if(angleUnit == AngleUnit.DEGREES) {
-            return Math.toDegrees(angleRadians);
-        } else {
-            return angleRadians;
-        }
+        //use local variable in case we need to convert units to degrees
+        //(remember this value is always stored as radians internally)
+        double iMinAngle = minAngle;
+
+        if(angleUnit == AngleUnit.DEGREES)
+            iMinAngle = Math.toDegrees(iMinAngle);
+
+        return getPosition() * getAngleRange() + iMinAngle;
     }
 
     public double getAngleRange() {
