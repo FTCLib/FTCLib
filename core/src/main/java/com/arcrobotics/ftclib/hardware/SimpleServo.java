@@ -61,18 +61,9 @@ public class SimpleServo implements ServoEx {
 
         //use local variable in case we need to convert units to degrees
         //(remember these values are always stored as radians internally)
-        double iMaxAngle = maxAngle;
-        double iMinAngle = minAngle;
-
-        if(angleUnit == AngleUnit.DEGREES) {
-            iMaxAngle = Math.toDegrees(iMaxAngle);
-            iMinAngle = Math.toDegrees(iMinAngle);
-        }
-
-        if(angle > iMaxAngle)
-            angle = iMaxAngle;
-        else if(angle < iMinAngle)
-            angle = iMinAngle;
+        double iMaxAngle = angleUnit == AngleUnit.DEGREES ? AngleUnit.normalizeDegrees(angleUnit.toDegrees(maxAngle)) : maxAngle;
+                                          
+        double iMinAngle = angleUnit == AngleUnit.DEGREES ? AngleUnit.normalizeDegrees(angleUnit.toDegrees(minAngle)) : minAngle;
 
         setPosition((angle - iMinAngle) / (getAngleRange()));
 
