@@ -54,6 +54,6 @@ public class Auto extends CommandOpMode {
         while (!Teleop.pid.atSetPoint()) {
             liftController.setStageOne();
         }
-        scoringServo.rotate(-90);
+        scoringServo.rotateAngle(-90);
     }
 }
