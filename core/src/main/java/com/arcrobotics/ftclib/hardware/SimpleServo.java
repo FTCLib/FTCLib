@@ -2,6 +2,7 @@ package com.arcrobotics.ftclib.hardware;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
@@ -17,13 +18,11 @@ public class SimpleServo implements ServoEx {
     final double minPosition = 0;
 
     public SimpleServo(HardwareMap hw, String servoName, AngleUnit angleUnit) {
-
         servo = hw.get(Servo.class, servoName);
         this.angleUnit = angleUnit;
 
         maxAngle = Math.toRadians(180);
         minAngle = 0;
-
     }
 
     public SimpleServo(HardwareMap hw, String servoName){
@@ -31,19 +30,11 @@ public class SimpleServo implements ServoEx {
     }
 
     public SimpleServo(HardwareMap hw, String servoName, double maxAngle, double minAngle, AngleUnit angleUnit) {
-
         servo = hw.get(Servo.class, servoName);
-
-        if(angleUnit == AngleUnit.DEGREES) {
-            this.maxAngle = Math.toRadians(maxAngle);
-            this.minAngle = Math.toRadians(minAngle);
-        } else {
-            this.maxAngle = maxAngle;
-            this.minAngle = minAngle;
-        }
-
         this.angleUnit = angleUnit;
 
+        this.maxAngle = angleUnit == AngleUnit.DEGREES ? Math.toRadians(maxAngle) : maxAngle;
+        this.minAngle = angleUnit == AngleUnit.DEGREES ? Math.toRadians(minAngle) : minAngle;
     }
 
     public SimpleServo(HardwareMap hw, String servoName, double maxAngle, double minAngle) {
@@ -62,8 +53,9 @@ public class SimpleServo implements ServoEx {
         //use local variable in case we need to convert units to degrees
         //(remember these values are always stored as radians internally)
         double iMaxAngle = angleUnit == AngleUnit.DEGREES ? AngleUnit.normalizeDegrees(angleUnit.toDegrees(maxAngle)) : maxAngle;
-                                          
         double iMinAngle = angleUnit == AngleUnit.DEGREES ? AngleUnit.normalizeDegrees(angleUnit.toDegrees(minAngle)) : minAngle;
+
+        angle = Range.clip(angle, iMinAngle, iMaxAngle);
 
         setPosition((angle - iMinAngle) / (getAngleRange()));
 
@@ -92,20 +84,13 @@ public class SimpleServo implements ServoEx {
 
     @Override
     public void setRange(double min, double max) {
-        if(angleUnit == AngleUnit.DEGREES) {
-            min = Math.toRadians(min);
-            max = Math.toRadians(max);
-        }
-        this.minAngle = min;
-        this.maxAngle = max;
+        this.minAngle = angleUnit == AngleUnit.DEGREES ? Math.toRadians(min) : min;
+        this.maxAngle = angleUnit == AngleUnit.DEGREES ? Math.toRadians(max) : max;
     }
 
     @Override
     public void setInverted(boolean isInverted) {
-        if(isInverted)
-            servo.setDirection(Servo.Direction.REVERSE);
-        else
-            servo.setDirection(Servo.Direction.FORWARD);
+        servo.setDirection(isInverted ? Servo.Direction.REVERSE : Servo.Direction.FORWARD);
     }
 
     @Override
@@ -122,21 +107,13 @@ public class SimpleServo implements ServoEx {
     public double getAngle() {
         //use local variable in case we need to convert units to degrees
         //(remember this value is always stored as radians internally)
-        double iMinAngle = minAngle;
-
-        if(angleUnit == AngleUnit.DEGREES)
-            iMinAngle = Math.toDegrees(iMinAngle);
-
+        double iMinAngle = angleUnit == AngleUnit.DEGREES ? Math.toDegrees(minAngle) : minAngle;
         return getPosition() * getAngleRange() + iMinAngle;
     }
 
     public double getAngleRange() {
         double angleRangeRadians = maxAngle - minAngle;
-        if(angleUnit == AngleUnit.DEGREES) {
-            return Math.toDegrees(angleRangeRadians);
-        } else {
-            return angleRangeRadians;
-        }
+        return angleUnit == AngleUnit.DEGREES ? Math.toDegrees(angleRangeRadians) : angleRangeRadians;
     }
 
     @Override
