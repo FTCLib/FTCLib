@@ -21,11 +21,11 @@ public class SimpleServo implements ServoEx {
         servo = hw.get(Servo.class, servoName);
         this.angleUnit = angleUnit;
 
-        maxAngle = Math.toRadians(180);
+        maxAngle = Math.PI;
         minAngle = 0;
     }
 
-    public SimpleServo(HardwareMap hw, String servoName){
+    public SimpleServo(HardwareMap hw, String servoName) {
         this(hw, servoName, AngleUnit.DEGREES);
     }
 
@@ -69,9 +69,9 @@ public class SimpleServo implements ServoEx {
 
     @Override
     public void setPosition(double position) {
-        if(position > maxPosition)
+        if (position > maxPosition)
             servo.setPosition(maxPosition);
-        else if(position < minAngle)
+        else if (position < minAngle)
             servo.setPosition(minPosition);
         else
             servo.setPosition(position);
