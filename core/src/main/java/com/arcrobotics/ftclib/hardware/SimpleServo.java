@@ -40,10 +40,8 @@ public class SimpleServo implements ServoEx {
 
     @Override
     public void turnToAngle(double angle, AngleUnit angleUnit) {
-        double angleRadians = angleUnit.toRadians(angle);
-
-        angle = Range.clip(angleRadians, minAngle, maxAngle);
-        setPosition((angle - minAngle) / (getAngleRange(AngleUnit.RADIANS)));
+        double angleRadians = Range.clip(angleUnit.toRadians(angle), minAngle, maxAngle);
+        setPosition((angleRadians - minAngle) / (getAngleRange(AngleUnit.RADIANS)));
     }
 
     @Override
