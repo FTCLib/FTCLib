@@ -22,7 +22,7 @@ public class Auto extends CommandOpMode {
     public void initialize() {
         driverGamepad = new GamepadEx(gamepad1);
         driveSubsystem = new DriveSubsystem(driverGamepad, hardwareMap, telemetry);
-        scoringServo = new SimpleServo(hardwareMap, "scoringServo");
+        scoringServo = new SimpleServo(hardwareMap, "scoringServo", 0, 270);
 
         Teleop.pid.reset();
         Teleop.pid.setTolerance(Teleop.kThreshold);
