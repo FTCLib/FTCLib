@@ -8,21 +8,34 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 public interface ServoEx extends HardwareDevice {
 
     /**
-     * Rotates the servo a certain angle
-     * Given angle unit depends on the defined one
+     * Rotates the servo a certain angle.
      *
-     * @see ServoEx#setAngleUnit(AngleUnit)
      * @param angle The desired angle of rotation
+     * @param angleUnit The unit of the angle parameter
      */
-    void rotateAngle(double angle);
+    void rotateAngle(double angle, AngleUnit angleUnit);
+
+    /**
+     * Rotates the servo a certain angle in degrees.
+     *
+     * @param angle The desired angle of rotation in degrees
+     */
+    void rotateAngle(double degrees);
 
     /**
      * Turns the servo position to a set angle.
      *
-     * @see ServoEx#setAngleUnit(AngleUnit)
      * @param angle The desired set position of the servo
+     * @param angleUnit The unit of the angle parameter
      */
-    void turnToAngle(double angle);
+    void turnToAngle(double angle, AngleUnit angleUnit);
+
+    /**
+     * Turns the servo position to a set angle in degrees.
+     *
+     * @param angle The desired set position of the servo in degrees
+     */
+    void turnToAngle(double degrees);
 
     /**
      * Rotates by a given positional factor.
@@ -37,23 +50,26 @@ public interface ServoEx extends HardwareDevice {
     void setPosition(double position);
 
     /**
-     * Sets the angle unit to be used in all of the methods of this servo.
+     * Sets the range of the servo at specified angles.
      *
-     * @param angleUnit The angle unit, either RADIANS or DEGREES
+     * @param min The minimum value. Setting the servo position to 0 will bring it
+     *            to this specified minimum.
+     * @param max The maximum value. Setting the servo position to 1 will bring it
+     *            to this specified maximum.
+     * @param angleUnit The unit of the range parameters
      */
-    void setAngleUnit(AngleUnit angleUnit);
+    void setRange(double min, double max, AngleUnit angleUnit);
 
     /**
-     * Sets the range of the servo at specified angles.
-     * Given angle unit depends on the defined one
+     * Sets the range of the servo at specified angles in degrees.
      *
-     * @see ServoEx#setAngleUnit(AngleUnit)
      * @param min The minimum value. Setting the servo position to 0 will bring it
      *            to this specified minimum.
      * @param max The maximum value. Setting the servo position to 1 will bring it
      *            to this specified maximum.
      */
     void setRange(double min, double max);
+
 
     /**
      * Sets the inversion factor of the servo.
@@ -75,8 +91,14 @@ public interface ServoEx extends HardwareDevice {
     double getPosition();
 
     /**
-     * @see ServoEx#setAngleUnit(AngleUnit)
+     * @param angleUnit Angle unit for the result to be returned in
      * @return The angle the servo's current makes with the 0 position.
      */
+    double getAngle(AngleUnit angleUnit);
+
+    /**
+     * @return The angle the servo's current makes with the 0 position, in degrees.
+     */
     double getAngle();
+
 }
