@@ -28,14 +28,14 @@ public class SimpleServo implements ServoEx {
     }
 
     @Override
-    public void rotateAngle(double angle, AngleUnit angleUnit) {
+    public void rotateByAngle(double angle, AngleUnit angleUnit) {
         angle = getAngle(angleUnit) + angle;
         turnToAngle(angle, angleUnit);
     }
 
     @Override
-    public void rotateAngle(double degrees) {
-        rotateAngle(degrees, AngleUnit.DEGREES);
+    public void rotateByAngle(double degrees) {
+        rotateByAngle(degrees, AngleUnit.DEGREES);
     }
 
     @Override
@@ -50,7 +50,7 @@ public class SimpleServo implements ServoEx {
     }
 
     @Override
-    public void rotate(double position) {
+    public void rotateBy(double position) {
         position = getPosition() + position;
         setPosition(position);
     }

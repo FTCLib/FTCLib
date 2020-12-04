@@ -8,19 +8,19 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 public interface ServoEx extends HardwareDevice {
 
     /**
-     * Rotates the servo a certain angle.
+     * Rotates the servo by a certain angle.
      *
      * @param angle The desired angle of rotation
      * @param angleUnit The unit of the angle parameter
      */
-    void rotateAngle(double angle, AngleUnit angleUnit);
+    void rotateByAngle(double angle, AngleUnit angleUnit);
 
     /**
-     * Rotates the servo a certain angle in degrees.
+     * Rotates the servo by a certain angle in degrees.
      *
      * @param angle The desired angle of rotation in degrees
      */
-    void rotateAngle(double degrees);
+    void rotateByAngle(double degrees);
 
     /**
      * Turns the servo position to a set angle.
@@ -40,7 +40,7 @@ public interface ServoEx extends HardwareDevice {
     /**
      * Rotates by a given positional factor.
      */
-    void rotate(double position);
+    void rotateBy(double position);
 
     /**
      * Sets the position of the servo to the specified location.
