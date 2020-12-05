@@ -284,6 +284,64 @@ public class Trigger {
     }
 
     /**
+     * Toggles between two commands when the trigger becomes active (commadOne then commandTwo
+     * then commandOne).
+     *
+     * @param commandOne the command to toggle
+     * @param commandTwo the command to be toggled
+     * @param interruptible whether the commands are interruptible
+     * @return this trigger, so calls can be chained
+     */
+    public Trigger toggleWhenActive(final Command commandOne, final Command commandTwo, boolean interruptible) {
+        CommandScheduler.getInstance().addButton(new Runnable() {
+            private boolean m_pressedLast = get();
+            @Override
+            public void run() {
+                boolean pressed = get();
+                if (!m_pressedLast && pressed) {
+                    if (commandOne.isScheduled()) {
+                        commandOne.cancel();
+                        commandTwo.schedule(interruptible);
+                    } else if(commandTwo.isScheduled()){
+                        commandTwo.cancel();
+                        commandOne.schedule(interruptible);
+                    } else {
+                        commandOne.schedule(interruptible);
+                    }
+                }
+                m_pressedLast = pressed;
+            }
+        });
+        return this;
+    }
+
+    /**
+     * Toggles between two commands when the trigger becomes active (commadOne then commandTwo
+     * then commandOne). These commands are set to be interruptible.
+     *
+     * @param commandOne the command to start
+     * @param commandTwo the command to be activated after
+     * @return this trigger, so calls can be chained
+     */
+    public Trigger toggleWhenActive(final Command commandOne, final Command commandTwo){
+        toggleWhenActive(commandOne, commandTwo, true);
+        return this;
+    }
+
+    /**
+     * Toggles between two runnables when the trigger becomes active (runnableOne then runnableTwo
+     * then runnableOne). These runnables are set to be interruptible.
+     *
+     * @param runnableOne the runnable to start
+     * @param runnableTwo the runnable to be activated after
+     * @return this trigger, so calls can be chained
+     */
+    public Trigger toggleWhenActive(final Runnable runnableOne, final Runnable runnableTwo){
+        toggleWhenActive(new InstantCommand(runnableOne), new InstantCommand(runnableTwo));
+        return this;
+    }
+
+    /**
      * Cancels a command when the trigger becomes active.
      *
      * @param command the command to cancel
