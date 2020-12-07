@@ -108,7 +108,7 @@ public class Trigger {
 
     /**
      * Constantly starts the given command while the button is held.
-     *
+     * <p>
      * {@link Command#schedule(boolean)} will be called repeatedly while the trigger is active, and
      * will be canceled when the trigger becomes inactive.
      *
@@ -139,7 +139,7 @@ public class Trigger {
 
     /**
      * Constantly starts the given command while the button is held.
-     *
+     * <p>
      * {@link Command#schedule(boolean)} will be called repeatedly while the trigger is active, and
      * will be canceled when the trigger becomes inactive.  The command is set to be interruptible.
      *
@@ -287,14 +287,20 @@ public class Trigger {
      * Toggles between two commands when the trigger becomes active (commadOne then commandTwo
      * then commandOne).
      *
+<<<<<<< Updated upstream
      * @param commandOne the command to toggle
      * @param commandTwo the command to be toggled
+=======
+     * @param commandOne    the command to toggle
+     * @param commandTwo    the command to be toggled
+>>>>>>> Stashed changes
      * @param interruptible whether the commands are interruptible
      * @return this trigger, so calls can be chained
      */
     public Trigger toggleWhenActive(final Command commandOne, final Command commandTwo, boolean interruptible) {
         CommandScheduler.getInstance().addButton(new Runnable() {
             private boolean m_pressedLast = get();
+<<<<<<< Updated upstream
             @Override
             public void run() {
                 boolean pressed = get();
@@ -309,6 +315,30 @@ public class Trigger {
                         commandOne.schedule(interruptible);
                     }
                 }
+=======
+            private boolean m_firstCommandActive = false;
+
+            @Override
+            public void run() {
+                boolean pressed = get();
+
+                if (!m_pressedLast && pressed) {
+                    if (m_firstCommandActive) {
+                        if (commandOne.isScheduled()) {
+                            commandOne.cancel();
+                        }
+                        commandTwo.schedule(interruptible);
+                    } else {
+                        if (commandTwo.isScheduled()) {
+                            commandTwo.cancel();
+                        }
+                        commandOne.schedule(interruptible);
+                    }
+
+                    m_firstCommandActive = !m_firstCommandActive;
+                }
+
+>>>>>>> Stashed changes
                 m_pressedLast = pressed;
             }
         });
@@ -323,9 +353,14 @@ public class Trigger {
      * @param commandTwo the command to be activated after
      * @return this trigger, so calls can be chained
      */
+<<<<<<< Updated upstream
     public Trigger toggleWhenActive(final Command commandOne, final Command commandTwo){
         toggleWhenActive(commandOne, commandTwo, true);
         return this;
+=======
+    public Trigger toggleWhenActive(final Command commandOne, final Command commandTwo) {
+        return toggleWhenActive(commandOne, commandTwo, true);
+>>>>>>> Stashed changes
     }
 
     /**
@@ -336,9 +371,14 @@ public class Trigger {
      * @param runnableTwo the runnable to be activated after
      * @return this trigger, so calls can be chained
      */
+<<<<<<< Updated upstream
     public Trigger toggleWhenActive(final Runnable runnableOne, final Runnable runnableTwo){
         toggleWhenActive(new InstantCommand(runnableOne), new InstantCommand(runnableTwo));
         return this;
+=======
+    public Trigger toggleWhenActive(final Runnable runnableOne, final Runnable runnableTwo) {
+        return toggleWhenActive(new InstantCommand(runnableOne), new InstantCommand(runnableTwo));
+>>>>>>> Stashed changes
     }
 
     /**
