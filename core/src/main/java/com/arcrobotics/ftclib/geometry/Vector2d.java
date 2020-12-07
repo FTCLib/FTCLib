@@ -149,7 +149,7 @@ public class Vector2d {
      * @param other the other vector
      */
     public Vector2d project(Vector2d other) {
-        return other.scale(dot(other) / (magnitude() * other.magnitude()));
+        return other.times(this.dot(other) / other.dot(other));
     }
 
     /**
