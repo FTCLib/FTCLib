@@ -51,7 +51,7 @@ public class TimingTest {
     @Test
     public void pauseTest() throws InterruptedException {
         timer.start();
-        Thread.sleep(1000);
+        Thread.sleep(1005);
         timer.pause();
         long currTime = timer.elapsedTime();
         assertTrue(currTime >= 1);
