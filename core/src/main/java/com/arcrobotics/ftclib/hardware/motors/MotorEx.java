@@ -81,10 +81,19 @@ public class MotorEx extends Motor {
         set(velocity / ACHIEVABLE_MAX_TICKS_PER_SECOND);
     }
 
+    /**
+     * Sets the velocity of the motor to an angular rate
+     *
+     * @param velocity      the angular rate
+     * @param angleUnit     radians or degrees
+     */
     public void setVelocity(double velocity, AngleUnit angleUnit) {
-        setVelocity(velocity * (angleUnit == AngleUnit.DEGREES ? Math.PI / 180.0 * getCPR() : getCPR()));
+        setVelocity(getCPR() * AngleUnit.RADIANS.fromUnit(angleUnit, velocity) / (2 * Math.PI));
     }
 
+    /**
+     * @return the velocity of the motor in ticks per second
+     */
     @Override
     public double getVelocity() {
         return motorEx.getVelocity();

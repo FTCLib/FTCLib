@@ -7,6 +7,7 @@ import com.arcrobotics.ftclib.controller.PIDController;
 import com.arcrobotics.ftclib.controller.wpilibcontroller.SimpleMotorFeedforward;
 import com.arcrobotics.ftclib.hardware.HardwareDevice;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import java.util.function.Supplier;
@@ -261,7 +262,7 @@ public class Motor implements HardwareDevice {
     public void set(double output) {
         if (runmode == RunMode.VelocityControl) {
             double speed = output * ACHIEVABLE_MAX_TICKS_PER_SECOND;
-            double velocity = veloController.calculate(getEstimatedVelocity(), speed) + feedforward.calculate(speed);
+            double velocity = veloController.calculate(getVelocity(), speed) + feedforward.calculate(speed);
             motor.setPower(velocity / ACHIEVABLE_MAX_TICKS_PER_SECOND);
         } else if (runmode == RunMode.PositionControl) {
             double error = positionController.calculate(targetIsDistance ? encoder.getDistance() : encoder.getPosition());
@@ -278,14 +279,6 @@ public class Motor implements HardwareDevice {
      */
     public Encoder setDistancePerPulse(double distancePerPulse) {
         return encoder.setDistancePerPulse(distancePerPulse);
-    }
-
-    /**
-     * @return the estimated velocity in ticks / second based on encoder readings
-     *          and time elapsed
-     */
-    public double getEstimatedVelocity() {
-        return encoder.veloEstimate;
     }
 
     /**
@@ -383,7 +376,7 @@ public class Motor implements HardwareDevice {
     }
 
     protected double getVelocity() {
-        return get() * ACHIEVABLE_MAX_TICKS_PER_SECOND;
+        return ((DcMotorEx)motor).getVelocity();
     }
 
     /**
