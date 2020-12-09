@@ -14,17 +14,16 @@ public class CommandSchedulerTests {
     private boolean val = false;
 
     @BeforeEach
-    public void setup(){
+    public void setup() {
         x = 3;
         val = false;
         Robot.enable();
     }
 
     @AfterEach
-    public void teardown(){
+    public void teardown() {
         CommandScheduler.getInstance().reset();
     }
-
 
     @Test
     public void testToggleBetweenCommands() {
@@ -64,10 +63,9 @@ public class CommandSchedulerTests {
         assertEquals(3, x, "The value of x should have updated");
     }
 
-
     @Test
     public void testAddCommand() {
-        CommandScheduler.getInstance().schedule(new CommandBase(){
+        CommandScheduler.getInstance().schedule(new CommandBase() {
             @Override
             public void execute() {
                 x = 5;
@@ -86,7 +84,7 @@ public class CommandSchedulerTests {
     @Test
     public void testNotRunWhenDisabled() {
         Robot.disable();
-        CommandScheduler.getInstance().schedule(new CommandBase(){
+        CommandScheduler.getInstance().schedule(new CommandBase() {
             @Override
             public void execute() {
                 x = 5;
@@ -105,7 +103,7 @@ public class CommandSchedulerTests {
     @Test
     public void testRunWhenDisabled() {
         Robot.disable();
-        CommandScheduler.getInstance().schedule(new CommandBase(){
+        CommandScheduler.getInstance().schedule(new CommandBase() {
             @Override
             public void execute() {
                 x = 5;
@@ -136,7 +134,7 @@ public class CommandSchedulerTests {
 
     @Test
     public void pollButtons() {
-        Trigger button = new Trigger(this::getValue).whenActive(new CommandBase(){
+        Trigger button = new Trigger(this::getValue).whenActive(new CommandBase() {
             @Override
             public void execute() {
                 x = 5;
