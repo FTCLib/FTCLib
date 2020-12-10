@@ -108,7 +108,7 @@ public class Trigger {
 
     /**
      * Constantly starts the given command while the button is held.
-     *
+     * <p>
      * {@link Command#schedule(boolean)} will be called repeatedly while the trigger is active, and
      * will be canceled when the trigger becomes inactive.
      *
@@ -139,7 +139,7 @@ public class Trigger {
 
     /**
      * Constantly starts the given command while the button is held.
-     *
+     * <p>
      * {@link Command#schedule(boolean)} will be called repeatedly while the trigger is active, and
      * will be canceled when the trigger becomes inactive.  The command is set to be interruptible.
      *
@@ -281,6 +281,70 @@ public class Trigger {
      */
     public Trigger toggleWhenActive(final Command command) {
         return toggleWhenActive(command, true);
+    }
+
+    /**
+     * Toggles between two commands when the trigger becomes active (commadOne then commandTwo
+     * then commandOne).
+     *
+     * @param commandOne    the command to toggle
+     * @param commandTwo    the command to be toggled
+     * @param interruptible whether the commands are interruptible
+     * @return this trigger, so calls can be chained
+     */
+    public Trigger toggleWhenActive(final Command commandOne, final Command commandTwo, boolean interruptible) {
+        CommandScheduler.getInstance().addButton(new Runnable() {
+            private boolean m_pressedLast = get();
+            private boolean m_firstCommandActive = false;
+
+            @Override
+            public void run() {
+                boolean pressed = get();
+                
+                if (!m_pressedLast && pressed) {
+                    if (m_firstCommandActive) {
+                        if (commandOne.isScheduled()) {
+                            commandOne.cancel();
+                        }
+                        commandTwo.schedule(interruptible);
+                    } else {
+                        if (commandTwo.isScheduled()) {
+                            commandTwo.cancel();
+                        }
+                        commandOne.schedule(interruptible);
+                    }
+
+                    m_firstCommandActive = !m_firstCommandActive;
+                }
+
+                m_pressedLast = pressed;
+            }
+        });
+        return this;
+    }
+
+    /**
+     * Toggles between two commands when the trigger becomes active (commadOne then commandTwo
+     * then commandOne). These commands are set to be interruptible.
+     *
+     * @param commandOne the command to start
+     * @param commandTwo the command to be activated after
+     * @return this trigger, so calls can be chained
+     */
+    public Trigger toggleWhenActive(final Command commandOne, final Command commandTwo) {
+        return toggleWhenActive(commandOne, commandTwo, true);
+    }
+
+    /**
+     * Toggles between two runnables when the trigger becomes active (runnableOne then runnableTwo
+     * then runnableOne). These runnables are set to be interruptible.
+     *
+     * @param runnableOne the runnable to start
+     * @param runnableTwo the runnable to be activated after
+     * @return this trigger, so calls can be chained
+     */
+    public Trigger toggleWhenActive(final Runnable runnableOne, final Runnable runnableTwo) {
+        return toggleWhenActive(new InstantCommand(runnableOne), new InstantCommand(runnableTwo));
     }
 
     /**
