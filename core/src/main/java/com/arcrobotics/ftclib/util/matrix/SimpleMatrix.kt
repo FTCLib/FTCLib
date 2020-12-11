@@ -51,4 +51,6 @@ class SimpleMatrix(size: Size, initBlock: (Int, Int) -> Double = {_, _ -> 0.0}):
         }
         return ret
     }
+
+    // TODO Jaran find effective PINV algo (QR?)
 }
