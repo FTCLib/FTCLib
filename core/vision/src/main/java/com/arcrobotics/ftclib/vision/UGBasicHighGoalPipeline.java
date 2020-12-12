@@ -1,5 +1,6 @@
 package com.arcrobotics.ftclib.vision;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfPoint;
@@ -10,16 +11,16 @@ import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
 import org.openftc.easyopencv.OpenCvPipeline;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import static java.util.Optional.of;
 
 
 public class UGBasicHighGoalPipeline extends OpenCvPipeline {
 
+    protected double centerX;
+    protected double centerY;
 
     public int minThreshold, maxThreshold;
     private Mat blueThreshold;
@@ -29,8 +30,8 @@ public class UGBasicHighGoalPipeline extends OpenCvPipeline {
     private Mat redChannel;
     private Mat blueChannel;
 
-    private ArrayList<MatOfPoint> redContours;
-    private ArrayList<MatOfPoint> blueContours;
+    private List<MatOfPoint> redContours;
+    private List<MatOfPoint> blueContours;
     private MatOfPoint biggestBlueContour;
     private MatOfPoint biggestRedContour;
     private Rect blueRect, redRect;
@@ -54,9 +55,24 @@ public class UGBasicHighGoalPipeline extends OpenCvPipeline {
         redRect = new Rect();
 
         minThreshold = 155;
-        maxThreshold = 255;
+        maxThreshold = 200;
+
     }
 
+    @Override
+    public void init(Mat mat) {
+        super.init(mat);
+        int imageWidth = mat.width();
+        int imageHeight = mat.height();
+
+        int imageArea = imageWidth * imageHeight;
+        centerX = ((double) imageWidth / 2) - 0.5;
+        centerY = ((double) imageHeight / 2) - 0.5;
+    }
+
+    public boolean filterContours(MatOfPoint contour) {
+        return Imgproc.contourArea(contour) > 30;
+    }
     @Override
     public Mat processFrame(Mat input) {
 
@@ -73,24 +89,22 @@ public class UGBasicHighGoalPipeline extends OpenCvPipeline {
 
         Imgproc.findContours(blueThreshold, blueContours, new Mat(), Imgproc.RETR_TREE, Imgproc.CHAIN_APPROX_SIMPLE);
         Imgproc.findContours(redThreshold, redContours, new Mat(), Imgproc.RETR_TREE, Imgproc.CHAIN_APPROX_SIMPLE);
+        blueContours = blueContours.stream().filter(i -> filterContours(i) && (((double) Imgproc.boundingRect(i).width / Imgproc.boundingRect(i).height) > 1) &&(((double) Imgproc.boundingRect(i).width / Imgproc.boundingRect(i).height) < 2)).collect(Collectors.toList());
+        redContours = redContours.stream().filter(i -> filterContours(i) && (((double) Imgproc.boundingRect(i).width / Imgproc.boundingRect(i).height) > 1) &&(((double) Imgproc.boundingRect(i).width / Imgproc.boundingRect(i).height) < 2)).collect(Collectors.toList());
 
+        Imgproc.drawContours(input, redContours, -1, new Scalar(255, 255, 0));
         if (blueContours.size() != 0) {
             biggestBlueContour = Collections.max(blueContours, new Comparator<MatOfPoint>() {
                 @Override
                 public int compare(MatOfPoint t0, MatOfPoint t1) {
-                    return Double.compare(Imgproc.contourArea(t0), Imgproc.contourArea(t1));
+                    return Double.compare(Imgproc.boundingRect(t0).width, Imgproc.boundingRect(t1).width);
                 }
             });
 
-
             blueRect = Imgproc.boundingRect(biggestBlueContour);
-            double aspectRatio = (double) blueRect.width / blueRect.height;
+            Imgproc.rectangle(input, blueRect, new Scalar(0, 0, 255), 3);
+            System.out.println((double) blueRect.width / (double) blueRect.height);
 
-            if (aspectRatio > 1.0) {
-                Imgproc.rectangle(input, blueRect, new Scalar(0, 0, 255));
-            } else {
-                blueRect = null;
-            }
         } else {
             blueRect = null;
         }
@@ -98,18 +112,13 @@ public class UGBasicHighGoalPipeline extends OpenCvPipeline {
             biggestRedContour = Collections.max(redContours, new Comparator<MatOfPoint>() {
                 @Override
                 public int compare(MatOfPoint t0, MatOfPoint t1) {
-                    return Double.compare(Imgproc.contourArea(t0), Imgproc.contourArea(t1)) ;
+                    return Double.compare(Imgproc.boundingRect(t0).width, Imgproc.boundingRect(t1).width);
                 }
             });
 
             redRect = Imgproc.boundingRect(biggestRedContour);
-            double aspectRatio = (double) redRect.width / redRect.height;
-
-            if (aspectRatio > 1.0) {
-                Imgproc.rectangle(input, redRect, new Scalar(0, 0, 255));
-            } else {
-                redRect = null;
-            }
+            System.out.println((double) redRect.width / (double) redRect.height);
+            Imgproc.rectangle(input, redRect, new Scalar(255, 0, 0), 3);
 
         } else {
             redRect = null;
@@ -134,10 +143,12 @@ public class UGBasicHighGoalPipeline extends OpenCvPipeline {
         return (blueRect != null);
     }
 
-    public static Optional<Point> getCenterofRect(Rect rect) {
+    public Point getCenterofRect(Rect rect) {
         if (rect == null) {
-            return Optional.empty();
+            return new Point(centerX, centerY);
         }
-        return Optional.of(new Point(rect.x + rect.width / 2, rect.y + rect.height / 2));
+        return new Point(rect.x + rect.width / 2, rect.y + rect.height / 2);
     }
+
+
 }
