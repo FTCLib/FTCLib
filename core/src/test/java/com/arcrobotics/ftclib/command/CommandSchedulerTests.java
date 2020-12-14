@@ -160,8 +160,15 @@ public class CommandSchedulerTests {
                 x = 3;
             }
         };
+        p.register();
         p.setDefaultCommand(new RunCommand(() -> x = 5, p));
+        assertEquals(3, x);
+        CommandScheduler.getInstance().run();
+        assertEquals(3, x);
+        CommandScheduler.getInstance().run();
+        assertEquals(5, x);
         CommandScheduler.getInstance().schedule(new InstantCommand(() -> x = 3, p));
+        x = 3;
         assertEquals(3, x);
         CommandScheduler.getInstance().run();
         assertEquals(3, x);
