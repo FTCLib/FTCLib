@@ -101,25 +101,6 @@ public class CommandSchedulerTests {
     }
 
     @Test
-    public void testRunWhenDisabled() {
-        Robot.disable();
-        CommandScheduler.getInstance().schedule(new CommandBase() {
-            @Override
-            public void execute() {
-                x = 5;
-            }
-
-            @Override
-            public boolean runsWhenDisabled() {
-                return true;
-            }
-        });
-
-        CommandScheduler.getInstance().run();
-        assertEquals(5, x);
-    }
-
-    @Test
     public void testSubsystemPeriodic() {
         CommandScheduler.getInstance().registerSubsystem(new SubsystemBase() {
             @Override
@@ -154,26 +135,6 @@ public class CommandSchedulerTests {
 
     @Test
     public void testDefaultCommand() {
-        SubsystemBase p = new SubsystemBase() {
-            @Override
-            public void periodic() {
-                x = 3;
-            }
-        };
-        p.setDefaultCommand(new PerpetualCommand(new InstantCommand(() -> x = 5, p)));
-        CommandScheduler.getInstance().schedule(new InstantCommand(() -> x = 3, p));
-        assertEquals(3, x);
-        CommandScheduler.getInstance().run();
-        assertEquals(5, x);
-        CommandScheduler.getInstance().schedule(new PerpetualCommand(new InstantCommand(() -> x = 3, p)));
-        CommandScheduler.getInstance().run();
-        assertEquals(3, x);
-    }
-
-    @Test
-    public void testDefaultCommand() {
-        x = 3;
-        Robot.enable();
         SubsystemBase p = new SubsystemBase() {
             @Override
             public void periodic() {
