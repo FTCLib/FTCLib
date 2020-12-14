@@ -64,8 +64,8 @@ public class MotorEx extends Motor {
     public void set(double output) {
         if (runmode == RunMode.VelocityControl) {
             double speed = output * ACHIEVABLE_MAX_TICKS_PER_SECOND;
-            double velocity = veloController.calculate(getVelocity(), speed) + feedforward.calculate(speed);
-            motorEx.setVelocity(velocity);
+            double velocity = veloController.calculate(getCorrectedVelocity(), speed) + feedforward.calculate(speed);
+            setVelocity(velocity);
         } else if (runmode == RunMode.PositionControl) {
             double error = positionController.calculate(encoder.getPosition());
             motorEx.setPower(output * error);
@@ -74,17 +74,29 @@ public class MotorEx extends Motor {
         }
     }
 
+    /**
+     * @param velocity  the velocity in ticks per second
+     */
     public void setVelocity(double velocity) {
-        motorEx.setVelocity(velocity);
+        set(velocity / ACHIEVABLE_MAX_TICKS_PER_SECOND);
     }
 
+    /**
+     * Sets the velocity of the motor to an angular rate
+     *
+     * @param velocity      the angular rate
+     * @param angleUnit     radians or degrees
+     */
     public void setVelocity(double velocity, AngleUnit angleUnit) {
-        motorEx.setVelocity(velocity, angleUnit);
+        setVelocity(getCPR() * AngleUnit.RADIANS.fromUnit(angleUnit, velocity) / (2 * Math.PI));
     }
 
+    /**
+     * @return the velocity of the motor in ticks per second
+     */
     @Override
     public double getVelocity() {
-        return encoder.getCorrectedVelocity();
+        return motorEx.getVelocity();
     }
 
     @Override

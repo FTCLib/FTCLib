@@ -70,4 +70,9 @@ public class CRServo extends Motor {
         set(0);
     }
 
+    @Override
+    public void stopMotor() {
+        stop();
+    }
+
 }
