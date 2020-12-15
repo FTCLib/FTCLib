@@ -33,6 +33,7 @@ public class GamepadSample extends LinearOpMode {
                 && toolOp.wasJustPressed(GamepadKeys.Button.B);
         waitForStart();
         while (opModeIsActive()) {
+            toolOp.readButtons();
             if (openClaw.getAsBoolean()) {
                 grip.setPosition(1);
             }

@@ -164,6 +164,16 @@ public class GamepadEx {
     }
 
     /**
+     * Updates the value for each {@link ButtonReader}.
+     * Call this once in your loop.
+     */
+    public void readButtons() {
+        for (Button button : buttons) {
+            buttonReaders.get(button).readValue();
+        }
+    }
+
+    /**
      * Returns if the button is down
      *
      * @param button    the desired button to read from

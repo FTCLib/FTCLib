@@ -18,7 +18,7 @@ public interface ServoEx extends HardwareDevice {
     /**
      * Rotates the servo by a certain angle in degrees.
      *
-     * @param angle The desired angle of rotation in degrees
+     * @param degrees The desired angle of rotation in degrees
      */
     void rotateByAngle(double degrees);
 
@@ -33,7 +33,7 @@ public interface ServoEx extends HardwareDevice {
     /**
      * Turns the servo position to a set angle in degrees.
      *
-     * @param angle The desired set position of the servo in degrees
+     * @param degrees The desired set position of the servo in degrees
      */
     void turnToAngle(double degrees);
 
