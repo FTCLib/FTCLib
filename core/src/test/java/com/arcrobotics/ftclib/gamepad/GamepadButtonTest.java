@@ -53,10 +53,16 @@ public class GamepadButtonTest {
         BooleanSupplier wasJustPressed = () -> gamepadEx.wasJustPressed(GamepadKeys.Button.A);
         assertFalse(wasJustPressed.getAsBoolean());
         myGamepad.a = true;
+        assertFalse(wasJustPressed.getAsBoolean());
+        gamepadEx.readButtons();
         assertTrue(wasJustPressed.getAsBoolean());
         myGamepad.a = true;
+        assertTrue(wasJustPressed.getAsBoolean());
+        gamepadEx.readButtons();
         assertFalse(wasJustPressed.getAsBoolean());
         myGamepad.a = false;
+        assertFalse(wasJustPressed.getAsBoolean());
+        gamepadEx.readButtons();
         assertFalse(wasJustPressed.getAsBoolean());
     }
 
