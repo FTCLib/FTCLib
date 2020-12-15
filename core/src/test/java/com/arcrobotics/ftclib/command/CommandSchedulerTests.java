@@ -141,14 +141,25 @@ public class CommandSchedulerTests {
                 x = 3;
             }
         };
-        p.setDefaultCommand(new PerpetualCommand(new InstantCommand(() -> x = 5, p)));
-        CommandScheduler.getInstance().schedule(new InstantCommand(() -> x = 3, p));
+        p.register();
+        p.setDefaultCommand(new RunCommand(() -> x = 5, p));
+        assertEquals(3, x);
+        CommandScheduler.getInstance().run();
         assertEquals(3, x);
         CommandScheduler.getInstance().run();
         assertEquals(5, x);
-        CommandScheduler.getInstance().schedule(new PerpetualCommand(new InstantCommand(() -> x = 3, p)));
+        CommandScheduler.getInstance().schedule(new InstantCommand(() -> x = 3, p));
+        x = 3;
+        assertEquals(3, x);
         CommandScheduler.getInstance().run();
         assertEquals(3, x);
+        CommandScheduler.getInstance().run();
+        assertEquals(5, x);
+        CommandScheduler.getInstance().schedule(new RunCommand(() -> x = 4, p));
+        CommandScheduler.getInstance().run();
+        assertEquals(4, x);
+        CommandScheduler.getInstance().run();
+        assertEquals(4, x);
     }
 
     public boolean getValue() {
