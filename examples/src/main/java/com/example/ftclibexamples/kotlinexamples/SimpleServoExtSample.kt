@@ -6,7 +6,7 @@ import com.arcrobotics.ftclib.kotlin.extensions.hardware.*
 
 class SimpleServoExtSample: LinearOpMode() {
     override fun runOpMode() {
-        val servo = SimpleServo(hardwareMap, "onlyServo") // range default to 0 to 180
+        val servo = SimpleServo(hardwareMap, "onlyServo", 0.0, 180.0) // range default to 0 to 180
 
         telemetry.addData("Current Range", servo.range)
 
