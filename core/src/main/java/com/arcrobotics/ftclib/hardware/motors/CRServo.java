@@ -1,6 +1,5 @@
 package com.arcrobotics.ftclib.hardware.motors;
 
-import com.arcrobotics.ftclib.controller.PController;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 /**
@@ -17,32 +16,16 @@ public class CRServo extends Motor {
     protected com.qualcomm.robotcore.hardware.CRServo crServo;
 
     /**
-     * The P controller.
-     */
-    protected PController pController;
-
-    /**
      * The constructor for the CR Servo.
      */
     public CRServo(HardwareMap hMap, String id) {
-        this(hMap, id, 0.3);
-    }
-
-    /**
-     * The constructor for the CR Servo that includes a custom
-     * proportional error coefficient.
-     *
-     * @param kP    The desired coefficient for the P controller.
-     */
-    public CRServo(HardwareMap hMap, String id, double kP) {
         crServo = hMap.get(com.qualcomm.robotcore.hardware.CRServo.class, id);
 
-        pController = new PController(kP);
     }
 
     @Override
-    public void set(double speed) {
-        crServo.setPower(get() + pController.calculate(get(), speed));
+    public void set(double output) {
+        crServo.setPower(output);
     }
 
     @Override
@@ -74,5 +57,4 @@ public class CRServo extends Motor {
     public void stopMotor() {
         stop();
     }
-
 }
