@@ -122,8 +122,6 @@ class UGContourRingDetector( // primary constructor
                         debug = debug,
                 ).apply {
                     UGContourRingPipeline.CAMERA_WIDTH = if (IS_PORTRAIT_MODE) CAMERA_HEIGHT else CAMERA_WIDTH
-                    // NOTE @Purav, try line below if it still doesnt work
-                    // UGContourRingPipeline.CAMERA_WIDTH = if (IS_PORTRAIT_MODE) CAMERA_WIDTH else CAMERA_HEIGHT
                     UGContourRingPipeline.HORIZON = HORIZON
                     ftcLibPipeline = this
                 }
