@@ -22,7 +22,7 @@ public class Auto extends CommandOpMode {
     public void initialize() {
         driverGamepad = new GamepadEx(gamepad1);
         driveSubsystem = new DriveSubsystem(driverGamepad, hardwareMap, telemetry);
-        scoringServo = new SimpleServo(hardwareMap, "scoringServo");
+        scoringServo = new SimpleServo(hardwareMap, "scoringServo", 0, 270);
 
         Teleop.pid.reset();
         Teleop.pid.setTolerance(Teleop.kThreshold);
@@ -42,7 +42,7 @@ public class Auto extends CommandOpMode {
         // Turn 90 degrees with a timeout of 2 seconds
         addSequential(new TurnAngleCommand(driveSubsystem, 90, telemetry), 2);
         // Rotate servo 90 degrees more than it was.
-        scoringServo.rotateDegrees(90);
+        scoringServo.rotateByAngle(90);
         // Wait for the servo to complete its action
         sleep(500);
         // Drive Forward for -10 inches with a timeout of 4 seconds.
@@ -54,6 +54,6 @@ public class Auto extends CommandOpMode {
         while (!Teleop.pid.atSetPoint()) {
             liftController.setStageOne();
         }
-        scoringServo.rotateDegrees(-90);
+        scoringServo.rotateByAngle(-90);
     }
 }

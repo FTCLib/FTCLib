@@ -21,7 +21,7 @@ public class GamepadSample extends LinearOpMode {
      * set it to position 0 when 'B' is pressed
      */
     private GamepadEx toolOp = new GamepadEx(gamepad2);
-    private SimpleServo grip = new SimpleServo(hardwareMap, "gripper");
+    private SimpleServo grip = new SimpleServo(hardwareMap, "gripper", 0, 270);
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -33,6 +33,7 @@ public class GamepadSample extends LinearOpMode {
                 && toolOp.wasJustPressed(GamepadKeys.Button.B);
         waitForStart();
         while (opModeIsActive()) {
+            toolOp.readButtons();
             if (openClaw.getAsBoolean()) {
                 grip.setPosition(1);
             }

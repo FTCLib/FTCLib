@@ -2,80 +2,83 @@ package com.arcrobotics.ftclib.hardware;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.Range;
+
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
 public class SimpleServo implements ServoEx {
 
-    Servo servo;
-    double maxAngle, minAngle;
-    final double maxPosition = 1;
-    final double minPosition = 0;
+    private Servo servo;
 
-    public SimpleServo(HardwareMap hw, String servoName) {
+    //always stored internally as radians
+    private double maxAngle, minAngle;
+
+    private final double maxPosition = 1;
+    private final double minPosition = 0;
+
+    public SimpleServo(HardwareMap hw, String servoName, double minAngle, double maxAngle, AngleUnit angleUnit) {
         servo = hw.get(Servo.class, servoName);
-        maxAngle = 180;
-        minAngle = 0;
+
+        this.minAngle = angleUnit.toRadians(maxAngle);
+        this.maxAngle = angleUnit.toRadians(minAngle);
     }
 
-    public SimpleServo(HardwareMap hw, String servoName, double maxAngle, double minAngle) {
-        servo = hw.get(Servo.class, servoName);
-        this.maxAngle = maxAngle;
-        this.minAngle = minAngle;
-    }
-
-
-    @Override
-    public void rotateDegrees(double angle) {
-        angle = getAngle() + angle;
-        turnToAngle(angle);
+    public SimpleServo(HardwareMap hw, String servoName, double minAngle, double maxAngle) {
+        this(hw, servoName, maxAngle, minAngle, AngleUnit.DEGREES);
     }
 
     @Override
-    public void turnToAngle(double angle) {
-        if(angle > maxAngle)
-            angle = maxAngle;
-        else if(angle < minAngle)
-            angle = minAngle;
-
-        setPosition((angle - minAngle) / (getAngleRange()));
+    public void rotateByAngle(double angle, AngleUnit angleUnit) {
+        angle = getAngle(angleUnit) + angle;
+        turnToAngle(angle, angleUnit);
     }
 
     @Override
-    public void rotate(double position) {
+    public void rotateByAngle(double degrees) {
+        rotateByAngle(degrees, AngleUnit.DEGREES);
+    }
+
+    @Override
+    public void turnToAngle(double angle, AngleUnit angleUnit) {
+        double angleRadians = Range.clip(angleUnit.toRadians(angle), minAngle, maxAngle);
+        setPosition((angleRadians - minAngle) / (getAngleRange(AngleUnit.RADIANS)));
+    }
+
+    @Override
+    public void turnToAngle(double degrees) {
+        turnToAngle(degrees, AngleUnit.DEGREES);
+    }
+
+    @Override
+    public void rotateBy(double position) {
         position = getPosition() + position;
         setPosition(position);
     }
 
     @Override
     public void setPosition(double position) {
-        if(position > maxPosition)
-            servo.setPosition(maxPosition);
-        else if(position < minAngle)
-            servo.setPosition(minPosition);
-        else
-            servo.setPosition(position);
+        servo.setPosition(Range.clip(position, minPosition, maxPosition));
+    }
+
+    @Override
+    public void setRange(double min, double max, AngleUnit angleUnit) {
+        this.minAngle = angleUnit.toRadians(min);
+        this.maxAngle = angleUnit.toRadians(max);
     }
 
     @Override
     public void setRange(double min, double max) {
-        this.minAngle = min;
-        this.maxAngle = max;
+        setRange(min, max, AngleUnit.DEGREES);
     }
 
     @Override
     public void setInverted(boolean isInverted) {
-        if(isInverted)
-            servo.setDirection(Servo.Direction.REVERSE);
-        else
-            servo.setDirection(Servo.Direction.FORWARD);
-
+        servo.setDirection(isInverted ? Servo.Direction.REVERSE : Servo.Direction.FORWARD);
     }
 
     @Override
     public boolean getInverted() {
-        if(Servo.Direction.REVERSE == servo.getDirection())
-            return true;
-        else
-            return false;
+        return Servo.Direction.REVERSE == servo.getDirection();
     }
 
     @Override
@@ -84,12 +87,21 @@ public class SimpleServo implements ServoEx {
     }
 
     @Override
+    public double getAngle(AngleUnit angleUnit) {
+        return getPosition() * getAngleRange(angleUnit) + angleUnit.fromRadians(minAngle);
+    }
+
+    @Override
     public double getAngle() {
-        return getPosition() * getAngleRange() + minAngle;
+        return getAngle(AngleUnit.DEGREES);
+    }
+
+    public double getAngleRange(AngleUnit angleUnit) {
+        return angleUnit.fromRadians(maxAngle - minAngle);
     }
 
     public double getAngleRange() {
-        return maxAngle - minAngle;
+        return getAngleRange(AngleUnit.DEGREES);
     }
 
     @Override

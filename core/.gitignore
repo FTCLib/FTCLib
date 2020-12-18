@@ -1,5 +1,5 @@
 build/
-local.properties/
+../local.properties/
 ReleaseStorage/
 .settings/
 vision/ReleaseStorage/

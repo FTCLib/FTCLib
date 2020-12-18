@@ -41,25 +41,21 @@ public class TriggerReader implements KeyReader {
 
     /** Checks if the button is down **/
     public boolean isDown() {
-        readValue();
         return currState;
     }
 
     /** Checks if the button was just pressed **/
     public boolean wasJustPressed() {
-        readValue();
         return (!lastState && currState);
     }
 
     /** Checks if the button was just released **/
     public boolean wasJustReleased() {
-        readValue();
         return (lastState && !currState);
     }
 
     /** Checks if the button state has changed **/
     public boolean stateJustChanged() {
-        readValue();
         return (lastState != currState);
     }
 
