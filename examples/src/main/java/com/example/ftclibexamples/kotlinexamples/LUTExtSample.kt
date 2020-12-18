@@ -13,9 +13,9 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 
 
-@TeleOp(name = "InterpLUTExt Sample")
+@TeleOp(name = "LUTExt Sample")
 @Disabled
-class InterpLUTExtSample: LinearOpMode() {
+class LUTExtSample: LinearOpMode() {
     // our lookup table of distances from the goal and respective speeds of the shooter
     var speeds: LUT<Double, Double> = mapOf(
             5.0 to 1.0,
