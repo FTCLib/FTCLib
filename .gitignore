@@ -11,3 +11,6 @@ captures
 .project
 .classpath
 docs/
+
+
+/core/vision/TestData/openCV_output/*

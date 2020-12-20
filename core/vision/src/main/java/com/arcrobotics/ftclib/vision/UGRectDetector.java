@@ -63,6 +63,10 @@ public class UGRectDetector {
     }
 
     public Stack getStack() {
+        return  getStack(this.ftclibPipeline);
+    }
+
+    public static Stack getStack(UGRectRingPipeline ftclibPipeline) {
         if (Math.abs(ftclibPipeline.getTopAverage() - ftclibPipeline.getBottomAverage()) < ftclibPipeline.getThreshold() && (ftclibPipeline.getTopAverage() <= 100 && ftclibPipeline.getBottomAverage() <= 100)) {
             return Stack.FOUR;
         } else if (Math.abs(ftclibPipeline.getTopAverage() - ftclibPipeline.getBottomAverage()) < ftclibPipeline.getThreshold() && (ftclibPipeline.getTopAverage() >= 100 && ftclibPipeline.getBottomAverage() >= 100)) {

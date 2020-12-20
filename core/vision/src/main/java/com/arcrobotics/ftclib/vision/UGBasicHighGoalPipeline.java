@@ -35,6 +35,8 @@ public class UGBasicHighGoalPipeline extends OpenCvPipeline {
     private MatOfPoint biggestRedContour;
     private Rect blueRect, redRect;
 
+    private Scalar outlineColor = new Scalar(0, 255, 0);
+
     public UGBasicHighGoalPipeline() {
 
         matYCrCb = new Mat();
@@ -55,6 +57,7 @@ public class UGBasicHighGoalPipeline extends OpenCvPipeline {
 
         minThreshold = 155;
         maxThreshold = 255;
+
     }
 
     @Override
@@ -87,7 +90,7 @@ public class UGBasicHighGoalPipeline extends OpenCvPipeline {
             double aspectRatio = (double) blueRect.width / blueRect.height;
 
             if (aspectRatio > 1.0) {
-                Imgproc.rectangle(input, blueRect, new Scalar(0, 0, 255));
+                Imgproc.rectangle(input, blueRect, outlineColor);
             } else {
                 blueRect = null;
             }
@@ -106,7 +109,7 @@ public class UGBasicHighGoalPipeline extends OpenCvPipeline {
             double aspectRatio = (double) redRect.width / redRect.height;
 
             if (aspectRatio > 1.0) {
-                Imgproc.rectangle(input, redRect, new Scalar(0, 0, 255));
+                Imgproc.rectangle(input, redRect, outlineColor);
             } else {
                 redRect = null;
             }
