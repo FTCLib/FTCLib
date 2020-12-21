@@ -205,7 +205,6 @@ public class Motor implements HardwareDevice {
     protected SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(0, 1, 0);
 
     private boolean targetIsSet = false;
-    private boolean targetIsDistance = false;
 
     public Motor() {}
 
@@ -265,7 +264,7 @@ public class Motor implements HardwareDevice {
             double velocity = veloController.calculate(getVelocity(), speed) + feedforward.calculate(speed);
             motor.setPower(velocity / ACHIEVABLE_MAX_TICKS_PER_SECOND);
         } else if (runmode == RunMode.PositionControl) {
-            double error = positionController.calculate(targetIsDistance ? encoder.getDistance() : encoder.getPosition());
+            double error = positionController.calculate(getDistance());
             motor.setPower(output * error);
         } else {
             motor.setPower(output);
@@ -396,8 +395,7 @@ public class Motor implements HardwareDevice {
      * @param target    the target position in ticks
      */
     public void setTargetPosition(int target) {
-        setTargetDistance((double)target / (encoder.dpp));
-        targetIsDistance = false;
+        setTargetDistance(target * encoder.dpp);
     }
 
     /**
@@ -409,7 +407,6 @@ public class Motor implements HardwareDevice {
      */
     public void setTargetDistance(double target) {
         targetIsSet = true;
-        targetIsDistance = true;
         positionController.setSetPoint(target);
     }
 
