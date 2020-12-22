@@ -11,12 +11,10 @@ import java.util.Map;
 
 public interface SensorDistanceEx extends SensorDistance {
 
-
     /**
      * Represents a target distance
      */
-     class DistanceTarget {
-
+    class DistanceTarget {
         /**
          * The distance.
          */
@@ -87,9 +85,6 @@ public interface SensorDistanceEx extends SensorDistance {
             return withinRange;
         }
 
-
-
-
         /**
          * Change the target value
          *
@@ -157,18 +152,15 @@ public interface SensorDistanceEx extends SensorDistance {
      */
     boolean targetReached(SensorRevTOFDistance.DistanceTarget target);
 
-
     /**
      * Adds a DistanceTarget.
      */
-     void addTarget(SensorRevTOFDistance.DistanceTarget target);
-
+    void addTarget(SensorRevTOFDistance.DistanceTarget target);
 
     /**
      * Adds an List of DistanceTargets to the targets associated with this device.
      */
-     void addTargets(List<SensorRevTOFDistance.DistanceTarget> targets);
-
+    void addTargets(List<SensorRevTOFDistance.DistanceTarget> targets);
 
     /**
      * Checks all targets currently associated with this device and returns a {@code Map}
@@ -177,6 +169,5 @@ public interface SensorDistanceEx extends SensorDistance {
      * @return The results of the checking.
      */
     Map<SensorRevTOFDistance.DistanceTarget, Boolean> checkAllTargets();
-
 
 }
