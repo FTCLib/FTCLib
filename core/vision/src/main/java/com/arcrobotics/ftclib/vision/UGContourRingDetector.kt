@@ -42,6 +42,12 @@ class UGContourRingDetector( // primary constructor
         /** Horizon value in use, anything above this value (less than the value) since
          * (0, 0) is the top left of the camera frame **/
         var HORIZON = 100
+
+        /** Value storing whether or not the orientation of the camera is in portrait mode **/
+        var IS_PORTRAIT_MODE = false
+
+        /** Value storing the orientation of the camera **/
+        var CAMERA_ORIENTATION: OpenCvCameraRotation = OpenCvCameraRotation.UPRIGHT
     }
 
     // camera variable, lateinit, initialized in init() function
@@ -115,16 +121,17 @@ class UGContourRingDetector( // primary constructor
                         telemetry = telemetry,
                         debug = debug,
                 ).apply {
-                    UGContourRingPipeline.CAMERA_WIDTH = CAMERA_WIDTH
+                    UGContourRingPipeline.CAMERA_WIDTH = if (IS_PORTRAIT_MODE) CAMERA_HEIGHT else CAMERA_WIDTH
                     UGContourRingPipeline.HORIZON = HORIZON
                     ftcLibPipeline = this
                 }
         )
 
         camera.openCameraDeviceAsync {
-            camera.startStreaming(320,
-                    240,
-                    OpenCvCameraRotation.UPRIGHT,
+            camera.startStreaming(
+                    CAMERA_WIDTH,
+                    CAMERA_HEIGHT,
+                    CAMERA_ORIENTATION,
             )
         }
     }
