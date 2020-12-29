@@ -93,6 +93,7 @@ public class UGBasicHighGoalPipeline extends OpenCvPipeline {
         redContours = redContours.stream().filter(i -> filterContours(i) && (((double) Imgproc.boundingRect(i).width / Imgproc.boundingRect(i).height) > 1) &&(((double) Imgproc.boundingRect(i).width / Imgproc.boundingRect(i).height) < 2)).collect(Collectors.toList());
 
         Imgproc.drawContours(input, redContours, -1, new Scalar(255, 255, 0));
+        Imgproc.drawContours(input, blueContours, -1, new Scalar(255, 255, 0));
         if (blueContours.size() != 0) {
             biggestBlueContour = Collections.max(blueContours, new Comparator<MatOfPoint>() {
                 @Override
