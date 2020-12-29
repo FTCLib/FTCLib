@@ -86,7 +86,8 @@ public class UGBasicHighGoalPipeline extends OpenCvPipeline {
         Imgproc.threshold(blueChannel, blueThreshold, minThreshold, maxThreshold, Imgproc.THRESH_BINARY);
         // Red threshold
         Imgproc.threshold(redChannel, redThreshold, minThreshold, maxThreshold, Imgproc.THRESH_BINARY);
-
+blueContours.clear();
+redContours.clear();
         Imgproc.findContours(blueThreshold, blueContours, new Mat(), Imgproc.RETR_TREE, Imgproc.CHAIN_APPROX_SIMPLE);
         Imgproc.findContours(redThreshold, redContours, new Mat(), Imgproc.RETR_TREE, Imgproc.CHAIN_APPROX_SIMPLE);
         blueContours = blueContours.stream().filter(i -> filterContours(i) && (((double) Imgproc.boundingRect(i).width / Imgproc.boundingRect(i).height) > 1) &&(((double) Imgproc.boundingRect(i).width / Imgproc.boundingRect(i).height) < 2)).collect(Collectors.toList());
