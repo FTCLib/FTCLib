@@ -6,8 +6,7 @@ import com.arcrobotics.ftclib.hardware.motors.Motor;
 /**
  * Holonomic drivebase
  */
-public class HDrive extends RobotDrive
-{
+public class HDrive extends RobotDrive {
     Motor[] motors;
 
     public static final double kDefaultRightMotorAngle = Math.PI / 3;
@@ -21,9 +20,9 @@ public class HDrive extends RobotDrive
     /**
      * Constructor for the H-Drive class, which requires at least three motors.
      *
-     * @param mLeft     one of the necessary primary drive motors
-     * @param mRight    one of the necessary primary drive motors
-     * @param slide     the necessary slide motor for the use of h-drive
+     * @param mLeft  one of the necessary primary drive motors
+     * @param mRight one of the necessary primary drive motors
+     * @param slide  the necessary slide motor for the use of h-drive
      */
     public HDrive(Motor mLeft, Motor mRight, Motor slide) {
         motors = new Motor[3];
@@ -36,16 +35,16 @@ public class HDrive extends RobotDrive
      * The constructor that includes the angles of the motors.
      *
      * <p>
-     *     The default angles are {@value #kDefaultRightMotorAngle},
-     *     {@value #kDefaultLeftMotorAngle}, {@value #kDefaultSlideMotorAngle}.
+     * The default angles are {@value #kDefaultRightMotorAngle},
+     * {@value #kDefaultLeftMotorAngle}, {@value #kDefaultSlideMotorAngle}.
      * </p>
      *
-     * @param mLeft             one of the necessary primary drive motors
-     * @param mRight            one of the necessary primary drive motors
-     * @param slide             the necessary slide motor for the use of h-drive
-     * @param leftMotorAngle    the angle of the left motor in radians
-     * @param rightMotorAngle   the angle of the right motor in radians
-     * @param slideMotorAngle   the angle of the slide motor in radians
+     * @param mLeft           one of the necessary primary drive motors
+     * @param mRight          one of the necessary primary drive motors
+     * @param slide           the necessary slide motor for the use of h-drive
+     * @param leftMotorAngle  the angle of the left motor in radians
+     * @param rightMotorAngle the angle of the right motor in radians
+     * @param slideMotorAngle the angle of the slide motor in radians
      */
     public HDrive(Motor mLeft, Motor mRight, Motor slide, double leftMotorAngle,
                   double rightMotorAngle, double slideMotorAngle) {
@@ -96,8 +95,7 @@ public class HDrive extends RobotDrive
         }
     }
 
-    public void driveFieldCentric(double strafeSpeed, double forwardSpeed, double turn, double heading)
-    {
+    public void driveFieldCentric(double strafeSpeed, double forwardSpeed, double turn, double heading) {
         strafeSpeed = clipRange(strafeSpeed);
         forwardSpeed = clipRange(forwardSpeed);
         turn = clipRange(turn);
@@ -150,7 +148,7 @@ public class HDrive extends RobotDrive
 
     }
 
-    public void driveRobotCentric(double strafeSpeed, double forwardSpeed, double turn){
+    public void driveRobotCentric(double strafeSpeed, double forwardSpeed, double turn) {
         driveFieldCentric(strafeSpeed, forwardSpeed, turn, 0.0);
     }
 }

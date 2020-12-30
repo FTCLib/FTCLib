@@ -10,14 +10,14 @@ import com.arcrobotics.ftclib.hardware.motors.MotorGroup;
  * There are two types of drive systems here. You can use tank and arcade.
  *
  * <p>
- *     Arcade drive use a y-value input from the controller and a value from
- *     the turn stick. We know that when the turn stick is pushed left, the right
- *     side should move forward and the left side should move backwards.
- *     Therefore, since pushing the turn stick to the left returns a negative value,
- *     it should be added to the left speed and subtracted from the right speed.
- *     <br><br />
- *     Tank drive uses a y-value input from the left and right sticks. The sticks
- *     control their respective side of the robot.
+ * Arcade drive use a y-value input from the controller and a value from
+ * the turn stick. We know that when the turn stick is pushed left, the right
+ * side should move forward and the left side should move backwards.
+ * Therefore, since pushing the turn stick to the left returns a negative value,
+ * it should be added to the left speed and subtracted from the right speed.
+ * <br><br />
+ * Tank drive uses a y-value input from the left and right sticks. The sticks
+ * control their respective side of the robot.
  * </p>
  */
 public class DifferentialDrive extends RobotDrive {
@@ -31,9 +31,9 @@ public class DifferentialDrive extends RobotDrive {
      * Construct a DifferentialDrive.
      *
      * <p>
-     *     To pass multiple motors per side, use a {@link MotorGroup}. If a motor needs to
-     *     be inverted, do so before passing it in. By default, the right motor speed multiplier
-     *     is {@value #kDefaultRightSideMultiplier}.
+     * To pass multiple motors per side, use a {@link MotorGroup}. If a motor needs to
+     * be inverted, do so before passing it in. By default, the right motor speed multiplier
+     * is {@value #kDefaultRightSideMultiplier}.
      * </p>
      *
      * @param myMotors The {@link Motor} objects in the differential drive. Must be in the order
@@ -48,12 +48,13 @@ public class DifferentialDrive extends RobotDrive {
      * Construct a DifferentialDrive.
      *
      * <p>
-     *     To pass multiple motors per side, use a {@link MotorGroup}. If a motor needs to
-     *     be inverted, do so before passing it in.
+     * To pass multiple motors per side, use a {@link MotorGroup}. If a motor needs to
+     * be inverted, do so before passing it in.
      * </p>
+     *
      * @param autoInvert Whether or not to automatically invert right side
-     * @param myMotors The {@link Motor} objects in the differential drive. Must be in the order
-     *                 of left, right.
+     * @param myMotors   The {@link Motor} objects in the differential drive. Must be in the order
+     *                   of left, right.
      */
     public DifferentialDrive(boolean autoInvert, Motor... myMotors) {
         motors = myMotors;
@@ -111,8 +112,8 @@ public class DifferentialDrive extends RobotDrive {
     /**
      * Drives the robot using the arcade system.
      *
-     * @param forwardSpeed    The input value that determines the vertical speed of the robot.
-     * @param turnSpeed The input value that determines the rotational speed of the robot.
+     * @param forwardSpeed The input value that determines the vertical speed of the robot.
+     * @param turnSpeed    The input value that determines the rotational speed of the robot.
      */
     public void arcadeDrive(double forwardSpeed, double turnSpeed) {
         forwardSpeed = clipRange(forwardSpeed);
@@ -131,8 +132,8 @@ public class DifferentialDrive extends RobotDrive {
     /**
      * Drives the robot using the arcade system.
      *
-     * @param forwardSpeed    The input value that determines the vertical speed of the robot.
-     * @param turnSpeed The input value that determines the rotational speed of the robot.
+     * @param forwardSpeed The input value that determines the vertical speed of the robot.
+     * @param turnSpeed    The input value that determines the rotational speed of the robot.
      * @param squareInputs Square the value of the input to allow for finer control
      */
     public void arcadeDrive(double forwardSpeed, double turnSpeed, boolean squareInputs) {
@@ -146,8 +147,8 @@ public class DifferentialDrive extends RobotDrive {
     /**
      * Drive the robot using the tank system.
      *
-     * @param leftSpeed     The input value that determines the speed of the left side motors.
-     * @param rightSpeed    The input value that determines the speed of the right side motors.
+     * @param leftSpeed  The input value that determines the speed of the left side motors.
+     * @param rightSpeed The input value that determines the speed of the right side motors.
      */
     public void tankDrive(double leftSpeed, double rightSpeed) {
         leftSpeed = clipRange(leftSpeed);
@@ -166,8 +167,8 @@ public class DifferentialDrive extends RobotDrive {
     /**
      * Drive the robot using the tank system.
      *
-     * @param leftSpeed     The input value that determines the speed of the left side motors.
-     * @param rightSpeed    The input value that determines the speed of the right side motors.
+     * @param leftSpeed    The input value that determines the speed of the left side motors.
+     * @param rightSpeed   The input value that determines the speed of the right side motors.
      * @param squareInputs Square the value of the input to allow for finer control
      */
     public void tankDrive(double leftSpeed, double rightSpeed, boolean squareInputs) {

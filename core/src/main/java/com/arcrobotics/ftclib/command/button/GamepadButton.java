@@ -18,8 +18,8 @@ public class GamepadButton extends Button {
     /**
      * Creates a gamepad button for triggering commands.
      *
-     * @param gamepad   the gamepad with the buttons
-     * @param buttons   the specified buttons
+     * @param gamepad the gamepad with the buttons
+     * @param buttons the specified buttons
      */
     public GamepadButton(GamepadEx gamepad, @NonNull GamepadKeys.Button... buttons) {
         m_gamepad = gamepad;

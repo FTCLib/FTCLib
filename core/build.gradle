@@ -49,7 +49,7 @@ dependencies {
     implementation('org.ejml:ejml-simple:0.39') {
         exclude group: 'org.ejml', module: 'ejml-all'
     }
-    
+
     testImplementation(platform('org.junit:junit-bom:5.7.0'))
     testImplementation('org.junit.jupiter:junit-jupiter-api:5.7.0')
     testRuntimeOnly('org.junit.jupiter:junit-jupiter-engine:5.7.0')

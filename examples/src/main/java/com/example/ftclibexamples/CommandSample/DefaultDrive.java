@@ -18,8 +18,8 @@ public class DefaultDrive extends CommandBase {
      * Creates a new DefaultDrive.
      *
      * @param subsystem The drive subsystem this command wil run on.
-     * @param forward The control input for driving forwards/backwards
-     * @param rotation The control input for turning
+     * @param forward   The control input for driving forwards/backwards
+     * @param rotation  The control input for turning
      */
     public DefaultDrive(DriveSubsystem subsystem, DoubleSupplier forward, DoubleSupplier rotation) {
         m_drive = subsystem;

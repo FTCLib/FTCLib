@@ -23,7 +23,8 @@ import org.openftc.easyopencv.OpenCvInternalCamera
  * @param debug If true, all intermediate calculation results (except showing mat operations) will
  * be printed to telemetry (mainly for debug purposes), default value of false
  */
-class UGContourRingDetector( // primary constructor
+class UGContourRingDetector(
+        // primary constructor
         private var hardwareMap: HardwareMap, // hardwareMap variable being passed into the detector. no default value
         private var cameraDirection: OpenCvInternalCamera.CameraDirection = OpenCvInternalCamera.CameraDirection.BACK,
         private val telemetry: Telemetry? = null,
@@ -66,7 +67,7 @@ class UGContourRingDetector( // primary constructor
      * @param hMap hardwareMap
      * @param webcamName name of webcam in use
      */
-    constructor(hMap: HardwareMap, webcamName: String): this(hardwareMap = hMap) {
+    constructor(hMap: HardwareMap, webcamName: String) : this(hardwareMap = hMap) {
         this.webcamName = webcamName
         this.isUsingWebcam = true
     }
@@ -79,7 +80,7 @@ class UGContourRingDetector( // primary constructor
      * @param debug If true, all intermediate calculation results (except showing mat operations) will
      * be printed to telemetry (mainly for debug purposes), default value of false
      */
-    constructor(hMap: HardwareMap, webcamName: String, telemetry: Telemetry, debug: Boolean): this(hardwareMap = hMap, telemetry = telemetry, debug = debug) {
+    constructor(hMap: HardwareMap, webcamName: String, telemetry: Telemetry, debug: Boolean) : this(hardwareMap = hMap, telemetry = telemetry, debug = debug) {
         this.webcamName = webcamName
         this.isUsingWebcam = true
     }

@@ -32,10 +32,10 @@ public class DriveSubsystem implements Subsystem {
         this.driverGamepad = driverGamepad;
         this.telemetry = telemetry;
 
-        backLeftMotor = new MotorEx(hw,"backLeftMotor");
-        frontLeftMotor = new MotorEx(hw,"frontLeftMotor");
-        backRightMotor = new MotorEx(hw,"backRightMotor");
-        frontRightMotor = new MotorEx(hw,"frontRightMotor");
+        backLeftMotor = new MotorEx(hw, "backLeftMotor");
+        frontLeftMotor = new MotorEx(hw, "frontLeftMotor");
+        backRightMotor = new MotorEx(hw, "backRightMotor");
+        frontRightMotor = new MotorEx(hw, "frontRightMotor");
 
         gyro = new RevIMU(hw);
 
@@ -52,7 +52,7 @@ public class DriveSubsystem implements Subsystem {
     }
 
     public boolean atTargetPos() {
-        return  frontLeftMotor.atTargetPosition() &&
+        return frontLeftMotor.atTargetPosition() &&
                 backLeftMotor.atTargetPosition() &&
                 frontRightMotor.atTargetPosition() &&
                 backRightMotor.atTargetPosition();
@@ -104,13 +104,13 @@ public class DriveSubsystem implements Subsystem {
 
         double maxSpeed;
 
-        if(slowDownButton.isDown())
+        if (slowDownButton.isDown())
             maxSpeed = 0.5;
         else
             maxSpeed = 1;
 
-        driveTrain.driveRobotCentric(driverGamepad.getLeftY()  * maxSpeed,
-                 driverGamepad.getLeftX() * maxSpeed, driverGamepad.getRightX() * maxSpeed);
+        driveTrain.driveRobotCentric(driverGamepad.getLeftY() * maxSpeed,
+                driverGamepad.getLeftX() * maxSpeed, driverGamepad.getRightX() * maxSpeed);
     }
 
     @Override

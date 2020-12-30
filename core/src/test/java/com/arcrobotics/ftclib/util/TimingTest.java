@@ -5,8 +5,9 @@ import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.TimeUnit;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static com.arcrobotics.ftclib.util.Timing.*;
+import static com.arcrobotics.ftclib.util.Timing.Timer;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TimingTest {
     private Timer timer;

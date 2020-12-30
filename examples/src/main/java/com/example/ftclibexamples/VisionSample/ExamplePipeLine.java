@@ -50,12 +50,13 @@ public class ExamplePipeLine extends OpenCvPipeline {
 
     /**
      * This will create the rectangles
-     * @param frame the input mat
-     * @param points the points for the rectangle
-     * @param color the color of the rectangle when it is displayed on screen
+     *
+     * @param frame     the input mat
+     * @param points    the points for the rectangle
+     * @param color     the color of the rectangle when it is displayed on screen
      * @param thickness the thickness of the rectangle
      */
-    public Mat drawRectangle(Mat frame,int[] points,Scalar color,int thickness){
+    public Mat drawRectangle(Mat frame, int[] points, Scalar color, int thickness) {
 
         Imgproc.rectangle(
                 frame,
@@ -84,8 +85,8 @@ public class ExamplePipeLine extends OpenCvPipeline {
          */
         Imgproc.cvtColor(input, matYCrCb, Imgproc.COLOR_RGB2YCrCb);
 
-        left_block = drawRectangle(matYCrCb,left_rect,new Scalar(0,255,0),1);
-        right_block = drawRectangle(matYCrCb,right_rect, new Scalar(0,0,255),1);
+        left_block = drawRectangle(matYCrCb, left_rect, new Scalar(0, 255, 0), 1);
+        right_block = drawRectangle(matYCrCb, right_rect, new Scalar(0, 0, 255), 1);
 
         /**
          *This will extract the value of the CB channel in both rectangles
@@ -101,8 +102,8 @@ public class ExamplePipeLine extends OpenCvPipeline {
          */
         Scalar left_mean = Core.mean(matCb_left);
         Scalar right_mean = Core.mean(matCb_Right);
-        left=left_mean.val[0];
-        right=right_mean.val[0];
+        left = left_mean.val[0];
+        right = right_mean.val[0];
 
         return input;
     }

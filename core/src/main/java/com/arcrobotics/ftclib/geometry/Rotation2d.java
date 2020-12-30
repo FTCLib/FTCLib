@@ -8,10 +8,6 @@ package com.arcrobotics.ftclib.geometry;
 /*----------------------------------------------------------------------------*/
 
 
-import java.io.IOException;
-import java.util.Objects;
-
-
 /**
  * A rotation in a 2d coordinate frame represented a point on the unit circle
  * (cosine and sine).

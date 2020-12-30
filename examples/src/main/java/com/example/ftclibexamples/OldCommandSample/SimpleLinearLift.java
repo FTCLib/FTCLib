@@ -35,7 +35,7 @@ public class SimpleLinearLift {
         int multiplier = direction == Direction.UP ? 1 : -1;
 
         while (!timer.done()) {
-            m_liftMotor.set(multiplier * (activeTime - timer.elapsedTime()) / (double)activeTime);
+            m_liftMotor.set(multiplier * (activeTime - timer.elapsedTime()) / (double) activeTime);
         }
     }
 

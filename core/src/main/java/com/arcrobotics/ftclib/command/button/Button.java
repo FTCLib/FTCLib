@@ -79,7 +79,7 @@ public abstract class Button extends Trigger {
 
     /**
      * Constantly starts the given command while the button is held.
-     *
+     * <p>
      * {@link Command#schedule(boolean)} will be called repeatedly while the button is held, and will
      * be canceled when the button is released.
      *
@@ -94,7 +94,7 @@ public abstract class Button extends Trigger {
 
     /**
      * Constantly starts the given command while the button is held.
-     *
+     * <p>
      * {@link Command#schedule(boolean)} will be called repeatedly while the button is held, and will
      * be canceled when the button is released.  The command is set to be interruptible.
      *
@@ -205,8 +205,8 @@ public abstract class Button extends Trigger {
      * Toggles the between the two commands whenever the button is pressed (commadOne then
      * commandTwo then commandOne).
      *
-     * @param commandOne the command to start
-     * @param commandTwo the command to be activated after
+     * @param commandOne    the command to start
+     * @param commandTwo    the command to be activated after
      * @param interruptible whether the command is interruptible
      * @return this button, so calls can be chained
      */

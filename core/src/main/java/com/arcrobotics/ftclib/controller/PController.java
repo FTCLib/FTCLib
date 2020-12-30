@@ -1,7 +1,5 @@
 package com.arcrobotics.ftclib.controller;
 
-import com.arcrobotics.ftclib.hardware.motors.Motor;
-
 public class PController extends PDController {
 
     /**

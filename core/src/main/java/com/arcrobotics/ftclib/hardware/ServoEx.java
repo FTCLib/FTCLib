@@ -10,7 +10,7 @@ public interface ServoEx extends HardwareDevice {
     /**
      * Rotates the servo by a certain angle.
      *
-     * @param angle The desired angle of rotation
+     * @param angle     The desired angle of rotation
      * @param angleUnit The unit of the angle parameter
      */
     void rotateByAngle(double angle, AngleUnit angleUnit);
@@ -25,7 +25,7 @@ public interface ServoEx extends HardwareDevice {
     /**
      * Turns the servo position to a set angle.
      *
-     * @param angle The desired set position of the servo
+     * @param angle     The desired set position of the servo
      * @param angleUnit The unit of the angle parameter
      */
     void turnToAngle(double angle, AngleUnit angleUnit);
@@ -52,10 +52,10 @@ public interface ServoEx extends HardwareDevice {
     /**
      * Sets the range of the servo at specified angles.
      *
-     * @param min The minimum value. Setting the servo position to 0 will bring it
-     *            to this specified minimum.
-     * @param max The maximum value. Setting the servo position to 1 will bring it
-     *            to this specified maximum.
+     * @param min       The minimum value. Setting the servo position to 0 will bring it
+     *                  to this specified minimum.
+     * @param max       The maximum value. Setting the servo position to 1 will bring it
+     *                  to this specified maximum.
      * @param angleUnit The unit of the range parameters
      */
     void setRange(double min, double max, AngleUnit angleUnit);

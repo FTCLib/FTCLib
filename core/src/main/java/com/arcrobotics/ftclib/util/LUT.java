@@ -15,7 +15,7 @@ public class LUT<T extends Number, R> extends TreeMap<T, R> {
     /**
      * Returns the closest possible value for the given key.
      *
-     * @param key   the input key
+     * @param key the input key
      * @return the closest value to the input key
      */
     public R getClosest(T key) {

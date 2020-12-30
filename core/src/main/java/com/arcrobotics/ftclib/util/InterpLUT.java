@@ -19,7 +19,8 @@ public class InterpLUT {
         mM = m;
     }
 
-    public InterpLUT() {}
+    public InterpLUT() {
+    }
 
     public void add(double input, double output) {
         mX.add(input);
@@ -120,7 +121,7 @@ public class InterpLUT {
         double h = mX.get(i + 1) - mX.get(i);
         double t = (input - mX.get(i)) / h;
         return (mY.get(i) * (1 + 2 * t) + h * mM.get(i) * t) * (1 - t) * (1 - t)
-                + (mY.get(i + 1) * (3 - 2 * t) + h * mM.get(i+1) * (t - 1)) * t * t;
+                + (mY.get(i + 1) * (3 - 2 * t) + h * mM.get(i + 1) * (t - 1)) * t * t;
     }
 
     // For debugging.
