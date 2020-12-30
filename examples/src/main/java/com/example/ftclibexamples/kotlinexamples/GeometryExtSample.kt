@@ -1,10 +1,10 @@
 package com.example.ftclibexamples.kotlinexamples
 
 import com.arcrobotics.ftclib.geometry.*
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.arcrobotics.ftclib.kotlin.extensions.geometry.*
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 
-class GeometryExtSample: LinearOpMode() {
+class GeometryExtSample : LinearOpMode() {
     /**
      * random math using geometry classes
      */

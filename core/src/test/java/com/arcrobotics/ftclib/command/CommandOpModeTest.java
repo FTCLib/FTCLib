@@ -3,8 +3,6 @@ package com.arcrobotics.ftclib.command;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import com.arcrobotics.ftclib.command.CommandOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 public class CommandOpModeTest extends CommandOpMode {
 
@@ -14,7 +12,7 @@ public class CommandOpModeTest extends CommandOpMode {
     public void initialize() {
         x = 3;
         Robot.enable();
-        schedule(new CommandBase(){
+        schedule(new CommandBase() {
             @Override
             public void execute() {
                 x = 5;

@@ -7,19 +7,23 @@ public class UGAngleHighGoalPipeline extends UGBasicHighGoalPipeline {
 
     class Fraction {
         private int numerator, denominator;
+
         Fraction(long a, long b) {
             numerator = (int) (a / gcd(a, b));
             denominator = (int) (b / gcd(a, b));
         }
+
         /**
          * @return the greatest common denominator
          */
         private long gcd(long a, long b) {
             return b == 0 ? a : gcd(b, a % b);
         }
+
         public int getNumerator() {
             return numerator;
         }
+
         public int getDenominator() {
             return denominator;
         }
@@ -82,16 +86,17 @@ public class UGAngleHighGoalPipeline extends UGBasicHighGoalPipeline {
 
         return super.processFrame(input);
     }
+
     /**
-     * @param color Alliance Color
+     * @param color        Alliance Color
      * @param defaultAngle Angle to display if no target found
-    */
+     */
     public double calculateYaw(Target color, double defaultAngle) {
         return calculateYaw(color, centerX, defaultAngle) + cameraYawOffset;
     }
 
     /**
-     * @param color Alliance Color
+     * @param color        Alliance Color
      * @param defaultAngle Angle to display if no target found
      */
     public double calculatePitch(Target color, double defaultAngle) {
@@ -99,10 +104,9 @@ public class UGAngleHighGoalPipeline extends UGBasicHighGoalPipeline {
     }
 
     /**
-     *
-     * @param color Allaince color
+     * @param color         Allaince color
      * @param offsetCenterX centerX
-     * @param defaultAngle Angle to return if no target found
+     * @param defaultAngle  Angle to return if no target found
      * @return
      */
     public double calculateYaw(Target color, double offsetCenterX, double defaultAngle) {
@@ -115,7 +119,7 @@ public class UGAngleHighGoalPipeline extends UGBasicHighGoalPipeline {
         } else {
             currentRect = getBlueRect();
         }
-        if(getCenterofRect(currentRect).isPresent()) {
+        if (getCenterofRect(currentRect).isPresent()) {
             targetCenterX = getCenterofRect(currentRect).get().x;
         } else {
             return defaultAngle;
@@ -126,10 +130,9 @@ public class UGAngleHighGoalPipeline extends UGBasicHighGoalPipeline {
     }
 
     /**
-     *
-     * @param color Allaince color
+     * @param color         Allaince color
      * @param offsetCenterY centerY
-     * @param defaultAngle Angle to return if no target found
+     * @param defaultAngle  Angle to return if no target found
      * @return
      */
     public double calculatePitch(Target color, double offsetCenterY, double defaultAngle) {
@@ -141,7 +144,7 @@ public class UGAngleHighGoalPipeline extends UGBasicHighGoalPipeline {
         } else {
             currentRect = getBlueRect();
         }
-        if(getCenterofRect(currentRect).isPresent()) {
+        if (getCenterofRect(currentRect).isPresent()) {
             targetCenterY = getCenterofRect(currentRect).get().y;
         } else {
             return defaultAngle;

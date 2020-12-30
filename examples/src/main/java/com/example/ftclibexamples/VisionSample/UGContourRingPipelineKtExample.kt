@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName
 import org.openftc.easyopencv.*
 
-class UGContourRingPipelineKtExample: LinearOpMode() {
+class UGContourRingPipelineKtExample : LinearOpMode() {
     companion object {
         val CAMERA_WIDTH = 320 // width  of wanted camera resolution
         val CAMERA_HEIGHT = 240 // height of wanted camera resolution
@@ -34,17 +34,17 @@ class UGContourRingPipelineKtExample: LinearOpMode() {
             )
 
     private fun configurePhoneCamera(): OpenCvInternalCamera = OpenCvCameraFactory.getInstance()
-                .createInternalCamera(
-                        OpenCvInternalCamera.CameraDirection.BACK, cameraMonitorViewId,
-                )
+            .createInternalCamera(
+                    OpenCvInternalCamera.CameraDirection.BACK, cameraMonitorViewId,
+            )
 
     private fun configureWebCam(): OpenCvWebcam = OpenCvCameraFactory.getInstance().createWebcam(
-                        hardwareMap.get(
-                                WebcamName::class.java,
-                                WEBCAM_NAME
-                        ),
-                        cameraMonitorViewId,
-                )
+            hardwareMap.get(
+                    WebcamName::class.java,
+                    WEBCAM_NAME
+            ),
+            cameraMonitorViewId,
+    )
 
     override fun runOpMode() {
         camera.setPipeline(UGContourRingPipeline(telemetry, DEBUG).apply { pipeline = this })

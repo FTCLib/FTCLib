@@ -2,9 +2,6 @@ package com.arcrobotics.ftclib.hardware.motors;
 
 import androidx.annotation.NonNull;
 
-import com.arcrobotics.ftclib.controller.PController;
-import com.arcrobotics.ftclib.controller.PIDController;
-import com.arcrobotics.ftclib.controller.wpilibcontroller.SimpleMotorFeedforward;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -44,20 +41,20 @@ public class MotorEx extends Motor {
      */
     public MotorEx(@NonNull HardwareMap hMap, String id, @NonNull GoBILDA gobildaType) {
         super(hMap, id, gobildaType);
-        motorEx = (DcMotorEx)hMap.get(DcMotor.class, id);
+        motorEx = (DcMotorEx) hMap.get(DcMotor.class, id);
     }
 
     /**
      * Constructs an instance motor for the wrapper
      *
-     * @param hMap      the hardware map from the OpMode
-     * @param id        the device id from the RC config
-     * @param cpr       the counts per revolution of the motor
-     * @param rpm       the revolutions per minute of the motor
+     * @param hMap the hardware map from the OpMode
+     * @param id   the device id from the RC config
+     * @param cpr  the counts per revolution of the motor
+     * @param rpm  the revolutions per minute of the motor
      */
     public MotorEx(@NonNull HardwareMap hMap, String id, double cpr, double rpm) {
         super(hMap, id, cpr, rpm);
-        motorEx = (DcMotorEx)hMap.get(DcMotor.class, id);
+        motorEx = (DcMotorEx) hMap.get(DcMotor.class, id);
     }
 
     @Override
@@ -75,7 +72,7 @@ public class MotorEx extends Motor {
     }
 
     /**
-     * @param velocity  the velocity in ticks per second
+     * @param velocity the velocity in ticks per second
      */
     public void setVelocity(double velocity) {
         set(velocity / ACHIEVABLE_MAX_TICKS_PER_SECOND);
@@ -84,8 +81,8 @@ public class MotorEx extends Motor {
     /**
      * Sets the velocity of the motor to an angular rate
      *
-     * @param velocity      the angular rate
-     * @param angleUnit     radians or degrees
+     * @param velocity  the angular rate
+     * @param angleUnit radians or degrees
      */
     public void setVelocity(double velocity, AngleUnit angleUnit) {
         setVelocity(getCPR() * AngleUnit.RADIANS.fromUnit(angleUnit, velocity) / (2 * Math.PI));

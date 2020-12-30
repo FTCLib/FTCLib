@@ -25,8 +25,8 @@ public class OdoWheelSpeeds {
     /**
      * Constructs a DifferentialDriveWheelSpeeds.
      *
-     * @param leftMetersPerSecond  The left speed.
-     * @param rightMetersPerSecond The right speed.
+     * @param leftMetersPerSecond   The left speed.
+     * @param rightMetersPerSecond  The right speed.
      * @param centerMetersPerSecond The strafe speed.
      */
     public OdoWheelSpeeds(double leftMetersPerSecond, double rightMetersPerSecond, double centerMetersPerSecond) {

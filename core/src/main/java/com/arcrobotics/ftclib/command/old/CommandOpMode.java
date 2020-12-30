@@ -10,6 +10,7 @@ import java.util.concurrent.TimeUnit;
 @Deprecated
 public abstract class CommandOpMode extends LinearOpMode {
     private ElapsedTime commandTimer;
+
     /**
      * Initialize all objects, set up subsystems, etc...
      */
@@ -24,18 +25,18 @@ public abstract class CommandOpMode extends LinearOpMode {
     /**
      * Init loop. Runs in a loop until start is pressed.
      */
-    public void initLoop() {}
+    public void initLoop() {
+    }
 
     @Override
     public void runOpMode() throws InterruptedException {
         commandTimer = new ElapsedTime();
         initialize();
-        while(!isStopRequested() && !isStarted()) {
+        while (!isStopRequested() && !isStarted()) {
             initLoop();
         }
         run();
     }
-
 
 
     /**
@@ -43,6 +44,7 @@ public abstract class CommandOpMode extends LinearOpMode {
      * After that, it runs the command's execute function every 20 ms.
      * After each iteration of the loop, it checks the command's isFinished method.
      * If the isFinished method is true, it exits out of the loop and runs the command's end method.
+     *
      * @param newCommand new Command to run.
      */
     public void addSequential(Command newCommand, double timeout) {
@@ -51,10 +53,11 @@ public abstract class CommandOpMode extends LinearOpMode {
 
     /**
      * Runs addSequential with a user-specified time interval (in ms)
+     *
      * @param newCommand Command to run
-     * @param dt Time interval of loop iterations
+     * @param dt         Time interval of loop iterations
      */
-    public void addSequential(Command newCommand, double timeout,double dt) {
+    public void addSequential(Command newCommand, double timeout, double dt) {
         final long timeInterval = (long) dt;
         final Command command = newCommand;
         commandTimer.reset();
@@ -69,7 +72,7 @@ public abstract class CommandOpMode extends LinearOpMode {
                     telemetry.addData("Running: ", true);
                     command.execute();
                     telemetry.update();
-                } catch(Exception e) {
+                } catch (Exception e) {
                     telemetry.addData("Running: ", false);
                     telemetry.addData("Exception: ", e);
 
@@ -81,8 +84,8 @@ public abstract class CommandOpMode extends LinearOpMode {
         try {
 
             scheduledExecutorService
-                    .scheduleAtFixedRate(updateMethod, 0,timeInterval, TimeUnit.MILLISECONDS);
-            while(!command.isFinished() && this.opModeIsActive() && (commandTimer.seconds() <= timeout)) {
+                    .scheduleAtFixedRate(updateMethod, 0, timeInterval, TimeUnit.MILLISECONDS);
+            while (!command.isFinished() && this.opModeIsActive() && (commandTimer.seconds() <= timeout)) {
                 //telemetry.update();
             }
             scheduledExecutorService.shutdownNow();

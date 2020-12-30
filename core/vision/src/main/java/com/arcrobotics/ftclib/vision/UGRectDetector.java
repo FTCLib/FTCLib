@@ -66,7 +66,7 @@ public class UGRectDetector {
         ftclibPipeline.setBottomRectWidthPercentage(bottomRectWidthPercentage);
     }
 
-    public void setRectangleSize(int rectangleWidth, int rectangleHeight){
+    public void setRectangleSize(int rectangleWidth, int rectangleHeight) {
         ftclibPipeline.setRectangleHeight(rectangleHeight);
         ftclibPipeline.setRectangleWidth(rectangleWidth);
     }

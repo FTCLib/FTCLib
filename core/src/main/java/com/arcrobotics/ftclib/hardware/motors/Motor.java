@@ -23,7 +23,7 @@ public class Motor implements HardwareDevice {
     public enum GoBILDA {
         RPM_30(5264, 30), RPM_43(3892, 43), RPM_60(2786, 60), RPM_84(1993.6, 84),
         RPM_117(1425.2, 117), RPM_223(753.2, 223), RPM_312(537.6, 312), RPM_435(383.6, 435),
-        RPM_1150(145.6, 1150), RPM_1620(103.6, 1620), BARE(28,6000), NONE(0, 0);
+        RPM_1150(145.6, 1150), RPM_1620(103.6, 1620), BARE(28, 6000), NONE(0, 0);
 
         private double cpr, rpm;
 
@@ -69,8 +69,8 @@ public class Motor implements HardwareDevice {
         /**
          * The encoder object for the motor.
          *
-         * @param position  the position supplier which just points to the
-         *                  current position of the motor in ticks
+         * @param position the position supplier which just points to the
+         *                 current position of the motor in ticks
          */
         public Encoder(Supplier<Integer> position) {
             m_position = position;
@@ -79,16 +79,16 @@ public class Motor implements HardwareDevice {
             lastPosition = 0;
             veloEstimate = 0;
             direction = Direction.FORWARD;
-            lastTimeStamp = (double)System.nanoTime() / 1E9;
+            lastTimeStamp = (double) System.nanoTime() / 1E9;
         }
 
         /**
-         * @return  the current position of the encoder
+         * @return the current position of the encoder
          */
         public int getPosition() {
             int currentPosition = m_position.get();
             if (currentPosition != lastPosition) {
-                double currentTime = (double)System.nanoTime() / 1E9;
+                double currentTime = (double) System.nanoTime() / 1E9;
                 double dt = currentTime - lastTimeStamp;
                 veloEstimate = (currentPosition - lastPosition) / dt;
                 lastPosition = m_position.get();
@@ -98,7 +98,7 @@ public class Motor implements HardwareDevice {
         }
 
         /**
-         * @return  the distance traveled by the encoder
+         * @return the distance traveled by the encoder
          */
         public double getDistance() {
             return dpp * getPosition();
@@ -124,14 +124,14 @@ public class Motor implements HardwareDevice {
         /**
          * Sets the direction of the encoder to forward or reverse
          *
-         * @param direction  the desired direction
+         * @param direction the desired direction
          */
         public void setDirection(Direction direction) {
             this.direction = direction;
         }
 
         /**
-         * @return  the number of revolutions turned by the encoder
+         * @return the number of revolutions turned by the encoder
          */
         public double getRevolutions() {
             return getPosition() / getCPR();
@@ -199,20 +199,22 @@ public class Motor implements HardwareDevice {
      */
     protected GoBILDA type;
 
-    protected PIDController veloController = new PIDController(1,0,0);;
+    protected PIDController veloController = new PIDController(1, 0, 0);
+    ;
     protected PController positionController = new PController(1);
 
     protected SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(0, 1, 0);
 
     private boolean targetIsSet = false;
 
-    public Motor() {}
+    public Motor() {
+    }
 
     /**
      * Constructs the instance motor for the wrapper
      *
-     * @param hMap  the hardware map from the OpMode
-     * @param id    the device id from the RC config
+     * @param hMap the hardware map from the OpMode
+     * @param id   the device id from the RC config
      */
     public Motor(@NonNull HardwareMap hMap, String id) {
         motor = hMap.get(DcMotor.class, id);
@@ -240,10 +242,10 @@ public class Motor implements HardwareDevice {
     /**
      * Constructs an instance motor for the wrapper
      *
-     * @param hMap      the hardware map from the OpMode
-     * @param id        the device id from the RC config
-     * @param cpr       the counts per revolution of the motor
-     * @param rpm       the revolutions per minute of the motor
+     * @param hMap the hardware map from the OpMode
+     * @param id   the device id from the RC config
+     * @param cpr  the counts per revolution of the motor
+     * @param rpm  the revolutions per minute of the motor
      */
     public Motor(@NonNull HardwareMap hMap, String id, double cpr, double rpm) {
         motor = hMap.get(DcMotor.class, id);
@@ -273,7 +275,8 @@ public class Motor implements HardwareDevice {
 
     /**
      * Sets the distance per pulse of the encoder in units per tick.
-     * @param distancePerPulse  the desired distance per pulse
+     *
+     * @param distancePerPulse the desired distance per pulse
      * @return an encoder an object with the specified distance per pulse
      */
     public Encoder setDistancePerPulse(double distancePerPulse) {
@@ -281,7 +284,7 @@ public class Motor implements HardwareDevice {
     }
 
     /**
-     * @return  the distance traveled by the encoder
+     * @return the distance traveled by the encoder
      */
     public double getDistance() {
         return encoder.getDistance();
@@ -332,14 +335,14 @@ public class Motor implements HardwareDevice {
     }
 
     /**
-     * @return  the current position of the motor in ticks
+     * @return the current position of the motor in ticks
      */
     public int getCurrentPosition() {
         return encoder.getPosition();
     }
 
     /**
-     * @return  the corrected velocity for overflow
+     * @return the corrected velocity for overflow
      */
     public double getCorrectedVelocity() {
         return encoder.getCorrectedVelocity();
@@ -375,7 +378,7 @@ public class Motor implements HardwareDevice {
     }
 
     protected double getVelocity() {
-        return ((DcMotorEx)motor).getVelocity();
+        return ((DcMotorEx) motor).getVelocity();
     }
 
     /**
@@ -392,7 +395,7 @@ public class Motor implements HardwareDevice {
      * Once {@link #set(double)} is called, the motor will attempt to move in the direction
      * of said target.
      *
-     * @param target    the target position in ticks
+     * @param target the target position in ticks
      */
     public void setTargetPosition(int target) {
         setTargetDistance(target * encoder.dpp);
@@ -441,9 +444,9 @@ public class Motor implements HardwareDevice {
     /**
      * Set the velocity pid coefficients for the motor.
      *
-     * @param kp    the proportional gain
-     * @param ki    the integral gain
-     * @param kd    the derivative gain
+     * @param kp the proportional gain
+     * @param ki the integral gain
+     * @param kd the derivative gain
      */
     public void setVeloCoefficients(double kp, double ki, double kd) {
         veloController.setPIDF(kp, ki, kd, 0);
@@ -452,8 +455,8 @@ public class Motor implements HardwareDevice {
     /**
      * Set the feedforward coefficients for the motor.
      *
-     * @param ks    the static gain
-     * @param kv    the velocity gain
+     * @param ks the static gain
+     * @param kv the velocity gain
      */
     public void setFeedforwardCoefficients(double ks, double kv) {
         feedforward = new SimpleMotorFeedforward(ks, kv);
@@ -462,9 +465,9 @@ public class Motor implements HardwareDevice {
     /**
      * Set the feedforward coefficients for the motor.
      *
-     * @param ks    the static gain
-     * @param kv    the velocity gain
-     * @param ka    the acceleration gain
+     * @param ks the static gain
+     * @param kv the velocity gain
+     * @param ka the acceleration gain
      */
     public void setFeedforwardCoefficients(double ks, double kv, double ka) {
         feedforward = new SimpleMotorFeedforward(ks, kv, ka);
@@ -473,7 +476,7 @@ public class Motor implements HardwareDevice {
     /**
      * Set the proportional gain for the position controller.
      *
-     * @param kp    the proportional gain
+     * @param kp the proportional gain
      */
     public void setPositionCoefficient(double kp) {
         positionController.setP(kp);

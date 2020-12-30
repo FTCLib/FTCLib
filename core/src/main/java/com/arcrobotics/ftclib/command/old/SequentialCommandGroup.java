@@ -12,6 +12,7 @@ public abstract class SequentialCommandGroup implements Command {
     private int numCommandsFinished;
     private int totalNumCommands;
     private int currentCommand;
+
     private void addCommand(Command command) {
         commands.add(command);
     }
@@ -28,11 +29,11 @@ public abstract class SequentialCommandGroup implements Command {
     public void execute() {
         commands.get(currentCommand).execute();
 
-        if(commands.get(currentCommand).isFinished()) {
+        if (commands.get(currentCommand).isFinished()) {
             commands.get(currentCommand).end();
             currentCommand++;
             numCommandsFinished++;
-            if(numCommandsFinished < totalNumCommands) {
+            if (numCommandsFinished < totalNumCommands) {
                 commands.get(currentCommand).initialize();
             }
         }

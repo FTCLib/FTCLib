@@ -6,8 +6,8 @@ import com.arcrobotics.ftclib.purepursuit.Path;
 import com.arcrobotics.ftclib.purepursuit.Waypoint;
 
 /**
- * @see Path
  * @author Jackson
+ * @see Path
  */
 public class PurePursuitCommand extends CommandBase {
 
@@ -47,7 +47,7 @@ public class PurePursuitCommand extends CommandBase {
         double[] motorSpeeds = m_path.loop(robotPose.getTranslation().getX(), robotPose.getTranslation().getY(), robotPose.getHeading());
         m_drive.driveRobotCentric(motorSpeeds[0], motorSpeeds[1], motorSpeeds[2]);
     }
-    
+
     @Override
     public void end(boolean interrupted) {
         m_drive.stop();
@@ -57,5 +57,5 @@ public class PurePursuitCommand extends CommandBase {
     public boolean isFinished() {
         return m_path.isFinished();
     }
-    
+
 }

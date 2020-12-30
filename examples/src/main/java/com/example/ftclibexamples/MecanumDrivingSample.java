@@ -2,8 +2,6 @@ package com.example.ftclibexamples;
 
 import com.arcrobotics.ftclib.drivebase.MecanumDrive;
 import com.arcrobotics.ftclib.geometry.Vector2d;
-
-import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.arcrobotics.ftclib.hardware.motors.MotorEx;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
@@ -29,15 +27,15 @@ public class MecanumDrivingSample extends LinearOpMode {
 
         waitForStart();
 
-        driveWithVector(new Vector2d(12,3));
+        driveWithVector(new Vector2d(12, 3));
         sleep(1000);
-        driveWithVector(new Vector2d(0,0));
+        driveWithVector(new Vector2d(0, 0));
 
     }
 
     private void driveWithVector(Vector2d vector) {
         double[] speeds = normalize(new double[]{vector.getX(), vector.getY()});
-        driveTrain.driveRobotCentric(speeds[0], speeds[1],0);
+        driveTrain.driveRobotCentric(speeds[0], speeds[1], 0);
     }
 
     /**

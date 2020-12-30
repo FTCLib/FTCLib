@@ -1,8 +1,6 @@
 package com.arcrobotics.ftclib.vision;
 
 
-import org.opencv.core.Mat;
-
 public class UGAdvancedHighGoalPipeline extends UGAngleHighGoalPipeline {
     private double centerOfLogoHeight;
     private double cameraHeight;
