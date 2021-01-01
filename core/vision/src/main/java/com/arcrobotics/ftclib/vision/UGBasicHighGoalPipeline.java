@@ -37,7 +37,6 @@ public class UGBasicHighGoalPipeline extends OpenCvPipeline {
     private Rect blueRect, redRect;
 
     public UGBasicHighGoalPipeline() {
-
         matYCrCb = new Mat();
         redChannel = new Mat();
         blueChannel = new Mat();
@@ -56,7 +55,6 @@ public class UGBasicHighGoalPipeline extends OpenCvPipeline {
 
         minThreshold = 155;
         maxThreshold = 200;
-
     }
 
     @Override
@@ -64,8 +62,8 @@ public class UGBasicHighGoalPipeline extends OpenCvPipeline {
         super.init(mat);
         int imageWidth = mat.width();
         int imageHeight = mat.height();
-
         int imageArea = imageWidth * imageHeight;
+        
         centerX = ((double) imageWidth / 2) - 0.5;
         centerY = ((double) imageHeight / 2) - 0.5;
     }
@@ -73,10 +71,9 @@ public class UGBasicHighGoalPipeline extends OpenCvPipeline {
     public boolean filterContours(MatOfPoint contour) {
         return Imgproc.contourArea(contour) > 30;
     }
+
     @Override
     public Mat processFrame(Mat input) {
-
-
         Imgproc.cvtColor(input, matYCrCb, Imgproc.COLOR_RGB2YCrCb);
 
         Core.extractChannel(matYCrCb, redChannel, 1);
@@ -90,38 +87,43 @@ public class UGBasicHighGoalPipeline extends OpenCvPipeline {
         redContours.clear();
         Imgproc.findContours(blueThreshold, blueContours, new Mat(), Imgproc.RETR_TREE, Imgproc.CHAIN_APPROX_SIMPLE);
         Imgproc.findContours(redThreshold, redContours, new Mat(), Imgproc.RETR_TREE, Imgproc.CHAIN_APPROX_SIMPLE);
-        blueContours = blueContours.stream().filter(i -> filterContours(i) && (((double) Imgproc.boundingRect(i).width / Imgproc.boundingRect(i).height) > 1) &&(((double) Imgproc.boundingRect(i).width / Imgproc.boundingRect(i).height) < 2)).collect(Collectors.toList());
-        redContours = redContours.stream().filter(i -> filterContours(i) && (((double) Imgproc.boundingRect(i).width / Imgproc.boundingRect(i).height) > 1) &&(((double) Imgproc.boundingRect(i).width / Imgproc.boundingRect(i).height) < 2)).collect(Collectors.toList());
+        
+        blueContours = blueContours.stream().filter(i -> {
+            boolean appropriateAspect = ((double) Imgproc.boundingRect(i).width / Imgproc.boundingRect(i).height > 1) && ((double) Imgproc.boundingRect(i).width / Imgproc.boundingRect(i).height < 2);
+            return filterContours(i) && appropriateAspect;
+        }).collect(Collectors.toList());
+        redContours = redContours.stream().filter(i -> {
+            boolean appropriateAspect = ((double) Imgproc.boundingRect(i).width / Imgproc.boundingRect(i).height > 1) && ((double) Imgproc.boundingRect(i).width / Imgproc.boundingRect(i).height < 2);
+            return filterContours(i) && appropriateAspect;
+        }).collect(Collectors.toList());
 
         Imgproc.drawContours(input, redContours, -1, new Scalar(255, 255, 0));
         Imgproc.drawContours(input, blueContours, -1, new Scalar(255, 255, 0));
+
         if (blueContours.size() != 0) {
             biggestBlueContour = Collections.max(blueContours, new Comparator<MatOfPoint>() {
+                // Comparing width instead of area because wobble goals that are close to the camera tend to have a large area
                 @Override
                 public int compare(MatOfPoint t0, MatOfPoint t1) {
                     return Double.compare(Imgproc.boundingRect(t0).width, Imgproc.boundingRect(t1).width);
                 }
             });
-
             blueRect = Imgproc.boundingRect(biggestBlueContour);
             Imgproc.rectangle(input, blueRect, new Scalar(0, 0, 255), 3);
-            System.out.println((double) blueRect.width / (double) blueRect.height);
-
         } else {
             blueRect = null;
         }
+
         if (redContours.size() != 0) {
             biggestRedContour = Collections.max(redContours, new Comparator<MatOfPoint>() {
+                // Comparing width instead of area because wobble goals that are close to the camera tend to have a large area
                 @Override
                 public int compare(MatOfPoint t0, MatOfPoint t1) {
                     return Double.compare(Imgproc.boundingRect(t0).width, Imgproc.boundingRect(t1).width);
                 }
             });
-
             redRect = Imgproc.boundingRect(biggestRedContour);
-            System.out.println((double) redRect.width / (double) redRect.height);
             Imgproc.rectangle(input, redRect, new Scalar(255, 0, 0), 3);
-
         } else {
             redRect = null;
         }
@@ -151,6 +153,4 @@ public class UGBasicHighGoalPipeline extends OpenCvPipeline {
         }
         return new Point(rect.x + rect.width / 2, rect.y + rect.height / 2);
     }
-
-
 }

@@ -12,15 +12,12 @@ public class UGAdvancedHighGoalPipeline extends UGAngleHighGoalPipeline {
     private double distanceOfClosestPuck = 16.5;
     private double puckSpacing = 7.5;
 
-
     enum Powershot {
         LeftShot, CenterShot, RightShot
     }
 
-
     public UGAdvancedHighGoalPipeline(double fov, double cameraHeight) {
         this(fov, cameraHeight, 40.625, 0, 0);  // inches
-
     }
 
     public UGAdvancedHighGoalPipeline(double fov, double cameraHeight, double centerOfLogoHeight, double cameraPitchOffset, double cameraYawOffset) {
@@ -83,12 +80,9 @@ public class UGAdvancedHighGoalPipeline extends UGAngleHighGoalPipeline {
         } else {
             return Math.toDegrees(Math.atan((offset - distanceFromWallToGoal) / getDistanceToGoalWall(color)));
         }
-
-
     }
 
     public double getPowerShotDistance(Target color, Powershot shot) {
         return getDistanceToGoalWall(color) / Math.cos(Math.toRadians(getPowershotAngle(color, shot)));
     }
-
 }
