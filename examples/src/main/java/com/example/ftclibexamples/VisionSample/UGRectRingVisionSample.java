@@ -1,4 +1,4 @@
-package com.example.ftclibexamples;
+package com.example.ftclibexamples.VisionSample;
 
 import com.arcrobotics.ftclib.vision.UGRectDetector;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
