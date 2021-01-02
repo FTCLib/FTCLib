@@ -1,21 +1,19 @@
 package com.arcrobotics.ftclib.vision;
 
-import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfPoint;
 import org.opencv.core.Point;
 import org.opencv.core.Rect;
-import org.opencv.core.RotatedRect;
 import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
 import org.openftc.easyopencv.OpenCvPipeline;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 import java.util.stream.Collectors;
-
-import static java.util.Optional.of;
-
 
 public class UGBasicHighGoalPipeline extends OpenCvPipeline {
 
@@ -63,7 +61,7 @@ public class UGBasicHighGoalPipeline extends OpenCvPipeline {
         int imageWidth = mat.width();
         int imageHeight = mat.height();
         int imageArea = imageWidth * imageHeight;
-        
+
         centerX = ((double) imageWidth / 2) - 0.5;
         centerY = ((double) imageHeight / 2) - 0.5;
     }
@@ -83,17 +81,21 @@ public class UGBasicHighGoalPipeline extends OpenCvPipeline {
         Imgproc.threshold(blueChannel, blueThreshold, minThreshold, maxThreshold, Imgproc.THRESH_BINARY);
         // Red threshold
         Imgproc.threshold(redChannel, redThreshold, minThreshold, maxThreshold, Imgproc.THRESH_BINARY);
+
         blueContours.clear();
         redContours.clear();
+
         Imgproc.findContours(blueThreshold, blueContours, new Mat(), Imgproc.RETR_TREE, Imgproc.CHAIN_APPROX_SIMPLE);
         Imgproc.findContours(redThreshold, redContours, new Mat(), Imgproc.RETR_TREE, Imgproc.CHAIN_APPROX_SIMPLE);
-        
+
         blueContours = blueContours.stream().filter(i -> {
-            boolean appropriateAspect = ((double) Imgproc.boundingRect(i).width / Imgproc.boundingRect(i).height > 1) && ((double) Imgproc.boundingRect(i).width / Imgproc.boundingRect(i).height < 2);
+            boolean appropriateAspect = ((double) Imgproc.boundingRect(i).width / Imgproc.boundingRect(i).height > 1)
+                    && ((double) Imgproc.boundingRect(i).width / Imgproc.boundingRect(i).height < 2);
             return filterContours(i) && appropriateAspect;
         }).collect(Collectors.toList());
         redContours = redContours.stream().filter(i -> {
-            boolean appropriateAspect = ((double) Imgproc.boundingRect(i).width / Imgproc.boundingRect(i).height > 1) && ((double) Imgproc.boundingRect(i).width / Imgproc.boundingRect(i).height < 2);
+            boolean appropriateAspect = ((double) Imgproc.boundingRect(i).width / Imgproc.boundingRect(i).height > 1)
+                    && ((double) Imgproc.boundingRect(i).width / Imgproc.boundingRect(i).height < 2);
             return filterContours(i) && appropriateAspect;
         }).collect(Collectors.toList());
 
@@ -151,6 +153,7 @@ public class UGBasicHighGoalPipeline extends OpenCvPipeline {
         if (rect == null) {
             return new Point(centerX, centerY);
         }
-        return new Point(rect.x + rect.width / 2, rect.y + rect.height / 2);
+        return new Point(rect.x + rect.width / 2.0, rect.y + rect.height / 2.0);
     }
+
 }

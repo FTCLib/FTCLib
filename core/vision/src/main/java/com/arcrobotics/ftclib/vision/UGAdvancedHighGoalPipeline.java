@@ -1,9 +1,9 @@
 package com.arcrobotics.ftclib.vision;
 
-
 import org.opencv.core.Mat;
 
 public class UGAdvancedHighGoalPipeline extends UGAngleHighGoalPipeline {
+
     private double centerOfLogoHeight;
     private double cameraHeight;
     private double cameraPitchOffset;
@@ -20,7 +20,8 @@ public class UGAdvancedHighGoalPipeline extends UGAngleHighGoalPipeline {
         this(fov, cameraHeight, 40.625, 0, 0);  // inches
     }
 
-    public UGAdvancedHighGoalPipeline(double fov, double cameraHeight, double centerOfLogoHeight, double cameraPitchOffset, double cameraYawOffset) {
+    public UGAdvancedHighGoalPipeline(double fov, double cameraHeight, double centerOfLogoHeight,
+                                      double cameraPitchOffset, double cameraYawOffset) {
         super(fov);
         this.cameraHeight = cameraHeight;
         this.centerOfLogoHeight = centerOfLogoHeight;
@@ -85,4 +86,5 @@ public class UGAdvancedHighGoalPipeline extends UGAngleHighGoalPipeline {
     public double getPowerShotDistance(Target color, Powershot shot) {
         return getDistanceToGoalWall(color) / Math.cos(Math.toRadians(getPowershotAngle(color, shot)));
     }
+
 }

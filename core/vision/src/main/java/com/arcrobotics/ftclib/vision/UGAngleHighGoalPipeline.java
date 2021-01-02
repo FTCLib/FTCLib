@@ -1,33 +1,33 @@
 package com.arcrobotics.ftclib.vision;
 
 import org.opencv.core.Mat;
-import org.opencv.core.Point;
 import org.opencv.core.Rect;
-import org.opencv.core.Scalar;
-import org.opencv.imgproc.Imgproc;
 
 public class UGAngleHighGoalPipeline extends UGBasicHighGoalPipeline {
 
     class Fraction {
         private int numerator, denominator;
+
         Fraction(long a, long b) {
             numerator = (int) (a / gcd(a, b));
             denominator = (int) (b / gcd(a, b));
         }
+
         /**
          * @return the greatest common denominator
          */
         private long gcd(long a, long b) {
             return b == 0 ? a : gcd(b, a % b);
         }
+
         public int getNumerator() {
             return numerator;
         }
+
         public int getDenominator() {
             return denominator;
         }
     }
-
 
     // Camera Settings
     protected int imageWidth;
@@ -79,9 +79,10 @@ public class UGAngleHighGoalPipeline extends UGBasicHighGoalPipeline {
 
     @Override
     public Mat processFrame(Mat input) {
-        input =  super.processFrame(input);
+        input = super.processFrame(input);
         return input;
     }
+
     /**
      * @param color Alliance Color
      */
@@ -97,14 +98,11 @@ public class UGAngleHighGoalPipeline extends UGBasicHighGoalPipeline {
     }
 
     /**
-     *
-     * @param color Allaince color
+     * @param color         Allaince color
      * @param offsetCenterX centerX
-     * @return
+     * @return yaw
      */
     public double calculateYaw(Target color, double offsetCenterX) {
-
-
         double targetCenterX = 0;
         Rect currentRect;
         if (color == Target.RED) {
@@ -115,14 +113,14 @@ public class UGAngleHighGoalPipeline extends UGBasicHighGoalPipeline {
         targetCenterX = getCenterofRect(currentRect).x;
 
         return Math.toDegrees(
-                Math.atan((targetCenterX - offsetCenterX) / horizontalFocalLength));
+                Math.atan((targetCenterX - offsetCenterX) / horizontalFocalLength)
+        );
     }
 
     /**
-     *
-     * @param color Allaince color
+     * @param color         Allaince color
      * @param offsetCenterY centerY
-     * @return
+     * @return pitch
      */
     public double calculatePitch(Target color, double offsetCenterY) {
         double targetCenterY = 0;
@@ -136,8 +134,8 @@ public class UGAngleHighGoalPipeline extends UGBasicHighGoalPipeline {
         targetCenterY = getCenterofRect(currentRect).y;
 
         return -Math.toDegrees(
-                Math.atan((targetCenterY - offsetCenterY ) / verticalFocalLength));
+                Math.atan((targetCenterY - offsetCenterY) / verticalFocalLength)
+        );
     }
-
 
 }
