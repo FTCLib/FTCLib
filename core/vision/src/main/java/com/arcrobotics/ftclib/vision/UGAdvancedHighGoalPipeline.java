@@ -71,7 +71,7 @@ public class UGAdvancedHighGoalPipeline extends UGAngleHighGoalPipeline {
 
         double distanceFromWallToGoal = Math.tan(Math.toRadians(angle)) * getDistanceToGoalWall(color);
 
-        // If robot is inbetween Powershot and Highgoal
+        // If robot is between Powershot and Highgoal
         if (Math.abs(offset) > Math.abs(distanceFromWallToGoal) && (offset * distanceFromWallToGoal < 0)) {
             return Math.toDegrees(Math.atan((offset + distanceFromWallToGoal) / getDistanceToGoalWall(color)));
         }

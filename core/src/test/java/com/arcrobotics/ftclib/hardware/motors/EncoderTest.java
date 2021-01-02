@@ -32,26 +32,33 @@ public class EncoderTest {
     private class MockMotor {
         private int position;
         private MockEncoder encoder;
+
         private class MockEncoder {
             private Supplier<Integer> m_supplier;
             private double dpp;
+
             public MockEncoder(Supplier<Integer> supplier) {
                 m_supplier = supplier;
             }
+
             public int getPosition() {
                 return m_supplier.get();
             }
+
             public MockEncoder setDistancePerPulse(double distancePerPulse) {
                 dpp = distancePerPulse;
                 return this;
             }
+
             public double getDistance() {
                 return dpp * getPosition();
             }
         }
+
         public MockMotor() {
             encoder = new MockEncoder(this::getCurrentPosition);
         }
+
         public int getCurrentPosition() {
             return position++;
         }

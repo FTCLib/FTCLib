@@ -9,7 +9,7 @@ import com.arcrobotics.ftclib.hardware.motors.MotorEx;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-@TeleOp(name="Sample TeleOp")
+@TeleOp(name = "Sample TeleOp")
 @Disabled
 public class SampleTeleOp extends CommandOpMode {
 
@@ -31,7 +31,7 @@ public class SampleTeleOp extends CommandOpMode {
         m_drive = new DriveSubsystem(m_left, m_right, WHEEL_DIAMETER);
 
         m_driverOp = new GamepadEx(gamepad1);
-        m_driveCommand = new DefaultDrive(m_drive, ()->m_driverOp.getLeftY(), ()->m_driverOp.getLeftX());
+        m_driveCommand = new DefaultDrive(m_drive, () -> m_driverOp.getLeftY(), () -> m_driverOp.getLeftX());
 
         m_gripper = new GripperSubsystem(hardwareMap, "gripper");
         m_grabCommand = new GrabStone(m_gripper);
@@ -42,8 +42,8 @@ public class SampleTeleOp extends CommandOpMode {
         m_releaseButton = (new GamepadButton(m_driverOp, GamepadKeys.Button.B))
                 .whenPressed(m_releaseCommand);
 
-        schedule(m_driveCommand);
-        register(m_drive, m_gripper);
+        register(m_drive);
+        m_drive.setDefaultCommand(m_driveCommand);
     }
 
 }

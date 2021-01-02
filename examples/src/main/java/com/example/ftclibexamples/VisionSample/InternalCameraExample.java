@@ -34,14 +34,12 @@ import org.openftc.easyopencv.OpenCvInternalCamera;
  * visit https://github.com/OpenFTC/EasyOpenCV/tree/master/examples/src/main/java/org/openftc/easyopencv/examples
  */
 @TeleOp
-public class InternalCameraExample extends LinearOpMode
-{
+public class InternalCameraExample extends LinearOpMode {
     OpenCvCamera phoneCam;
     ExamplePipeLine visionPipeLine;
 
     @Override
-    public void runOpMode()
-    {
+    public void runOpMode() {
         /*
          * Instantiate an OpenCvCamera object for the camera we'll be using.
          * In this sample, we're using the phone's internal camera. We pass it a
@@ -88,8 +86,7 @@ public class InternalCameraExample extends LinearOpMode
          */
         waitForStart();
 
-        while (opModeIsActive())
-        {
+        while (opModeIsActive()) {
             /*
              * Send some stats to the telemetry
              */
@@ -108,8 +105,7 @@ public class InternalCameraExample extends LinearOpMode
              * when it will be automatically stopped for you) *IS* supported. The "if" statement
              * below will stop streaming from the camera when the "A" button on gamepad 1 is pressed.
              */
-            if(gamepad1.a)
-            {
+            if (gamepad1.a) {
                 /*
                  * IMPORTANT NOTE: calling stopStreaming() will indeed stop the stream of images
                  * from the camera (and, by extension, stop calling your vision pipeline). HOWEVER,
@@ -145,12 +141,9 @@ public class InternalCameraExample extends LinearOpMode
              * The "if" statements below will pause the viewport if the "X" button on gamepad1 is pressed,
              * and resume the viewport if the "Y" button on gamepad1 is pressed.
              */
-            else if(gamepad1.x)
-            {
+            else if (gamepad1.x) {
                 phoneCam.pauseViewport();
-            }
-            else if(gamepad1.y)
-            {
+            } else if (gamepad1.y) {
                 phoneCam.resumeViewport();
             }
 

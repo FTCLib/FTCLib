@@ -9,7 +9,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class Transform2dTest {
     private static final double kEpsilon = 1E-9;
     Pose2d initial = new Pose2d(new Translation2d(1.0, 2.0), Rotation2d.fromDegrees(45.0));
-    Transform2d base = new Transform2d(new Translation2d(10,10),new Rotation2d(1));
+    Transform2d base = new Transform2d(new Translation2d(10, 10), new Rotation2d(1));
+
     @Test
     void testInverse() {
         Transform2d transformation = new Transform2d(new Translation2d(5.0, 0.0),
@@ -30,22 +31,22 @@ class Transform2dTest {
 
     @Test
     void times() {
-        assertEquals(new Transform2d(new Translation2d(20,20),new Rotation2d(2)),base.times(2));
+        assertEquals(new Transform2d(new Translation2d(20, 20), new Rotation2d(2)), base.times(2));
     }
 
     @Test
     void getTranslation() {
-        assertEquals(new Translation2d(10,10),base.getTranslation());
+        assertEquals(new Translation2d(10, 10), base.getTranslation());
     }
 
     @Test
     void getRotation() {
-        assertEquals(new Rotation2d(1),base.getRotation());
+        assertEquals(new Rotation2d(1), base.getRotation());
     }
 
     @Test
     void testEquals() {
         assertTrue(base.equals(new Transform2d(new Translation2d(10, 10), new Rotation2d(1))));
     }
-    
+
 }

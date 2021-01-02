@@ -9,7 +9,7 @@ public class PIDLiftController {
     public PIDLiftController(SimpleLinearLift lift) {
         m_lift = lift;
 
-        STAGE_CONSTANT = (int)(lift.m_liftMotor.getCPR());
+        STAGE_CONSTANT = (int) (lift.m_liftMotor.getCPR());
     }
 
     // let's say that one stage is 3.2 rotations of the motor
@@ -20,7 +20,7 @@ public class PIDLiftController {
     }
 
     public void setStageTwo() {
-        m_lift.moveToPosition( 2 * STAGE_CONSTANT + 8);
+        m_lift.moveToPosition(2 * STAGE_CONSTANT + 8);
     }
 
     public void setStageThree() {

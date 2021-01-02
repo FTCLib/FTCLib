@@ -49,21 +49,21 @@ dependencies {
     implementation('org.ejml:ejml-simple:0.39') {
         exclude group: 'org.ejml', module: 'ejml-all'
     }
-    
+
     testImplementation(platform('org.junit:junit-bom:5.7.0'))
     testImplementation('org.junit.jupiter:junit-jupiter-api:5.7.0')
     testRuntimeOnly('org.junit.jupiter:junit-jupiter-engine:5.7.0')
     testImplementation('org.mockito:mockito-core:3.5.13')
     testImplementation "org.junit.jupiter:junit-jupiter-params:5.7.0"
 
-    compileOnly 'org.firstinspires.ftc:Inspection:6.0.1'
-    compileOnly 'org.firstinspires.ftc:Blocks:6.0.1'
-    compileOnly 'org.firstinspires.ftc:RobotCore:6.0.1'
-    testImplementation 'org.firstinspires.ftc:RobotCore:6.0.1'
-    compileOnly 'org.firstinspires.ftc:RobotServer:6.0.1'
-    compileOnly 'org.firstinspires.ftc:OnBotJava:6.0.1'
-    compileOnly 'org.firstinspires.ftc:Hardware:6.0.1'
-    compileOnly 'org.firstinspires.ftc:FtcCommon:6.0.1'
+    compileOnly 'org.firstinspires.ftc:Inspection:6.1.1'
+    compileOnly 'org.firstinspires.ftc:Blocks:6.1.1'
+    compileOnly 'org.firstinspires.ftc:RobotCore:6.1.1'
+    testImplementation 'org.firstinspires.ftc:RobotCore:6.1.1'
+    compileOnly 'org.firstinspires.ftc:RobotServer:6.1.1'
+    compileOnly 'org.firstinspires.ftc:OnBotJava:6.1.1'
+    compileOnly 'org.firstinspires.ftc:Hardware:6.1.1'
+    compileOnly 'org.firstinspires.ftc:FtcCommon:6.1.1'
     compileOnly 'androidx.appcompat:appcompat:1.2.0'
     implementation "androidx.core:core-ktx:+"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"

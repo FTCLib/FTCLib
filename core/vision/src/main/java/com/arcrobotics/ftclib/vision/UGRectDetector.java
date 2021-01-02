@@ -13,10 +13,13 @@ public class UGRectDetector {
     private OpenCvCamera camera;
     private boolean isUsingWebcam;
     private String webcamName;
-    private HardwareMap hardwareMap;
+    private final HardwareMap hardwareMap;
     private UGRectRingPipeline ftclibPipeline;
 
-    //The constructor is overloaded to allow the use of webcam instead of the phone camera
+    public static int CAMERA_WIDTH = 320, CAMERA_HEIGHT = 240;
+    public static OpenCvCameraRotation ORIENTATION = OpenCvCameraRotation.UPRIGHT;
+
+    // The constructor is overloaded to allow the use of webcam instead of the phone camera
     public UGRectDetector(HardwareMap hMap) {
         hardwareMap = hMap;
     }
@@ -30,11 +33,17 @@ public class UGRectDetector {
     public void init() {
         //This will instantiate an OpenCvCamera object for the camera we'll be using
         if (isUsingWebcam) {
-            int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
-            camera = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, webcamName), cameraMonitorViewId);
+            int cameraMonitorViewId = hardwareMap
+                    .appContext.getResources()
+                    .getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
+            camera = OpenCvCameraFactory.getInstance()
+                    .createWebcam(hardwareMap.get(WebcamName.class, webcamName), cameraMonitorViewId);
         } else {
-            int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
-            camera = OpenCvCameraFactory.getInstance().createInternalCamera(OpenCvInternalCamera.CameraDirection.BACK, cameraMonitorViewId);
+            int cameraMonitorViewId = hardwareMap
+                    .appContext.getResources()
+                    .getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
+            camera = OpenCvCameraFactory.getInstance()
+                    .createInternalCamera(OpenCvInternalCamera.CameraDirection.BACK, cameraMonitorViewId);
         }
 
         //Set the pipeline the camera should use and start streaming
@@ -42,7 +51,7 @@ public class UGRectDetector {
         camera.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener() {
             @Override
             public void onOpened() {
-                camera.startStreaming(320, 240, OpenCvCameraRotation.UPRIGHT);
+                camera.startStreaming(CAMERA_WIDTH, CAMERA_HEIGHT, ORIENTATION);
             }
         });
     }
@@ -57,15 +66,17 @@ public class UGRectDetector {
         ftclibPipeline.setBottomRectWidthPercentage(bottomRectWidthPercentage);
     }
 
-    public void setRectangleSize(int rectangleWidth, int rectangleHeight){
+    public void setRectangleSize(int rectangleWidth, int rectangleHeight) {
         ftclibPipeline.setRectangleHeight(rectangleHeight);
         ftclibPipeline.setRectangleWidth(rectangleWidth);
     }
 
     public Stack getStack() {
-        if (Math.abs(ftclibPipeline.getTopAverage() - ftclibPipeline.getBottomAverage()) < ftclibPipeline.getThreshold() && (ftclibPipeline.getTopAverage() <= 100 && ftclibPipeline.getBottomAverage() <= 100)) {
+        if (Math.abs(ftclibPipeline.getTopAverage() - ftclibPipeline.getBottomAverage()) < ftclibPipeline.getThreshold()
+                && (ftclibPipeline.getTopAverage() <= 100 && ftclibPipeline.getBottomAverage() <= 100)) {
             return Stack.FOUR;
-        } else if (Math.abs(ftclibPipeline.getTopAverage() - ftclibPipeline.getBottomAverage()) < ftclibPipeline.getThreshold() && (ftclibPipeline.getTopAverage() >= 100 && ftclibPipeline.getBottomAverage() >= 100)) {
+        } else if (Math.abs(ftclibPipeline.getTopAverage() - ftclibPipeline.getBottomAverage()) < ftclibPipeline.getThreshold()
+                && (ftclibPipeline.getTopAverage() >= 100 && ftclibPipeline.getBottomAverage() >= 100)) {
             return Stack.ZERO;
         } else {
             return Stack.ONE;

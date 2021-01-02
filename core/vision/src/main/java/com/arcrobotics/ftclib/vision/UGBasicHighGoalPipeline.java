@@ -60,7 +60,6 @@ public class UGBasicHighGoalPipeline extends OpenCvPipeline {
         super.init(mat);
         int imageWidth = mat.width();
         int imageHeight = mat.height();
-        int imageArea = imageWidth * imageHeight;
 
         centerX = ((double) imageWidth / 2) - 0.5;
         centerY = ((double) imageHeight / 2) - 0.5;
@@ -103,12 +102,9 @@ public class UGBasicHighGoalPipeline extends OpenCvPipeline {
         Imgproc.drawContours(input, blueContours, -1, new Scalar(255, 255, 0));
 
         if (blueContours.size() != 0) {
-            biggestBlueContour = Collections.max(blueContours, new Comparator<MatOfPoint>() {
-                // Comparing width instead of area because wobble goals that are close to the camera tend to have a large area
-                @Override
-                public int compare(MatOfPoint t0, MatOfPoint t1) {
-                    return Double.compare(Imgproc.boundingRect(t0).width, Imgproc.boundingRect(t1).width);
-                }
+            // Comparing width instead of area because wobble goals that are close to the camera tend to have a large area
+            biggestBlueContour = Collections.max(blueContours, (t0, t1) -> {
+                return Double.compare(Imgproc.boundingRect(t0).width, Imgproc.boundingRect(t1).width);
             });
             blueRect = Imgproc.boundingRect(biggestBlueContour);
             Imgproc.rectangle(input, blueRect, new Scalar(0, 0, 255), 3);
@@ -117,12 +113,9 @@ public class UGBasicHighGoalPipeline extends OpenCvPipeline {
         }
 
         if (redContours.size() != 0) {
-            biggestRedContour = Collections.max(redContours, new Comparator<MatOfPoint>() {
-                // Comparing width instead of area because wobble goals that are close to the camera tend to have a large area
-                @Override
-                public int compare(MatOfPoint t0, MatOfPoint t1) {
-                    return Double.compare(Imgproc.boundingRect(t0).width, Imgproc.boundingRect(t1).width);
-                }
+            // Comparing width instead of area because wobble goals that are close to the camera tend to have a large area
+            biggestRedContour = Collections.max(redContours, (t0, t1) -> {
+                return Double.compare(Imgproc.boundingRect(t0).width, Imgproc.boundingRect(t1).width);
             });
             redRect = Imgproc.boundingRect(biggestRedContour);
             Imgproc.rectangle(input, redRect, new Scalar(255, 0, 0), 3);

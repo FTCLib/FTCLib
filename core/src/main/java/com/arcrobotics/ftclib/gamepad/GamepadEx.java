@@ -1,8 +1,8 @@
 package com.arcrobotics.ftclib.gamepad;
 
 import com.arcrobotics.ftclib.command.button.GamepadButton;
-import com.qualcomm.robotcore.hardware.Gamepad;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys.Button;
+import com.qualcomm.robotcore.hardware.Gamepad;
 
 import java.util.HashMap;
 
@@ -12,7 +12,9 @@ import java.util.HashMap;
  */
 public class GamepadEx {
 
-    /** The retrievable gamepad object */
+    /**
+     * The retrievable gamepad object
+     */
     public Gamepad gamepad;
 
     private HashMap<Button, ButtonReader> buttonReaders;
@@ -41,8 +43,8 @@ public class GamepadEx {
     }
 
     /**
-     * @param button    the button object
-     * @return          the boolean value as to whether the button is active or not
+     * @param button the button object
+     * @return the boolean value as to whether the button is active or not
      */
     public boolean getButton(Button button) {
         boolean buttonValue = false;
@@ -97,8 +99,8 @@ public class GamepadEx {
     }
 
     /**
-     * @param trigger   the trigger object
-     * @return          the value returned by the trigger in question
+     * @param trigger the trigger object
+     * @return the value returned by the trigger in question
      */
     public double getTrigger(GamepadKeys.Trigger trigger) {
         double triggerValue = 0;
@@ -146,8 +148,8 @@ public class GamepadEx {
     /**
      * Returns if the button was just pressed
      *
-     * @param button    the desired button to read from
-     * @return  if the button was just pressed
+     * @param button the desired button to read from
+     * @return if the button was just pressed
      */
     public boolean wasJustPressed(Button button) {
         return buttonReaders.get(button).wasJustPressed();
@@ -156,18 +158,28 @@ public class GamepadEx {
     /**
      * Returns if the button was just released
      *
-     * @param button    the desired button to read from
-     * @return  if the button was just released
+     * @param button the desired button to read from
+     * @return if the button was just released
      */
     public boolean wasJustReleased(Button button) {
         return buttonReaders.get(button).wasJustReleased();
     }
 
     /**
+     * Updates the value for each {@link ButtonReader}.
+     * Call this once in your loop.
+     */
+    public void readButtons() {
+        for (Button button : buttons) {
+            buttonReaders.get(button).readValue();
+        }
+    }
+
+    /**
      * Returns if the button is down
      *
-     * @param button    the desired button to read from
-     * @return  if the button is down
+     * @param button the desired button to read from
+     * @return if the button is down
      */
     public boolean isDown(Button button) {
         return buttonReaders.get(button).isDown();
@@ -176,8 +188,8 @@ public class GamepadEx {
     /**
      * Returns if the button's state has just changed
      *
-     * @param button    the desired button to read from
-     * @return  if the button's state has just changed
+     * @param button the desired button to read from
+     * @return if the button's state has just changed
      */
     public boolean stateJustChanged(Button button) {
         return buttonReaders.get(button).stateJustChanged();

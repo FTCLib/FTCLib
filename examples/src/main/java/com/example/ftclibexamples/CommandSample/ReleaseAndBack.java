@@ -14,7 +14,7 @@ public class ReleaseAndBack extends SequentialCommandGroup {
      * Creates a new ReleaseAndBack command group.
      *
      * @param drive The drive subsystem this command will run on
-     * @param grip The gripper subsystem this command will run on
+     * @param grip  The gripper subsystem this command will run on
      */
     public ReleaseAndBack(DriveSubsystem drive, GripperSubsystem grip) {
         addCommands(

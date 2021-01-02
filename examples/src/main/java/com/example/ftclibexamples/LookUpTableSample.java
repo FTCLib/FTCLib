@@ -13,12 +13,10 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 @TeleOp(name = "LUT Sample")
 @Disabled
-public class LookUpTableSample extends LinearOpMode
-{
+public class LookUpTableSample extends LinearOpMode {
 
     // our lookup table of distances from the goal and respective speeds of the shooter
-    LUT<Double, Double> speeds = new LUT<Double, Double>()
-    {{
+    LUT<Double, Double> speeds = new LUT<Double, Double>() {{
         add(5.0, 1.0);
         add(4.0, 0.9);
         add(3.0, 0.75);
@@ -28,11 +26,11 @@ public class LookUpTableSample extends LinearOpMode
 
     private HolonomicOdometry odometry;
     private MotorEx leftEncoder, rightEncoder, perpEncoder;
-    private Motor shooter = new Motor(hardwareMap, "shooter");
+    private Motor shooter;
 
     @Override
-    public void runOpMode() throws InterruptedException
-    {
+    public void runOpMode() throws InterruptedException {
+        shooter = new Motor(hardwareMap, "shooter");
 
         leftEncoder = new MotorEx(hardwareMap, "left");
         rightEncoder = new MotorEx(hardwareMap, "right");
@@ -59,10 +57,8 @@ public class LookUpTableSample extends LinearOpMode
         waitForStart();
 
         // let's say our goal is at (5, 10) in our global field coordinates
-        while (opModeIsActive() && !isStopRequested())
-        {
-            if (gamepad1.a)
-            {
+        while (opModeIsActive() && !isStopRequested()) {
+            if (gamepad1.a) {
                 double distance = odometry.getPose().getTranslation().getDistance(new Translation2d(5, 10));
                 shooter.set(speeds.getClosest(distance));
             }

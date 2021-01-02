@@ -9,7 +9,7 @@ import com.arcrobotics.ftclib.util.LUT
  * LUT<T: Number, R>. Extension function allows for easy conversion from Map<T: Number, R> to a
  * LUT<T: Number, R>.
  */
-fun <T, R> Map<T, R>.toLUT(): LUT<T, R> where T: Number {
+fun <T, R> Map<T, R>.toLUT(): LUT<T, R> where T : Number {
     val ret = LUT<T, R>()
     for (i in this) {
         ret[i.key] = i.value

@@ -10,7 +10,7 @@ import com.arcrobotics.ftclib.hardware.motors.Motor;
  * of a loop. You can call them in {@code void loop()} in an OpMode and within
  * a {@code while (!isStopRequested() && opModeIsActive())} loop in the
  * {@code runOpMode()} method in LinearOpMode.
- *
+ * <p>
  * For the derivation of mecanum kinematics, please watch this video:
  * https://www.youtube.com/watch?v=8rhAkjViHEQ.
  */
@@ -23,10 +23,10 @@ public class MecanumDrive extends RobotDrive {
      * Sets up the constructor for the mecanum drive.
      * Automatically inverts right side by default
      *
-     * @param frontLeft     the front left motor
-     * @param frontRight    the front right motor
-     * @param backLeft      the back left motor
-     * @param backRight     the back right motor
+     * @param frontLeft  the front left motor
+     * @param frontRight the front right motor
+     * @param backLeft   the back left motor
+     * @param backRight  the back right motor
      */
     public MecanumDrive(Motor frontLeft, Motor frontRight, Motor backLeft, Motor backRight) {
         this(true, frontLeft, frontRight, backLeft, backRight);
@@ -35,11 +35,11 @@ public class MecanumDrive extends RobotDrive {
     /**
      * Sets up the constructor for the mecanum drive.
      *
-     * @param autoInvert    Whether or not to automatically invert the right motors
-     * @param frontLeft     the front left motor
-     * @param frontRight    the front right motor
-     * @param backLeft      the back left motor
-     * @param backRight     the back right motor
+     * @param autoInvert Whether or not to automatically invert the right motors
+     * @param frontLeft  the front left motor
+     * @param frontRight the front right motor
+     * @param backLeft   the back left motor
+     * @param backRight  the back right motor
      */
     public MecanumDrive(boolean autoInvert, Motor frontLeft, Motor frontRight, Motor backLeft, Motor backRight) {
         motors = new Motor[]{frontLeft, frontRight, backLeft, backRight};
@@ -98,9 +98,9 @@ public class MecanumDrive extends RobotDrive {
      * Drives the robot from the perspective of the robot itself rather than that
      * of the driver.
      *
-     * @param strafeSpeed    the horizontal speed of the robot, derived from input
-     * @param forwardSpeed    the vertical speed of the robot, derived from input
-     * @param turnSpeed the turn speed of the robot, derived from input
+     * @param strafeSpeed  the horizontal speed of the robot, derived from input
+     * @param forwardSpeed the vertical speed of the robot, derived from input
+     * @param turnSpeed    the turn speed of the robot, derived from input
      */
     public void driveRobotCentric(double strafeSpeed, double forwardSpeed, double turnSpeed) {
         driveFieldCentric(strafeSpeed, forwardSpeed, turnSpeed, 0.0);
@@ -111,9 +111,9 @@ public class MecanumDrive extends RobotDrive {
      * Drives the robot from the perspective of the robot itself rather than that
      * of the driver.
      *
-     * @param strafeSpeed    the horizontal speed of the robot, derived from input
-     * @param forwardSpeed    the vertical speed of the robot, derived from input
-     * @param turnSpeed the turn speed of the robot, derived from input
+     * @param strafeSpeed  the horizontal speed of the robot, derived from input
+     * @param forwardSpeed the vertical speed of the robot, derived from input
+     * @param turnSpeed    the turn speed of the robot, derived from input
      * @param squareInputs Square joystick inputs for finer control
      */
     public void driveRobotCentric(double strafeSpeed, double forwardSpeed, double turnSpeed, boolean squareInputs) {
@@ -129,10 +129,10 @@ public class MecanumDrive extends RobotDrive {
      * robot, pushing forward on the drive stick will always drive the robot away
      * from the driver.
      *
-     * @param strafeSpeed    the horizontal speed of the robot, derived from input
-     * @param forwardSpeed    the vertical speed of the robot, derived from input
-     * @param turnSpeed the turn speed of the robot, derived from input
-     * @param gyroAngle the heading of the robot, derived from the gyro
+     * @param strafeSpeed  the horizontal speed of the robot, derived from input
+     * @param forwardSpeed the vertical speed of the robot, derived from input
+     * @param turnSpeed    the turn speed of the robot, derived from input
+     * @param gyroAngle    the heading of the robot, derived from the gyro
      */
     public void driveFieldCentric(double strafeSpeed, double forwardSpeed,
                                   double turnSpeed, double gyroAngle) {
@@ -175,10 +175,10 @@ public class MecanumDrive extends RobotDrive {
      * robot, pushing forward on the drive stick will always drive the robot away
      * from the driver.
      *
-     * @param xSpeed    the horizontal speed of the robot, derived from input
-     * @param ySpeed    the vertical speed of the robot, derived from input
-     * @param turnSpeed the turn speed of the robot, derived from input
-     * @param gyroAngle the heading of the robot, derived from the gyro
+     * @param xSpeed       the horizontal speed of the robot, derived from input
+     * @param ySpeed       the vertical speed of the robot, derived from input
+     * @param turnSpeed    the turn speed of the robot, derived from input
+     * @param gyroAngle    the heading of the robot, derived from the gyro
      * @param squareInputs Square the value of the input to allow for finer control
      */
     public void driveFieldCentric(double xSpeed, double ySpeed, double turnSpeed, double gyroAngle, boolean squareInputs) {

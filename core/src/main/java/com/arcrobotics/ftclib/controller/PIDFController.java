@@ -1,13 +1,11 @@
 package com.arcrobotics.ftclib.controller;
 
-import com.arcrobotics.ftclib.hardware.motors.Motor;
-
 /**
  * This is a PID controller (https://en.wikipedia.org/wiki/PID_controller)
  * for your robot. Internally, it performs all the calculations for you.
  * You need to tune your values to the appropriate amounts in order
  * to properly utilize these calculations.
- *
+ * <p>
  * The equation we will use is:
  * u(t) = kP * e(t) + kI * int(0,t)[e(t')dt'] + kD * e'(t) + kF
  * where e(t) = r(t) - y(t) and r(t) is the setpoint and y(t) is the
@@ -45,9 +43,9 @@ public class PIDFController {
      * includes a feed-forward value which is useful for fighting friction and gravity.
      * Our errorVal represents the return of e(t) and prevErrorVal is the previous error.
      *
-     * @param sp        The setpoint of the pid control loop.
-     * @param pv        The measured value of he pid control loop. We want sp = pv, or to the degree
-     *                  such that sp - pv, or e(t) < tolerance.
+     * @param sp The setpoint of the pid control loop.
+     * @param pv The measured value of he pid control loop. We want sp = pv, or to the degree
+     *           such that sp - pv, or e(t) < tolerance.
      */
     public PIDFController(double kp, double ki, double kd, double kf, double sp, double pv) {
         kP = kp;
@@ -186,7 +184,7 @@ public class PIDFController {
     public double calculate(double pv) {
         prevErrorVal = errorVal_p;
 
-        double currentTimeStamp = (double)System.nanoTime() / 1E9;
+        double currentTimeStamp = (double) System.nanoTime() / 1E9;
         if (lastTimeStamp == 0) lastTimeStamp = currentTimeStamp;
         period = currentTimeStamp - lastTimeStamp;
         lastTimeStamp = currentTimeStamp;

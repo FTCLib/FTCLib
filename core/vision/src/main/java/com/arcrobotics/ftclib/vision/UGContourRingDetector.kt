@@ -23,7 +23,8 @@ import org.openftc.easyopencv.OpenCvInternalCamera
  * @param debug If true, all intermediate calculation results (except showing mat operations) will
  * be printed to telemetry (mainly for debug purposes), default value of false
  */
-class UGContourRingDetector( // primary constructor
+class UGContourRingDetector(
+        // primary constructor
         private var hardwareMap: HardwareMap, // hardwareMap variable being passed into the detector. no default value
         private var cameraDirection: OpenCvInternalCamera.CameraDirection = OpenCvInternalCamera.CameraDirection.BACK,
         private val telemetry: Telemetry? = null,
@@ -42,6 +43,12 @@ class UGContourRingDetector( // primary constructor
         /** Horizon value in use, anything above this value (less than the value) since
          * (0, 0) is the top left of the camera frame **/
         var HORIZON = 100
+
+        /** Value storing whether or not the orientation of the camera is in portrait mode **/
+        var IS_PORTRAIT_MODE = false
+
+        /** Value storing the orientation of the camera **/
+        var CAMERA_ORIENTATION: OpenCvCameraRotation = OpenCvCameraRotation.UPRIGHT
     }
 
     // camera variable, lateinit, initialized in init() function
@@ -60,7 +67,7 @@ class UGContourRingDetector( // primary constructor
      * @param hMap hardwareMap
      * @param webcamName name of webcam in use
      */
-    constructor(hMap: HardwareMap, webcamName: String): this(hardwareMap = hMap) {
+    constructor(hMap: HardwareMap, webcamName: String) : this(hardwareMap = hMap) {
         this.webcamName = webcamName
         this.isUsingWebcam = true
     }
@@ -73,7 +80,7 @@ class UGContourRingDetector( // primary constructor
      * @param debug If true, all intermediate calculation results (except showing mat operations) will
      * be printed to telemetry (mainly for debug purposes), default value of false
      */
-    constructor(hMap: HardwareMap, webcamName: String, telemetry: Telemetry, debug: Boolean): this(hardwareMap = hMap, telemetry = telemetry, debug = debug) {
+    constructor(hMap: HardwareMap, webcamName: String, telemetry: Telemetry, debug: Boolean) : this(hardwareMap = hMap, telemetry = telemetry, debug = debug) {
         this.webcamName = webcamName
         this.isUsingWebcam = true
     }
@@ -115,16 +122,17 @@ class UGContourRingDetector( // primary constructor
                         telemetry = telemetry,
                         debug = debug,
                 ).apply {
-                    UGContourRingPipeline.CAMERA_WIDTH = CAMERA_WIDTH
+                    UGContourRingPipeline.CAMERA_WIDTH = if (IS_PORTRAIT_MODE) CAMERA_HEIGHT else CAMERA_WIDTH
                     UGContourRingPipeline.HORIZON = HORIZON
                     ftcLibPipeline = this
                 }
         )
 
         camera.openCameraDeviceAsync {
-            camera.startStreaming(320,
-                    240,
-                    OpenCvCameraRotation.UPRIGHT,
+            camera.startStreaming(
+                    CAMERA_WIDTH,
+                    CAMERA_HEIGHT,
+                    CAMERA_ORIENTATION,
             )
         }
     }

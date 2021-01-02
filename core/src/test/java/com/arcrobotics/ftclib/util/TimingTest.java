@@ -5,8 +5,9 @@ import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.TimeUnit;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static com.arcrobotics.ftclib.util.Timing.*;
+import static com.arcrobotics.ftclib.util.Timing.Timer;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TimingTest {
     private Timer timer;
@@ -51,7 +52,7 @@ public class TimingTest {
     @Test
     public void pauseTest() throws InterruptedException {
         timer.start();
-        Thread.sleep(1000);
+        Thread.sleep(1005);
         timer.pause();
         long currTime = timer.elapsedTime();
         assertTrue(currTime >= 1);

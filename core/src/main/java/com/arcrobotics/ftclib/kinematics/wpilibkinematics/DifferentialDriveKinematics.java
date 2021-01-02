@@ -17,49 +17,49 @@ package com.arcrobotics.ftclib.kinematics.wpilibkinematics;
  */
 @SuppressWarnings("MemberName")
 public class DifferentialDriveKinematics {
-  public final double trackWidthMeters;
+    public final double trackWidthMeters;
 
-  /**
-   * Constructs a differential drive kinematics object.
-   *
-   * @param trackWidthMeters The track width of the drivetrain. Theoretically, this is
-   *                         the distance between the left wheels and right wheels.
-   *                         However, the empirical value may be larger than the physical
-   *                         measured value due to scrubbing effects.
-   */
-  public DifferentialDriveKinematics(double trackWidthMeters) {
-    this.trackWidthMeters = trackWidthMeters;
-  }
+    /**
+     * Constructs a differential drive kinematics object.
+     *
+     * @param trackWidthMeters The track width of the drivetrain. Theoretically, this is
+     *                         the distance between the left wheels and right wheels.
+     *                         However, the empirical value may be larger than the physical
+     *                         measured value due to scrubbing effects.
+     */
+    public DifferentialDriveKinematics(double trackWidthMeters) {
+        this.trackWidthMeters = trackWidthMeters;
+    }
 
-  /**
-   * Returns a chassis speed from left and right component velocities using
-   * forward kinematics.
-   *
-   * @param wheelSpeeds The left and right velocities.
-   * @return The chassis speed.
-   */
-  public ChassisSpeeds toChassisSpeeds(DifferentialDriveWheelSpeeds wheelSpeeds) {
-    return new ChassisSpeeds(
-        (wheelSpeeds.leftMetersPerSecond + wheelSpeeds.rightMetersPerSecond) / 2, 0,
-        (wheelSpeeds.rightMetersPerSecond - wheelSpeeds.leftMetersPerSecond)
-            / trackWidthMeters
-    );
-  }
+    /**
+     * Returns a chassis speed from left and right component velocities using
+     * forward kinematics.
+     *
+     * @param wheelSpeeds The left and right velocities.
+     * @return The chassis speed.
+     */
+    public ChassisSpeeds toChassisSpeeds(DifferentialDriveWheelSpeeds wheelSpeeds) {
+        return new ChassisSpeeds(
+                (wheelSpeeds.leftMetersPerSecond + wheelSpeeds.rightMetersPerSecond) / 2, 0,
+                (wheelSpeeds.rightMetersPerSecond - wheelSpeeds.leftMetersPerSecond)
+                        / trackWidthMeters
+        );
+    }
 
-  /**
-   * Returns left and right component velocities from a chassis speed using
-   * inverse kinematics.
-   *
-   * @param chassisSpeeds The linear and angular (dx and dtheta) components that
-   *                      represent the chassis' speed.
-   * @return The left and right velocities.
-   */
-  public DifferentialDriveWheelSpeeds toWheelSpeeds(ChassisSpeeds chassisSpeeds) {
-    return new DifferentialDriveWheelSpeeds(
-        chassisSpeeds.vxMetersPerSecond - trackWidthMeters / 2
-          * chassisSpeeds.omegaRadiansPerSecond,
-        chassisSpeeds.vxMetersPerSecond + trackWidthMeters / 2
-          * chassisSpeeds.omegaRadiansPerSecond
-    );
-  }
+    /**
+     * Returns left and right component velocities from a chassis speed using
+     * inverse kinematics.
+     *
+     * @param chassisSpeeds The linear and angular (dx and dtheta) components that
+     *                      represent the chassis' speed.
+     * @return The left and right velocities.
+     */
+    public DifferentialDriveWheelSpeeds toWheelSpeeds(ChassisSpeeds chassisSpeeds) {
+        return new DifferentialDriveWheelSpeeds(
+                chassisSpeeds.vxMetersPerSecond - trackWidthMeters / 2
+                        * chassisSpeeds.omegaRadiansPerSecond,
+                chassisSpeeds.vxMetersPerSecond + trackWidthMeters / 2
+                        * chassisSpeeds.omegaRadiansPerSecond
+        );
+    }
 }

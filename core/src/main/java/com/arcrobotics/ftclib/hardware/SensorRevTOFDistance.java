@@ -5,35 +5,28 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
-import com.qualcomm.robotcore.util.Range;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Class for a time-of-flight distance sensor
  */
 public class SensorRevTOFDistance implements SensorDistanceEx {
 
-
-
-
     /**
      * Our distance sensor object.
      *
      * @see DistanceSensor
      */
-    private DistanceSensor distanceSensor;
+    private final DistanceSensor distanceSensor;
 
     /**
      * The List that holds the {@code DistanceTarget} (s) associated with this device.
      *
      * @see DistanceTarget
      */
-    private ArrayList<DistanceTarget> targetList;
-
+    private final List<DistanceTarget> targetList;
 
     /**
      * Makes a distance sensor from an FTC DistanceSensor device.
@@ -55,7 +48,6 @@ public class SensorRevTOFDistance implements SensorDistanceEx {
         this.distanceSensor = hardwareMap.get(DistanceSensor.class, name);
         targetList = new ArrayList<>();
     }
-
 
     /**
      * Makes a distance sensor from an FTC DistanceSensor device and a given list of DistanceTargets
@@ -80,35 +72,21 @@ public class SensorRevTOFDistance implements SensorDistanceEx {
         this.targetList = new ArrayList<>(targetList);
     }
 
-// TODO: complete docs for the remainder of these methods below
-
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public double getDistance(DistanceUnit unit) {
         return distanceSensor.getDistance(unit);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public boolean targetReached(DistanceTarget target) {
         return target.atTarget(getDistance(target.getUnit()));
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void addTarget(DistanceTarget target) {
         if (!targetList.contains(target)) targetList.add(target);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void addTargets(List<DistanceTarget> targets) {
 
@@ -117,24 +95,18 @@ public class SensorRevTOFDistance implements SensorDistanceEx {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     *
-     */
     @Override
     public HashMap<DistanceTarget, Boolean> checkAllTargets() {
         HashMap<DistanceTarget, Boolean> results = new HashMap<>();
         for (DistanceTarget target : targetList) {
-            if (target.atTarget(getDistance(target.getUnit()))) results.put(target, true);
-            else results.put(target, false);
+            results.put(target, target.atTarget(getDistance(target.getUnit())));
         }
         return results;
     }
 
-
     @Override
     public void disable() {
-
+        distanceSensor.close();
     }
 
     @Override

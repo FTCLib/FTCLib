@@ -11,8 +11,11 @@ import com.arcrobotics.ftclib.hardware.SimpleServo
  */
 private typealias Range = Pair<Number, Number> // type alias only in file for clarity
 
+private var offset: Pair<Double, Double> = 0.0 to 0.0 // keep track of angle offset
+
 var SimpleServo.range: Range
-    get() = 0 to this.angleRange
+    get() = (0 - offset.first) to (this.angleRange - offset.second)
     set(value) {
+        offset = (0 - value.first.toDouble()) to (0 - value.second.toDouble())
         this.setRange(value.first.toDouble(), value.second.toDouble())
     }

@@ -37,7 +37,6 @@ public class UGAngleHighGoalPipeline extends UGBasicHighGoalPipeline {
     private double cameraYawOffset;
 
     private double fov;
-    private double imageArea;
     private double horizontalFocalLength;
     private double verticalFocalLength;
 
@@ -62,8 +61,6 @@ public class UGAngleHighGoalPipeline extends UGBasicHighGoalPipeline {
 
         imageWidth = mat.width();
         imageHeight = mat.height();
-
-        imageArea = this.imageWidth * this.imageHeight;
 
         // pinhole model calculations
         double diagonalView = Math.toRadians(this.fov);
@@ -98,19 +95,12 @@ public class UGAngleHighGoalPipeline extends UGBasicHighGoalPipeline {
     }
 
     /**
-     * @param color         Allaince color
+     * @param color         Alliance color
      * @param offsetCenterX centerX
-     * @return yaw
      */
     public double calculateYaw(Target color, double offsetCenterX) {
-        double targetCenterX = 0;
-        Rect currentRect;
-        if (color == Target.RED) {
-            currentRect = getRedRect();
-        } else {
-            currentRect = getBlueRect();
-        }
-        targetCenterX = getCenterofRect(currentRect).x;
+        Rect currentRect = color == Target.RED ? getRedRect() : getBlueRect();
+        double targetCenterX = getCenterofRect(currentRect).x;
 
         return Math.toDegrees(
                 Math.atan((targetCenterX - offsetCenterX) / horizontalFocalLength)
@@ -118,20 +108,12 @@ public class UGAngleHighGoalPipeline extends UGBasicHighGoalPipeline {
     }
 
     /**
-     * @param color         Allaince color
+     * @param color         Alliance color
      * @param offsetCenterY centerY
-     * @return pitch
      */
     public double calculatePitch(Target color, double offsetCenterY) {
-        double targetCenterY = 0;
-
-        Rect currentRect;
-        if (color == Target.RED) {
-            currentRect = getRedRect();
-        } else {
-            currentRect = getBlueRect();
-        }
-        targetCenterY = getCenterofRect(currentRect).y;
+        Rect currentRect = color == Target.RED ? getRedRect() : getBlueRect();
+        double targetCenterY = getCenterofRect(currentRect).y;
 
         return -Math.toDegrees(
                 Math.atan((targetCenterY - offsetCenterY) / verticalFocalLength)

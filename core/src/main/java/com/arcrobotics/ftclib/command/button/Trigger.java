@@ -300,7 +300,7 @@ public class Trigger {
             @Override
             public void run() {
                 boolean pressed = get();
-                
+
                 if (!m_pressedLast && pressed) {
                     if (m_firstCommandActive) {
                         if (commandOne.isScheduled()) {

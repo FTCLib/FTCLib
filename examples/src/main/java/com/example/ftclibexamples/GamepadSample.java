@@ -11,7 +11,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import java.util.function.BooleanSupplier;
 
-@TeleOp(name="Simple Gamepad Example")
+@TeleOp(name = "Simple Gamepad Example")
 @Disabled
 public class GamepadSample extends LinearOpMode {
 
@@ -20,11 +20,14 @@ public class GamepadSample extends LinearOpMode {
      * to position 1 when the 'A' button is pressed, then
      * set it to position 0 when 'B' is pressed
      */
-    private GamepadEx toolOp = new GamepadEx(gamepad2);
-    private SimpleServo grip = new SimpleServo(hardwareMap, "gripper", 0, 270);
+    private GamepadEx toolOp;
+    private SimpleServo grip;
 
     @Override
     public void runOpMode() throws InterruptedException {
+
+        toolOp = new GamepadEx(gamepad2);
+        grip = new SimpleServo(hardwareMap, "gripper", 0, 270);
 
         // WITHOUT COMMAND BASED
         BooleanSupplier openClaw = () -> toolOp.wasJustPressed(GamepadKeys.Button.A)
@@ -33,6 +36,7 @@ public class GamepadSample extends LinearOpMode {
                 && toolOp.wasJustPressed(GamepadKeys.Button.B);
         waitForStart();
         while (opModeIsActive()) {
+            toolOp.readButtons();
             if (openClaw.getAsBoolean()) {
                 grip.setPosition(1);
             }

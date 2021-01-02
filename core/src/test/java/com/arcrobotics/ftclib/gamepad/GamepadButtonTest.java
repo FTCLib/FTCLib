@@ -2,7 +2,6 @@ package com.arcrobotics.ftclib.gamepad;
 
 import com.arcrobotics.ftclib.command.CommandScheduler;
 import com.arcrobotics.ftclib.command.InstantCommand;
-import com.arcrobotics.ftclib.command.button.GamepadButton;
 import com.qualcomm.robotcore.hardware.Gamepad;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -10,7 +9,9 @@ import org.junit.jupiter.api.Test;
 
 import java.util.function.BooleanSupplier;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class GamepadButtonTest {
 
@@ -53,10 +54,16 @@ public class GamepadButtonTest {
         BooleanSupplier wasJustPressed = () -> gamepadEx.wasJustPressed(GamepadKeys.Button.A);
         assertFalse(wasJustPressed.getAsBoolean());
         myGamepad.a = true;
+        assertFalse(wasJustPressed.getAsBoolean());
+        gamepadEx.readButtons();
         assertTrue(wasJustPressed.getAsBoolean());
         myGamepad.a = true;
+        assertTrue(wasJustPressed.getAsBoolean());
+        gamepadEx.readButtons();
         assertFalse(wasJustPressed.getAsBoolean());
         myGamepad.a = false;
+        assertFalse(wasJustPressed.getAsBoolean());
+        gamepadEx.readButtons();
         assertFalse(wasJustPressed.getAsBoolean());
     }
 
