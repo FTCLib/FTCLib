@@ -48,6 +48,8 @@ public class FlywheelSample extends LinearOpMode {
 
             if (toolOp.isDown(GamepadKeys.Button.A)) {
                 flywheel.set(1);
+            } else {
+                flywheel.stopMotor();
             }
 
             List<Double> velocities = flywheel.getVelocities();
