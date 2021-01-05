@@ -28,6 +28,7 @@ public abstract class FTCLibOpMode extends LinearOpMode {
             run();
             driverOp.readButtons();
             toolOp.readButtons();
+            telemetry.update();
         }
     }
 
