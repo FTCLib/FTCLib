@@ -9,6 +9,7 @@ import com.arcrobotics.ftclib.hardware.HardwareDevice;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigurationType;
 
 import java.util.function.Supplier;
 
@@ -220,6 +221,9 @@ public class Motor implements HardwareDevice {
         motor = hMap.get(DcMotor.class, id);
         runmode = RunMode.RawPower;
         type = GoBILDA.NONE;
+        MotorConfigurationType type = motor.getMotorType().clone();
+        type.setAchieveableMaxRPMFraction(1.0);
+        motor.setMotorType(type);
         ACHIEVABLE_MAX_TICKS_PER_SECOND = motor.getMotorType().getAchieveableMaxTicksPerSecond();
         encoder = new Encoder(motor::getCurrentPosition);
     }
@@ -235,6 +239,9 @@ public class Motor implements HardwareDevice {
         motor = hMap.get(DcMotor.class, id);
         runmode = RunMode.RawPower;
         type = gobildaType;
+        MotorConfigurationType type = motor.getMotorType().clone();
+        type.setAchieveableMaxRPMFraction(1.0);
+        motor.setMotorType(type);
         ACHIEVABLE_MAX_TICKS_PER_SECOND = gobildaType.getAchievableMaxTicksPerSecond();
         encoder = new Encoder(motor::getCurrentPosition);
     }
@@ -251,6 +258,9 @@ public class Motor implements HardwareDevice {
         motor = hMap.get(DcMotor.class, id);
         runmode = RunMode.RawPower;
         type = GoBILDA.NONE;
+        MotorConfigurationType type = motor.getMotorType().clone();
+        type.setAchieveableMaxRPMFraction(1.0);
+        motor.setMotorType(type);
         ACHIEVABLE_MAX_TICKS_PER_SECOND = cpr * rpm / 60;
         encoder = new Encoder(motor::getCurrentPosition);
     }
