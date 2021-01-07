@@ -218,14 +218,8 @@ public class Motor implements HardwareDevice {
      * @param id   the device id from the RC config
      */
     public Motor(@NonNull HardwareMap hMap, String id) {
-        motor = hMap.get(DcMotor.class, id);
-        runmode = RunMode.RawPower;
-        type = GoBILDA.NONE;
-        MotorConfigurationType type = motor.getMotorType().clone();
-        type.setAchieveableMaxRPMFraction(1.0);
-        motor.setMotorType(type);
+        this(hMap, id, GoBILDA.NONE);
         ACHIEVABLE_MAX_TICKS_PER_SECOND = motor.getMotorType().getAchieveableMaxTicksPerSecond();
-        encoder = new Encoder(motor::getCurrentPosition);
     }
 
     /**
@@ -237,13 +231,15 @@ public class Motor implements HardwareDevice {
      */
     public Motor(@NonNull HardwareMap hMap, String id, @NonNull GoBILDA gobildaType) {
         motor = hMap.get(DcMotor.class, id);
+        encoder = new Encoder(motor::getCurrentPosition);
+
         runmode = RunMode.RawPower;
         type = gobildaType;
+
         MotorConfigurationType type = motor.getMotorType().clone();
         type.setAchieveableMaxRPMFraction(1.0);
         motor.setMotorType(type);
         ACHIEVABLE_MAX_TICKS_PER_SECOND = gobildaType.getAchievableMaxTicksPerSecond();
-        encoder = new Encoder(motor::getCurrentPosition);
     }
 
     /**
@@ -255,14 +251,8 @@ public class Motor implements HardwareDevice {
      * @param rpm  the revolutions per minute of the motor
      */
     public Motor(@NonNull HardwareMap hMap, String id, double cpr, double rpm) {
-        motor = hMap.get(DcMotor.class, id);
-        runmode = RunMode.RawPower;
-        type = GoBILDA.NONE;
-        MotorConfigurationType type = motor.getMotorType().clone();
-        type.setAchieveableMaxRPMFraction(1.0);
-        motor.setMotorType(type);
+        this(hMap, id, GoBILDA.NONE);
         ACHIEVABLE_MAX_TICKS_PER_SECOND = cpr * rpm / 60;
-        encoder = new Encoder(motor::getCurrentPosition);
     }
 
     /**
