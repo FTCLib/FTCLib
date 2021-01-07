@@ -75,7 +75,7 @@ public class MotorEx extends Motor {
      * @param velocity the velocity in ticks per second
      */
     public void setVelocity(double velocity) {
-        set(velocity / ACHIEVABLE_MAX_TICKS_PER_SECOND);
+        motor.setPower(velocity / ACHIEVABLE_MAX_TICKS_PER_SECOND);
     }
 
     /**
