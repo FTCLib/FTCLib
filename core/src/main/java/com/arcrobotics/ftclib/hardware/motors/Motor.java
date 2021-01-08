@@ -201,12 +201,14 @@ public class Motor implements HardwareDevice {
     protected GoBILDA type;
 
     protected PIDController veloController = new PIDController(1, 0, 0);
-    ;
+
     protected PController positionController = new PController(1);
 
     protected SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(0, 1, 0);
 
     private boolean targetIsSet = false;
+
+    protected double bufferFraction = 0.9;
 
     public Motor() {
     }
@@ -236,9 +238,6 @@ public class Motor implements HardwareDevice {
         runmode = RunMode.RawPower;
         type = gobildaType;
 
-        MotorConfigurationType type = motor.getMotorType().clone();
-        type.setAchieveableMaxRPMFraction(1.0);
-        motor.setMotorType(type);
         ACHIEVABLE_MAX_TICKS_PER_SECOND = gobildaType.getAchievableMaxTicksPerSecond();
     }
 
@@ -252,6 +251,12 @@ public class Motor implements HardwareDevice {
      */
     public Motor(@NonNull HardwareMap hMap, String id, double cpr, double rpm) {
         this(hMap, id, GoBILDA.NONE);
+
+        MotorConfigurationType type = motor.getMotorType().clone();
+        type.setMaxRPM(rpm);
+        type.setTicksPerRev(cpr);
+        motor.setMotorType(type);
+
         ACHIEVABLE_MAX_TICKS_PER_SECOND = cpr * rpm / 60;
     }
 
@@ -262,7 +267,7 @@ public class Motor implements HardwareDevice {
      */
     public void set(double output) {
         if (runmode == RunMode.VelocityControl) {
-            double speed = output * ACHIEVABLE_MAX_TICKS_PER_SECOND;
+            double speed = bufferFraction * output * ACHIEVABLE_MAX_TICKS_PER_SECOND;
             double velocity = veloController.calculate(getVelocity(), speed) + feedforward.calculate(speed);
             motor.setPower(velocity / ACHIEVABLE_MAX_TICKS_PER_SECOND);
         } else if (runmode == RunMode.PositionControl) {
@@ -360,6 +365,10 @@ public class Motor implements HardwareDevice {
      */
     public double getMaxRPM() {
         return type == GoBILDA.NONE ? motor.getMotorType().getMaxRPM() : type.getRPM();
+    }
+
+    public void setBuffer(double fraction) {
+        bufferFraction = fraction;
     }
 
     /**
