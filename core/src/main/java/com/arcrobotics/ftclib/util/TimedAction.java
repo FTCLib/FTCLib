@@ -56,7 +56,7 @@ public class TimedAction {
      * @return true if the timed action is currently running
      */
     public boolean running() {
-        return state == State.RUNNING || state == State.SYMMETRIC;
+        return state != State.IDLE;
     }
 
     /**
