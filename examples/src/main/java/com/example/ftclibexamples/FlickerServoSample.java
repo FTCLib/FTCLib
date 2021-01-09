@@ -60,7 +60,7 @@ public class FlickerServoSample extends LinearOpMode {
                     true    // square inputs
             );
 
-            if (driverOp.isDown(GamepadKeys.Button.A) && flicker.running()) {
+            if (driverOp.isDown(GamepadKeys.Button.A) && !flicker.running()) {
                 flicker.reset();
             }
             flicker.run();
