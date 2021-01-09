@@ -15,7 +15,7 @@ public class TimedAction {
     private State state = State.IDLE;
 
     private final Runnable onRun, onEnd;
-    private final double waitTime;
+    private final double waitTime, endTime;
     private final boolean symmetric;
 
     /**
@@ -45,7 +45,19 @@ public class TimedAction {
         this.onEnd = onEnd;
 
         waitTime = milliseconds;
+        endTime = milliseconds;
         this.symmetric = symmetric;
+    }
+
+    public TimedAction(Runnable onRun, Runnable onEnd, double runTime, double endTime) {
+        timer = new ElapsedTime();
+
+        this.onRun = onRun;
+        this.onEnd = onEnd;
+
+        waitTime = runTime;
+        this.endTime = endTime;
+        this.symmetric = true;
     }
 
     enum State {
@@ -84,7 +96,7 @@ public class TimedAction {
                 }
                 break;
             case SYMMETRIC:
-                if (timer.milliseconds() <= waitTime) {
+                if (timer.milliseconds() <= endTime) {
                     onEnd.run();
                 } else {
                     timer.reset();
