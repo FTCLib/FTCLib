@@ -41,8 +41,8 @@ public class FlickerServoSample extends LinearOpMode {
         flickerServo = new SimpleServo(hardwareMap, "flicker", 0, 270);
         // for this example, 35 degrees is the resting position and 80 degrees is the flick out position
         flicker = new TimedAction(
-                () -> flickerServo.turnToAngle(35),
                 () -> flickerServo.turnToAngle(80),
+                () -> flickerServo.turnToAngle(35),
                 500,    // 500 ms between flick positions
                 true
         );
