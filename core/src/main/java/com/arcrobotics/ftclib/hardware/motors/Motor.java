@@ -368,6 +368,9 @@ public class Motor implements HardwareDevice {
     }
 
     public void setBuffer(double fraction) {
+        if (fraction <= 0 || fraction > 1) {
+            throw new IllegalArgumentException("Buffer must be between 0 and 1, exclusive to 0");
+        }
         bufferFraction = fraction;
     }
 
