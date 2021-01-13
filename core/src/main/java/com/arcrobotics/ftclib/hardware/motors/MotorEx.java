@@ -41,7 +41,7 @@ public class MotorEx extends Motor {
      */
     public MotorEx(@NonNull HardwareMap hMap, String id, @NonNull GoBILDA gobildaType) {
         super(hMap, id, gobildaType);
-        motorEx = (DcMotorEx) hMap.get(DcMotor.class, id);
+        motorEx = (DcMotorEx) super.motor;
     }
 
     /**
@@ -54,15 +54,15 @@ public class MotorEx extends Motor {
      */
     public MotorEx(@NonNull HardwareMap hMap, String id, double cpr, double rpm) {
         super(hMap, id, cpr, rpm);
-        motorEx = (DcMotorEx) hMap.get(DcMotor.class, id);
+        motorEx = (DcMotorEx) super.motor;
     }
 
     @Override
     public void set(double output) {
         if (runmode == RunMode.VelocityControl) {
-            double speed = output * ACHIEVABLE_MAX_TICKS_PER_SECOND;
+            double speed = bufferFraction * output * ACHIEVABLE_MAX_TICKS_PER_SECOND;
             double velocity = veloController.calculate(getCorrectedVelocity(), speed) + feedforward.calculate(speed);
-            setVelocity(velocity);
+            motorEx.setPower(velocity / ACHIEVABLE_MAX_TICKS_PER_SECOND);
         } else if (runmode == RunMode.PositionControl) {
             double error = positionController.calculate(encoder.getPosition());
             motorEx.setPower(output * error);
@@ -75,7 +75,7 @@ public class MotorEx extends Motor {
      * @param velocity the velocity in ticks per second
      */
     public void setVelocity(double velocity) {
-        motor.setPower(velocity / ACHIEVABLE_MAX_TICKS_PER_SECOND);
+        set(velocity / ACHIEVABLE_MAX_TICKS_PER_SECOND);
     }
 
     /**
