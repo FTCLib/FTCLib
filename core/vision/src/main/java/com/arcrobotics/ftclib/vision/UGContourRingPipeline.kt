@@ -81,8 +81,20 @@ class UGContourRingPipeline(
     private var mat: Mat
     private var ret: Mat
 
-    /** lastRect will be used later to get the height, width, and size of the bounding box  **/
-    private lateinit var lastRect: Rect
+    /** variable to store the rect of the bounding box **/
+
+    var maxRect = Rect()
+
+    /** variables to store the width, height, and size of the bounding box **/
+
+    var rectWidth: Double = 0.0
+        get() = maxRect.size().width
+
+    var rectHeight: Double = 0.0
+        get() = maxRect.size().height
+
+    var rectSize: Size = Size(0.0,0.0)
+        get() = maxRect.size()
 
     /** enum class for Height of the Ring Stack **/
     enum class Height {
@@ -151,7 +163,6 @@ class UGContourRingPipeline(
 
             /**finding widths of each contour, comparing, and storing the widest**/
             var maxWidth = 0
-            var maxRect = Rect()
             for (c: MatOfPoint in contours) {
                 val copy = MatOfPoint2f(*c.toArray())
                 val rect: Rect = Imgproc.boundingRect(copy)
@@ -165,9 +176,6 @@ class UGContourRingPipeline(
                 c.release() // releasing the buffer of the contour, since after use, it is no longer needed
                 copy.release() // releasing the buffer of the copy of the contour, since after use, it is no longer needed
             }
-
-            /** setting lastRect equal to maxRect to use in getRectWidth, getRectHeight, and getRectSize methods **/
-            lastRect = maxRect;
 
             /**drawing widest bounding rectangle to ret in blue**/
             Imgproc.rectangle(ret, maxRect, Scalar(0.0, 0.0, 255.0), 2)
@@ -228,20 +236,5 @@ class UGContourRingPipeline(
 
         /**returns the black and orange mask with contours drawn to see logic in action**/
         return ret
-    }
-
-    /**returns the width of the bounding box **/
-    fun getRectWidth(): Double {
-        return lastRect.size().width
-    }
-
-    /**returns the height of the bounding box **/
-    fun getRectHeight(): Double {
-        return lastRect.size().height
-    }
-
-    /**returns the size(i.e. 10x10) of the bounding box **/
-    fun getRectSize(): Size {
-        return lastRect.size()
     }
 }
