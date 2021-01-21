@@ -230,14 +230,17 @@ class UGContourRingPipeline(
         return ret
     }
 
+    /**returns the width of the bounding box **/
     fun getRectWidth(): Double {
         return lastRect.size().width
     }
 
+    /**returns the height of the bounding box **/
     fun getRectHeight(): Double {
         return lastRect.size().height
     }
 
+    /**returns the size(i.e. 10x10) of the bounding box **/
     fun getRectSize(): Size {
         return lastRect.size()
     }
