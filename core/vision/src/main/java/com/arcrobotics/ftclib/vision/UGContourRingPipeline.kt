@@ -81,6 +81,9 @@ class UGContourRingPipeline(
     private var mat: Mat
     private var ret: Mat
 
+    /** lastRect will be used later to get the height, width, and size of the bounding box  **/
+    private lateinit var lastRect: Rect
+
     /** enum class for Height of the Ring Stack **/
     enum class Height {
         ZERO, ONE, FOUR
@@ -163,6 +166,9 @@ class UGContourRingPipeline(
                 copy.release() // releasing the buffer of the copy of the contour, since after use, it is no longer needed
             }
 
+            /** setting lastRect equal to maxRect to use in getRectWidth, getRectHeight, and getRectSize methods **/
+            lastRect = maxRect;
+
             /**drawing widest bounding rectangle to ret in blue**/
             Imgproc.rectangle(ret, maxRect, Scalar(0.0, 0.0, 255.0), 2)
 
@@ -222,5 +228,17 @@ class UGContourRingPipeline(
 
         /**returns the black and orange mask with contours drawn to see logic in action**/
         return ret
+    }
+
+    fun getRectWidth(): Double {
+        return lastRect.size().width
+    }
+
+    fun getRectHeight(): Double {
+        return lastRect.size().height
+    }
+
+    fun getRectSize(): Size {
+        return lastRect.size()
     }
 }
