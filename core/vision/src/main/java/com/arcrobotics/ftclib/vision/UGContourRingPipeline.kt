@@ -83,17 +83,17 @@ class UGContourRingPipeline(
 
     /** variable to store the rect of the bounding box **/
 
-    var maxRect = Rect()
+    private var maxRect = Rect()
 
     /** variables to store the width, height, and size of the bounding box **/
 
-    var rectWidth: Double = 0.0
+    val rectWidth
         get() = maxRect.size().width
 
-    var rectHeight: Double = 0.0
+    val rectHeight
         get() = maxRect.size().height
 
-    var rectSize: Size = Size(0.0,0.0)
+    val rectSize
         get() = maxRect.size()
 
     /** enum class for Height of the Ring Stack **/
