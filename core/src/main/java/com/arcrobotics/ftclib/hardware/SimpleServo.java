@@ -19,8 +19,8 @@ public class SimpleServo implements ServoEx {
     public SimpleServo(HardwareMap hw, String servoName, double minAngle, double maxAngle, AngleUnit angleUnit) {
         servo = hw.get(Servo.class, servoName);
 
-        this.minAngle = angleUnit.toRadians(maxAngle);
-        this.maxAngle = angleUnit.toRadians(minAngle);
+        this.minAngle = toRadians(maxAngle, angleUnit);
+        this.maxAngle = toRadians(minAngle, angleUnit);
     }
 
     public SimpleServo(HardwareMap hw, String servoName, double minAngle, double maxAngle) {
@@ -40,7 +40,7 @@ public class SimpleServo implements ServoEx {
 
     @Override
     public void turnToAngle(double angle, AngleUnit angleUnit) {
-        double angleRadians = Range.clip(angleUnit.toRadians(angle), minAngle, maxAngle);
+        double angleRadians = Range.clip(toRadians(angle, angleUnit), minAngle, maxAngle);
         setPosition((angleRadians - minAngle) / (getAngleRange(AngleUnit.RADIANS)));
     }
 
@@ -62,8 +62,8 @@ public class SimpleServo implements ServoEx {
 
     @Override
     public void setRange(double min, double max, AngleUnit angleUnit) {
-        this.minAngle = angleUnit.toRadians(min);
-        this.maxAngle = angleUnit.toRadians(max);
+        this.minAngle = toRadians(min, angleUnit);
+        this.maxAngle = toRadians(max, angleUnit);
     }
 
     @Override
@@ -88,7 +88,7 @@ public class SimpleServo implements ServoEx {
 
     @Override
     public double getAngle(AngleUnit angleUnit) {
-        return getPosition() * getAngleRange(angleUnit) + angleUnit.fromRadians(minAngle);
+        return getPosition() * getAngleRange(angleUnit) + fromRadians(minAngle, angleUnit);
     }
 
     @Override
@@ -97,7 +97,7 @@ public class SimpleServo implements ServoEx {
     }
 
     public double getAngleRange(AngleUnit angleUnit) {
-        return angleUnit.fromRadians(maxAngle - minAngle);
+        return fromRadians(maxAngle - minAngle, angleUnit);
     }
 
     public double getAngleRange() {
@@ -114,6 +114,20 @@ public class SimpleServo implements ServoEx {
         String port = Integer.toString(servo.getPortNumber());
         String controller = servo.getController().toString();
         return "SimpleServo: " + port + "; " + controller;
+    }
+    
+    private double toRadians(double angle, AngleUnit angleUnit) {
+        if (angleUnit == AngleUnit.DEGREES) {
+            return Math.toRadians(angle);
+        }
+        return angle;
+    }
+
+    private double fromRadians(double angle, AngleUnit angleUnit) {
+        if (angleUnit == AngleUnit.DEGREES) {
+            return Math.toDegrees(angle);
+        }
+        return angle;
     }
 
 }
