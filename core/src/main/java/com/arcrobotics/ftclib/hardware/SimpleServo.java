@@ -121,10 +121,7 @@ public class SimpleServo implements ServoEx {
     }
 
     private double fromRadians(double angle, AngleUnit angleUnit) {
-        if (angleUnit == AngleUnit.DEGREES) {
-            return Math.toDegrees(angle);
-        }
-        return angle;
+        return angleUnit == AngleUnit.DEGREES ? Math.toDegrees(angle) : angle;
     }
 
 }
