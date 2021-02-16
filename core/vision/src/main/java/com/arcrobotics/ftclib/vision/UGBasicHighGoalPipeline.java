@@ -101,7 +101,7 @@ public class UGBasicHighGoalPipeline extends OpenCvPipeline {
         Imgproc.drawContours(input, redContours, -1, new Scalar(255, 255, 0));
         Imgproc.drawContours(input, blueContours, -1, new Scalar(255, 255, 0));
 
-        if (blueContours.size() != 0) {
+        if (!blueContours.isEmpty()) {
             // Comparing width instead of area because wobble goals that are close to the camera tend to have a large area
             biggestBlueContour = Collections.max(blueContours, (t0, t1) -> {
                 return Double.compare(Imgproc.boundingRect(t0).width, Imgproc.boundingRect(t1).width);
