@@ -12,7 +12,7 @@ public class UGAdvancedHighGoalPipeline extends UGAngleHighGoalPipeline {
     private double distanceOfClosestPuck = 16.5;
     private double puckSpacing = 7.5;
 
-    enum Powershot {
+    public enum Powershot {
         LeftShot, CenterShot, RightShot
     }
 
