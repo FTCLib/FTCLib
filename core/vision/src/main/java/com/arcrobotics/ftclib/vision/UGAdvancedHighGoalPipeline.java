@@ -1,7 +1,9 @@
 package com.arcrobotics.ftclib.vision;
 
+import org.opencv.core.Mat;
 
 public class UGAdvancedHighGoalPipeline extends UGAngleHighGoalPipeline {
+
     private double centerOfLogoHeight;
     private double cameraHeight;
     private double cameraPitchOffset;
@@ -10,25 +12,27 @@ public class UGAdvancedHighGoalPipeline extends UGAngleHighGoalPipeline {
     private double distanceOfClosestPuck = 16.5;
     private double puckSpacing = 7.5;
 
-    private double defaultAngle;
-
-    enum Powershot {
+    public enum Powershot {
         LeftShot, CenterShot, RightShot
     }
 
-
-    public UGAdvancedHighGoalPipeline(double fov, double cameraHeight, double defaultAngle) {
-        this(fov, cameraHeight, 40.625, 0, 0, defaultAngle);  // inches
-
+    public UGAdvancedHighGoalPipeline(double fov, double cameraHeight) {
+        this(fov, cameraHeight, 40.625, 0, 0);  // inches
     }
 
-    public UGAdvancedHighGoalPipeline(double fov, double cameraHeight, double centerOfLogoHeight, double cameraPitchOffset, double cameraYawOffset, double defaultAngle) {
+    public UGAdvancedHighGoalPipeline(double fov, double cameraHeight, double centerOfLogoHeight,
+                                      double cameraPitchOffset, double cameraYawOffset) {
         super(fov);
         this.cameraHeight = cameraHeight;
         this.centerOfLogoHeight = centerOfLogoHeight;
         this.cameraPitchOffset = cameraPitchOffset;
         this.cameraYawOffset = cameraYawOffset;
-        this.defaultAngle = defaultAngle;
+    }
+
+    @Override
+    public Mat processFrame(Mat input) {
+        super.processFrame(input);
+        return input;
     }
 
     public void setCameraHeight(double cameraHeight) {
@@ -36,17 +40,22 @@ public class UGAdvancedHighGoalPipeline extends UGAngleHighGoalPipeline {
     }
 
     public double getDistanceToGoal(Target color) {
-
-        return getDistanceToGoalWall(color) / Math.cos(Math.toRadians(calculateYaw(color, defaultAngle)));
+        Target baseline;
+        if (Math.abs(calculateYaw(Target.BLUE)) < Math.abs(calculateYaw(Target.RED))) {
+            baseline = Target.BLUE;
+        } else {
+            baseline = Target.RED;
+        }
+        return getDistanceToGoalWall(baseline) / Math.cos(Math.toRadians(calculateYaw(color)));
     }
 
     public double getDistanceToGoalWall(Target color) {
-        return (centerOfLogoHeight - cameraHeight) / Math.tan(Math.toRadians(calculatePitch(color, defaultAngle)));
+        return (centerOfLogoHeight - cameraHeight) / Math.tan(Math.toRadians(calculatePitch(color)));
     }
 
     public double getPowershotAngle(Target color, Powershot shot) {
         double offset = 0;
-        double angle = calculateYaw(color, defaultAngle);
+        double angle = calculateYaw(color);
         if (shot == Powershot.LeftShot) {
             offset = distanceOfClosestPuck;
         } else if (shot == Powershot.CenterShot) {
@@ -62,26 +71,16 @@ public class UGAdvancedHighGoalPipeline extends UGAngleHighGoalPipeline {
 
         double distanceFromWallToGoal = Math.tan(Math.toRadians(angle)) * getDistanceToGoalWall(color);
 
-        // If robot is inbetween Powershot and Highgoal
-        if (Math.abs(offset) > Math.abs(distanceFromWallToGoal)) {
-            return Math.toRadians(Math.atan((offset - distanceFromWallToGoal) / getDistanceToGoalWall(color)));
+        // If robot is between Powershot and Highgoal
+        if (Math.abs(offset) > Math.abs(distanceFromWallToGoal) && (offset * distanceFromWallToGoal < 0)) {
+            return Math.toDegrees(Math.atan((offset + distanceFromWallToGoal) / getDistanceToGoalWall(color)));
         }
 
-        // if the angle to the powershot is embedded in the angle to the color goal
-        boolean inclusiveAngle = angle * offset < 0;
-        // triangle made from distangeToGoalWall and angle
-        double hypotenuse = getDistanceToGoalWall(color) / Math.cos(Math.toRadians(angle));
-        if (inclusiveAngle) {
-            return angle - Math.toDegrees(Math.asin(offset / hypotenuse));
+        if (angle > 0) {
+            return Math.toDegrees(Math.atan((offset + distanceFromWallToGoal) / getDistanceToGoalWall(color)));
         } else {
-            double alpha = Math.toDegrees(Math.atan((Math.abs(offset) + Math.abs(distanceFromWallToGoal)) / getDistanceToGoalWall(color))) - angle;
-            return (Math.signum(angle) * alpha) + angle;
+            return Math.toDegrees(Math.atan((offset - distanceFromWallToGoal) / getDistanceToGoalWall(color)));
         }
-
-
-        // If both the offset and alpha are the same sign, the angle to the powershot is alpha + yaw. else just alpha
-
-
     }
 
     public double getPowerShotDistance(Target color, Powershot shot) {
@@ -89,4 +88,3 @@ public class UGAdvancedHighGoalPipeline extends UGAngleHighGoalPipeline {
     }
 
 }
-
