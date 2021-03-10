@@ -95,7 +95,7 @@ public class Motor implements HardwareDevice {
                 lastPosition = m_position.get();
                 lastTimeStamp = currentTime;
             }
-            return direction.getMultiplier() * (currentPosition - resetVal);
+            return direction.getMultiplier() * currentPosition - resetVal;
         }
 
         /**
