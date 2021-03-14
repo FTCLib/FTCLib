@@ -513,7 +513,7 @@ public class Motor implements HardwareDevice {
      * motor.
      */
     public void stopMotor() {
-        set(0);
+        motor.setPower(0);
     }
 
 }
