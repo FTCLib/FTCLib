@@ -2,7 +2,6 @@ package com.arcrobotics.ftclib.hardware.motors;
 
 import androidx.annotation.NonNull;
 
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
@@ -61,7 +60,7 @@ public class MotorEx extends Motor {
     public void set(double output) {
         if (runmode == RunMode.VelocityControl) {
             double speed = bufferFraction * output * ACHIEVABLE_MAX_TICKS_PER_SECOND;
-            double velocity = veloController.calculate(getCorrectedVelocity(), speed) + feedforward.calculate(speed);
+            double velocity = veloController.calculate(getCorrectedVelocity(), speed) + feedforward.calculate(speed, getAcceleration());
             motorEx.setPower(velocity / ACHIEVABLE_MAX_TICKS_PER_SECOND);
         } else if (runmode == RunMode.PositionControl) {
             double error = positionController.calculate(encoder.getPosition());
@@ -94,6 +93,13 @@ public class MotorEx extends Motor {
     @Override
     public double getVelocity() {
         return motorEx.getVelocity();
+    }
+
+    /**
+     * @return the acceleration of the motor in ticks per second squared
+     */
+    public double getAcceleration() {
+        return encoder.getAcceleration();
     }
 
     @Override

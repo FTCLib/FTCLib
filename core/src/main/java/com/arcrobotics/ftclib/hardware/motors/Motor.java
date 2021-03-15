@@ -65,7 +65,7 @@ public class Motor implements HardwareDevice {
         private Supplier<Integer> m_position;
         private int resetVal, lastPosition;
         private Direction direction;
-        private double lastTimeStamp, veloEstimate, dpp;
+        private double lastTimeStamp, veloEstimate, dpp, accel, lastVelo;
 
         /**
          * The encoder object for the motor.
@@ -92,7 +92,7 @@ public class Motor implements HardwareDevice {
                 double currentTime = (double) System.nanoTime() / 1E9;
                 double dt = currentTime - lastTimeStamp;
                 veloEstimate = (currentPosition - lastPosition) / dt;
-                lastPosition = m_position.get();
+                lastPosition = currentPosition;
                 lastTimeStamp = currentTime;
             }
             return direction.getMultiplier() * currentPosition - resetVal;
@@ -138,8 +138,26 @@ public class Motor implements HardwareDevice {
             return getPosition() / getCPR();
         }
 
+        /**
+         * @return the raw velocity of the motor reported by the encoder
+         */
         public double getRawVelocity() {
-            return getVelocity();
+            double velo = getVelocity();
+            if (velo != lastVelo) {
+                double currentTime = (double) System.nanoTime() / 1E9;
+                double dt = currentTime - lastTimeStamp;
+                accel = (velo - lastVelo) / dt;
+                lastVelo = velo;
+                lastTimeStamp = currentTime;
+            }
+            return velo;
+        }
+
+        /**
+         * @return the estimated acceleration of the motor in ticks per second squared
+         */
+        public double getAcceleration() {
+            return accel;
         }
 
         private final static int CPS_STEP = 0x10000;
@@ -268,7 +286,7 @@ public class Motor implements HardwareDevice {
     public void set(double output) {
         if (runmode == RunMode.VelocityControl) {
             double speed = bufferFraction * output * ACHIEVABLE_MAX_TICKS_PER_SECOND;
-            double velocity = veloController.calculate(getVelocity(), speed) + feedforward.calculate(speed);
+            double velocity = veloController.calculate(getVelocity(), speed) + feedforward.calculate(speed, encoder.getAcceleration());
             motor.setPower(velocity / ACHIEVABLE_MAX_TICKS_PER_SECOND);
         } else if (runmode == RunMode.PositionControl) {
             double error = positionController.calculate(getDistance());
@@ -367,6 +385,11 @@ public class Motor implements HardwareDevice {
         return type == GoBILDA.NONE ? motor.getMotorType().getMaxRPM() : type.getRPM();
     }
 
+    /**
+     * Set the buffer for the motor. This adds a fractional value to the velocity control.
+     *
+     * @param fraction a fractional value between (0, 1].
+     */
     public void setBuffer(double fraction) {
         if (fraction <= 0 || fraction > 1) {
             throw new IllegalArgumentException("Buffer must be between 0 and 1, exclusive to 0");
@@ -441,7 +464,6 @@ public class Motor implements HardwareDevice {
      */
     public void setInverted(boolean isInverted) {
         motor.setDirection(isInverted ? DcMotor.Direction.REVERSE : DcMotor.Direction.FORWARD);
-        encoder.setDirection(isInverted ? Direction.REVERSE : Direction.FORWARD);
     }
 
     /**
