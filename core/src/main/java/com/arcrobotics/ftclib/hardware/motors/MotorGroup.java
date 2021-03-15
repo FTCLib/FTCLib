@@ -36,7 +36,7 @@ public class MotorGroup extends Motor implements Iterable<Motor> {
     public void set(double speed) {
         group[0].set(speed);
         for (int i = 1; i < group.length; i++) {
-            group[i].set(isInverted ? -speed : speed);
+            group[i].set(isInverted ? -group[0].get() : group[0].get());
         }
     }
 
