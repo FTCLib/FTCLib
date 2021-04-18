@@ -1,4 +1,6 @@
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 
 android {
     compileSdkVersion 28
@@ -40,5 +42,10 @@ dependencies {
     compileOnly 'org.firstinspires.ftc:FtcCommon:6.1.1'
     compileOnly 'androidx.appcompat:appcompat:1.2.0'
     implementation project(path: ':core:vision')
+    implementation "androidx.core:core-ktx:+"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 
+}
+repositories {
+    mavenCentral()
 }

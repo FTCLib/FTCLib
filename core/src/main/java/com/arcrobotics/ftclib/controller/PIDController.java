@@ -5,7 +5,7 @@ public class PIDController extends PIDFController {
     /**
      * Default constructor with just the coefficients
      */
-    public PIDController(double kp, double ki, double kd){
+    public PIDController(double kp, double ki, double kd) {
         super(kp, ki, kd, 0);
     }
 
@@ -17,7 +17,7 @@ public class PIDController extends PIDFController {
     }
 
     public void setPID(double kp, double ki, double kd) {
-        setPIDF(kp,ki,kd,0);
+        setPIDF(kp, ki, kd, 0);
     }
 
 }

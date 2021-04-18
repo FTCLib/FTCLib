@@ -31,9 +31,9 @@ public class MecanumOdoKinematics {
      *                              physical center of the robot.
      */
     public MecanumOdoKinematics(Translation2d frontLeftWheelMeters,
-                                  Translation2d frontRightWheelMeters,
-                                  Translation2d rearLeftWheelMeters,
-                                  Translation2d rearRightWheelMeters, double auxDistance, double wheelbaseWidth) {
+                                Translation2d frontRightWheelMeters,
+                                Translation2d rearLeftWheelMeters,
+                                Translation2d rearRightWheelMeters, double auxDistance, double wheelbaseWidth) {
         m_frontLeftWheelMeters = frontLeftWheelMeters;
         m_frontRightWheelMeters = frontRightWheelMeters;
         m_rearLeftWheelMeters = rearLeftWheelMeters;
@@ -59,14 +59,14 @@ public class MecanumOdoKinematics {
      * However, if you wish to change the center of rotation for evasive
      * manuevers, vision alignment, or for any other use case, you can do so.
      *
-     * @param chassisSpeeds    The desired chassis speed.
+     * @param chassisSpeeds          The desired chassis speed.
      * @param centerOfRotationMeters The center of rotation. For example, if you set the
-     *                         center of rotation at one corner of the robot and provide
-     *                         a chassis speed that only has a dtheta component, the robot
-     *                         will rotate around that corner.
-     * @return  The wheel speeds. Use caution because they are not normalized. Sometimes, a user
-     *          input may cause one of the wheel speeds to go above the attainable max velocity. Use
-     *          the {@link MecanumDriveWheelSpeeds#normalize(double)} function to rectify this issue.
+     *                               center of rotation at one corner of the robot and provide
+     *                               a chassis speed that only has a dtheta component, the robot
+     *                               will rotate around that corner.
+     * @return The wheel speeds. Use caution because they are not normalized. Sometimes, a user
+     * input may cause one of the wheel speeds to go above the attainable max velocity. Use
+     * the {@link MecanumDriveWheelSpeeds#normalize(double)} function to rectify this issue.
      */
     public MecanumDriveWheelSpeeds toWheelSpeeds(ChassisSpeeds chassisSpeeds,
                                                  Translation2d centerOfRotationMeters) {
@@ -116,7 +116,7 @@ public class MecanumOdoKinematics {
      */
     public ChassisSpeeds toChassisSpeeds(OdoWheelSpeeds wheelSpeeds) {
         double omega = (wheelSpeeds.rightMetersPerSecond - wheelSpeeds.leftMetersPerSecond)
-                        / (wheelbaseRadius * 2);
+                / (wheelbaseRadius * 2);
         return new ChassisSpeeds(
                 (wheelSpeeds.leftMetersPerSecond + wheelSpeeds.rightMetersPerSecond) / 2, wheelSpeeds.centerMetersPerSecond - auxDistance * omega,
                 (omega));

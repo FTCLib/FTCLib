@@ -7,42 +7,41 @@ public class UGAngleHighGoalPipeline extends UGBasicHighGoalPipeline {
 
     class Fraction {
         private int numerator, denominator;
+
         Fraction(long a, long b) {
             numerator = (int) (a / gcd(a, b));
             denominator = (int) (b / gcd(a, b));
         }
+
         /**
          * @return the greatest common denominator
          */
         private long gcd(long a, long b) {
             return b == 0 ? a : gcd(b, a % b);
         }
+
         public int getNumerator() {
             return numerator;
         }
+
         public int getDenominator() {
             return denominator;
         }
     }
 
-    private boolean isFirstFrame;
-
     // Camera Settings
-    private int imageWidth;
-    private int imageHeight;
+    protected int imageWidth;
+    protected int imageHeight;
 
     private double cameraPitchOffset;
     private double cameraYawOffset;
 
     private double fov;
-    private double imageArea;
-    private double centerX;
-    private double centerY;
     private double horizontalFocalLength;
     private double verticalFocalLength;
 
     public enum Target {
-        RED, Blue
+        RED, BLUE
     }
 
     public UGAngleHighGoalPipeline(double fov, double cameraPitchOffset, double cameraYawOffset) {
@@ -50,7 +49,6 @@ public class UGAngleHighGoalPipeline extends UGBasicHighGoalPipeline {
         this.fov = fov;
         this.cameraPitchOffset = cameraPitchOffset;
         this.cameraYawOffset = cameraYawOffset;
-        this.isFirstFrame = true;
     }
 
     public UGAngleHighGoalPipeline(double fov) {
@@ -58,98 +56,68 @@ public class UGAngleHighGoalPipeline extends UGBasicHighGoalPipeline {
     }
 
     @Override
+    public void init(Mat mat) {
+        super.init(mat);
+
+        imageWidth = mat.width();
+        imageHeight = mat.height();
+
+        // pinhole model calculations
+        double diagonalView = Math.toRadians(this.fov);
+        Fraction aspectFraction = new Fraction(this.imageWidth, this.imageHeight);
+        int horizontalRatio = aspectFraction.getNumerator();
+        int verticalRatio = aspectFraction.getDenominator();
+        double diagonalAspect = Math.hypot(horizontalRatio, verticalRatio);
+        double horizontalView = Math.atan(Math.tan(diagonalView / 2) * (horizontalRatio / diagonalAspect)) * 2;
+        double verticalView = Math.atan(Math.tan(diagonalView / 2) * (verticalRatio / diagonalAspect)) * 2;
+        horizontalFocalLength = this.imageWidth / (2 * Math.tan(horizontalView / 2));
+        verticalFocalLength = this.imageHeight / (2 * Math.tan(verticalView / 2));
+    }
+
+    @Override
     public Mat processFrame(Mat input) {
-        if (isFirstFrame) {
-            imageWidth = input.width();
-            imageHeight = input.height();
-
-            imageArea = this.imageWidth * this.imageHeight;
-            centerX = ((double) this.imageWidth / 2) - 0.5;
-            centerY = ((double) this.imageHeight / 2) - 0.5;
-
-            // pinhole model calculations
-            double diagonalView = Math.toRadians(this.fov);
-            Fraction aspectFraction = new Fraction(this.imageWidth, this.imageHeight);
-            int horizontalRatio = aspectFraction.getNumerator();
-            int verticalRatio = aspectFraction.getDenominator();
-            double diagonalAspect = Math.hypot(horizontalRatio, verticalRatio);
-            double horizontalView = Math.atan(Math.tan(diagonalView / 2) * (horizontalRatio / diagonalAspect)) * 2;
-            double verticalView = Math.atan(Math.tan(diagonalView / 2) * (verticalRatio / diagonalAspect)) * 2;
-            horizontalFocalLength = this.imageWidth / (2 * Math.tan(horizontalView / 2));
-            verticalFocalLength = this.imageHeight / (2 * Math.tan(verticalView / 2));
-            isFirstFrame = false;
-        }
-
-        return super.processFrame(input);
-    }
-    /**
-     * @param color Alliance Color
-     * @param defaultAngle Angle to display if no target found
-    */
-    public double calculateYaw(Target color, double defaultAngle) {
-        return calculateYaw(color, centerX, defaultAngle) + cameraYawOffset;
+        input = super.processFrame(input);
+        return input;
     }
 
     /**
      * @param color Alliance Color
-     * @param defaultAngle Angle to display if no target found
      */
-    public double calculatePitch(Target color, double defaultAngle) {
-        return calculatePitch(color, centerY, defaultAngle) + cameraPitchOffset;
+    public double calculateYaw(Target color) {
+        return calculateYaw(color, centerX) + cameraYawOffset;
     }
 
     /**
-     *
-     * @param color Allaince color
+     * @param color Alliance Color
+     */
+    public double calculatePitch(Target color) {
+        return calculatePitch(color, centerY) + cameraPitchOffset;
+    }
+
+    /**
+     * @param color         Alliance color
      * @param offsetCenterX centerX
-     * @param defaultAngle Angle to return if no target found
-     * @return
      */
-    public double calculateYaw(Target color, double offsetCenterX, double defaultAngle) {
-
-
-        double targetCenterX = 0;
-        Rect currentRect;
-        if (color == Target.RED) {
-            currentRect = getRedRect();
-        } else {
-            currentRect = getBlueRect();
-        }
-        if(getCenterofRect(currentRect).isPresent()) {
-            targetCenterX = getCenterofRect(currentRect).get().x;
-        } else {
-            return defaultAngle;
-        }
+    public double calculateYaw(Target color, double offsetCenterX) {
+        Rect currentRect = color == Target.RED ? getRedRect() : getBlueRect();
+        double targetCenterX = getCenterofRect(currentRect).x;
 
         return Math.toDegrees(
-                Math.atan((offsetCenterX - targetCenterX) / horizontalFocalLength));
+                Math.atan((targetCenterX - offsetCenterX) / horizontalFocalLength)
+        );
     }
 
     /**
-     *
-     * @param color Allaince color
+     * @param color         Alliance color
      * @param offsetCenterY centerY
-     * @param defaultAngle Angle to return if no target found
-     * @return
      */
-    public double calculatePitch(Target color, double offsetCenterY, double defaultAngle) {
-        double targetCenterY = 0;
-
-        Rect currentRect;
-        if (color == Target.RED) {
-            currentRect = getRedRect();
-        } else {
-            currentRect = getBlueRect();
-        }
-        if(getCenterofRect(currentRect).isPresent()) {
-            targetCenterY = getCenterofRect(currentRect).get().y;
-        } else {
-            return defaultAngle;
-        }
+    public double calculatePitch(Target color, double offsetCenterY) {
+        Rect currentRect = color == Target.RED ? getRedRect() : getBlueRect();
+        double targetCenterY = getCenterofRect(currentRect).y;
 
         return -Math.toDegrees(
-                Math.atan((offsetCenterY - targetCenterY) / verticalFocalLength));
+                Math.atan((targetCenterY - offsetCenterY) / verticalFocalLength)
+        );
     }
-
 
 }

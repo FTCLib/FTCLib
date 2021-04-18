@@ -63,23 +63,38 @@ import org.openftc.easyopencv.OpenCvPipeline
  * example of contours:                           https://docs.opencv.org/3.4/df/d0d/tutorial_find_contours.html
  *
  * @constructor Constructs the VisionPipeline
- * 
+ *
  * @param telemetry If wanted, provide a telemetry object to the constructor to get stacktrace if an
  * error occurs (mainly for debug purposes)
  * @param debug If true, all intermediate calculation results (except showing mat operations) will
  * be printed to telemetry (mainly for debug purposes)
  */
 class UGContourRingPipeline(
-        private val telemetry: Telemetry? = null, 
+        private val telemetry: Telemetry? = null,
         var debug: Boolean = false,
-): OpenCvPipeline() {
+) : OpenCvPipeline() {
     /** variable to store the calculated height of the stack **/
     var height: Height
         private set
-    
+
     /** variables that will be reused for calculations **/
     private var mat: Mat
     private var ret: Mat
+
+    /** variable to store the rect of the bounding box **/
+
+    private var maxRect = Rect()
+
+    /** variables to store the width, height, and size of the bounding box **/
+
+    val rectWidth
+        get() = maxRect.size().width
+
+    val rectHeight
+        get() = maxRect.size().height
+
+    val rectSize
+        get() = maxRect.size()
 
     /** enum class for Height of the Ring Stack **/
     enum class Height {
@@ -89,11 +104,11 @@ class UGContourRingPipeline(
     /** companion object to store all static variables needed **/
     companion object Config {
         /** values used for inRange calculation
-         * set to var in-case user wants to use their own tuned values 
+         * set to var in-case user wants to use their own tuned values
          * stored in YCrCb format **/
         var lowerOrange = Scalar(0.0, 141.0, 0.0)
         var upperOrange = Scalar(255.0, 230.0, 95.0)
-        
+
         /** width of the camera in use, defaulted to 320 as that is most common in examples **/
         var CAMERA_WIDTH = 320
 
@@ -148,7 +163,6 @@ class UGContourRingPipeline(
 
             /**finding widths of each contour, comparing, and storing the widest**/
             var maxWidth = 0
-            var maxRect = Rect()
             for (c: MatOfPoint in contours) {
                 val copy = MatOfPoint2f(*c.toArray())
                 val rect: Rect = Imgproc.boundingRect(copy)
@@ -187,20 +201,20 @@ class UGContourRingPipeline(
 
             /** checking if widest width is greater than equal to minimum width
              * using Kotlin if expression (Java ternary) to set height variable
-             * 
+             *
              * height = maxWidth >= MIN_WIDTH ? aspectRatio > BOUND_RATIO ? FOUR : ONE : ZERO
              **/
             height = if (maxWidth >= MIN_WIDTH) {
                 val aspectRatio: Double = maxRect.height.toDouble() / maxRect.width.toDouble()
-                
-                if(debug) telemetry?.addData("Vision: Aspect Ratio", aspectRatio)
 
-                /** checks if aspectRatio is greater than BOUND_RATIO 
+                if (debug) telemetry?.addData("Vision: Aspect Ratio", aspectRatio)
+
+                /** checks if aspectRatio is greater than BOUND_RATIO
                  * to determine whether stack is ONE or FOUR
                  */
-                if (aspectRatio > BOUND_RATIO) 
+                if (aspectRatio > BOUND_RATIO)
                     Height.FOUR // height variable is now FOUR
-                else 
+                else
                     Height.ONE // height variable is now ONE
             } else {
                 Height.ZERO // height variable is now ZERO

@@ -15,8 +15,6 @@ FTCLib is a library designed to be the only library you'll need for FTC programm
 Please read the documentation and the rest of the README before you get started with the library.
 
 FTCLib documentation - <https://ftclib.gitbook.io/ftclib>
-<br />
-JavaDocs - <https://javadoc.io/doc/com.arcrobotics/ftclib/1.1.1/index.html>
 
 ## Installation
 
@@ -40,7 +38,7 @@ JavaDocs - <https://javadoc.io/doc/com.arcrobotics/ftclib/1.1.1/index.html>
 
     ```groovy
     dependencies {
-        implementation 'com.arcrobotics:ftclib:1.1.6'
+        implementation 'com.arcrobotics:ftclib:1.2.0'
         // the following is optional if you want vision
         implementation 'com.arcrobotics.ftclib:vision:1.2.0'
     }
@@ -56,8 +54,22 @@ In build.common.gradle, change the minSdkVersion from 23 to 24:
         targetSdkVersion 28
     }
 ```
+7. You will need to change your Java version. Scroll down in `build.common.gradle` until you find the `compileOptions` block.
+```groovy
+compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_7
+    targetCompatibility JavaVersion.VERSION_1_7
+}
+```
+Change the 7 to an 8 like so:
+```groovy
+compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+}
+```
     
-7. Perform a gradle sync to implement your changes.
+8. Perform a gradle sync to implement your changes.
 
     ![GradleSync](https://github.com/OpenFTC/EasyOpenCV/blob/master/doc/images/gradle-sync.png)
 

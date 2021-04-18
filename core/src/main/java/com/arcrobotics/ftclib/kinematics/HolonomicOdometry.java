@@ -67,10 +67,10 @@ public class HolonomicOdometry extends Odometry {
         prevHorizontalEncoder = horizontalEncoderPos;
 
         double dw = (angle.minus(previousAngle).getRadians());
-        
+
         double dx = (deltaLeftEncoder + deltaRightEncoder) / 2;
         double dy = deltaHorizontalEncoder - (centerWheelOffset * dw);
-        
+
         Twist2d twist2d = new Twist2d(dx, dy, dw);
 
         Pose2d newPose = robotPose.exp(twist2d);

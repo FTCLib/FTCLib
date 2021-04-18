@@ -23,7 +23,7 @@ public class DriveForwardCommand implements Command {
 
     @Override
     public void execute() {
-        driveSubsystem.driveToPosition((int)distance, speed);
+        driveSubsystem.driveToPosition((int) distance, speed);
     }
 
 
@@ -36,6 +36,6 @@ public class DriveForwardCommand implements Command {
 
     @Override
     public boolean isFinished() {
-        return  driveSubsystem.atTargetPos();
+        return driveSubsystem.atTargetPos();
     }
 }

@@ -265,7 +265,7 @@ public class MecanumControllerCommand extends CommandBase {
         double frontLeftSpeedSetpoint = targetWheelSpeeds.frontLeftMetersPerSecond;
         double rearLeftSpeedSetpoint = targetWheelSpeeds.rearLeftMetersPerSecond;
         double frontRightSpeedSetpoint = targetWheelSpeeds.frontRightMetersPerSecond;
-        double rearRightSpeedSetpoint =  targetWheelSpeeds.rearRightMetersPerSecond;
+        double rearRightSpeedSetpoint = targetWheelSpeeds.rearRightMetersPerSecond;
 
         double frontLeftOutput;
         double rearLeftOutput;
