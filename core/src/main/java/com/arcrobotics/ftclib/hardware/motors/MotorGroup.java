@@ -110,8 +110,8 @@ public class MotorGroup extends Motor implements Iterable<Motor> {
 
     @Override
     public void resetEncoder() {
-        for (Motor x : group) {
-            x.resetEncoder();
+        for (Motor motor : group) {
+            motor.resetEncoder();
         }
     }
 
