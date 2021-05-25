@@ -27,11 +27,15 @@ public abstract class FTCLibOpMode extends LinearOpMode {
         List<LynxModule> hubs = hardwareMap.getAll(LynxModule.class);
         hubs.forEach(hub -> hub.setBulkCachingMode(LynxModule.BulkCachingMode.MANUAL));
 
-        waitForStart();
+        while (!isStopRequested() && !isStarted()) {
+            runInitLoop();
+        }
 
-        while (!isStopRequested() && opModeIsActive()) {
+        if (isStopRequested()) return;
+
+        while (!isStopRequested()) {
             hubs.forEach(LynxModule::clearBulkCache);
-            run();
+            runLoop();
             gamepadEx1.readButtons();
             gamepadEx2.readButtons();
             telemetry.update();
@@ -44,8 +48,15 @@ public abstract class FTCLibOpMode extends LinearOpMode {
     public abstract void initialize();
 
     /**
+     * This method is like {@link OpMode#init_loop()}
+     */
+    public void runInitLoop() {
+        init_loop();
+    }
+
+    /**
      * This method is like {@link OpMode#loop()}
      */
-    public abstract void run();
+    public abstract void runLoop();
 
 }

@@ -36,7 +36,7 @@ public class OpModeSample extends FTCLibOpMode {
     }
 
     @Override
-    public void run() {
+    public void runLoop() {
         drive.driveFieldCentric(
                 gamepadEx1.getLeftX(), gamepadEx1.getLeftY(),
                 gamepadEx1.getRightX(), imu.getHeading()
