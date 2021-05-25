@@ -103,15 +103,15 @@ public class MotorGroup extends Motor implements Iterable<Motor> {
 
     @Override
     public void setZeroPowerBehavior(ZeroPowerBehavior behavior) {
-        for (Motor x : group) {
-            x.setZeroPowerBehavior(behavior);
+        for (Motor motor : group) {
+            motor.setZeroPowerBehavior(behavior);
         }
     }
 
     @Override
     public void resetEncoder() {
-        for (Motor x : group) {
-            x.resetEncoder();
+        for (Motor motor : group) {
+            motor.resetEncoder();
         }
     }
 
