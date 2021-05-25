@@ -1,33 +1,30 @@
 package com.example.ftclibexamples;
 
+import com.arcrobotics.ftclib.command.CommandOpMode;
 import com.arcrobotics.ftclib.vision.UGRectDetector;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-public class UGRectRingVisionSample extends LinearOpMode {
-
+public class UGRectRingVisionSample extends CommandOpMode {
     UGRectDetector UGRectDetector;
 
     @Override
-    public void runOpMode() {
+    public void initialize() {
         UGRectDetector = new UGRectDetector(hardwareMap);
         UGRectDetector.init();
-
-        waitForStart();
-
-        while (!isStopRequested() && opModeIsActive()) {
-            UGRectDetector.Stack stack = UGRectDetector.getStack();
-            switch (stack) {
-                case ZERO:
-                    break;
-                case ONE:
-                    break;
-                case FOUR:
-                    break;
-                default:
-                    break;
-            }
-            telemetry.addData("Rings", stack);
-        }
     }
 
+    @Override
+    public void run() {
+        UGRectDetector.Stack stack = UGRectDetector.getStack();
+
+        switch (stack) {
+            case ZERO:
+                break;
+            case ONE:
+                break;
+            case FOUR:
+                break;
+            default:
+                break;
+        }
+    }
 }

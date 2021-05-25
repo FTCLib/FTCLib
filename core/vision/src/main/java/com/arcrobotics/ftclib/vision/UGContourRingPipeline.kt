@@ -81,6 +81,21 @@ class UGContourRingPipeline(
     private var mat: Mat
     private var ret: Mat
 
+    /** variable to store the rect of the bounding box **/
+
+    private var maxRect = Rect()
+
+    /** variables to store the width, height, and size of the bounding box **/
+
+    val rectWidth
+        get() = maxRect.size().width
+
+    val rectHeight
+        get() = maxRect.size().height
+
+    val rectSize
+        get() = maxRect.size()
+
     /** enum class for Height of the Ring Stack **/
     enum class Height {
         ZERO, ONE, FOUR
@@ -148,7 +163,6 @@ class UGContourRingPipeline(
 
             /**finding widths of each contour, comparing, and storing the widest**/
             var maxWidth = 0
-            var maxRect = Rect()
             for (c: MatOfPoint in contours) {
                 val copy = MatOfPoint2f(*c.toArray())
                 val rect: Rect = Imgproc.boundingRect(copy)

@@ -2,7 +2,6 @@ package com.arcrobotics.ftclib.hardware.motors;
 
 import androidx.annotation.NonNull;
 
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
@@ -41,7 +40,7 @@ public class MotorEx extends Motor {
      */
     public MotorEx(@NonNull HardwareMap hMap, String id, @NonNull GoBILDA gobildaType) {
         super(hMap, id, gobildaType);
-        motorEx = (DcMotorEx) hMap.get(DcMotor.class, id);
+        motorEx = (DcMotorEx) super.motor;
     }
 
     /**
@@ -54,15 +53,15 @@ public class MotorEx extends Motor {
      */
     public MotorEx(@NonNull HardwareMap hMap, String id, double cpr, double rpm) {
         super(hMap, id, cpr, rpm);
-        motorEx = (DcMotorEx) hMap.get(DcMotor.class, id);
+        motorEx = (DcMotorEx) super.motor;
     }
 
     @Override
     public void set(double output) {
         if (runmode == RunMode.VelocityControl) {
-            double speed = output * ACHIEVABLE_MAX_TICKS_PER_SECOND;
-            double velocity = veloController.calculate(getCorrectedVelocity(), speed) + feedforward.calculate(speed);
-            setVelocity(velocity);
+            double speed = bufferFraction * output * ACHIEVABLE_MAX_TICKS_PER_SECOND;
+            double velocity = veloController.calculate(getCorrectedVelocity(), speed) + feedforward.calculate(speed, getAcceleration());
+            motorEx.setPower(velocity / ACHIEVABLE_MAX_TICKS_PER_SECOND);
         } else if (runmode == RunMode.PositionControl) {
             double error = positionController.calculate(encoder.getPosition());
             motorEx.setPower(output * error);
@@ -94,6 +93,13 @@ public class MotorEx extends Motor {
     @Override
     public double getVelocity() {
         return motorEx.getVelocity();
+    }
+
+    /**
+     * @return the acceleration of the motor in ticks per second squared
+     */
+    public double getAcceleration() {
+        return encoder.getAcceleration();
     }
 
     @Override
