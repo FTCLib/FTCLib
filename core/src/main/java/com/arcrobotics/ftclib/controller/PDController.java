@@ -5,7 +5,7 @@ public class PDController extends PIDController {
     /**
      * Default constructor with just the coefficients
      */
-    public PDController(double kp, double kd){
+    public PDController(double kp, double kd) {
         super(kp, 0, kd);
     }
 

@@ -1,7 +1,6 @@
 package com.arcrobotics.ftclib.kinematics;
 
 import com.arcrobotics.ftclib.geometry.Pose2d;
-import com.arcrobotics.ftclib.geometry.Rotation2d;
 
 public abstract class Odometry {
 
@@ -15,7 +14,7 @@ public abstract class Odometry {
      */
     protected double trackWidth;
 
-    public Odometry(Pose2d robotPose){
+    public Odometry(Pose2d robotPose) {
         this(robotPose, 18);
     }
 
@@ -36,6 +35,7 @@ public abstract class Odometry {
 
     /**
      * Returns the Pose2d object that represents the current robot position
+     *
      * @return The robot pose
      */
     public Pose2d getPose() {
@@ -44,7 +44,8 @@ public abstract class Odometry {
 
     /**
      * Rotates the position of the robot by a given angle
-     * @param byAngle   the angle to be rotated by, preferably in radians
+     *
+     * @param byAngle the angle to be rotated by, preferably in radians
      */
     public void rotatePose(double byAngle) {
         robotPose = robotPose.rotate(byAngle);

@@ -45,35 +45,41 @@ public class Vector2d {
         angle = Math.toRadians(angle);
         double cosA = Math.cos(angle);
         double sinA = Math.sin(angle);
-        double x  = m_x * cosA - m_y * sinA;
+        double x = m_x * cosA - m_y * sinA;
         double y = m_x * sinA + m_y * cosA;
-        return new Vector2d(x,y);
+        return new Vector2d(x, y);
     }
 
     /**
      * @return the angle of the vector
      */
-    public double angle() { return Math.atan2(m_y, m_x); }
+    public double angle() {
+        return Math.atan2(m_y, m_x);
+    }
 
     /**
      * adds two vectors in 2d space and returns a new vector of the sum
+     *
      * @param other the vector to add
      * @return the sum of the vectors
      */
-    public Vector2d plus(Vector2d other){
+    public Vector2d plus(Vector2d other) {
         return new Vector2d(m_x + other.m_x, m_y + other.m_y);
     }
+
     /**
      * subtracts two vectors in 2d space and returns a new vector of the difference
+     *
      * @param other the vector to subtract
      * @return the difference of the vectors
      */
-    public Vector2d minus(Vector2d other){
+    public Vector2d minus(Vector2d other) {
         return plus(other.unaryMinus());
     }
 
     /**
      * returns the inverse of the vector, equivalent to rotating by 180 degrees
+     *
      * @return the inverse of the current vector
      */
     public Vector2d unaryMinus() {
@@ -81,7 +87,6 @@ public class Vector2d {
     }
 
     /**
-     *
      * @param scalar the value to multiple the vector by
      * @return the new scaled vector
      */
@@ -90,7 +95,6 @@ public class Vector2d {
     }
 
     /**
-     *
      * @param scalar the value to divide the vector by
      * @return the new scaled vector
      */
@@ -100,14 +104,21 @@ public class Vector2d {
 
     /**
      * the x component of the vector
+     *
      * @return the x component of the vector
      */
-    public double getX() {return m_x;}
+    public double getX() {
+        return m_x;
+    }
+
     /**
      * the y component of the vector
+     *
      * @return the y component of the vector
      */
-    public double getY() {return m_y;}
+    public double getY() {
+        return m_y;
+    }
 
     /**
      * Returns dot product of this vector with argument.
@@ -122,7 +133,7 @@ public class Vector2d {
      * Returns magnitude (norm) of the vector.
      */
     public double magnitude() {
-        return Math.hypot(m_x,m_y);
+        return Math.hypot(m_x, m_y);
     }
 
     /**
@@ -149,7 +160,7 @@ public class Vector2d {
      * @param other the other vector
      */
     public Vector2d project(Vector2d other) {
-        return other.scale(dot(other) / (magnitude() * other.magnitude()));
+        return other.times(this.dot(other) / other.dot(other));
     }
 
     /**

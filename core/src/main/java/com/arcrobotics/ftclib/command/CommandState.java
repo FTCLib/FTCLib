@@ -12,7 +12,7 @@ package com.arcrobotics.ftclib.command;
  * {@link CommandScheduler}.
  *
  * <p>
- *     <i>Has been <u>grossly</u> oversimplified compared to that of WPILib</i>
+ * <i>Has been <u>grossly</u> oversimplified compared to that of WPILib</i>
  * </p>
  *
  * @author Jackson
