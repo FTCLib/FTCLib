@@ -29,7 +29,7 @@ public class PIDInputOutputTest {
     @Test
     void integralGainOutputTest() {
         m_controller.setI(4);
-        m_controller.setIntegrationBounds(-180,180);
+        m_controller.setIntegrationBounds(-180, 180);
 
         double out = 0;
 
@@ -48,7 +48,7 @@ public class PIDInputOutputTest {
         m_controller.setTolerance(Double.MAX_VALUE, 1);
         assertFalse(m_controller.atSetPoint());
 
-        assertEquals(0, m_controller.calculate(0,0));
+        assertEquals(0, m_controller.calculate(0, 0));
 
         assertEquals(m_controller.calculate(0.025, 0), -0.1 / m_controller.getPeriod(), 0.05);
     }

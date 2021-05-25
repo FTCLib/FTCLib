@@ -1,6 +1,5 @@
 package com.arcrobotics.ftclib.command;
 
-import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 /**

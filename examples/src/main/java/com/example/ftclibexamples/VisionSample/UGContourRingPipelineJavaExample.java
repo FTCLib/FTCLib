@@ -31,6 +31,7 @@ public class UGContourRingPipelineJavaExample extends LinearOpMode {
                     "id",
                     hardwareMap.appContext.getPackageName()
             );
+
     @Override
     public void runOpMode() throws InterruptedException {
         if (USING_WEBCAM) {

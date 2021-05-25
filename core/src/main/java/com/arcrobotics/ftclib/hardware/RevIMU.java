@@ -30,7 +30,8 @@ public class RevIMU extends GyroEx {
 
     /**
      * Create a new object for the built-in gyro/imu in the Rev Expansion Hub
-     * @param hw Hardware map
+     *
+     * @param hw      Hardware map
      * @param imuName Name of sensor in configuration
      */
     public RevIMU(HardwareMap hw, String imuName) {
@@ -52,11 +53,11 @@ public class RevIMU extends GyroEx {
      */
     public void init() {
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
-        parameters.angleUnit           = BNO055IMU.AngleUnit.DEGREES;
-        parameters.accelUnit           = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
+        parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
+        parameters.accelUnit = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
         parameters.calibrationDataFile = "BNO055IMUCalibration.json"; // see the calibration sample opmode
-        parameters.loggingEnabled      = true;
-        parameters.loggingTag          = "IMU";
+        parameters.loggingEnabled = true;
+        parameters.loggingTag = "IMU";
         parameters.accelerationIntegrationAlgorithm = new JustLoggingAccelerationIntegrator();
 
         init(parameters);

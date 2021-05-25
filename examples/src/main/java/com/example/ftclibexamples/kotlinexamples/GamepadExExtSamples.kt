@@ -5,15 +5,15 @@ import com.arcrobotics.ftclib.gamepad.GamepadEx
 import com.arcrobotics.ftclib.gamepad.GamepadKeys
 import com.arcrobotics.ftclib.hardware.SimpleServo
 import com.arcrobotics.ftclib.kotlin.extensions.gamepad.and
+import com.arcrobotics.ftclib.kotlin.extensions.gamepad.not
+import com.arcrobotics.ftclib.kotlin.extensions.gamepad.whenActive
 import com.qualcomm.robotcore.eventloop.opmode.Disabled
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
-import com.arcrobotics.ftclib.kotlin.extensions.gamepad.not
-import com.arcrobotics.ftclib.kotlin.extensions.gamepad.whenActive
 
 @TeleOp(name = "Simple GamepadExExt Example")
 @Disabled
-class GamepadExExtSamples: LinearOpMode() {
+class GamepadExExtSamples : LinearOpMode() {
 
     /**
      * We want to use the tool op gamepad to set the servo

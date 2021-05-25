@@ -15,7 +15,7 @@ public interface Command {
 
     /**
      * The action to take when the command ends.
-     * */
+     */
     void end();
 
     /**

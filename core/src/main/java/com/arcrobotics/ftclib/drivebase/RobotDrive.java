@@ -105,7 +105,7 @@ public abstract class RobotDrive {
                 maxMagnitude = temp;
             }
         }
-        if(maxMagnitude > 1) {
+        if (maxMagnitude > 1) {
             for (int i = 0; i < wheelSpeeds.length; i++) {
                 wheelSpeeds[i] = (wheelSpeeds[i] / maxMagnitude);
             }

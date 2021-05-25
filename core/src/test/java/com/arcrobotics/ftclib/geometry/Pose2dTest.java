@@ -2,17 +2,19 @@ package com.arcrobotics.ftclib.geometry;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 public class Pose2dTest {
     private static final double kEpsilon = 1E-9;
-    Pose2d base = new Pose2d(new Translation2d(0,0),new Rotation2d(0));
+    Pose2d base = new Pose2d(new Translation2d(0, 0), new Rotation2d(0));
 
     @Test
-    void testPlus(){
-        Pose2d output = base.plus(new Transform2d(new Translation2d(1,1),new Rotation2d(90)));
-        Pose2d expected = new Pose2d(new Translation2d(1,1),new Rotation2d(90));
-        assertEquals(output,expected);
+    void testPlus() {
+        Pose2d output = base.plus(new Transform2d(new Translation2d(1, 1), new Rotation2d(90)));
+        Pose2d expected = new Pose2d(new Translation2d(1, 1), new Rotation2d(90));
+        assertEquals(output, expected);
     }
 
     @Test

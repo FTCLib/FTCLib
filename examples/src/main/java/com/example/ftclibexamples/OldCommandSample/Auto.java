@@ -7,7 +7,8 @@ import com.arcrobotics.ftclib.hardware.motors.MotorEx;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 @Disabled
-@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="Command-based Autonomous Sample")  // @Autonomous(...) is the other common choice
+@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name = "Command-based Autonomous Sample")
+// @Autonomous(...) is the other common choice
 public class Auto extends CommandOpMode {
 
     DriveSubsystem driveSubsystem;

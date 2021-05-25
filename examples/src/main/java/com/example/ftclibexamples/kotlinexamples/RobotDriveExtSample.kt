@@ -7,18 +7,17 @@ import com.arcrobotics.ftclib.hardware.motors.MotorEx
 import com.arcrobotics.ftclib.kotlin.extensions.drivebase.setMaxSpeed
 import com.arcrobotics.ftclib.kotlin.extensions.drivebase.setRange
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
-import kotlin.math.abs
 import kotlin.math.absoluteValue
 
-class RobotDriveExtSample: LinearOpMode() {
+class RobotDriveExtSample : LinearOpMode() {
     private lateinit var driveTrain: MecanumDrive
 
     // using motors goBILDA Yellow Jackets, 435 rpm
     // all motors are type inferred to be of type MotorEx
-    private var frontLeft  = MotorEx(hardwareMap, "frontLeft", Motor.GoBILDA.RPM_435)
+    private var frontLeft = MotorEx(hardwareMap, "frontLeft", Motor.GoBILDA.RPM_435)
     private var frontRight = MotorEx(hardwareMap, "frontRight", Motor.GoBILDA.RPM_435)
-    private var backLeft   = MotorEx(hardwareMap, "backLeft", Motor.GoBILDA.RPM_435)
-    private var backRight  = MotorEx(hardwareMap, "backRight", Motor.GoBILDA.RPM_435)
+    private var backLeft = MotorEx(hardwareMap, "backLeft", Motor.GoBILDA.RPM_435)
+    private var backRight = MotorEx(hardwareMap, "backRight", Motor.GoBILDA.RPM_435)
 
     init {
         driveTrain = MecanumDrive(

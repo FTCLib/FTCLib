@@ -16,8 +16,8 @@ public class UtilTest {
     @Test
     public void strafeMoveTest() {
         m_path = new Path(
-                new StartWaypoint(0,0),
-                new GeneralWaypoint(200,0, 0,0.8,0.8,30),
+                new StartWaypoint(0, 0),
+                new GeneralWaypoint(200, 0, 0, 0.8, 0.8, 30),
                 new EndWaypoint(400, 0, 0, 0.5, 0.5,
                         30, 0.8, 1));
         m_path.init();
@@ -30,8 +30,8 @@ public class UtilTest {
     @Test
     public void verticalMoveTest() {
         m_path = new Path(
-                new StartWaypoint(0,0),
-                new GeneralWaypoint(0,200,0,0.8,0.8,30),
+                new StartWaypoint(0, 0),
+                new GeneralWaypoint(0, 200, 0, 0.8, 0.8, 30),
                 new EndWaypoint(0, 400, 0, 0.5, 0.5,
                         30, 0.8, 1));
         m_path.init();
@@ -44,9 +44,9 @@ public class UtilTest {
     @Test
     public void turnTest() {
         m_path = new Path(
-                new StartWaypoint(0,0),
-                new PointTurnWaypoint(0,0, -Math.PI,0.8,1,
-                        30,0.8,1),
+                new StartWaypoint(0, 0),
+                new PointTurnWaypoint(0, 0, -Math.PI, 0.8, 1,
+                        30, 0.8, 1),
                 new EndWaypoint(0, 0, -Math.PI, 0.5, 0.5,
                         30, 0.8, 1));
         m_path.init();
