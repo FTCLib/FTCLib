@@ -1,6 +1,6 @@
 package com.arcrobotics.ftclib.hardware.motors;
 
-import org.jetbrains.annotations.NotNull;
+import androidx.annotation.NonNull;
 
 import java.util.Arrays;
 import java.util.Iterator;
@@ -71,7 +71,7 @@ public class MotorGroup extends Motor implements Iterable<Motor> {
                 .collect(Collectors.toList());
     }
 
-    @NotNull
+    @NonNull
     @Override
     public Iterator<Motor> iterator() {
         return Arrays.asList(group).iterator();
