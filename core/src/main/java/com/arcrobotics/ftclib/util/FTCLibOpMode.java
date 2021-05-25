@@ -7,6 +7,12 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 import java.util.List;
 
+/**
+ * An OpMode that is modeled after {@link OpMode}
+ * but provides greater functionality. Bulk caching
+ * by default is on MANUAL and the internal loop
+ * clears the cache at the beginning of each loop.
+ */
 public abstract class FTCLibOpMode extends LinearOpMode {
 
     protected GamepadEx driverOp, toolOp;
