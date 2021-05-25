@@ -15,12 +15,12 @@ import java.util.List;
  */
 public abstract class FTCLibOpMode extends LinearOpMode {
 
-    protected GamepadEx driverOp, toolOp;
+    protected GamepadEx gamepadEx1, gamepadEx2;
 
     @Override
     public final void runOpMode() throws InterruptedException {
-        driverOp = new GamepadEx(gamepad1);
-        toolOp = new GamepadEx(gamepad2);
+        gamepadEx1 = new GamepadEx(gamepad1);
+        gamepadEx2 = new GamepadEx(gamepad2);
 
         initialize();
 
@@ -32,8 +32,8 @@ public abstract class FTCLibOpMode extends LinearOpMode {
         while (!isStopRequested() && opModeIsActive()) {
             hubs.forEach(LynxModule::clearBulkCache);
             run();
-            driverOp.readButtons();
-            toolOp.readButtons();
+            gamepadEx1.readButtons();
+            gamepadEx2.readButtons();
             telemetry.update();
         }
     }
