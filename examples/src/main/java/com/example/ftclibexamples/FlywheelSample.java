@@ -53,6 +53,9 @@ public class FlywheelSample extends LinearOpMode {
         waitForStart();
 
         while (!isStopRequested() && opModeIsActive()) {
+            // This clears the cache for the hardware
+            // Refer to https://gm0.org/en/latest/docs/software/control-system-internals.html#bulk-reads
+            // for more information on bulk reads.
             hubs.forEach(LynxModule::clearBulkCache);
 
             if (toolOp.isDown(GamepadKeys.Button.A)) {
