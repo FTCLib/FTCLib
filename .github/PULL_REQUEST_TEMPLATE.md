@@ -10,6 +10,7 @@ Please note that we accept pull requests from anyone, but that does not mean it 
 * Other
 
 ## Did this PR introduce a breaking change?
+_A breaking change includes anything that breaks backwards compatibility either at compile or run time._
 * Yes, please list breaking changes
 * No
 

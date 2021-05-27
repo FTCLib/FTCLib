@@ -10,6 +10,7 @@ Welcome to the FTCLib project! We hope we have something useful for you!
 - [Jiaming](https://github.com/Jaiming724) from IguTech
 - [Jaran](https://github.com/JarnaChao09) from The "NUTS!"
 - [Purav](https://github.com/puravdatta-sudo) from Electro
+- [Ethan](https://github.com/litehed) from Raiders of the ARC Crimson
 
 ## Branch Naming
 
@@ -49,7 +50,6 @@ The different types of branches we may use are:
 
 * Feature branches
 * Hotfix branches
-* Release branches
 
 Each of these branches have a specific purpose and are bound to strict rules as to which branches may be their originating branch and which branches must be their merge targets. Each branch and its usage is explained below.
 
@@ -140,7 +140,7 @@ $ git clone https://github.com/FTCLib/FTCLib.git
 
 ### 2. Build
 
-Develop and build this project using Android Studio or another IDE with a properly set-up Anroid SDK. A standardized code style is to be determined.
+Develop and build this project using Android Studio or another IDE with a properly set-up Android SDK. A standardized code style is to be determined.
 
 ### 3. Branch
 

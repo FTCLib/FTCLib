@@ -40,7 +40,7 @@ FTCLib documentation - <https://ftclib.gitbook.io/ftclib>
     dependencies {
         implementation 'org.ftclib.ftclib:core:1.2.0'
         // the following is optional if you want vision
-        implementation 'org.ftclib.ftclib:vision:1.1.0'
+        implementation 'org.ftclib.ftclib:vision:1.2.0'
     }
     ```
 6. Because FTCLib makes use of advanced features, you need to increase the minSdkVersion to 24. Unfortunately, this means that ZTE Speed Phones are not supported in this release.
