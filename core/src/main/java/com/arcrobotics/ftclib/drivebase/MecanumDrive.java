@@ -169,7 +169,66 @@ public class MecanumDrive extends RobotDrive {
         motors[MotorType.kBackRight.value]
                 .set(wheelSpeeds[MotorType.kBackRight.value] * rightSideMultiplier * maxOutput);
     }
-
+    
+    /**
+     * Drives the robot from the perspective of the driver. No matter the orientation of the
+     * robot, pushing forward on the drive stick will always drive the robot away
+     * from the driver. 
+     *
+     * @param joystickX  the x value of the joystick used to drive the robot, derived from input.
+     * @param joystickY  the y value of the joystick used to drive the robot, derived from input.
+     * @param turnSpeed  the turn speed of the robot, derived from input
+     * @param heading    the heading of the robot, derived from the gyro
+     */
+    public void driveFieldCentric(double joystickX, double joystickY, double turnSpeed, double heading) {
+        double angle = Math.toDegrees(Math.atan2(joystickY, joystickX)) + 180;
+        double magnitude = Math.sqrt(Math.pow(joystickX, 2) + Math.pow(joystickY, 2));
+        double absolute = angle - heading;
+        //Calculate the two powers for the two pairs of wheels: FR, BL; FL, BR. Subtract the heading for field centric control.
+        double v1 = magnitude * Math.sin(Math.toRadians(absolute + 45));
+        double v2 = magnitude * Math.sin(Math.toRadians(absolute - 45));
+        double[] powers = new double[]{
+                v1 + turnSpeed,
+                v2 + turnSpeed,
+                v2 - turnSpeed,
+                v1 - turnSpeed
+        };
+        //Scale the powers up/down depending on if the largest power is greater than or less than 1.
+        //Scaling down is necessary because the robot won't move in the right direction if value(s) are greater than 1. Scaling up is beneficial because it maximizes how fast the robot goes.
+        scale(powers);
+        //Finally, set the motor speeds to the scaled powers.
+        motors[MotorType.kFrontLeft.value]
+                .set(powers[0]);
+        motors[MotorType.kBackLeft.value]
+                .set(powers[1]);
+        motors[MotorType.kFrontRight.value]
+                .set(powers[2]);
+        motors[MotorType.kBackRight.value]
+                .set(powers[3]);
+    }
+    
+    private void scale(double[] powers) {
+        double maxPower = 0;
+        for (double d :
+                powers) {
+            maxPower = Math.max(maxPower, Math.abs(d));
+        }
+        if(maxPower == 0) {
+            return;
+        }
+        else if(maxPower > 1) {
+            //scale down to 1
+            for (int i = 0; i < powers.length; i++) {
+                powers[i] = powers[i]/maxPower;
+            }
+        } else {
+            //scale up to 1
+            for (int i = 0; i < powers.length; i++) {
+                powers[i] = (1/Math.sin(Math.toRadians(135))) * powers[i];
+            }
+        }
+    }
+    
     /**
      * Drives the robot from the perspective of the driver. No matter the orientation of the
      * robot, pushing forward on the drive stick will always drive the robot away
