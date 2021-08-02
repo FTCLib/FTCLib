@@ -71,10 +71,14 @@ public class MecanumDrivingSample extends LinearOpMode {
                 //                 (0,1,0)
                 //                   /
                 //                  /
-                //            _____/_____
-                //          /  (0,0,1)   /
+                //           ______/_____
+                //          /           /
+                //         /           /
+                //        /___________/
+                //           ____________
+                //          /  (0,0,1)  /
                 //         /     ↻     /
-                //        /__________ /
+                //        /___________/
 
                 // optional fourth parameter for squared inputs
                 drive.driveRobotCentric(
