@@ -206,7 +206,7 @@ public class PIDFController {
         if total error is the integral from 0 to t of e(t')dt', and
         e(t) = sp - pv, then the total error, E(t), equals sp*t - pv*t.
          */
-        totalError = period * (setPoint - measuredValue);
+        totalError += period * (setPoint - measuredValue);
         totalError = totalError < minIntegral ? minIntegral : Math.min(maxIntegral, totalError);
 
         // returns u(t)
