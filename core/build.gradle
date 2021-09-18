@@ -5,7 +5,7 @@ apply plugin: 'kotlin-android-extensions'
 ext {
     PUBLISH_GROUP_ID = 'com.arcrobotics'
     PUBLISH_ARTIFACT_ID = 'ftclib'
-    PUBLISH_VERSION = '1.2.0'
+    PUBLISH_VERSION = '1.2.1'
 }
 
 android {
@@ -17,7 +17,7 @@ android {
         minSdkVersion 24
         targetSdkVersion 28
         versionCode 1
-        versionName 'v1.2.0'
+        versionName 'v1.2.1'
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles 'consumer-rules.pro'
@@ -61,7 +61,6 @@ dependencies {
     compileOnly 'org.firstinspires.ftc:RobotCore:6.2.1'
     testImplementation 'org.firstinspires.ftc:RobotCore:6.2.1'
     compileOnly 'org.firstinspires.ftc:RobotServer:6.2.1'
-    compileOnly 'org.firstinspires.ftc:OnBotJava:6.2.1'
     compileOnly 'org.firstinspires.ftc:Hardware:6.2.1'
     compileOnly 'org.firstinspires.ftc:FtcCommon:6.2.1'
     compileOnly 'androidx.appcompat:appcompat:1.2.0'
