@@ -3,7 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
     buildToolsVersion "29.0.2"
 
     defaultConfig {
@@ -28,6 +28,12 @@ android {
     }
 }
 
+configurations.all {
+    resolutionStrategy {
+        force 'androidx.core:core-ktx:1.6.0'
+    }
+}
+
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation 'androidx.appcompat:appcompat:1.2.0'
@@ -40,7 +46,7 @@ dependencies {
     compileOnly 'org.firstinspires.ftc:Hardware:6.2.1'
     compileOnly 'org.firstinspires.ftc:FtcCommon:6.2.1'
     implementation project(path: ':core:vision')
-    implementation "androidx.core:core-ktx:1.6.0"
+//    implementation "androidx.core:core-ktx:1.6.0"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 
 }

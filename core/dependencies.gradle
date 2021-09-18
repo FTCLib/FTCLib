@@ -10,8 +10,14 @@ dependencies {
     compileOnly 'androidx.appcompat:appcompat:1.2.0'
 }
 
+configurations.all {
+    resolutionStrategy {
+        force 'androidx.core:core-ktx:1.6.0'
+    }
+}
+
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
     buildToolsVersion "29.0.2"
 
     defaultConfig {
