@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigurationType;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
@@ -27,8 +28,7 @@ public class MotorEx extends Motor {
      * @param id   the device id from the RC config
      */
     public MotorEx(@NonNull HardwareMap hMap, String id) {
-        this(hMap, id, GoBILDA.NONE);
-        ACHIEVABLE_MAX_TICKS_PER_SECOND = motorEx.getMotorType().getAchieveableMaxTicksPerSecond();
+        this(hMap.get(DcMotorEx.class, id), GoBILDA.NONE);
     }
 
     /**
@@ -39,8 +39,7 @@ public class MotorEx extends Motor {
      * @param gobildaType the type of gobilda 5202 series motor being used
      */
     public MotorEx(@NonNull HardwareMap hMap, String id, @NonNull GoBILDA gobildaType) {
-        super(hMap, id, gobildaType);
-        motorEx = (DcMotorEx) super.motor;
+        this(hMap.get(DcMotorEx.class, id), gobildaType);
     }
 
     /**
@@ -52,8 +51,40 @@ public class MotorEx extends Motor {
      * @param rpm  the revolutions per minute of the motor
      */
     public MotorEx(@NonNull HardwareMap hMap, String id, double cpr, double rpm) {
-        super(hMap, id, cpr, rpm);
-        motorEx = (DcMotorEx) super.motor;
+        this(hMap.get(DcMotorEx.class, id), cpr, rpm);
+    }
+
+    /**
+     * Constructs a motor wrapper for the given DcMotorEx
+     *
+     * @param dcMotor the DcMotorEx to be wrapped
+     */
+    public MotorEx(@NonNull DcMotorEx dcMotor) {
+        this(dcMotor, GoBILDA.NONE);
+        ACHIEVABLE_MAX_TICKS_PER_SECOND = motorEx.getMotorType().getAchieveableMaxTicksPerSecond();
+    }
+
+    /**
+     * Constructs a motor wrapper for the given DcMotorEx
+     *
+     * @param dcMotor     the DcMotorEx to be wrapped
+     * @param gobildaType the type of goBILDA gearbox motor being used
+     */
+    public MotorEx(@NonNull DcMotorEx dcMotor, @NonNull GoBILDA gobildaType) {
+        super(dcMotor, gobildaType);
+        motorEx = dcMotor;
+    }
+
+    /**
+     * Constructs a motor wrapper for the given DcMotorEx
+     *
+     * @param dcMotor the DcMotorEx to be wrapped
+     * @param cpr     the counts per revolution of the motor
+     * @param rpm     the revolutions per minute of the motor
+     */
+    public MotorEx(@NonNull DcMotorEx dcMotor, double cpr, double rpm) {
+        super(dcMotor, cpr, rpm);
+        motorEx = dcMotor;
     }
 
     @Override

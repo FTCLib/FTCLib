@@ -24,7 +24,7 @@ public class DifferentialDrive extends RobotDrive {
 
     public static final double kDefaultRightSideMultiplier = -1.0;
 
-    private Motor[] motors;
+    Motor[] motors;
     private double rightSideMultiplier = kDefaultRightSideMultiplier;
 
     /**
@@ -36,11 +36,11 @@ public class DifferentialDrive extends RobotDrive {
      * is {@value #kDefaultRightSideMultiplier}.
      * </p>
      *
-     * @param myMotors The {@link Motor} objects in the differential drive. Must be in the order
-     *                 of left, right.
+     * @param leftMotor  the left motor(s) of the differential drive
+     * @param rightMotor the right motor(s) of the differential drive
      */
-    public DifferentialDrive(Motor... myMotors) {
-        motors = myMotors;
+    public DifferentialDrive(Motor leftMotor, Motor rightMotor) {
+        motors = new Motor[]{leftMotor, rightMotor};
         setRightSideInverted(true);
     }
 

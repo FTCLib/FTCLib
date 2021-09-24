@@ -238,8 +238,7 @@ public class Motor implements HardwareDevice {
      * @param id   the device id from the RC config
      */
     public Motor(@NonNull HardwareMap hMap, String id) {
-        this(hMap, id, GoBILDA.NONE);
-        ACHIEVABLE_MAX_TICKS_PER_SECOND = motor.getMotorType().getAchieveableMaxTicksPerSecond();
+        this(hMap.get(DcMotor.class, id));
     }
 
     /**
@@ -247,16 +246,10 @@ public class Motor implements HardwareDevice {
      *
      * @param hMap        the hardware map from the OpMode
      * @param id          the device id from the RC config
-     * @param gobildaType the type of gobilda 5202 series motor being used
+     * @param gobildaType the type of goBILDA gearbox motor being used
      */
     public Motor(@NonNull HardwareMap hMap, String id, @NonNull GoBILDA gobildaType) {
-        motor = hMap.get(DcMotor.class, id);
-        encoder = new Encoder(motor::getCurrentPosition);
-
-        runmode = RunMode.RawPower;
-        type = gobildaType;
-
-        ACHIEVABLE_MAX_TICKS_PER_SECOND = gobildaType.getAchievableMaxTicksPerSecond();
+        this(hMap.get(DcMotor.class, id), gobildaType);
     }
 
     /**
@@ -268,7 +261,44 @@ public class Motor implements HardwareDevice {
      * @param rpm  the revolutions per minute of the motor
      */
     public Motor(@NonNull HardwareMap hMap, String id, double cpr, double rpm) {
-        this(hMap, id, GoBILDA.NONE);
+        this(hMap.get(DcMotor.class, id), cpr, rpm);
+    }
+
+    /**
+     * Constructs a motor wrapper for the given DcMotor
+     *
+     * @param dcMotor the DcMotor to be wrapped
+     */
+    public Motor(@NonNull DcMotor dcMotor) {
+        this(dcMotor, GoBILDA.NONE);
+        ACHIEVABLE_MAX_TICKS_PER_SECOND = motor.getMotorType().getAchieveableMaxTicksPerSecond();
+    }
+
+    /**
+     * Constructs a motor wrapper for the given DcMotor
+     *
+     * @param dcMotor     the DcMotor to be wrapped
+     * @param gobildaType the type of goBILDA gearbox motor being used
+     */
+    public Motor(@NonNull DcMotor dcMotor, @NonNull GoBILDA gobildaType) {
+        motor = dcMotor;
+        encoder = new Encoder(motor::getCurrentPosition);
+
+        runmode = RunMode.RawPower;
+        type = gobildaType;
+
+        ACHIEVABLE_MAX_TICKS_PER_SECOND = gobildaType.getAchievableMaxTicksPerSecond();
+    }
+
+    /**
+     * Constructs a motor wrapper for the given DcMotor
+     *
+     * @param dcMotor the DcMotor to be wrapped
+     * @param cpr     the counts per revolution of the motor
+     * @param rpm     the revolutions per minute of the motor
+     */
+    public Motor(@NonNull DcMotor dcMotor, double cpr, double rpm) {
+        this(dcMotor, GoBILDA.NONE);
 
         MotorConfigurationType type = motor.getMotorType().clone();
         type.setMaxRPM(rpm);
