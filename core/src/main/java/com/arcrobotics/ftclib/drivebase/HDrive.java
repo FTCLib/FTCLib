@@ -7,7 +7,8 @@ import com.arcrobotics.ftclib.hardware.motors.Motor;
  * Holonomic drivebase
  */
 public class HDrive extends RobotDrive {
-    Motor[] motors;
+
+    private final Motor[] motors;
 
     public static final double kDefaultRightMotorAngle = Math.PI / 3;
     public static final double kDefaultLeftMotorAngle = 2 * Math.PI / 3;
@@ -151,4 +152,5 @@ public class HDrive extends RobotDrive {
     public void driveRobotCentric(double strafeSpeed, double forwardSpeed, double turn) {
         driveFieldCentric(strafeSpeed, forwardSpeed, turn, 0.0);
     }
+
 }

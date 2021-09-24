@@ -24,7 +24,7 @@ public class DifferentialDrive extends RobotDrive {
 
     public static final double kDefaultRightSideMultiplier = -1.0;
 
-    Motor[] motors;
+    private final Motor[] motors;
     private double rightSideMultiplier = kDefaultRightSideMultiplier;
 
     /**

@@ -15,9 +15,10 @@ import com.arcrobotics.ftclib.hardware.motors.Motor;
  * https://www.youtube.com/watch?v=8rhAkjViHEQ.
  */
 public class MecanumDrive extends RobotDrive {
+
     private double rightSideMultiplier;
 
-    Motor[] motors;
+    private final Motor[] motors;
 
     /**
      * Sets up the constructor for the mecanum drive.
