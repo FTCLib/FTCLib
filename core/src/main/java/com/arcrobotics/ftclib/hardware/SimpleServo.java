@@ -16,15 +16,55 @@ public class SimpleServo implements ServoEx {
     private final double maxPosition = 1;
     private final double minPosition = 0;
 
+    /**
+     * Constructs a simple servo object wrapper
+     *
+     * @param hw        the HardwareMap instance from the OpMode
+     * @param servoName the name of the servo in the configuration
+     * @param minAngle  the smallest angle the servo can turn to
+     * @param maxAngle  the largest angle the servo can turn to
+     * @param angleUnit the type of angular units the servo angles are measured in
+     */
     public SimpleServo(HardwareMap hw, String servoName, double minAngle, double maxAngle, AngleUnit angleUnit) {
-        servo = hw.get(Servo.class, servoName);
+        this(hw.get(Servo.class, servoName), minAngle, maxAngle, angleUnit);
+    }
+
+    /**
+     * Constructs a simple servo object wrapper
+     *
+     * @param hw        the HardwareMap instance from the OpMode
+     * @param servoName the name of the servo in the configuration
+     * @param minAngle  the smallest angle in degrees the servo can turn to
+     * @param maxAngle  the largest angle in degrees the servo can turn to
+     */
+    public SimpleServo(HardwareMap hw, String servoName, double minAngle, double maxAngle) {
+        this(hw, servoName, maxAngle, minAngle, AngleUnit.DEGREES);
+    }
+
+    /**
+     * Constructs a simple servo object wrapper
+     *
+     * @param servo     the servo object to be wrapped
+     * @param minAngle  the smallest angle the servo can turn to
+     * @param maxAngle  the largest angle the servo can turn to
+     * @param angleUnit the type of angular units the servo angles are measured in
+     */
+    public SimpleServo(Servo servo, double minAngle, double maxAngle, AngleUnit angleUnit) {
+        this.servo = servo;
 
         this.minAngle = toRadians(maxAngle, angleUnit);
         this.maxAngle = toRadians(minAngle, angleUnit);
     }
 
-    public SimpleServo(HardwareMap hw, String servoName, double minAngle, double maxAngle) {
-        this(hw, servoName, maxAngle, minAngle, AngleUnit.DEGREES);
+    /**
+     * Constructs a simple servo object wrapper
+     *
+     * @param servo     the servo object to be wrapped
+     * @param minAngle  the smallest angle in degrees the servo can turn to
+     * @param maxAngle  the largest angle in degrees the servo can turn to
+     */
+    public SimpleServo(Servo servo, double minAngle, double maxAngle) {
+        this(servo, maxAngle, minAngle, AngleUnit.DEGREES);
     }
 
     @Override

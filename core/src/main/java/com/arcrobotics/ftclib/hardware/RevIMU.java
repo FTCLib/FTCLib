@@ -1,5 +1,7 @@
 package com.arcrobotics.ftclib.hardware;
 
+import androidx.annotation.NonNull;
+
 import com.arcrobotics.ftclib.geometry.Rotation2d;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
@@ -29,18 +31,27 @@ public class RevIMU extends GyroEx {
     private int multiplier;
 
     /**
-     * Create a new object for the built-in gyro/imu in the Rev Expansion Hub
+     * Create a new object for the built-in gyro/imu in the REV Hub
      *
      * @param hw      Hardware map
      * @param imuName Name of sensor in configuration
      */
     public RevIMU(HardwareMap hw, String imuName) {
-        revIMU = hw.get(BNO055IMU.class, imuName);
+        this(hw.get(BNO055IMU.class, imuName));
+    }
+
+    /**
+     *  Create a new object for the built-in gyro/imu in the REV Hub
+     *
+     * @param imu the IMU object in the REV Hub
+     */
+    public RevIMU(@NonNull BNO055IMU imu) {
+        revIMU = imu;
         multiplier = 1;
     }
 
     /**
-     * Create a new object for the built-in gyro/imu in the Rev Expansion Hub with the default configuration name of "imu"
+     * Create a new object for the built-in gyro/imu in the REV Hub with the default configuration name of "imu"
      *
      * @param hw Hardware map
      */
