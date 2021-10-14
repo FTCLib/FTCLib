@@ -53,6 +53,11 @@ public class UGRectDetector {
             public void onOpened() {
                 camera.startStreaming(CAMERA_WIDTH, CAMERA_HEIGHT, ORIENTATION);
             }
+
+            @Override
+            public void onError(int errorCode){
+
+            }
         });
     }
 

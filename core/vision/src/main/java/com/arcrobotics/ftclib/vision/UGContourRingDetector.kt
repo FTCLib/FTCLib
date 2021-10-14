@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap
 import org.firstinspires.ftc.robotcore.external.Telemetry
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName
 import org.openftc.easyopencv.OpenCvCamera
+import org.openftc.easyopencv.OpenCvCamera.AsyncCameraOpenListener
 import org.openftc.easyopencv.OpenCvCameraFactory
 import org.openftc.easyopencv.OpenCvCameraRotation
 import org.openftc.easyopencv.OpenCvInternalCamera
@@ -128,13 +129,17 @@ class UGContourRingDetector(
                 }
         )
 
-        camera.openCameraDeviceAsync {
-            camera.startStreaming(
-                    CAMERA_WIDTH,
-                    CAMERA_HEIGHT,
-                    CAMERA_ORIENTATION,
-            )
-        }
+
+        camera.openCameraDeviceAsync(object : AsyncCameraOpenListener {
+            override fun onOpened() {
+                camera.startStreaming(
+                        CAMERA_WIDTH,
+                        CAMERA_HEIGHT,
+                        CAMERA_ORIENTATION,
+                )
+            }
+            override fun onError(errorCode: Int) {}
+        })
     }
 
 }
