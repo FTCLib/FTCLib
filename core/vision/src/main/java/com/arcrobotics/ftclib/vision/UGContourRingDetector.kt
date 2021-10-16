@@ -152,15 +152,20 @@ class UGContourRingDetector(
                             CAMERA_HEIGHT,
                             CAMERA_ORIENTATION,
                     )
-                    detectorState = DetectorState.RUNNING;
+
+                    synchronized(sync){
+                        detectorState = DetectorState.RUNNING;
+                    }
                 }
 
                 override fun onError(errorCode: Int) {
-                    detectorState = DetectorState.INIT_FAILURE_NOT_RUNNING //Set our state
+                    synchronized(sync) {
+                        detectorState = DetectorState.INIT_FAILURE_NOT_RUNNING //Set our state
+                    }
 
-                    RobotLog.addGlobalWarningMessage("Warning: Camera device failed to open with EasyOpenCv error: " +
-                            if (errorCode == -1) "CAMERA_OPEN_ERROR_FAILURE_TO_OPEN_CAMERA_DEVICE" else "CAMERA_OPEN_ERROR_POSTMORTEM_OPMODE"
-                    ) //Warn the user about the issue
+                        RobotLog.addGlobalWarningMessage("Warning: Camera device failed to open with EasyOpenCv error: " +
+                                if (errorCode == -1) "CAMERA_OPEN_ERROR_FAILURE_TO_OPEN_CAMERA_DEVICE" else "CAMERA_OPEN_ERROR_POSTMORTEM_OPMODE"
+                        ) //Warn the user about the issue
 
                 }
             })

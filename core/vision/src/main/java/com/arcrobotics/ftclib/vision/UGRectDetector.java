@@ -67,16 +67,24 @@ public class UGRectDetector {
                 camera.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener() {
                     @Override
                     public void onOpened() {
+
                         camera.startStreaming(CAMERA_WIDTH, CAMERA_HEIGHT, ORIENTATION);
-                        detectorState = DetectorState.RUNNING;
+
+                        synchronized (sync) {
+                            detectorState = DetectorState.RUNNING;
+                        }
                     }
 
                     @Override
                     public void onError(int errorCode) {
-                        detectorState = DetectorState.INIT_FAILURE_NOT_RUNNING; //Set our state
-                        RobotLog.addGlobalWarningMessage("Warning: Camera device failed to open with EasyOpenCv error: "+
-                                ((errorCode == -1) ? "CAMERA_OPEN_ERROR_FAILURE_TO_OPEN_CAMERA_DEVICE" : "CAMERA_OPEN_ERROR_POSTMORTEM_OPMODE")
-                        ); //Warn the user about the issue
+
+                        synchronized (sync) {
+                            detectorState = DetectorState.INIT_FAILURE_NOT_RUNNING; //Set our state
+                        }
+
+                            RobotLog.addGlobalWarningMessage("Warning: Camera device failed to open with EasyOpenCv error: " +
+                                    ((errorCode == -1) ? "CAMERA_OPEN_ERROR_FAILURE_TO_OPEN_CAMERA_DEVICE" : "CAMERA_OPEN_ERROR_POSTMORTEM_OPMODE")
+                            ); //Warn the user about the issue
                     }
                 });
             }
