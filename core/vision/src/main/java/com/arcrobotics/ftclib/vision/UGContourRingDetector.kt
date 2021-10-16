@@ -1,6 +1,7 @@
 package com.arcrobotics.ftclib.vision
 
 import com.qualcomm.robotcore.hardware.HardwareMap
+import com.qualcomm.robotcore.util.RobotLog
 import org.firstinspires.ftc.robotcore.external.Telemetry
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName
 import org.openftc.easyopencv.OpenCvCamera
@@ -52,6 +53,10 @@ class UGContourRingDetector(
         var CAMERA_ORIENTATION: OpenCvCameraRotation = OpenCvCameraRotation.UPRIGHT
     }
 
+    private var detectorState = DetectorState.NOT_CONFIGURED
+
+    private val sync: Any = Any()
+
     // camera variable, lateinit, initialized in init() function
     lateinit var camera: OpenCvCamera
 
@@ -90,56 +95,76 @@ class UGContourRingDetector(
     val height: UGContourRingPipeline.Height
         get() = ftcLibPipeline.height
 
+    fun getDetectorState(): DetectorState {
+        synchronized(sync) {
+            return detectorState
+        }
+    }
+
     // init function to initialize camera and pipeline
     fun init() {
-        val cameraMonitorViewId = hardwareMap
-                .appContext
-                .resources
-                .getIdentifier(
-                        "cameraMonitorViewId",
-                        "id",
-                        hardwareMap.appContext.packageName,
-                )
-        camera = if (isUsingWebcam) {
-            OpenCvCameraFactory
-                    .getInstance()
-                    .createWebcam(
-                            hardwareMap.get(
-                                    WebcamName::class.java,
-                                    webcamName
-                            ),
-                            cameraMonitorViewId,
+        synchronized(sync, ::init)
+        if(detectorState == DetectorState.NOT_CONFIGURED) {
+            val cameraMonitorViewId = hardwareMap
+                    .appContext
+                    .resources
+                    .getIdentifier(
+                            "cameraMonitorViewId",
+                            "id",
+                            hardwareMap.appContext.packageName,
                     )
-        } else {
-            OpenCvCameraFactory
-                    .getInstance()
-                    .createInternalCamera(
-                            cameraDirection, cameraMonitorViewId,
-                    )
-        }
-
-        camera.setPipeline(
-                UGContourRingPipeline(
-                        telemetry = telemetry,
-                        debug = debug,
-                ).apply {
-                    UGContourRingPipeline.CAMERA_WIDTH = if (IS_PORTRAIT_MODE) CAMERA_HEIGHT else CAMERA_WIDTH
-                    UGContourRingPipeline.HORIZON = HORIZON
-                    ftcLibPipeline = this
-                }
-        )
-
-
-        camera.openCameraDeviceAsync(object : AsyncCameraOpenListener {
-            override fun onOpened() {
-                camera.startStreaming(
-                        CAMERA_WIDTH,
-                        CAMERA_HEIGHT,
-                        CAMERA_ORIENTATION,
-                )
+            camera = if (isUsingWebcam) {
+                OpenCvCameraFactory
+                        .getInstance()
+                        .createWebcam(
+                                hardwareMap.get(
+                                        WebcamName::class.java,
+                                        webcamName
+                                ),
+                                cameraMonitorViewId,
+                        )
+            } else {
+                OpenCvCameraFactory
+                        .getInstance()
+                        .createInternalCamera(
+                                cameraDirection, cameraMonitorViewId,
+                        )
             }
-            override fun onError(errorCode: Int) {}
-        })
+
+            camera.setPipeline(
+                    UGContourRingPipeline(
+                            telemetry = telemetry,
+                            debug = debug,
+                    ).apply {
+                        UGContourRingPipeline.CAMERA_WIDTH = if (IS_PORTRAIT_MODE) CAMERA_HEIGHT else CAMERA_WIDTH
+                        UGContourRingPipeline.HORIZON = HORIZON
+                        ftcLibPipeline = this
+                    }
+            )
+
+
+            detectorState = DetectorState.INITIALIZING
+
+            camera.openCameraDeviceAsync(object : AsyncCameraOpenListener {
+                override fun onOpened() {
+                    camera.startStreaming(
+                            CAMERA_WIDTH,
+                            CAMERA_HEIGHT,
+                            CAMERA_ORIENTATION,
+                    )
+                    detectorState = DetectorState.RUNNING;
+                }
+
+                override fun onError(errorCode: Int) {
+                    detectorState = DetectorState.INIT_FAILURE_NOT_RUNNING //Set our state
+
+                    RobotLog.addGlobalWarningMessage("Warning: Camera device failed to open with EasyOpenCv error: " +
+                            if (errorCode == -1) "CAMERA_OPEN_ERROR_FAILURE_TO_OPEN_CAMERA_DEVICE" else "CAMERA_OPEN_ERROR_POSTMORTEM_OPMODE"
+                    ) //Warn the user about the issue
+
+                }
+            })
+        }
     }
 
 }

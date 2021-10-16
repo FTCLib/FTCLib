@@ -74,7 +74,7 @@ class UGContourRingPipeline(
         var debug: Boolean = false,
 ) : OpenCvPipeline() {
     /** variable to store the calculated height of the stack **/
-    var height: Height
+    var height: Height = Height.ZERO
         private set
 
     /** variables that will be reused for calculations **/
