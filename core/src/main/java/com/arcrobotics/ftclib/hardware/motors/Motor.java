@@ -106,6 +106,13 @@ public class Motor implements HardwareDevice {
         }
 
         /**
+         * @return the velocity of the encoder adjusted to account for the distane per pulse
+         */
+        public double getRate() {
+            return dpp * getVelocity();
+        }
+
+        /**
          * Resets the encoder without having to stop the motor.
          */
         public void reset() {
@@ -311,6 +318,13 @@ public class Motor implements HardwareDevice {
      */
     public double getDistance() {
         return encoder.getDistance();
+    }
+
+    /**
+     * @return the rate of the encoder
+     */
+    public double getRate() {
+        return encoder.getRate();
     }
 
     /**
