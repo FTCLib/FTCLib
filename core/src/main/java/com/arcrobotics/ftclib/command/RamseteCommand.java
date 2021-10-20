@@ -44,12 +44,7 @@ public class RamseteCommand extends CommandBase {
 
     /**
      * Constructs a new RamseteCommand that, when executed, will follow the provided trajectory.
-     * PID control and feedforward are handled internally, and outputs are scaled -12 to 12
-     * representing units of volts.
-     *
-     * <p>Note: The controller will *not* set the outputVolts to zero upon completion of the path -
-     * this
-     * is left to the user, since it is not appropriate for paths with nonstationary endstates.
+     * PID control and feedforward are handled internally.
      *
      * @param trajectory      The trajectory to follow.
      * @param pose            A function that supplies the robot pose - use one of
@@ -61,8 +56,8 @@ public class RamseteCommand extends CommandBase {
      *                        right sides of the robot drive.
      * @param leftController  The PIDController for the left side of the robot drive.
      * @param rightController The PIDController for the right side of the robot drive.
-     * @param outputVolts     A function that consumes the computed left and right
-     *                        outputs (in volts) for the robot drive.
+     * @param output          A function that consumes the computed left and right
+     *                        outputs (unitless) for the robot drive.
      */
     public RamseteCommand(Trajectory trajectory,
                           Supplier<Pose2d> pose,
@@ -72,7 +67,7 @@ public class RamseteCommand extends CommandBase {
                           Supplier<DifferentialDriveWheelSpeeds> wheelSpeeds,
                           PIDController leftController,
                           PIDController rightController,
-                          BiConsumer<Double, Double> outputVolts) {
+                          BiConsumer<Double, Double> output) {
         m_trajectory = trajectory;
         m_pose = pose;
         m_follower = controller;
@@ -81,7 +76,7 @@ public class RamseteCommand extends CommandBase {
         m_speeds = wheelSpeeds;
         m_leftController = leftController;
         m_rightController = rightController;
-        m_output = outputVolts;
+        m_output = output;
 
         m_usePID = true;
 
@@ -180,7 +175,12 @@ public class RamseteCommand extends CommandBase {
     }
 
     @Override
+    public void end(boolean interrupted) {
+        m_output.accept(0.0, 0.0);
+    }
+
+    @Override
     public boolean isFinished() {
-        return m_trajectory.getTotalTimeSeconds() > m_timer.seconds();
+        return m_timer.seconds() > m_trajectory.getTotalTimeSeconds();
     }
 }
