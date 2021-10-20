@@ -85,10 +85,8 @@ public class RevIMU extends GyroEx {
      * @return Relative heading of the robot
      */
     public double getHeading() {
-        globalHeading = revIMU.getAngularOrientation().firstAngle;
-        relativeHeading = globalHeading + offset;
         // Return yaw
-        return relativeHeading * multiplier;
+        return getAbsoluteHeading() - offset;
     }
 
     /**
@@ -124,7 +122,7 @@ public class RevIMU extends GyroEx {
 
     @Override
     public void reset() {
-        offset = -getHeading();
+        offset += getHeading();
     }
 
     @Override
