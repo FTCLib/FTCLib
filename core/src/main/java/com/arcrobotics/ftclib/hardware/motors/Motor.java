@@ -106,7 +106,7 @@ public class Motor implements HardwareDevice {
         }
 
         /**
-         * @return the velocity of the encoder adjusted to account for the distane per pulse
+         * @return the velocity of the encoder adjusted to account for the distance per pulse
          */
         public double getRate() {
             return dpp * getVelocity();
