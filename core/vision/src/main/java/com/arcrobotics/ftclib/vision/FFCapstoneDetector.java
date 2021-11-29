@@ -114,9 +114,9 @@ public class FFCapstoneDetector {
 
     public Placement getPlacement() {
         if (capstonePipeline.getCentroid() != null) {
-            if (capstonePipeline.getCentroid().x > WIDTH - (WIDTH / 3.2))
+            if (capstonePipeline.getCentroid().x > WIDTH * 2 / 3.0)
                 return Placement.RIGHT;
-            else if (capstonePipeline.getCentroid().x < WIDTH - (WIDTH / 1.6))
+            else if (capstonePipeline.getCentroid().x < WIDTH / 3.0)
                 return Placement.LEFT;
         }
         return Placement.CENTER;
