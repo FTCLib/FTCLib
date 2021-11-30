@@ -17,8 +17,12 @@ public class FFCapstoneDetector {
     private String cameraName;
     private FFCapstonePipeline capstonePipeline;
     private final HardwareMap hardwareMap;
+
     private int WIDTH = 432;
     private int HEIGHT = 240;
+    private double thresholdRight = 2 * WIDTH / 3.0;
+    private double thresholdLeft = WIDTH / 3.0;
+
 
     private DetectorState detectorState = DetectorState.NOT_CONFIGURED;
 
@@ -112,11 +116,26 @@ public class FFCapstoneDetector {
         capstonePipeline.setLowerAndUpperBounds(low, high);
     }
 
+    // The area below thresholdLeft will be the Left placement, to the right of
+    // thresholdRight will be Right placement, and the area between those is the center
+    // 0.0 to 1.0
+    public void setPercentThreshold(double percentLeft, double percentRight) {
+        thresholdLeft = WIDTH * percentLeft;
+        thresholdRight = WIDTH * percentRight;
+    }
+
+    // 0.0 to WIDTH
+    public void setThreshold(double pixelsLeft, double pixelsRight) {
+        thresholdLeft = pixelsLeft;
+        thresholdLeft = pixelsRight;
+    }
+
+
     public Placement getPlacement() {
         if (capstonePipeline.getCentroid() != null) {
-            if (capstonePipeline.getCentroid().x > WIDTH * 2 / 3.0)
+            if (capstonePipeline.getCentroid().x > thresholdRight)
                 return Placement.RIGHT;
-            else if (capstonePipeline.getCentroid().x < WIDTH / 3.0)
+            else if (capstonePipeline.getCentroid().x < thresholdLeft)
                 return Placement.LEFT;
         }
         return Placement.CENTER;
