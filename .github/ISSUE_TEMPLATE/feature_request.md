@@ -2,8 +2,8 @@
 name: Feature request
 about: Suggest an idea for this project
 title: ''
-labels: backend, documentation, enhancement, hardware
-assignees: JIceberg, codeNinjaDev, Lunerwalker2
+labels: ''
+assignees: JIceberg
 
 ---
 
