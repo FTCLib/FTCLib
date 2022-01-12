@@ -86,6 +86,7 @@ public class FFCapstonePipeline extends OpenCvPipeline {
 
         mask.release();
         hierarchy.release();
+        output.release();
 
         return frame;
     }
