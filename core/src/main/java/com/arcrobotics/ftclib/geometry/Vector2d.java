@@ -155,6 +155,16 @@ public class Vector2d {
     }
 
     /**
+     * Takes the vector and changes the length while maintaining the direction
+     *
+     * @param value number to normalize vectors with
+     * @return a normalized vector
+     */
+    public Vector2d normalize(double value) {
+        return scale(value / magnitude());
+    }
+
+    /**
      * Projects this vector onto another vector
      *
      * @param other the other vector
