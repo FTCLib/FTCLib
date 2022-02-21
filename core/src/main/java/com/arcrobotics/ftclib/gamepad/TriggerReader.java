@@ -39,12 +39,12 @@ public class TriggerReader implements KeyReader {
      * Reads button value
      **/
     public void readValue() {
+        lastState = currState;
         if (this.gamepad.getTrigger(trigger) > 0.5) {
             currState = true;
         } else {
             currState = false;
         }
-        lastState = currState;
     }
 
     /**

@@ -178,5 +178,4 @@ public class DifferentialDrive extends RobotDrive {
         tankDrive(leftSpeed, rightSpeed);
     }
 
-
 }

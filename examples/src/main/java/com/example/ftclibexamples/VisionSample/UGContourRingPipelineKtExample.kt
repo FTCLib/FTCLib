@@ -53,13 +53,19 @@ class UGContourRingPipelineKtExample : LinearOpMode() {
 
         UGContourRingPipeline.Config.HORIZON = HORIZON
 
-        camera.openCameraDeviceAsync {
-            camera.startStreaming(
-                    CAMERA_WIDTH,
-                    CAMERA_HEIGHT,
-                    OpenCvCameraRotation.UPRIGHT,
-            )
-        }
+        camera.openCameraDeviceAsync(object : OpenCvCamera.AsyncCameraOpenListener {
+            override fun onOpened() {
+                camera.startStreaming(
+                        CAMERA_WIDTH,
+                        CAMERA_HEIGHT,
+                        OpenCvCameraRotation.UPRIGHT,
+                )
+            }
+
+            override fun onError(errorCode: Int) {
+
+            }
+        })
 
         waitForStart()
 

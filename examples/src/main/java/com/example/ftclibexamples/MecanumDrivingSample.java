@@ -1,61 +1,120 @@
 package com.example.ftclibexamples;
 
 import com.arcrobotics.ftclib.drivebase.MecanumDrive;
-import com.arcrobotics.ftclib.geometry.Vector2d;
-import com.arcrobotics.ftclib.hardware.motors.MotorEx;
+import com.arcrobotics.ftclib.gamepad.GamepadEx;
+import com.arcrobotics.ftclib.hardware.RevIMU;
+import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+@TeleOp
 public class MecanumDrivingSample extends LinearOpMode {
 
-    private MecanumDrive driveTrain;
-
-    private MotorEx fL, fR, bL, bR;
-
-    // the motors used here are goBILDA Yellow Jackets, 435 rpm
+    // This variable determines whether the following program
+    // uses field-centric or robot-centric driving styles. The
+    // differences between them can be read here in the docs:
+    // https://docs.ftclib.org/ftclib/features/drivebases#control-scheme
+    static final boolean FIELD_CENTRIC = false;
 
     @Override
     public void runOpMode() throws InterruptedException {
-
-        fL = new MotorEx(hardwareMap, "frontLeft", MotorEx.GoBILDA.RPM_435);
-        fR = new MotorEx(hardwareMap, "frontRight", MotorEx.GoBILDA.RPM_435);
-        bL = new MotorEx(hardwareMap, "backLeft", MotorEx.GoBILDA.RPM_435);
-        bR = new MotorEx(hardwareMap, "backRight", MotorEx.GoBILDA.RPM_435);
-
-        driveTrain = new MecanumDrive(
-                fL, fR, bL, bR
+        // constructor takes in frontLeft, frontRight, backLeft, backRight motors
+        // IN THAT ORDER
+        MecanumDrive drive = new MecanumDrive(
+            new Motor(hardwareMap, "frontLeft", Motor.GoBILDA.RPM_435),
+            new Motor(hardwareMap, "frontRight", Motor.GoBILDA.RPM_435),
+            new Motor(hardwareMap, "backLeft", Motor.GoBILDA.RPM_435),
+            new Motor(hardwareMap, "backRight", Motor.GoBILDA.RPM_435)
         );
+
+        // This is the built-in IMU in the REV hub.
+        // We're initializing it by its default parameters
+        // and name in the config ('imu'). The orientation
+        // of the hub is important. Below is a model
+        // of the REV Hub and the orientation axes for the IMU.
+        //
+        //                           | Z axis
+        //                           |
+        //     (Motor Port Side)     |   / X axis
+        //                       ____|__/____
+        //          Y axis     / *   | /    /|   (IO Side)
+        //          _________ /______|/    //      I2C
+        //                   /___________ //     Digital
+        //                  |____________|/      Analog
+        //
+        //                 (Servo Port Side)
+        //
+        // (unapologetically stolen from the road-runner-quickstart)
+
+        RevIMU imu = new RevIMU(hardwareMap);
+        imu.init();
+
+        // the extended gamepad object
+        GamepadEx driverOp = new GamepadEx(gamepad1);
 
         waitForStart();
 
-        driveWithVector(new Vector2d(12, 3));
-        sleep(1000);
-        driveWithVector(new Vector2d(0, 0));
+        while (!isStopRequested()) {
 
-    }
+            // Driving the mecanum base takes 3 joystick parameters: leftX, leftY, rightX.
+            // These are related to the left stick x value, left stick y value, and
+            // right stick x value respectively. These values are passed in to represent the
+            // strafing speed, the forward speed, and the turning speed of the robot frame
+            // respectively from [-1, 1].
 
-    private void driveWithVector(Vector2d vector) {
-        double[] speeds = normalize(new double[]{vector.getX(), vector.getY()});
-        driveTrain.driveRobotCentric(speeds[0], speeds[1], 0);
-    }
+            if (!FIELD_CENTRIC) {
 
-    /**
-     * Normalize the wheel speeds if any value is greater than 1
-     */
-    private double[] normalize(double[] wheelSpeeds) {
-        double maxMagnitude = Math.abs(wheelSpeeds[0]);
-        for (int i = 1; i < wheelSpeeds.length; i++) {
-            double temp = Math.abs(wheelSpeeds[i]);
-            if (maxMagnitude < temp) {
-                maxMagnitude = temp;
+                // For a robot centric model, the input of (0,1,0) for (leftX, leftY, rightX)
+                // will move the robot in the direction of its current heading. Every movement
+                // is relative to the frame of the robot itself.
+                //
+                //                 (0,1,0)
+                //                   /
+                //                  /
+                //           ______/_____
+                //          /           /
+                //         /           /
+                //        /___________/
+                //           ____________
+                //          /  (0,0,1)  /
+                //         /     ↻     /
+                //        /___________/
+
+                // optional fourth parameter for squared inputs
+                drive.driveRobotCentric(
+                        driverOp.getLeftX(),
+                        driverOp.getLeftY(),
+                        driverOp.getRightX(),
+                        false
+                );
+            } else {
+
+                // Below is a model for how field centric will drive when given the inputs
+                // for (leftX, leftY, rightX). As you can see, for (0,1,0), it will travel forward
+                // regardless of the heading. For (1,0,0) it will strafe right (ref to the 0 heading)
+                // regardless of the heading.
+                //
+                //                   heading
+                //                     /
+                //            (0,1,0) /
+                //               |   /
+                //               |  /
+                //            ___|_/_____
+                //          /           /
+                //         /           / ---------- (1,0,0)
+                //        /__________ /
+
+                // optional fifth parameter for squared inputs
+                drive.driveFieldCentric(
+                        driverOp.getLeftX(),
+                        driverOp.getLeftY(),
+                        driverOp.getRightX(),
+                        imu.getRotation2d().getDegrees(),   // gyro value passed in here must be in degrees
+                        false
+                );
             }
-        }
-        if (maxMagnitude > 1.0) {
-            for (int i = 0; i < wheelSpeeds.length; i++) {
-                wheelSpeeds[i] = wheelSpeeds[i] / maxMagnitude;
-            }
-        }
 
-        return wheelSpeeds;
+        }
     }
 
 }
