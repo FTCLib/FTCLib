@@ -10,7 +10,7 @@ dependencies {
 
 configurations.all {
     resolutionStrategy {
-        force 'androidx.core:core-ktx:1.7.0'
+        force 'androidx.core:core-ktx:1.6.0'
     }
 }
 
