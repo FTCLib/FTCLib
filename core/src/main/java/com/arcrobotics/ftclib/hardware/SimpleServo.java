@@ -19,8 +19,8 @@ public class SimpleServo implements ServoEx {
     public SimpleServo(HardwareMap hw, String servoName, double minAngle, double maxAngle, AngleUnit angleUnit) {
         servo = hw.get(Servo.class, servoName);
 
-        this.minAngle = toRadians(maxAngle, angleUnit);
-        this.maxAngle = toRadians(minAngle, angleUnit);
+        this.minAngle = toRadians(minAngle, angleUnit);
+        this.maxAngle = toRadians(maxAngle, angleUnit);
     }
 
     public SimpleServo(HardwareMap hw, String servoName, double minDegree, double maxDegree) {
