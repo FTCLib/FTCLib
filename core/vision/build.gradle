@@ -12,7 +12,7 @@ dependencies {
 
 def groupId = 'com.arcrobotics.ftclib'
 def artifactId = 'vision'
-def version = '2.0.0'
+def version = '2.0.1'
 
 def localReleaseDest = "${buildDir}/release/${version}"
 def releaseStorageDir = "${projectDir}/ReleaseStorage"
