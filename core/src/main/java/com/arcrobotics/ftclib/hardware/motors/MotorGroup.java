@@ -16,15 +16,17 @@ import java.util.stream.Collectors;
 public class MotorGroup extends Motor implements Iterable<Motor> {
 
     private final Motor[] group;
-    private boolean isInverted;
 
     /**
      * Create a new MotorGroup with the provided Motors.
      *
-     * @param motors The motors to add.
+     * @param leader    The leader motor.
+     * @param followers The follower motors which follow the leader motor's protocols.
      */
-    public MotorGroup(Motor... motors) {
-        group = motors;
+    public MotorGroup(@NonNull Motor leader, Motor... followers) {
+        group = new Motor[followers.length + 1];
+        group[0] = leader;
+        System.arraycopy(followers, 0, group, 1, followers.length);
     }
 
     /**
@@ -63,11 +65,12 @@ public class MotorGroup extends Motor implements Iterable<Motor> {
     }
 
     /**
-     * @return All current velocities of the motors in the group
+     * @return All current velocities of the motors in the group in units of distance
+     * per second which is by default ticks / second
      */
     public List<Double> getVelocities() {
         return Arrays.stream(group)
-                .map(Motor::getCorrectedVelocity)
+                .map(Motor::getRate)
                 .collect(Collectors.toList());
     }
 
@@ -160,7 +163,7 @@ public class MotorGroup extends Motor implements Iterable<Motor> {
      */
     @Override
     public boolean getInverted() {
-        return isInverted;
+        return group[0].getInverted();
     }
 
     /**
@@ -171,7 +174,9 @@ public class MotorGroup extends Motor implements Iterable<Motor> {
      */
     @Override
     public void setInverted(boolean isInverted) {
-        this.isInverted = isInverted;
+        for (Motor motor : group) {
+            motor.setInverted(isInverted);
+        }
     }
 
     /**

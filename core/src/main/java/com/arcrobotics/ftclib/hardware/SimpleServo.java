@@ -26,7 +26,10 @@ public class SimpleServo implements ServoEx {
      * @param angleUnit the type of angular units the servo angles are measured in
      */
     public SimpleServo(HardwareMap hw, String servoName, double minAngle, double maxAngle, AngleUnit angleUnit) {
-        this(hw.get(Servo.class, servoName), minAngle, maxAngle, angleUnit);
+        servo = hw.get(Servo.class, servoName);
+
+        this.minAngle = toRadians(minAngle, angleUnit);
+        this.maxAngle = toRadians(maxAngle, angleUnit);
     }
 
     /**
@@ -34,11 +37,11 @@ public class SimpleServo implements ServoEx {
      *
      * @param hw        the HardwareMap instance from the OpMode
      * @param servoName the name of the servo in the configuration
-     * @param minAngle  the smallest angle in degrees the servo can turn to
-     * @param maxAngle  the largest angle in degrees the servo can turn to
+     * @param minDegree the smallest angle in degrees the servo can turn to
+     * @param maxDegree the largest angle in degrees the servo can turn to
      */
-    public SimpleServo(HardwareMap hw, String servoName, double minAngle, double maxAngle) {
-        this(hw, servoName, maxAngle, minAngle, AngleUnit.DEGREES);
+    public SimpleServo(HardwareMap hw, String servoName, double minDegree, double maxDegree) {
+        this(hw, servoName, minDegree, maxDegree, AngleUnit.DEGREES);
     }
 
     /**
@@ -52,8 +55,8 @@ public class SimpleServo implements ServoEx {
     public SimpleServo(Servo servo, double minAngle, double maxAngle, AngleUnit angleUnit) {
         this.servo = servo;
 
-        this.minAngle = toRadians(maxAngle, angleUnit);
-        this.maxAngle = toRadians(minAngle, angleUnit);
+        this.minAngle = toRadians(minAngle, angleUnit);
+        this.maxAngle = toRadians(maxAngle, angleUnit);
     }
 
     /**
@@ -155,7 +158,7 @@ public class SimpleServo implements ServoEx {
         String controller = servo.getController().toString();
         return "SimpleServo: " + port + "; " + controller;
     }
-    
+
     private double toRadians(double angle, AngleUnit angleUnit) {
         return angleUnit == AngleUnit.DEGREES ? Math.toRadians(angle) : angle;
     }

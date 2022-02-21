@@ -17,8 +17,8 @@ public class UGRectRingPipeline extends OpenCvPipeline {
     private Mat bottomBlock = new Mat();
 
     //Where the average CB value of the rectangles are stored
-    private double topAverage;
-    private double bottomAverage;
+    private double topAverage = 0;
+    private double bottomAverage = 0;
 
     //The max difference allowed inside the rectangles
     private int threshold = 15;
