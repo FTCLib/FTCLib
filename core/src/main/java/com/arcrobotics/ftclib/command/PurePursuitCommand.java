@@ -2,8 +2,8 @@ package com.arcrobotics.ftclib.command;
 
 import com.arcrobotics.ftclib.drivebase.MecanumDrive;
 import com.arcrobotics.ftclib.geometry.Pose2d;
-import com.arcrobotics.ftclib.purepursuit.Path;
-import com.arcrobotics.ftclib.purepursuit.Waypoint;
+import com.arcrobotics.ftclib.trajectory.purepursuit.Path;
+import com.arcrobotics.ftclib.trajectory.purepursuit.Waypoint;
 
 /**
  * @author Jackson

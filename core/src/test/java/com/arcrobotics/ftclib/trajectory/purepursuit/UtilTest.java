@@ -1,9 +1,9 @@
-package com.arcrobotics.ftclib.purepursuit;
+package com.arcrobotics.ftclib.trajectory.purepursuit;
 
-import com.arcrobotics.ftclib.purepursuit.waypoints.EndWaypoint;
-import com.arcrobotics.ftclib.purepursuit.waypoints.GeneralWaypoint;
-import com.arcrobotics.ftclib.purepursuit.waypoints.PointTurnWaypoint;
-import com.arcrobotics.ftclib.purepursuit.waypoints.StartWaypoint;
+import com.arcrobotics.ftclib.trajectory.purepursuit.waypoints.EndWaypoint;
+import com.arcrobotics.ftclib.trajectory.purepursuit.waypoints.GeneralWaypoint;
+import com.arcrobotics.ftclib.trajectory.purepursuit.waypoints.PointTurnWaypoint;
+import com.arcrobotics.ftclib.trajectory.purepursuit.waypoints.StartWaypoint;
 
 import org.junit.jupiter.api.Test;
 
