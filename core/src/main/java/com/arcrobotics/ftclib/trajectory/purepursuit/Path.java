@@ -39,4 +39,8 @@ public class Path {
         return pathPoints.get(closestPointIdx).minus(robotPoint);
     }
 
+    public Translation2d getLastPoint() {
+        return pathPoints.get(pathPoints.size() - 1);
+    }
+
 }

@@ -3,72 +3,97 @@ package com.example.ftclibexamples;
 import com.arcrobotics.ftclib.command.CommandOpMode;
 import com.arcrobotics.ftclib.command.OdometrySubsystem;
 import com.arcrobotics.ftclib.command.PurePursuitCommand;
-import com.arcrobotics.ftclib.drivebase.MecanumDrive;
+import com.arcrobotics.ftclib.drivebase.DifferentialDrive;
+import com.arcrobotics.ftclib.geometry.Pose2d;
+import com.arcrobotics.ftclib.geometry.Rotation2d;
+import com.arcrobotics.ftclib.geometry.Translation2d;
 import com.arcrobotics.ftclib.hardware.motors.Motor;
-import com.arcrobotics.ftclib.hardware.motors.MotorEx;
-import com.arcrobotics.ftclib.kinematics.HolonomicOdometry;
-import com.arcrobotics.ftclib.trajectory.purepursuit.waypoints.EndWaypoint;
-import com.arcrobotics.ftclib.trajectory.purepursuit.waypoints.GeneralWaypoint;
-import com.arcrobotics.ftclib.trajectory.purepursuit.waypoints.StartWaypoint;
+import com.arcrobotics.ftclib.hardware.motors.MotorGroup;
+import com.arcrobotics.ftclib.kinematics.DifferentialOdometry;
+import com.arcrobotics.ftclib.kinematics.wpilibkinematics.DifferentialDriveKinematics;
+import com.arcrobotics.ftclib.trajectory.Trajectory;
+import com.arcrobotics.ftclib.trajectory.TrajectoryConfig;
+import com.arcrobotics.ftclib.trajectory.TrajectoryGenerator;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
+import java.util.Arrays;
+
+/**
+ * A sample for the pure pursuit command, which is a look-ahead based follower
+ * for the FTCLib trajectories. Please refer to the DeadWheelsSample
+ * before looking at this one, as it will more thoroughly explain
+ * how the odometry is being used and how to create it.
+ */
 @Autonomous
 @Disabled
 public class PurePursuitSample extends CommandOpMode {
 
-    // define our constants
-    static final double TRACKWIDTH = 13.7;
-    static final double WHEEL_DIAMETER = 4.0;    // inches
-    static double TICKS_TO_INCHES;
-    static final double CENTER_WHEEL_OFFSET = 2.4;
+    static final double TRACKWIDTH = 0.4572;    // meters
+    static final double WHEEL_DIAMETER = 0.03;  // meters
+    static final double TICKS_PER_REV = 4096;
+    static final double DISTANCE_PER_PULSE = WHEEL_DIAMETER * Math.PI / TICKS_PER_REV;
 
-    private HolonomicOdometry m_robotOdometry;
-    private OdometrySubsystem m_odometry;
-    private PurePursuitCommand ppCommand;
-    private MecanumDrive m_robotDrive;
-    private Motor fL, fR, bL, bR;
-    private MotorEx leftEncoder, rightEncoder, centerEncoder;
+    static final double MAX_VELOCITY = 1.5;     // meters per second
+    static final double MAX_ACCELERATION = 1.5; // meters per second per second
+
+    static double LOOK_AHEAD_DISTANCE = 0.5;    // meters
+
+    private DifferentialOdometry robotOdometry;
+    private DifferentialDrive robotDrive;
+    private Motor frontLeft, frontRight, backLeft, backRight;
+    private Motor.Encoder leftEncoder, rightEncoder;
+
+    private OdometrySubsystem odometrySubsystem;
+    private PurePursuitCommand followerCommand;
 
     @Override
     public void initialize() {
-        fL = new Motor(hardwareMap, "frontLeft");
-        fR = new Motor(hardwareMap, "frontRight");
-        bL = new Motor(hardwareMap, "backLeft");
-        bR = new Motor(hardwareMap, "backRight");
+        frontLeft = new Motor(hardwareMap, "front_left");
+        frontRight = new Motor(hardwareMap, "front_right");
+        backLeft = new Motor(hardwareMap, "back_left");
+        backRight = new Motor(hardwareMap, "back_right");
 
-        // create our drive object
-        m_robotDrive = new MecanumDrive(fL, fR, bL, bR);
+        // The pure pursuit command uses a DifferentialDrive object
+        // because of how the look-ahead algorithm works. It tries to make
+        // the robot follow the curvature of the path through the use of the look ahead.
+        robotDrive = new DifferentialDrive(
+            new MotorGroup(frontLeft, backLeft),
+            new MotorGroup(frontRight, backRight)
+        );
 
-        leftEncoder = new MotorEx(hardwareMap, "leftEncoder");
-        rightEncoder = new MotorEx(hardwareMap, "rightEncoder");
-        centerEncoder = new MotorEx(hardwareMap, "centerEncoder");
-
-        // calculate multiplier
-        TICKS_TO_INCHES = WHEEL_DIAMETER * Math.PI / leftEncoder.getCPR();
+        // obtain our encoder objects
+        leftEncoder = frontLeft.encoder.setDistancePerPulse(DISTANCE_PER_PULSE);
+        rightEncoder = frontRight.encoder.setDistancePerPulse(DISTANCE_PER_PULSE);
 
         // create our odometry object and subsystem
-        m_robotOdometry = new HolonomicOdometry(
-                () -> leftEncoder.getCurrentPosition() * TICKS_TO_INCHES,
-                () -> rightEncoder.getCurrentPosition() * TICKS_TO_INCHES,
-                () -> centerEncoder.getCurrentPosition() * TICKS_TO_INCHES,
-                TRACKWIDTH, CENTER_WHEEL_OFFSET
-        );
-        m_odometry = new OdometrySubsystem(m_robotOdometry);
+        robotOdometry = new DifferentialOdometry(leftEncoder::getDistance, rightEncoder::getDistance, TRACKWIDTH);
+        odometrySubsystem = new OdometrySubsystem(robotOdometry);
+
+        // Create config for trajectory
+        TrajectoryConfig config = new TrajectoryConfig(MAX_VELOCITY, MAX_ACCELERATION);
+
+        // An example trajectory to follow. All units in meters.
+        Trajectory exampleTrajectory =
+            TrajectoryGenerator.generateTrajectory(
+                // Start at the origin facing the +X direction
+                new Pose2d(0, 0, new Rotation2d(0)),
+                // Pass through these two interior waypoints, making an 's' curve path
+                Arrays.asList(new Translation2d(1, 1), new Translation2d(2, -1)),
+                // End 3 meters straight ahead of where we started, facing forward
+                new Pose2d(3, 0, new Rotation2d(0)),
+                // Pass config
+                config);
 
         // create our pure pursuit command
-        ppCommand = new PurePursuitCommand(
-                m_robotDrive, m_odometry,
-                new StartWaypoint(0, 0),
-                new GeneralWaypoint(200, 0, 0.8, 0.8, 30),
-                new EndWaypoint(
-                        400, 0, 0, 0.5,
-                        0.5, 30, 0.8, 1
-                )
+        followerCommand = new PurePursuitCommand(
+            robotDrive, new DifferentialDriveKinematics(TRACKWIDTH), exampleTrajectory,
+            LOOK_AHEAD_DISTANCE, MAX_VELOCITY,
+            new Translation2d(), odometrySubsystem::getPose
         );
 
         // schedule the command
-        schedule(ppCommand);
+        schedule(followerCommand);
     }
 
 }
