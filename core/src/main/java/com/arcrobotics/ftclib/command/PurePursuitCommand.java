@@ -1,14 +1,15 @@
 package com.arcrobotics.ftclib.command;
 
-import com.arcrobotics.ftclib.drivebase.DifferentialDrive;
 import com.arcrobotics.ftclib.geometry.Pose2d;
 import com.arcrobotics.ftclib.geometry.Translation2d;
 import com.arcrobotics.ftclib.kinematics.wpilibkinematics.ChassisSpeeds;
 import com.arcrobotics.ftclib.kinematics.wpilibkinematics.DifferentialDriveKinematics;
 import com.arcrobotics.ftclib.kinematics.wpilibkinematics.DifferentialDriveWheelSpeeds;
 import com.arcrobotics.ftclib.trajectory.Trajectory;
+import com.arcrobotics.ftclib.trajectory.TrajectoryConfig;
 import com.arcrobotics.ftclib.trajectory.purepursuit.PathFollower;
 
+import java.util.function.BiConsumer;
 import java.util.function.Supplier;
 
 /**
@@ -19,27 +20,26 @@ import java.util.function.Supplier;
  */
 public class PurePursuitCommand extends CommandBase {
 
-    private DifferentialDrive drive;
     private DifferentialDriveKinematics kinematics;
     private PathFollower follower;
     private Translation2d poseTolerance;
     private Supplier<Pose2d> currentRobotPose;
-    private double lookAhead, maxVelocity;
+    private BiConsumer<Double, Double> output;
+    private double lookAhead;
 
-    public PurePursuitCommand(DifferentialDrive drive,
-                              DifferentialDriveKinematics kinematics,
+    public PurePursuitCommand(TrajectoryConfig config,
                               Trajectory trajectory,
+                              DifferentialDriveKinematics kinematics,
                               double lookAheadDistance,
-                              double maxVelocity,
                               Translation2d poseTolerance,
-                              Supplier<Pose2d> currentRobotPose) {
-        this.drive = drive;
+                              Supplier<Pose2d> currentRobotPose,
+                              BiConsumer<Double, Double> output) {
         this.kinematics = kinematics;
         this.currentRobotPose = currentRobotPose;
-        this.maxVelocity = maxVelocity;
         this.poseTolerance = poseTolerance;
+        this.output = output;
         lookAhead = lookAheadDistance;
-        follower = new PathFollower(trajectory, maxVelocity);
+        follower = new PathFollower(trajectory, config.getMaxVelocity());
     }
 
     @Override
@@ -47,13 +47,13 @@ public class PurePursuitCommand extends CommandBase {
         Pose2d robotPose = currentRobotPose.get();
         ChassisSpeeds chassisSpeeds = follower.getChassisSpeeds(robotPose, lookAhead);
         DifferentialDriveWheelSpeeds wheelSpeeds = kinematics.toWheelSpeeds(chassisSpeeds);
-        wheelSpeeds.normalize(maxVelocity);
-        drive.tankDrive(wheelSpeeds.leftMetersPerSecond / maxVelocity, wheelSpeeds.rightMetersPerSecond / maxVelocity);
+        wheelSpeeds.normalize(1);
+        output.accept(wheelSpeeds.leftMetersPerSecond, wheelSpeeds.rightMetersPerSecond);
     }
 
     @Override
     public void end(boolean interrupted) {
-        drive.stop();
+        output.accept(0.0, 0.0);
     }
 
     @Override

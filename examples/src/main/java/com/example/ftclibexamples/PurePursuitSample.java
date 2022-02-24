@@ -87,9 +87,10 @@ public class PurePursuitSample extends CommandOpMode {
 
         // create our pure pursuit command
         followerCommand = new PurePursuitCommand(
-            robotDrive, new DifferentialDriveKinematics(TRACKWIDTH), exampleTrajectory,
-            LOOK_AHEAD_DISTANCE, MAX_VELOCITY,
-            new Translation2d(), odometrySubsystem::getPose
+            config, exampleTrajectory,
+            new DifferentialDriveKinematics(TRACKWIDTH), LOOK_AHEAD_DISTANCE,
+            new Translation2d(), odometrySubsystem::getPose,
+            (leftSpeed, rightSpeed) -> robotDrive.tankDrive(leftSpeed, rightSpeed)
         );
 
         // schedule the command
