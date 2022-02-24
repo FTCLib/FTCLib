@@ -71,7 +71,9 @@ public class PurePursuitSample extends CommandOpMode {
         odometrySubsystem = new OdometrySubsystem(robotOdometry);
 
         // Create config for trajectory
-        TrajectoryConfig config = new TrajectoryConfig(MAX_VELOCITY, MAX_ACCELERATION);
+        DifferentialDriveKinematics kinematics = new DifferentialDriveKinematics(TRACKWIDTH);
+        TrajectoryConfig config = new TrajectoryConfig(MAX_VELOCITY, MAX_ACCELERATION)
+            .setKinematics(kinematics);
 
         // An example trajectory to follow. All units in meters.
         Trajectory exampleTrajectory =
@@ -88,7 +90,7 @@ public class PurePursuitSample extends CommandOpMode {
         // create our pure pursuit command
         followerCommand = new PurePursuitCommand(
             config, exampleTrajectory,
-            new DifferentialDriveKinematics(TRACKWIDTH), LOOK_AHEAD_DISTANCE,
+            kinematics, LOOK_AHEAD_DISTANCE,
             new Translation2d(), odometrySubsystem::getPose,
             (leftSpeed, rightSpeed) -> robotDrive.tankDrive(leftSpeed, rightSpeed)
         );
