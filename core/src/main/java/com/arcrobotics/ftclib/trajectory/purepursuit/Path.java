@@ -24,7 +24,7 @@ public class Path {
     public Translation2d getRelativeLookAheadPoint(Pose2d robotPose, double lookAhead) {
         Translation2d robotPoint = robotPose.getTranslation();
         int closestPointIdx = lastLookAheadPoint;
-        for (int pointIdx = Math.min(closestPointIdx - 1, 0); pointIdx < pathPoints.size(); pointIdx++) {
+        for (int pointIdx = Math.max(closestPointIdx - 1, 0); pointIdx < pathPoints.size(); pointIdx++) {
             Translation2d relativePoint = pathPoints.get(pointIdx).minus(robotPoint);
             Translation2d closestRelativePoint = pathPoints.get(closestPointIdx).minus(robotPoint);
             double d1 = Math.sqrt(lookAhead * lookAhead - relativePoint.getX() * relativePoint.getX());
