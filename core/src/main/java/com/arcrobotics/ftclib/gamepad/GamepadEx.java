@@ -44,7 +44,7 @@ public class GamepadEx {
 
     /**
      * @param button the button object
-     * @return the boolean value as to whether the button is active or not
+     * @return the boolean value whether the button is active or not
      */
     public boolean getButton(Button button) {
         boolean buttonValue = false;
@@ -152,6 +152,7 @@ public class GamepadEx {
      * @return if the button was just pressed
      */
     public boolean wasJustPressed(Button button) {
+        buttonReaders.get(button).readValue();
         return buttonReaders.get(button).wasJustPressed();
     }
 
@@ -162,6 +163,7 @@ public class GamepadEx {
      * @return if the button was just released
      */
     public boolean wasJustReleased(Button button) {
+        buttonReaders.get(button).readValue();
         return buttonReaders.get(button).wasJustReleased();
     }
 
@@ -192,6 +194,7 @@ public class GamepadEx {
      * @return if the button's state has just changed
      */
     public boolean stateJustChanged(Button button) {
+        buttonReaders.get(button).readValue();
         return buttonReaders.get(button).stateJustChanged();
     }
 
