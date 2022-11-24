@@ -160,14 +160,12 @@ public class MecanumDrive extends RobotDrive {
 
         normalize(wheelSpeeds);
 
-        motors[MotorType.kFrontLeft.value]
-                .set(wheelSpeeds[MotorType.kFrontLeft.value] * maxOutput);
-        motors[MotorType.kFrontRight.value]
-                .set(wheelSpeeds[MotorType.kFrontRight.value] * rightSideMultiplier * maxOutput);
-        motors[MotorType.kBackLeft.value]
-                .set(wheelSpeeds[MotorType.kBackLeft.value] * maxOutput);
-        motors[MotorType.kBackRight.value]
-                .set(wheelSpeeds[MotorType.kBackRight.value] * rightSideMultiplier * maxOutput);
+        driveWithMotorPowers(
+                wheelSpeeds[MotorType.kFrontLeft.value],
+                wheelSpeeds[MotorType.kFrontRight.value],
+                wheelSpeeds[MotorType.kBackLeft.value],
+                wheelSpeeds[MotorType.kBackRight.value]
+        );
     }
 
     /**
@@ -187,6 +185,26 @@ public class MecanumDrive extends RobotDrive {
         turnSpeed = squareInputs ? clipRange(squareInput(turnSpeed)) : clipRange(turnSpeed);
 
         driveFieldCentric(xSpeed, ySpeed, turnSpeed, gyroAngle);
+    }
+
+    /**
+     * Drives the motors directly with the specified motor powers.
+     *
+     * @param frontLeftSpeed    the speed of the front left motor
+     * @param frontRightSpeed   the speed of the front right motor
+     * @param backLeftSpeed     the speed of the back left motor
+     * @param backRightSpeed    the speed of the back right motor
+     */
+    public void driveWithMotorPowers(double frontLeftSpeed, double frontRightSpeed,
+                                     double backLeftSpeed, double backRightSpeed) {
+        motors[MotorType.kFrontLeft.value]
+                .set(frontLeftSpeed * maxOutput);
+        motors[MotorType.kFrontRight.value]
+                .set(frontRightSpeed * rightSideMultiplier * maxOutput);
+        motors[MotorType.kBackLeft.value]
+                .set(backLeftSpeed * maxOutput);
+        motors[MotorType.kBackRight.value]
+                .set(backRightSpeed * rightSideMultiplier * maxOutput);
     }
 
 }

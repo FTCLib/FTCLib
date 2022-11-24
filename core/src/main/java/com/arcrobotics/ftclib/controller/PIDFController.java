@@ -225,7 +225,6 @@ public class PIDFController {
         maxIntegral = integralMax;
     }
 
-    // used to clear kI gains
     public void clearTotalError() {
         totalError = 0;
     }
@@ -233,7 +232,7 @@ public class PIDFController {
     public void setP(double kp) {
         kP = kp;
     }
-
+    
     public void setI(double ki) {
         kI = ki;
     }
