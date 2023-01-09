@@ -60,4 +60,15 @@ public class SwerveModuleState implements Comparable<SwerveModuleState> {
         return String.format("SwerveModuleState(Speed: %.2f m/s, Angle: %s)", speedMetersPerSecond,
                 angle);
     }
+        public static SwerveModuleState optimize(
+            SwerveModuleState desiredState, Rotation2d currentAngle) {
+        Rotation2d delta = desiredState.angle.minus(currentAngle);
+        if (Math.abs(delta.getDegrees()) > 90.0) {
+            return new SwerveModuleState(
+                    -desiredState.speedMetersPerSecond,
+                    desiredState.angle.rotateBy(Rotation2d.fromDegrees(180.0)));
+        } else {
+            return new SwerveModuleState(desiredState.speedMetersPerSecond, desiredState.angle);
+        }
+    }
 }
