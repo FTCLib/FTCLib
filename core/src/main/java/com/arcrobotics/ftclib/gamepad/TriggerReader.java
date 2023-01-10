@@ -40,8 +40,7 @@ public class TriggerReader implements KeyReader {
         lastState = currState;
     }
     
-    public TriggerReader(GamepadEx gamepad, GamepadKeys.Trigger trigger, double threshold)
-    {
+    public TriggerReader(GamepadEx gamepad, GamepadKeys.Trigger trigger, double threshold) {
         this.gamepad = gamepad;
         this.trigger = trigger;
         this.threshold = threshold;
