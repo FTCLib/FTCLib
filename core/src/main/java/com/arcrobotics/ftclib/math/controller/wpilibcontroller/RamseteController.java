@@ -5,7 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package com.arcrobotics.ftclib.controller.wpilibcontroller;
+package com.arcrobotics.ftclib.math.controller.wpilibcontroller;
 
 
 import com.arcrobotics.ftclib.geometry.Pose2d;

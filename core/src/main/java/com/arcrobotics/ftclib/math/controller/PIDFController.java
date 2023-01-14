@@ -1,4 +1,4 @@
-package com.arcrobotics.ftclib.controller;
+package com.arcrobotics.ftclib.math.controller;
 
 /**
  * This is a PID controller (https://en.wikipedia.org/wiki/PID_controller)

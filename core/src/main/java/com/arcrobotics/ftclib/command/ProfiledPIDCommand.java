@@ -9,7 +9,7 @@ package com.arcrobotics.ftclib.command;
 
 import androidx.annotation.NonNull;
 
-import com.arcrobotics.ftclib.controller.wpilibcontroller.ProfiledPIDController;
+import com.arcrobotics.ftclib.math.controller.wpilibcontroller.ProfiledPIDController;
 
 import java.util.Arrays;
 import java.util.function.BiConsumer;

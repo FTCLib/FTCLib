@@ -1,6 +1,6 @@
 package com.example.ftclibexamples.OldCommandSample;
 
-import com.arcrobotics.ftclib.controller.PIDController;
+import com.arcrobotics.ftclib.math.controller.PIDController;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.hardware.motors.MotorEx;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;

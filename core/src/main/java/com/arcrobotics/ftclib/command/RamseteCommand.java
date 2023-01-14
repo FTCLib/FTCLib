@@ -1,8 +1,8 @@
 package com.arcrobotics.ftclib.command;
 
-import com.arcrobotics.ftclib.controller.PIDController;
-import com.arcrobotics.ftclib.controller.wpilibcontroller.RamseteController;
-import com.arcrobotics.ftclib.controller.wpilibcontroller.SimpleMotorFeedforward;
+import com.arcrobotics.ftclib.math.controller.PIDController;
+import com.arcrobotics.ftclib.math.controller.wpilibcontroller.RamseteController;
+import com.arcrobotics.ftclib.math.controller.wpilibcontroller.SimpleMotorFeedforward;
 import com.arcrobotics.ftclib.geometry.Pose2d;
 import com.arcrobotics.ftclib.kinematics.wpilibkinematics.ChassisSpeeds;
 import com.arcrobotics.ftclib.kinematics.wpilibkinematics.DifferentialDriveKinematics;

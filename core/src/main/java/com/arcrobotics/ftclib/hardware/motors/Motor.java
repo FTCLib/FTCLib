@@ -2,9 +2,9 @@ package com.arcrobotics.ftclib.hardware.motors;
 
 import androidx.annotation.NonNull;
 
-import com.arcrobotics.ftclib.controller.PController;
-import com.arcrobotics.ftclib.controller.PIDController;
-import com.arcrobotics.ftclib.controller.wpilibcontroller.SimpleMotorFeedforward;
+import com.arcrobotics.ftclib.math.controller.PController;
+import com.arcrobotics.ftclib.math.controller.PIDController;
+import com.arcrobotics.ftclib.math.controller.wpilibcontroller.SimpleMotorFeedforward;
 import com.arcrobotics.ftclib.hardware.HardwareDevice;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;

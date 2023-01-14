@@ -5,7 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package com.arcrobotics.ftclib.controller.wpilibcontroller;
+package com.arcrobotics.ftclib.math.controller.wpilibcontroller;
 
 /**
  * A helper class that computes feedforward outputs for a simple arm (modeled as a motor

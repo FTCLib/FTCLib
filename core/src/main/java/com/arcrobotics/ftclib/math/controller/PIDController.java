@@ -1,4 +1,4 @@
-package com.arcrobotics.ftclib.controller;
+package com.arcrobotics.ftclib.math.controller;
 
 public class PIDController extends PIDFController {
 

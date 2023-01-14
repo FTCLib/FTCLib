@@ -1,7 +1,7 @@
 package com.example.ftclibexamples.OldCommandSample;
 
 import com.arcrobotics.ftclib.command.old.Command;
-import com.arcrobotics.ftclib.controller.PController;
+import com.arcrobotics.ftclib.math.controller.PController;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
