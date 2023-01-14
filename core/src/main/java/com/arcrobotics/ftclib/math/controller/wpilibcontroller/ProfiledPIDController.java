@@ -5,9 +5,9 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package com.arcrobotics.ftclib.controller.wpilibcontroller;
+package com.arcrobotics.ftclib.math.controller.wpilibcontroller;
 
-import com.arcrobotics.ftclib.controller.PIDController;
+import com.arcrobotics.ftclib.math.controller.PIDController;
 import com.arcrobotics.ftclib.trajectory.TrapezoidProfile;
 
 /**
