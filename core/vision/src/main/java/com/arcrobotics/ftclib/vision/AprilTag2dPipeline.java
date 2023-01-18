@@ -1,4 +1,4 @@
-package org.ftclib.core.vision.src.main.java.com.arcrobotics.ftclib.vision;
+package com.arcrobotics.ftclib.vision;
 
 import org.opencv.core.Mat;
 import org.opencv.core.Point;
