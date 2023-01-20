@@ -10,7 +10,7 @@ import org.openftc.easyopencv.OpenCvPipeline;
 
 import java.util.ArrayList;
 
-public class AprilTagDetectionPipeline extends OpenCvPipeline
+public class AprilTag2dPipeline extends OpenCvPipeline
 {
     private long nativeApriltagPtr;
     private Mat grey = new Mat();
@@ -37,7 +37,7 @@ public class AprilTagDetectionPipeline extends OpenCvPipeline
     private boolean needToSetDecimation;
     private final Object decimationSync = new Object();
 
-    public AprilTagDetectionPipeline(double tagsize, double fx, double fy, double cx, double cy)
+    public AprilTag2dPipeline(double tagsize, double fx, double fy, double cx, double cy)
     {
         this.tagsize = tagsize;
         this.tagsizeX = tagsize;
@@ -51,7 +51,7 @@ public class AprilTagDetectionPipeline extends OpenCvPipeline
         nativeApriltagPtr = AprilTagDetectorJNI.createApriltagDetector(AprilTagDetectorJNI.TagFamily.TAG_36h11.string, 3, 3);
     }
 
-    public AprilTagDetectionPipeline() {
+    public AprilTag2dPipeline() {
         this(0.166, 578.272, 578.272, 402.145, 221.506);
     }
 
