@@ -1,4 +1,4 @@
-package com.example.ftclibexamples.CommandSample;
+package com.example.ftclibexamples.VerboseCommandSamples;
 
 import com.arcrobotics.ftclib.command.CommandBase;
 
