@@ -1,4 +1,4 @@
-package com.example.ftclibexamples.kotlinexamples
+package com.example.ftclibexamples.KotlinSample
 
 import com.arcrobotics.ftclib.geometry.Pose2d
 import com.arcrobotics.ftclib.geometry.Rotation2d

@@ -1,4 +1,4 @@
-package com.example.ftclibexamples.kotlinexamples
+package com.example.ftclibexamples.KotlinSample
 
 import com.arcrobotics.ftclib.hardware.SimpleServo
 import com.arcrobotics.ftclib.kotlin.extensions.hardware.range

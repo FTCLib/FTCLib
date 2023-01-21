@@ -1,4 +1,4 @@
-package com.example.ftclibexamples.kotlinexamples
+package com.example.ftclibexamples.KotlinSample
 
 import com.arcrobotics.ftclib.command.CommandScheduler
 import com.arcrobotics.ftclib.gamepad.GamepadEx

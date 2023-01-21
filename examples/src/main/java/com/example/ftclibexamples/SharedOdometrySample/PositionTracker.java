@@ -1,4 +1,4 @@
-package com.example.ftclibexamples.SharedOdometry;
+package com.example.ftclibexamples.SharedOdometrySample;
 
 import com.arcrobotics.ftclib.geometry.Pose2d;
 

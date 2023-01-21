@@ -1,4 +1,4 @@
-package com.example.ftclibexamples.VerboseCommandSamples;
+package com.example.ftclibexamples.VerboseCommandSample;
 
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.arcrobotics.ftclib.drivebase.DifferentialDrive;
