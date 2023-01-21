@@ -1,4 +1,4 @@
-package com.example.ftclibexamples.CommandSample;
+package com.example.ftclibexamples.VerboseCommandSamples;
 
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 
@@ -22,6 +22,8 @@ public class ReleaseAndBack extends SequentialCommandGroup {
                 new ReleaseStone(grip),
                 new DriveDistance(INCHES, SPEED, drive)
         );
+
+        addRequirements(drive, grip);
     }
 
 }
