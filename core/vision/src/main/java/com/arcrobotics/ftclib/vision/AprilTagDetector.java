@@ -119,9 +119,14 @@ public class AprilTagDetector {
 
     @Nullable
     public List<Integer> getTargets() {
-        return targetIds;
+        if (targetIds.isEmpty()) {
+            return null;
+        } else {
+            return targetIds;
+        }
     }
 
+    @Nullable
     public Map<String, Integer> getDetection() {
         ArrayList<AprilTagDetection> detections = apriltagPipeline.getLatestDetections();
         Map<String, Integer> detection_data = new HashMap<>();
