@@ -1,11 +1,13 @@
 package com.arcrobotics.ftclib.vision;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.RobotLog;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.openftc.apriltag.AprilTagDetection;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
@@ -13,7 +15,9 @@ import org.openftc.easyopencv.OpenCvInternalCamera;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class AprilTagDetector {
 
@@ -38,6 +42,12 @@ public class AprilTagDetector {
         WIDTH = width;
         HEIGHT = height;
         isUsingWebcam = true;
+    }
+
+    public AprilTagDetector(HardwareMap hMap, int width, int height) {
+        hardwareMap = hMap;
+        WIDTH = width;
+        HEIGHT = height;
     }
 
     public AprilTagDetector(HardwareMap hMap) {
@@ -107,8 +117,34 @@ public class AprilTagDetector {
         targetIds = Arrays.asList(targets);
     }
 
+    @Nullable
     public List<Integer> getTargets() {
         return targetIds;
+    }
+
+    public Map<String, Integer> getDetection() {
+        ArrayList<AprilTagDetection> detections = apriltagPipeline.getLatestDetections();
+        Map<String, Integer> detection_data = new HashMap<>();
+
+        if (targetIds.isEmpty()) {
+            RobotLog.setGlobalErrorMsg("AprilTag Error: No target AprilTags have been set.");
+            return null;
+        }
+
+        if (detections.isEmpty()) {
+            return null;
+        }
+
+        for (AprilTagDetection tag : detections)
+            if (targetIds.contains(tag.id)) {
+                detection_data.put("id", tag.id);
+                detection_data.put("x", (int) tag.center.x);
+                detection_data.put("y", (int) tag.center.y);
+
+                return detection_data;
+            }
+
+        return null;
     }
 
     public OpenCvCamera getCamera() {
