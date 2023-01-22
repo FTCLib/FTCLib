@@ -25,8 +25,10 @@ public class AprilTagDetector {
     private AprilTag2dPipeline apriltagPipeline;
     private final HardwareMap hardwareMap;
 
-    private int WIDTH = 640;
-    private int HEIGHT = 480;
+    public int WIDTH = 640;
+    public int HEIGHT = 480;
+    public boolean GPU_ENABLED = false;
+    public OpenCvCameraRotation ORIENTATION = OpenCvCameraRotation.UPRIGHT;
 
     private boolean isUsingWebcam;
     private String cameraName;
@@ -35,20 +37,6 @@ public class AprilTagDetector {
     private final Object sync = new Object();
 
     private List<Integer> targetIds = new ArrayList<>();
-
-    public AprilTagDetector(HardwareMap hMap, String camName, int width, int height) {
-        hardwareMap = hMap;
-        cameraName = camName;
-        WIDTH = width;
-        HEIGHT = height;
-        isUsingWebcam = true;
-    }
-
-    public AprilTagDetector(HardwareMap hMap, int width, int height) {
-        hardwareMap = hMap;
-        WIDTH = width;
-        HEIGHT = height;
-    }
 
     public AprilTagDetector(HardwareMap hMap) {
         hardwareMap = hMap;
@@ -66,7 +54,7 @@ public class AprilTagDetector {
         }
     }
 
-    public void init(OpenCvCameraRotation orientation) {
+    public void init() {
         synchronized (sync) {
 
             // Get camera instance
@@ -88,10 +76,14 @@ public class AprilTagDetector {
                 camera.setPipeline(apriltagPipeline);
                 detectorState = DetectorState.INITIALIZING;
 
+                if (GPU_ENABLED) {
+                    camera.setViewportRenderer(OpenCvCamera.ViewportRenderer.GPU_ACCELERATED);
+                }
+                camera.showFpsMeterOnViewport(false);
                 camera.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener() {
                     @Override
                     public void onOpened() {
-                        camera.startStreaming(WIDTH, HEIGHT, orientation);
+                        camera.startStreaming(WIDTH, HEIGHT, ORIENTATION);
                         synchronized (sync) {
                             detectorState = DetectorState.RUNNING;
                         }
@@ -109,8 +101,9 @@ public class AprilTagDetector {
         }
     }
 
-    public void init() {
-        this.init(OpenCvCameraRotation.UPRIGHT);
+    public void close() {
+        camera.closeCameraDevice();
+        detectorState = DetectorState.NOT_CONFIGURED;
     }
 
     public void setTargets(@NonNull Integer... targets) {

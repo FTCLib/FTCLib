@@ -4,6 +4,7 @@ import com.arcrobotics.ftclib.vision.AprilTagDetector;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.openftc.easyopencv.OpenCvCamera;
+import org.openftc.easyopencv.OpenCvCameraRotation;
 
 import java.text.DecimalFormat;
 import java.util.List;
@@ -20,17 +21,18 @@ public class AprilTagVisionSample extends LinearOpMode {
         DecimalFormat df = new DecimalFormat("0.00");
         List<Integer> targets;
 
-        aprilTagDetector = new AprilTagDetector(hardwareMap, 1280, 720);
+        aprilTagDetector = new AprilTagDetector(hardwareMap);
         /* Custom camera example:
          * new AprilTagDetector(hardwareMap, "camera")
-         * or new AprilTagDetector(hardwareMap, "camera", 432, 240)
          */
 
+        // Make sure the settings below are configured before initializing the detector
+        aprilTagDetector.WIDTH = 1280;
+        aprilTagDetector.HEIGHT = 720;
+        aprilTagDetector.ORIENTATION = OpenCvCameraRotation.SIDEWAYS_LEFT;
+        aprilTagDetector.GPU_ENABLED = true;
+
         aprilTagDetector.init();
-        /* NOTE: Default orientation is UPRIGHT.
-         * Custom orientation example:
-         * aprilTagDetector.init(OpenCvCameraRotation.SIDEWAYS_LEFT)
-         */
         aprilTagDetector.setTargets(0, 1, 2);
         camera = aprilTagDetector.getCamera();
 
@@ -41,6 +43,7 @@ public class AprilTagVisionSample extends LinearOpMode {
             targets = aprilTagDetector.getTargets();
 
             telemetry.addLine("Camera FPS: " + df.format(camera.getFps()));
+            telemetry.addLine("Max theoretical FPS: " + df.format(camera.getCurrentPipelineMaxFps()));
             telemetry.addLine("Current Targets: " + (targets != null ? targets.toString() : "None"));
 
             if (detection != null) {
@@ -51,5 +54,6 @@ public class AprilTagVisionSample extends LinearOpMode {
 
             telemetry.update();
         }
+        aprilTagDetector.close();
     }
 }
