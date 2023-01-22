@@ -18,39 +18,21 @@ public class AprilTag2dPipeline extends OpenCvPipeline {
     private ArrayList<AprilTagDetection> detectionsUpdate = new ArrayList<>();
     private final Object detectionsUpdateSync = new Object();
 
-    Scalar blue = new Scalar(7, 197, 235, 255);
-    Scalar red = new Scalar(255, 0, 0, 255);
-    Scalar green = new Scalar(0, 255, 0, 255);
-    Scalar white = new Scalar(255, 255, 255, 255);
+    double fx = 578.272;
+    double fy = 578.272;
+    double cx = 402.145;
+    double cy = 221.506;
 
-    double fx;
-    double fy;
-    double cx;
-    double cy;
-
-    double tagSize;
-    double tagSizeX;
-    double tagSizeY;
+    double tagSize = 0.166;
+    double tagSizeX = 0.166;
+    double tagSizeY = 0.166;
 
     private float decimation;
     private boolean needToSetDecimation;
     private final Object decimationSync = new Object();
 
-    public AprilTag2dPipeline(double tagSize, double fx, double fy, double cx, double cy) {
-        this.tagSize = tagSize;
-        this.tagSizeX = tagSize;
-        this.tagSizeY = tagSize;
-        this.fx = fx;
-        this.fy = fy;
-        this.cx = cx;
-        this.cy = cy;
-
-        // Allocate a native context object. See the corresponding deletion in the finalizer
-        nativeAprilTagPtr = AprilTagDetectorJNI.createApriltagDetector(AprilTagDetectorJNI.TagFamily.TAG_36h11.string, 3, 3);
-    }
-
     public AprilTag2dPipeline() {
-        this(0.166, 578.272, 578.272, 402.145, 221.506);
+        nativeAprilTagPtr = AprilTagDetectorJNI.createApriltagDetector(AprilTagDetectorJNI.TagFamily.TAG_36h11.string, 3, 3);
     }
 
     @Override
@@ -111,6 +93,8 @@ public class AprilTag2dPipeline extends OpenCvPipeline {
 
 
     void draw2dSquare(Mat buf, Point[] points) {
+        Scalar blue = new Scalar(7, 197, 235, 255);
+
         Imgproc.line(buf, points[0], points[1], blue);
         Imgproc.line(buf, points[1], points[2], blue);
         Imgproc.line(buf, points[2], points[3], blue);
