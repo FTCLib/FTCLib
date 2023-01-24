@@ -47,6 +47,13 @@ public class AprilTag2dPipeline extends OpenCvPipeline {
         }
     }
 
+    /**
+     * <p>Processes frames received from the camera, runs detections, and draws a square on the Driver Station around the detected tag.</p>
+     * <p>Doesn't need to be called by the user.</p>
+     *
+     * @param input The frame from the camera
+     * @return The modified frame
+     */
     @Override
     public Mat processFrame(Mat input) {
         // Convert to greyscale
@@ -79,6 +86,11 @@ public class AprilTag2dPipeline extends OpenCvPipeline {
         }
     }
 
+    /**
+     * Gets the latest detections from the pipeline.
+     *
+     * @return An ArrayList of AprilTagDetection objects
+     */
     public ArrayList<AprilTagDetection> getLatestDetections() {
         return detections;
     }
@@ -92,6 +104,12 @@ public class AprilTag2dPipeline extends OpenCvPipeline {
     }
 
 
+    /**
+     * Draws a square on the image
+     *
+     * @param buf    The image to draw on
+     * @param points The corners of the square
+     */
     void draw2dSquare(Mat buf, Point[] points) {
         Scalar blue = new Scalar(7, 197, 235, 255);
 
