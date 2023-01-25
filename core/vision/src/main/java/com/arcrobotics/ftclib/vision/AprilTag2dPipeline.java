@@ -24,8 +24,6 @@ public class AprilTag2dPipeline extends OpenCvPipeline {
     double cy = 221.506;
 
     double tagSize = 0.166;
-    double tagSizeX = 0.166;
-    double tagSizeY = 0.166;
 
     private float decimation;
     private boolean needToSetDecimation;
@@ -48,7 +46,7 @@ public class AprilTag2dPipeline extends OpenCvPipeline {
     }
 
     /**
-     * <p>Processes frames received from the camera, runs detections, and draws a square on the Driver Station around the detected tag.</p>
+     * <p>Processes frames received from the camera and runs detections.</p>
      * <p>Doesn't need to be called by the user.</p>
      *
      * @param input The frame from the camera
@@ -105,17 +103,13 @@ public class AprilTag2dPipeline extends OpenCvPipeline {
 
 
     /**
-     * Draws a square on the image
+     * Draws a square on the input image.
      *
      * @param buf    The image to draw on
      * @param points The corners of the square
      */
     void draw2dSquare(Mat buf, Point[] points) {
         Scalar blue = new Scalar(7, 197, 235, 255);
-
-        Imgproc.line(buf, points[0], points[1], blue);
-        Imgproc.line(buf, points[1], points[2], blue);
-        Imgproc.line(buf, points[2], points[3], blue);
-        Imgproc.line(buf, points[3], points[0], blue);
+        Imgproc.rectangle(buf, points[0], points[2], blue, 3);
     }
 }

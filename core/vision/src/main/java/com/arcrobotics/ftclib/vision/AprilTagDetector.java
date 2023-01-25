@@ -63,12 +63,14 @@ public class AprilTagDetector {
     }
 
     public DetectorState getDetectorState() {
-        return detectorState;
+        synchronized (sync) {
+            return detectorState;
+        }
     }
 
     public void init() {
-        synchronized (sync) {
 
+        synchronized (sync) {
             // Get camera instance
             if (detectorState == DetectorState.NOT_CONFIGURED) {
                 int cameraMonitorViewId = hardwareMap
@@ -87,29 +89,31 @@ public class AprilTagDetector {
                 apriltagPipeline = new AprilTag2dPipeline();
                 camera.setPipeline(apriltagPipeline);
 
-                synchronized (sync) {
-                    detectorState = DetectorState.INITIALIZING;
-                }
+                detectorState = DetectorState.INITIALIZING;
 
                 if (GPU_ENABLED) {
                     camera.setViewportRenderer(OpenCvCamera.ViewportRenderer.GPU_ACCELERATED);
                 }
                 camera.showFpsMeterOnViewport(false);
                 camera.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener() {
+
                     @Override
                     public void onOpened() {
-                        camera.startStreaming(WIDTH, HEIGHT, ORIENTATION);
                         synchronized (sync) {
                             detectorState = DetectorState.RUNNING;
+                            sync.notifyAll();
                         }
+
+                        camera.startStreaming(WIDTH, HEIGHT, ORIENTATION);
                     }
 
                     @Override
                     public void onError(int errorCode) {
                         synchronized (sync) {
                             detectorState = DetectorState.INIT_FAILURE_NOT_RUNNING;
-                            RobotLog.addGlobalWarningMessage("WARNING: Camera device failed to open with OpenCV error: " + errorCode);
+                            sync.notifyAll();
                         }
+                        RobotLog.addGlobalWarningMessage("WARNING: Camera device failed to open with OpenCV error: " + errorCode);
                     }
                 });
             }
@@ -120,6 +124,7 @@ public class AprilTagDetector {
      * <p>Closes the camera device and stops the detector. Runs by default at the end of the OpMode.</p>
      * <p>This method is <strong>synchronous</strong>, meaning it will block the thread until the camera is closed.</p>
      */
+
     public void close() {
         if (detectorState != DetectorState.RUNNING) {
             return;
@@ -136,8 +141,10 @@ public class AprilTagDetector {
      * <p>This method is <strong>asynchronous</strong>, meaning it will not block the thread until the camera is closed.</p>
      */
     public void closeAsync() {
-        if (detectorState != DetectorState.RUNNING) {
-            return;
+        synchronized (sync) {
+            if (detectorState != DetectorState.RUNNING) {
+                return;
+            }
         }
 
         camera.closeCameraDeviceAsync(new OpenCvCamera.AsyncCameraCloseListener() {
@@ -156,11 +163,13 @@ public class AprilTagDetector {
      * @return A list of the target AprilTag IDs. Null if no target AprilTags have been set.
      */
     @Nullable
-    public List<Integer> getTargets() {
-        if (targetIds.isEmpty()) {
-            return null;
-        } else {
-            return targetIds;
+    public synchronized List<Integer> getTargets() {
+        synchronized (sync) {
+            if (targetIds.isEmpty()) {
+                return null;
+            } else {
+                return targetIds;
+            }
         }
     }
 
@@ -181,16 +190,22 @@ public class AprilTagDetector {
      */
     @Nullable
     public Map<String, Integer> getDetection() {
-        if (detectorState != DetectorState.RUNNING) {
-            RobotLog.setGlobalErrorMsg("AprilTag Error: Camera is not running.");
-            return null;
+        synchronized (sync) {
+            if (detectorState != DetectorState.RUNNING) {
+                try {
+                    sync.wait();
+                } catch (InterruptedException e) {
+                    RobotLog.setGlobalErrorMsg("AprilTag Error: Camera is not running.");
+                    return null;
+                }
+            }
         }
 
         ArrayList<AprilTagDetection> detections = apriltagPipeline.getLatestDetections();
         Map<String, Integer> detection_data = new HashMap<>();
 
         if (targetIds.isEmpty()) {
-            RobotLog.setGlobalErrorMsg("AprilTag Error: No target AprilTags have been set.");
+            RobotLog.addGlobalWarningMessage("AprilTag Warning: No target AprilTags have been set.");
             return null;
         }
 
@@ -217,10 +232,16 @@ public class AprilTagDetector {
      */
     @Nullable
     public OpenCvCamera getCamera() {
-        if (detectorState != DetectorState.RUNNING) {
-            RobotLog.setGlobalErrorMsg("AprilTag Error: Camera is not running.");
-            return null;
+        synchronized (sync) {
+            if (detectorState != DetectorState.RUNNING) {
+                try {
+                    sync.wait();
+                } catch (InterruptedException e) {
+                    RobotLog.setGlobalErrorMsg("AprilTag Error: Camera is not running.");
+                    return null;
+                }
+            }
+            return camera;
         }
-        return camera;
     }
 }
