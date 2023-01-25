@@ -20,7 +20,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Detection wrapper for the AprilTag2dPipeline.
+ * <p>Detection wrapper for the AprilTag2dPipeline.</p>
+ * <p>Customizable parameters include: camera width, height, orientation, and whether to use the GPU.</p>
  */
 public class AprilTagDetector {
 
@@ -42,7 +43,7 @@ public class AprilTagDetector {
     private List<Integer> targetIds = new ArrayList<>();
 
     /**
-     * Creates a new AprilTagDetector instance
+     * Creates a new AprilTagDetector instance.
      *
      * @param hMap The hardware map
      */
@@ -51,7 +52,7 @@ public class AprilTagDetector {
     }
 
     /**
-     * Creates a new AprilTagDetector instance
+     * Creates a new AprilTagDetector instance.
      *
      * @param hMap    The hardware map
      * @param camName The name of the webcam, if using one
@@ -68,6 +69,10 @@ public class AprilTagDetector {
         }
     }
 
+    /**
+     * <p>Initializes the camera and loads the pipeline.</p>
+     * <p>The customizations of the camera must be set before calling this method.</p>
+     */
     public void init() {
 
         synchronized (sync) {
@@ -113,7 +118,7 @@ public class AprilTagDetector {
                             detectorState = DetectorState.INIT_FAILURE_NOT_RUNNING;
                             sync.notifyAll();
                         }
-                        RobotLog.addGlobalWarningMessage("WARNING: Camera device failed to open with OpenCV error: " + errorCode);
+                        RobotLog.setGlobalErrorMsg("Camera device failed to open with OpenCV error " + errorCode);
                     }
                 });
             }
@@ -126,8 +131,10 @@ public class AprilTagDetector {
      */
 
     public void close() {
-        if (detectorState != DetectorState.RUNNING) {
-            return;
+        synchronized (sync) {
+            if (detectorState != DetectorState.RUNNING) {
+                return;
+            }
         }
 
         camera.closeCameraDevice();
@@ -163,7 +170,7 @@ public class AprilTagDetector {
      * @return A list of the target AprilTag IDs. Null if no target AprilTags have been set.
      */
     @Nullable
-    public synchronized List<Integer> getTargets() {
+    public List<Integer> getTargets() {
         synchronized (sync) {
             if (targetIds.isEmpty()) {
                 return null;
@@ -183,8 +190,8 @@ public class AprilTagDetector {
     }
 
     /**
-     * Gets the latest detection data from the AprilTagDetector.
-     * <p>Throws an error if no target AprilTags have been set.</p>
+     * <p>Gets the latest detection data from the AprilTagDetector.</p>
+     * <p>Shows a warning if no target AprilTags have been set.</p>
      *
      * @return A map containing the ID, x, and y coordinates of the first target AprilTag detected. Null if no AprilTags are detected.
      */
