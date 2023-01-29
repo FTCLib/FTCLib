@@ -5,6 +5,7 @@ apply plugin: 'maven'
 
 dependencies {
     api 'org.openftc:easyopencv:1.5.3'
+    implementation 'org.openftc:apriltag:1.1.1'
     implementation "androidx.core:core-ktx:1.6.0"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 }
