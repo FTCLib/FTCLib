@@ -38,9 +38,9 @@ FTCLib documentation - <https://ftclib.gitbook.io/ftclib>
 
     ```groovy
     dependencies {
-        implementation 'org.ftclib.ftclib:core:2.0.1'
+        implementation 'org.ftclib.ftclib:core:2.1.1'
         // the following is optional if you want vision
-        implementation 'org.ftclib.ftclib:vision:2.0.1'
+        implementation 'org.ftclib.ftclib:vision:2.1.0'
     }
     ```
 6. Because FTCLib makes use of advanced features, you need to increase the minSdkVersion to 24. Unfortunately, this means that ZTE Speed Phones are not supported in this release.

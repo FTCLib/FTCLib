@@ -9,7 +9,11 @@ android {
         minSdkVersion 24
         targetSdkVersion 28
         versionCode 1
+<<<<<<< HEAD
         versionName "2.1.0"
+=======
+        versionName "2.1.1"
+>>>>>>> 98e921bf9eac506c2bbe80a0cddf51ae33f1cbb6
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"

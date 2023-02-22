@@ -335,10 +335,19 @@ public class Motor implements HardwareDevice {
     }
 
     /**
-     * Resets the encoder.
+     * Resets the external encoder wrapper value.
      */
     public void resetEncoder() {
         encoder.reset();
+    }
+
+    /**
+     * Resets the internal position of the motor.
+     */
+    public void stopAndResetEncoder() {
+        encoder.resetVal = 0;
+        motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 
     /**
