@@ -321,6 +321,6 @@ public class MecanumControllerCommand extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return m_trajectory.getTotalTimeSeconds() > m_timer.seconds();
+        return m_timer.seconds() > m_trajectory.getTotalTimeSeconds();
     }
 }

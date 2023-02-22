@@ -15,6 +15,11 @@ public class TriggerReader implements KeyReader {
      * Current state of the button
      **/
     private boolean currState;
+    
+    /**
+     * Current threshold
+     **/
+    private double threshold;
 
     /**
      * Initializes controller variables
@@ -23,15 +28,20 @@ public class TriggerReader implements KeyReader {
      * @param trigger The controller button
      **/
     public TriggerReader(GamepadEx gamepad, GamepadKeys.Trigger trigger) {
+        this(gamepad, trigger, 0.5);
+    }
+    
+    public TriggerReader(GamepadEx gamepad, GamepadKeys.Trigger trigger, double threshold) {
         this.gamepad = gamepad;
         this.trigger = trigger;
-
-        if (this.gamepad.getTrigger(trigger) > 0.5) {
+        this.threshold = threshold;
+        
+        if (this.gamepad.getTrigger(trigger) > this.threshold) {
             currState = true;
         } else {
             currState = false;
         }
-
+        
         lastState = currState;
     }
 
@@ -40,7 +50,7 @@ public class TriggerReader implements KeyReader {
      **/
     public void readValue() {
         lastState = currState;
-        if (this.gamepad.getTrigger(trigger) > 0.5) {
+        if (this.gamepad.getTrigger(trigger) > this.threshold) {
             currState = true;
         } else {
             currState = false;
