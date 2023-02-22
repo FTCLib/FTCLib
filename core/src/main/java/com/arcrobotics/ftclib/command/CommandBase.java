@@ -38,7 +38,7 @@ public abstract class CommandBase implements Command {
     }
 
     public String getName() {
-        return this.getClass().getSimpleName();
+        return m_name;
     }
 
     public void setName(String name) {
