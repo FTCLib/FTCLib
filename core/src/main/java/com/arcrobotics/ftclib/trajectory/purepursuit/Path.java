@@ -9,38 +9,39 @@ import java.util.List;
 
 public class Path {
 
-    private List<Translation2d> pathPoints;
-    private int lastLookAheadPoint;
+    private List<Pose2d> pathPoints;
 
     public Path(Trajectory trajectory) {
         pathPoints = new ArrayList<>();
         for (double t = 0; t < trajectory.getTotalTimeSeconds(); t += 0.01) {
             Trajectory.State currSample = trajectory.sample(t);
-            Translation2d point = new Translation2d(currSample.poseMeters.getX(), currSample.poseMeters.getY());
-            pathPoints.add(point);
+            pathPoints.add(currSample.poseMeters);
         }
     }
 
-    public Translation2d getRelativeLookAheadPoint(Pose2d robotPose, double lookAhead) {
+    public int getRelativeLookAheadPoint(Pose2d robotPose, int lastLookAheadPointIdx, double lookAhead) {
         Translation2d robotPoint = robotPose.getTranslation();
-        int closestPointIdx = lastLookAheadPoint;
-        for (int pointIdx = Math.max(closestPointIdx - 1, 0); pointIdx < pathPoints.size(); pointIdx++) {
-            Translation2d relativePoint = pathPoints.get(pointIdx).minus(robotPoint);
-            Translation2d closestRelativePoint = pathPoints.get(closestPointIdx).minus(robotPoint);
-            double d1 = Math.sqrt(lookAhead * lookAhead - relativePoint.getX() * relativePoint.getX());
-            double d2 = Math.sqrt(lookAhead * lookAhead - closestRelativePoint.getX() * closestRelativePoint.getX());
-            double diff1 = Math.abs(relativePoint.getY() - d1);
-            double diff2 = Math.abs(closestRelativePoint.getY() - d2);
-            if (diff1 < diff2) {
-                closestPointIdx = pointIdx;
+        int i;
+        double distance = 0;
+        for (i = lastLookAheadPointIdx + 1; i < pathPoints.size(); i++) {
+            distance += robotPoint.getDistance(getPoint(i).getTranslation());
+            if (distance >= lookAhead) {
+                break;
             }
         }
-        lastLookAheadPoint = closestPointIdx;
-        return pathPoints.get(closestPointIdx).minus(robotPoint);
+        return Math.min(i, pathPoints.size() - 1);
     }
 
-    public Translation2d getLastPoint() {
+    public Pose2d getLastPoint() {
         return pathPoints.get(pathPoints.size() - 1);
+    }
+
+    public List<Pose2d> getPath() {
+        return pathPoints;
+    }
+
+    public Pose2d getPoint(int pointIdx) {
+        return pathPoints.get(pointIdx);
     }
 
 }
