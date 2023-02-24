@@ -239,6 +239,32 @@ public class Motor implements HardwareDevice {
     }
 
     /**
+     * Constructs the instance motor for the wrapper using the SDK object
+     *
+     * @param motor the DcMotor object
+     */
+    public Motor (@NonNull DcMotor motor) {
+        this(motor, GoBILDA.NONE);
+        ACHIEVABLE_MAX_TICKS_PER_SECOND = motor.getMotorType().getAchieveableMaxTicksPerSecond();
+    }
+
+    /**
+     * Constructs the instance motor for the wrapper using the SDK object
+     *
+     * @param motor         the DcMotor object
+     * @param gobildaType   the type of gobilda 5202 series motor being used
+     */
+    public Motor (@NonNull DcMotor motor, @NonNull GoBILDA gobildaType) {
+        this.motor = motor;
+        encoder = new Encoder(motor::getCurrentPosition);
+
+        runmode = RunMode.RawPower;
+        type = GoBILDA.NONE;
+
+        ACHIEVABLE_MAX_TICKS_PER_SECOND = gobildaType.getAchievableMaxTicksPerSecond();
+    }
+
+    /**
      * Constructs the instance motor for the wrapper
      *
      * @param hMap the hardware map from the OpMode
