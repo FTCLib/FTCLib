@@ -165,6 +165,5 @@ public class MecanumDriveKinematics {
         m_inverseKinematics.setRow(1, 0, 1, 1, fr.getX() - fr.getY());
         m_inverseKinematics.setRow(2, 0, 1, 1, rl.getX() - rl.getY());
         m_inverseKinematics.setRow(3, 0, 1, -1, -(rr.getX() + rr.getY()));
-        m_inverseKinematics = m_inverseKinematics.scale(1.0 / Math.sqrt(2));
     }
 }
