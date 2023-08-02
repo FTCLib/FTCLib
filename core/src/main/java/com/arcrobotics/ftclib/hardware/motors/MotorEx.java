@@ -21,6 +21,27 @@ public class MotorEx extends Motor {
     public DcMotorEx motorEx;
 
     /**
+     * Constructs the instance motor for the wrapper using the SDK object
+     *
+     * @param motor         the DcMotorEx object
+     */
+    public MotorEx(@NonNull DcMotorEx motor) {
+        this(motor, GoBILDA.NONE);
+        ACHIEVABLE_MAX_TICKS_PER_SECOND = motorEx.getMotorType().getAchieveableMaxTicksPerSecond();
+    }
+
+    /**
+     * Constructs the instance motor for the wrapper using the SDK object
+     *
+     * @param motor         the DcMotorEx object
+     * @param gobildaType   the type of gobilda 5202 series motor being used
+     */
+    public MotorEx(@NonNull DcMotorEx motor, @NonNull GoBILDA gobildaType) {
+        super(motor, gobildaType);
+        motorEx = motor;
+    }
+
+    /**
      * Constructs the instance motor for the wrapper
      *
      * @param hMap the hardware map from the OpMode
