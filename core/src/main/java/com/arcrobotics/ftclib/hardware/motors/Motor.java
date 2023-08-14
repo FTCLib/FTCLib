@@ -65,7 +65,7 @@ public class Motor implements HardwareDevice {
         private Supplier<Integer> m_position;
         private int resetVal, lastPosition;
         private Direction direction;
-        private double lastTimeStamp, veloEstimate, dpp, accel, lastVelo;
+        private double lastTimeStamp, velocityEstimateFromPosition, dpp, accel, lastVelocity;
 
         /**
          * The encoder object for the motor.
@@ -78,7 +78,9 @@ public class Motor implements HardwareDevice {
             dpp = 1;
             resetVal = 0;
             lastPosition = 0;
-            veloEstimate = 0;
+            velocityEstimateFromPosition = 0;
+            lastVelocity = 0;
+            accel = 0;
             direction = Direction.FORWARD;
             lastTimeStamp = (double) System.nanoTime() / 1E9;
         }
@@ -88,13 +90,11 @@ public class Motor implements HardwareDevice {
          */
         public int getPosition() {
             int currentPosition = m_position.get();
-            if (currentPosition != lastPosition) {
-                double currentTime = (double) System.nanoTime() / 1E9;
-                double dt = currentTime - lastTimeStamp;
-                veloEstimate = (currentPosition - lastPosition) / dt;
-                lastPosition = currentPosition;
-                lastTimeStamp = currentTime;
-            }
+            double currentTime = (double) System.nanoTime() / 1E9;
+            double dt = currentTime - lastTimeStamp;
+            velocityEstimateFromPosition = (currentPosition - lastPosition) / dt;
+            lastPosition = currentPosition;
+            lastTimeStamp = currentTime;
             return direction.getMultiplier() * currentPosition - resetVal;
         }
 
@@ -117,6 +117,10 @@ public class Motor implements HardwareDevice {
          */
         public void reset() {
             resetVal += getPosition();
+            accel = 0;
+            velocityEstimateFromPosition = 0;
+            lastVelocity = getVelocity();
+            lastPosition = getPosition();
         }
 
         /**
@@ -150,13 +154,11 @@ public class Motor implements HardwareDevice {
          */
         public double getRawVelocity() {
             double velo = getVelocity();
-            if (velo != lastVelo) {
-                double currentTime = (double) System.nanoTime() / 1E9;
-                double dt = currentTime - lastTimeStamp;
-                accel = (velo - lastVelo) / dt;
-                lastVelo = velo;
-                lastTimeStamp = currentTime;
-            }
+            double currentTime = (double) System.nanoTime() / 1E9;
+            double dt = currentTime - lastTimeStamp;
+            accel = (velo - lastVelocity) / dt;
+            lastVelocity = velo;
+            lastTimeStamp = currentTime;
             return velo;
         }
 
@@ -164,6 +166,7 @@ public class Motor implements HardwareDevice {
          * @return the estimated acceleration of the motor in ticks per second squared
          */
         public double getAcceleration() {
+            getRawVelocity(); // updates accel
             return accel;
         }
 
@@ -175,9 +178,10 @@ public class Motor implements HardwareDevice {
          * @return the corrected velocity
          */
         public double getCorrectedVelocity() {
+            getPosition(); // updates velocityEstimateFromPosition
             double real = getRawVelocity();
-            while (Math.abs(veloEstimate - real) > CPS_STEP / 2.0) {
-                real += Math.signum(veloEstimate - real) * CPS_STEP;
+            while (Math.abs(velocityEstimateFromPosition - real) > CPS_STEP / 2.0) {
+                real += Math.signum(velocityEstimateFromPosition - real) * CPS_STEP;
             }
             return real;
         }
