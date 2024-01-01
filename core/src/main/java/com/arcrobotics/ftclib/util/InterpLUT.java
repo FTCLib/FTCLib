@@ -13,12 +13,6 @@ public class InterpLUT {
     private List<Double> mY = new ArrayList<>();
     private List<Double> mM = new ArrayList<>();
 
-    private InterpLUT(List<Double> x, List<Double> y, List<Double> m) {
-        mX = x;
-        mY = y;
-        mM = m;
-    }
-
     public InterpLUT() {
     }
 
@@ -36,7 +30,6 @@ public class InterpLUT {
      *
      * @throws IllegalArgumentException if the X or Y arrays are null, have different lengths or have fewer than 2 values.
      */
-    //public static LUTWithInterpolator createLUT(List<Double> x, List<Double> y) {
     public void createLUT() {
         List<Double> x = this.mX;
         List<Double> y = this.mY;
@@ -52,7 +45,7 @@ public class InterpLUT {
 
         // Compute slopes of secant lines between successive points.
         for (int i = 0; i < n - 1; i++) {
-            Double h = x.get(i + 1) - x.get(i);
+            double h = x.get(i + 1) - x.get(i);
             if (h <= 0f) {
                 throw new IllegalArgumentException("The control points must all "
                         + "have strictly increasing X values.");
@@ -70,8 +63,8 @@ public class InterpLUT {
         // Update the tangents to preserve monotonicity.
         for (int i = 0; i < n - 1; i++) {
             if (d[i] == 0f) { // successive Y values are equal
-                m[i] = Double.valueOf(0f);
-                m[i + 1] = Double.valueOf(0f);
+                m[i] = 0.0;
+                m[i + 1] = 0.0;
             } else {
                 double a = m[i] / d[i];
                 double b = m[i + 1] / d[i];
@@ -93,17 +86,26 @@ public class InterpLUT {
      *
      * @param input The X value.
      * @return The interpolated Y = f(X) value.
+     * @throws IllegalArgumentException If provided value is out of bounds.
      */
-    public double get(double input) {
+    public double get(double input) throws IllegalArgumentException {
         // Handle the boundary cases.
         final int n = mX.size();
         if (Double.isNaN(input)) {
             return input;
         }
-        if (input <= mX.get(0)) {
+        // Handle minimum and maximum control points
+        if (input == mX.get(0)) {
+            return mY.get(0);
+        }
+        if (input == mX.get(n - 1)) {
+            return mY.get(n - 1);
+        }
+        // Throw error if out of bounds
+        if (input < mX.get(0)) {
             throw new IllegalArgumentException("User requested value outside of bounds of LUT. Bounds are: " + mX.get(0).toString() + " to " + mX.get(n - 1).toString() + ". Value provided was: " + input);
         }
-        if (input >= mX.get(n - 1)) {
+        if (input > mX.get(n - 1)) {
             throw new IllegalArgumentException("User requested value outside of bounds of LUT. Bounds are: " + mX.get(0).toString() + " to " + mX.get(n - 1).toString() + ". Value provided was: " + input);
         }
 
