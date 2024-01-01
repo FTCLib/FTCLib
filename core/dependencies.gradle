@@ -1,11 +1,11 @@
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    compileOnly 'org.firstinspires.ftc:Inspection:8.1.1'
-    compileOnly 'org.firstinspires.ftc:RobotCore:8.1.1'
-    compileOnly 'org.firstinspires.ftc:RobotServer:8.1.1'
-    compileOnly 'org.firstinspires.ftc:Hardware:8.1.1'
-    compileOnly 'org.firstinspires.ftc:FtcCommon:8.1.1'
+    compileOnly 'org.firstinspires.ftc:Inspection:9.0.1'
+    compileOnly 'org.firstinspires.ftc:RobotCore:9.0.1'
+    compileOnly 'org.firstinspires.ftc:RobotServer:9.0.1'
+    compileOnly 'org.firstinspires.ftc:Hardware:9.0.1'
+    compileOnly 'org.firstinspires.ftc:FtcCommon:9.0.1'
     compileOnly 'androidx.appcompat:appcompat:1.2.0'
 }
 
@@ -21,6 +21,7 @@ android {
 
     defaultConfig {
         minSdkVersion 24
+        //noinspection ExpiredTargetSdkVersion
         targetSdkVersion 28
         versionCode 1
         versionName "2.1.0"
