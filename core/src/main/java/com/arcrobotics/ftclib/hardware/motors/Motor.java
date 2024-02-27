@@ -22,11 +22,11 @@ import java.util.function.Supplier;
 public class Motor implements HardwareDevice {
 
     public enum GoBILDA {
-        RPM_30(5264, 30), RPM_43(3892, 43), RPM_60(2786, 60), RPM_84(1993.6, 84),
-        RPM_117(1425.2, 117), RPM_223(753.2, 223), RPM_312(537.6, 312), RPM_435(383.6, 435),
-        RPM_1150(145.6, 1150), RPM_1620(103.6, 1620), BARE(28, 6000), NONE(0, 0);
+        RPM_30(5281.1, 30), RPM_43(3895.9, 43), RPM_60(2786.2, 60), RPM_84(1993.6, 84),
+        RPM_117(1425.1, 117), RPM_223(751.8, 223), RPM_312(537.7, 312), RPM_435(384.5, 435),
+        RPM_1150(145.1, 1150), RPM_1620(103.8, 1620), BARE(28, 6000), NONE(0, 0);
 
-        private double cpr, rpm;
+        private final double cpr, rpm;
 
         GoBILDA(double cpr, double rpm) {
             this.cpr = cpr;
@@ -49,7 +49,7 @@ public class Motor implements HardwareDevice {
     public enum Direction {
         FORWARD(1), REVERSE(-1);
 
-        private int val;
+        private final int val;
 
         Direction(int multiplier) {
             val = multiplier;
@@ -62,7 +62,7 @@ public class Motor implements HardwareDevice {
 
     public class Encoder {
 
-        private Supplier<Integer> m_position;
+        private final Supplier<Integer> m_position;
         private int resetVal, lastPosition;
         private Direction direction;
         private double lastTimeStamp, veloEstimate, dpp, accel, lastVelo;
@@ -254,7 +254,7 @@ public class Motor implements HardwareDevice {
      *
      * @param hMap        the hardware map from the OpMode
      * @param id          the device id from the RC config
-     * @param gobildaType the type of gobilda 5202 series motor being used
+     * @param gobildaType the type of GoBilda 5204 series motor being used
      */
     public Motor(@NonNull HardwareMap hMap, String id, @NonNull GoBILDA gobildaType) {
         motor = hMap.get(DcMotor.class, id);
