@@ -1,32 +1,23 @@
 package com.arcrobotics.ftclib.hardware;
 
 import com.arcrobotics.ftclib.geometry.Rotation2d;
-import com.qualcomm.hardware.bosch.BNO055IMU;
-import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
+import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.IMU;
 
-import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
 
-public class RevIMU extends GyroEx {
+public class RevIMU {
 
-    private BNO055IMU revIMU;
-
-    /***
-     * Heading relative to starting position
-     */
-    double globalHeading;
-
-    /**
-     * Heading relative to last offset
-     */
-    double relativeHeading;
+    private final IMU revIMU;
 
     /**
      * Offset between global heading and relative heading
      */
     double offset;
 
-    private int multiplier;
+    private int multiplier = 1;
 
     /**
      * Create a new object for the built-in gyro/imu in the Rev Expansion Hub
@@ -35,8 +26,7 @@ public class RevIMU extends GyroEx {
      * @param imuName Name of sensor in configuration
      */
     public RevIMU(HardwareMap hw, String imuName) {
-        revIMU = hw.get(BNO055IMU.class, imuName);
-        multiplier = 1;
+        revIMU = hw.get(IMU.class, imuName);
     }
 
     /**
@@ -49,89 +39,89 @@ public class RevIMU extends GyroEx {
     }
 
     /**
-     * Initializes gyro with default parameters.
-     */
-    public void init() {
-        BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
-        parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
-        parameters.calibrationDataFile = "BNO055IMUCalibration.json"; // see the calibration sample opmode
-        parameters.loggingEnabled = true;
-        parameters.loggingTag = "IMU";
-
-        init(parameters);
-    }
-
-    /**
      * Initializes gyro with custom parameters.
      */
-    public void init(BNO055IMU.Parameters parameters) {
-        revIMU.initialize(parameters);
-
-        globalHeading = 0;
-        relativeHeading = 0;
-        offset = 0;
+    public void init(RevHubOrientationOnRobot orientation) {
+        revIMU.initialize(new IMU.Parameters(orientation));
     }
 
     /**
-     * Inverts the ouptut of gyro
+     * Inverts the output of gyro
      */
     public void invertGyro() {
         multiplier *= -1;
     }
 
     /**
+     * @param unit Unit to output the heading in
      * @return Relative heading of the robot
      */
-    public double getHeading() {
-        // Return yaw
-        return getAbsoluteHeading() - offset;
+    public double getHeading(AngleUnit unit) {
+        return revIMU.getRobotYawPitchRollAngles().getYaw(unit) * multiplier;
     }
 
     /**
+     * @return Relative heading of the robot in degrees
+     */
+    public double getHeading() {
+        return getHeading(AngleUnit.DEGREES);
+    }
+
+    /**
+     * @param unit Unit to output the heading in
      * @return Absolute heading of the robot
      */
-    @Override
-    public double getAbsoluteHeading() {
-        return revIMU.getAngularOrientation().firstAngle * multiplier;
+    public double getAbsoluteHeading(AngleUnit unit) {
+        return getHeading(unit) + unit.fromDegrees(offset) * multiplier;
     }
 
     /**
-     * @return X, Y, Z angles of gyro
+     * @return Absolute heading of the robot in degrees
      */
-    public double[] getAngles() {
-        // make a singular hardware call
-        Orientation orientation = revIMU.getAngularOrientation();
+    public double getAbsoluteHeading() {
+        return getAbsoluteHeading(AngleUnit.DEGREES);
+    }
 
-        return new double[]{orientation.firstAngle, orientation.secondAngle, orientation.thirdAngle};
+    /**
+     * @return Yaw, Pitch, Roll angles of gyro
+     */
+    public YawPitchRollAngles getAngles() {
+        return revIMU.getRobotYawPitchRollAngles();
+    }
+
+    public double[] getAngles(AngleUnit unit) {
+        YawPitchRollAngles angles = revIMU.getRobotYawPitchRollAngles();
+        return new double[]{
+                angles.getYaw(unit),
+                angles.getPitch(unit),
+                angles.getRoll(unit)
+        };
     }
 
     /**
      * @return Transforms heading into {@link Rotation2d}
      */
-    @Override
     public Rotation2d getRotation2d() {
         return Rotation2d.fromDegrees(getHeading());
     }
 
-    @Override
     public void disable() {
         revIMU.close();
     }
 
-    @Override
     public void reset() {
         offset += getHeading();
+        revIMU.resetYaw();
     }
 
-    @Override
     public String getDeviceType() {
-        return "Rev Expansion Hub IMU";
+        return "Rev IMU";
     }
 
     /**
      * @return the internal sensor being wrapped
      */
-    public BNO055IMU getRevIMU() {
+    public IMU getRevIMU() {
         return revIMU;
     }
 
