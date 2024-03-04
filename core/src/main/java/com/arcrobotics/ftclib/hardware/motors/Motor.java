@@ -10,6 +10,7 @@ import com.arcrobotics.ftclib.util.MathUtils;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigurationType;
 
 import java.util.Locale;
 import java.util.function.Supplier;
@@ -80,14 +81,13 @@ public class Motor implements HardwareDevice {
          */
         public int getPosition() {
             int currentPosition = m_position.get();
-            if (currentPosition != lastPosition) {
-                double currentTime = (double) System.nanoTime() / 1E9;
-                double dt = currentTime - lastTimeStamp;
 
-                veloEstimate = (currentPosition - lastPosition) / dt;
-                lastPosition = currentPosition;
-                lastTimeStamp = currentTime;
-            }
+            double currentTime = (double) System.nanoTime() / 1E9;
+            double dt = currentTime - lastTimeStamp;
+
+            veloEstimate = (currentPosition - lastPosition) / dt;
+            lastPosition = currentPosition;
+            lastTimeStamp = currentTime;
 
             return direction.getMultiplier() * currentPosition - resetVal;
         }
@@ -111,6 +111,9 @@ public class Motor implements HardwareDevice {
          */
         public void reset() {
             resetVal += getPosition();
+
+            lastVelo = getVelocity();
+            lastPosition = getPosition();
         }
 
         /**
@@ -144,14 +147,12 @@ public class Motor implements HardwareDevice {
          */
         public double getRawVelocity() {
             double velo = getVelocity();
-            if (velo != lastVelo) {
-                double currentTime = (double) System.nanoTime() / 1E9;
-                double dt = currentTime - lastTimeStamp;
+            double currentTime = (double) System.nanoTime() / 1E9;
+            double dt = currentTime - lastTimeStamp;
 
-                accel = (velo - lastVelo) / dt;
-                lastVelo = velo;
-                lastTimeStamp = currentTime;
-            }
+            accel = (velo - lastVelo) / dt;
+            lastVelo = velo;
+            lastTimeStamp = currentTime;
 
             return velo;
         }
@@ -160,6 +161,7 @@ public class Motor implements HardwareDevice {
          * @return the estimated acceleration of the motor in ticks per second squared
          */
         public double getAcceleration() {
+            this.getRawVelocity(); // Update the acceleration
             return accel;
         }
 
@@ -171,6 +173,7 @@ public class Motor implements HardwareDevice {
          * @return the corrected velocity
          */
         public double getCorrectedVelocity() {
+            this.getPosition(); // Update velocity estimate
             double real = getRawVelocity();
             while (Math.abs(veloEstimate - real) > CPS_STEP / 2.0) {
                 real += Math.signum(veloEstimate - real) * CPS_STEP;
@@ -228,6 +231,49 @@ public class Motor implements HardwareDevice {
     }
 
     /**
+     * Constructs the instance motor for the wrapper using the SDK object
+     *
+     * @param motor the DcMotor object
+     */
+    public Motor(@NonNull DcMotor motor) {
+        this(motor, GoBILDA.NONE);
+    }
+
+    /**
+     * Constructs the instance motor for the wrapper using the SDK object
+     *
+     * @param motor       the DcMotor object
+     * @param gobildaType the type of GoBilda 5204 series motor being used
+     */
+    public Motor(@NonNull DcMotor motor, @NonNull GoBILDA gobildaType) {
+        this(motor, gobildaType.getCPR(), gobildaType.getRPM());
+    }
+
+    /**
+     * Constructs an instance motor for the wrapper using the SDK object
+     *
+     * @param motor the DcMotor object
+     * @param cpr   the counts per revolution of the motor
+     * @param rpm   the revolutions per minute of the motor
+     */
+    public Motor(@NonNull DcMotor motor, double cpr, double rpm) {
+        this.motor = motor;
+        encoder = new Encoder(motor::getCurrentPosition);
+
+        if (cpr != 0 && rpm != 0) {
+            MotorConfigurationType type = motor.getMotorType().clone();
+
+            type.setMaxRPM(rpm);
+            type.setTicksPerRev(cpr);
+            type.setAchieveableMaxRPMFraction(1.0);
+
+            this.motor.setMotorType(type);
+        }
+
+        ACHIEVABLE_MAX_TICKS_PER_SECOND = this.motor.getMotorType().getAchieveableMaxTicksPerSecond();
+    }
+
+    /**
      * Constructs the instance motor for the wrapper
      *
      * @param hMap the hardware map from the OpMode
@@ -235,7 +281,6 @@ public class Motor implements HardwareDevice {
      */
     public Motor(@NonNull HardwareMap hMap, String id) {
         this(hMap, id, GoBILDA.NONE);
-        ACHIEVABLE_MAX_TICKS_PER_SECOND = motor.getMotorType().getAchieveableMaxTicksPerSecond();
     }
 
     /**
@@ -261,9 +306,17 @@ public class Motor implements HardwareDevice {
         motor = hMap.get(DcMotor.class, id);
         encoder = new Encoder(motor::getCurrentPosition);
 
-        motor.getMotorType().setMaxRPM(rpm);
-        motor.getMotorType().setTicksPerRev(cpr);
-        ACHIEVABLE_MAX_TICKS_PER_SECOND = cpr * rpm / 60;
+        if (cpr != 0 && rpm != 0) {
+            MotorConfigurationType type = motor.getMotorType().clone();
+
+            type.setMaxRPM(rpm);
+            type.setTicksPerRev(cpr);
+            type.setAchieveableMaxRPMFraction(1.0);
+
+            motor.setMotorType(type);
+        }
+
+        ACHIEVABLE_MAX_TICKS_PER_SECOND = motor.getMotorType().getAchieveableMaxTicksPerSecond();
     }
 
     /**
