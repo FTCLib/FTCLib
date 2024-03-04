@@ -4,8 +4,11 @@ import com.arcrobotics.ftclib.drivebase.MecanumDrive;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.hardware.RevIMU;
 import com.arcrobotics.ftclib.hardware.motors.Motor;
+import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
 @TeleOp
 public class MecanumDrivingSample extends LinearOpMode {
@@ -27,27 +30,13 @@ public class MecanumDrivingSample extends LinearOpMode {
             new Motor(hardwareMap, "backRight", Motor.GoBILDA.RPM_435)
         );
 
-        // This is the built-in IMU in the REV hub.
-        // We're initializing it by its default parameters
-        // and name in the config ('imu'). The orientation
-        // of the hub is important. Below is a model
-        // of the REV Hub and the orientation axes for the IMU.
-        //
-        //                           | Z axis
-        //                           |
-        //     (Motor Port Side)     |   / X axis
-        //                       ____|__/____
-        //          Y axis     / *   | /    /|   (IO Side)
-        //          _________ /______|/    //      I2C
-        //                   /___________ //     Digital
-        //                  |____________|/      Analog
-        //
-        //                 (Servo Port Side)
-        //
-        // (unapologetically stolen from the road-runner-quickstart)
-
         RevIMU imu = new RevIMU(hardwareMap);
-        imu.init();
+        imu.init(
+                new RevHubOrientationOnRobot(
+                        RevHubOrientationOnRobot.LogoFacingDirection.UP,
+                        RevHubOrientationOnRobot.UsbFacingDirection.FORWARD
+                )
+        );
 
         // the extended gamepad object
         GamepadEx driverOp = new GamepadEx(gamepad1);
@@ -109,7 +98,7 @@ public class MecanumDrivingSample extends LinearOpMode {
                         driverOp.getLeftX(),
                         driverOp.getLeftY(),
                         driverOp.getRightX(),
-                        imu.getRotation2d().getDegrees(),   // gyro value passed in here must be in degrees
+                        imu.getHeading(AngleUnit.DEGREES),   // gyro value passed in here must be in degrees
                         false
                 );
             }

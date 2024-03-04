@@ -34,7 +34,7 @@ public class MotorEx extends Motor {
      * Constructs the instance motor for the wrapper using the SDK object
      *
      * @param motor         the DcMotorEx object
-     * @param gobildaType   the type of gobilda 5202 series motor being used
+     * @param gobildaType   the type of GoBilda 5204 series motor being used
      */
     public MotorEx(@NonNull DcMotorEx motor, @NonNull GoBILDA gobildaType) {
         super(motor, gobildaType);
@@ -57,7 +57,7 @@ public class MotorEx extends Motor {
      *
      * @param hMap        the hardware map from the OpMode
      * @param id          the device id from the RC config
-     * @param gobildaType the type of gobilda 5202 series motor being used
+     * @param gobildaType the type of GoBilda 5204 series motor being used
      */
     public MotorEx(@NonNull HardwareMap hMap, String id, @NonNull GoBILDA gobildaType) {
         super(hMap, id, gobildaType);

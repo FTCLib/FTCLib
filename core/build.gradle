@@ -14,6 +14,7 @@ android {
 
     defaultConfig {
         minSdkVersion 24
+        //noinspection ExpiredTargetSdkVersion
         targetSdkVersion 28
         versionCode 1
         versionName 'v2.1.1'
@@ -55,12 +56,12 @@ dependencies {
     testImplementation('org.mockito:mockito-core:3.5.13')
     testImplementation "org.junit.jupiter:junit-jupiter-params:5.7.0"
 
-    compileOnly 'org.firstinspires.ftc:Inspection:7.1.0'
-    compileOnly 'org.firstinspires.ftc:RobotCore:7.1.0'
-    testImplementation 'org.firstinspires.ftc:RobotCore:7.1.0'
-    compileOnly 'org.firstinspires.ftc:RobotServer:7.1.0'
-    compileOnly 'org.firstinspires.ftc:Hardware:7.1.0'
-    compileOnly 'org.firstinspires.ftc:FtcCommon:7.1.0'
+    compileOnly 'org.firstinspires.ftc:Inspection:9.0.1'
+    compileOnly 'org.firstinspires.ftc:RobotCore:9.0.1'
+    testImplementation 'org.firstinspires.ftc:RobotCore:9.0.1'
+    compileOnly 'org.firstinspires.ftc:RobotServer:9.0.1'
+    compileOnly 'org.firstinspires.ftc:Hardware:9.0.1'
+    compileOnly 'org.firstinspires.ftc:FtcCommon:9.0.1'
     compileOnly 'androidx.appcompat:appcompat:1.2.0'
     implementation "androidx.core:core-ktx:1.6.0"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
