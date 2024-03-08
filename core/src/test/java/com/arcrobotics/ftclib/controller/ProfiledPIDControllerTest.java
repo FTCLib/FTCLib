@@ -1,6 +1,6 @@
 package com.arcrobotics.ftclib.controller;
 
-import com.arcrobotics.ftclib.controller.wpilibcontroller.ProfiledPIDController;
+import com.arcrobotics.ftclib.math.controller.wpilibcontroller.ProfiledPIDController;
 import com.arcrobotics.ftclib.trajectory.TrapezoidProfile;
 
 import org.junit.jupiter.api.Test;

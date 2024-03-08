@@ -1,6 +1,6 @@
 package com.arcrobotics.ftclib.controller;
 
-import com.arcrobotics.ftclib.controller.wpilibcontroller.RamseteController;
+import com.arcrobotics.ftclib.math.controller.wpilibcontroller.RamseteController;
 import com.arcrobotics.ftclib.geometry.Pose2d;
 import com.arcrobotics.ftclib.geometry.Rotation2d;
 import com.arcrobotics.ftclib.geometry.Twist2d;
