@@ -1,61 +1,65 @@
 package com.arcrobotics.ftclib.command;
 
-import com.arcrobotics.ftclib.drivebase.MecanumDrive;
 import com.arcrobotics.ftclib.geometry.Pose2d;
-import com.arcrobotics.ftclib.purepursuit.Path;
-import com.arcrobotics.ftclib.purepursuit.Waypoint;
+import com.arcrobotics.ftclib.geometry.Translation2d;
+import com.arcrobotics.ftclib.kinematics.wpilibkinematics.ChassisSpeeds;
+import com.arcrobotics.ftclib.kinematics.wpilibkinematics.DifferentialDriveKinematics;
+import com.arcrobotics.ftclib.kinematics.wpilibkinematics.DifferentialDriveWheelSpeeds;
+import com.arcrobotics.ftclib.trajectory.Trajectory;
+import com.arcrobotics.ftclib.trajectory.TrajectoryConfig;
+import com.arcrobotics.ftclib.trajectory.purepursuit.PathFollower;
+
+import java.util.function.BiConsumer;
+import java.util.function.Supplier;
 
 /**
+ * A command that makes use of the look-ahead algorithm for
+ * following a path derived from a trajectory.
+ *
  * @author Jackson
- * @see Path
  */
 public class PurePursuitCommand extends CommandBase {
 
-    private MecanumDrive m_drive;
-    private OdometrySubsystem m_odometry;
-    private Path m_path;
+    private DifferentialDriveKinematics kinematics;
+    private PathFollower follower;
+    private Translation2d poseTolerance;
+    private Supplier<Pose2d> currentRobotPose;
+    private BiConsumer<Double, Double> output;
+    private double lookAhead;
 
-    public PurePursuitCommand(MecanumDrive drive, OdometrySubsystem odometry, Waypoint... waypoints) {
-        m_path = new Path(waypoints);
-        m_drive = drive;
-        m_odometry = odometry;
+    public PurePursuitCommand(TrajectoryConfig config,
+                              Trajectory trajectory,
+                              DifferentialDriveKinematics kinematics,
+                              double lookAheadDistance,
+                              Translation2d poseTolerance,
+                              Supplier<Pose2d> currentRobotPose,
+                              BiConsumer<Double, Double> output) {
+        this.kinematics = kinematics;
+        this.currentRobotPose = currentRobotPose;
+        this.poseTolerance = poseTolerance;
+        this.output = output;
+        lookAhead = lookAheadDistance;
+        follower = new PathFollower(trajectory, config.getMaxVelocity());
     }
 
-    @Override
-    public void initialize() {
-        m_path.init();
-    }
-
-    public void addWaypoint(Waypoint waypoint) {
-        m_path.add(waypoint);
-    }
-
-    public void addWaypoints(Waypoint... waypoints) {
-        for (Waypoint waypoint : waypoints) this.addWaypoint(waypoint);
-    }
-
-    public void removeWaypointAtIndex(int index) {
-        m_path.remove(index);
-    }
-
-    /**
-     * Call this in a loop
-     */
     @Override
     public void execute() {
-        Pose2d robotPose = m_odometry.getPose();
-        double[] motorSpeeds = m_path.loop(robotPose.getTranslation().getX(), robotPose.getTranslation().getY(), robotPose.getHeading());
-        m_drive.driveRobotCentric(motorSpeeds[0], motorSpeeds[1], motorSpeeds[2]);
+        Pose2d robotPose = currentRobotPose.get();
+        ChassisSpeeds chassisSpeeds = follower.getChassisSpeeds(robotPose, lookAhead);
+        DifferentialDriveWheelSpeeds wheelSpeeds = kinematics.toWheelSpeeds(chassisSpeeds);
+        wheelSpeeds.normalize(1);
+        output.accept(wheelSpeeds.leftMetersPerSecond, wheelSpeeds.rightMetersPerSecond);
     }
 
     @Override
     public void end(boolean interrupted) {
-        m_drive.stop();
+        output.accept(0.0, 0.0);
     }
 
     @Override
     public boolean isFinished() {
-        return m_path.isFinished();
+        Pose2d robotPose = currentRobotPose.get();
+        return !follower.isBusy(robotPose, poseTolerance);
     }
 
 }
